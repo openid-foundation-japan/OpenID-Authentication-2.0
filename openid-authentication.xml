@@ -4,7 +4,7 @@
 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml'>
 ]>
 
-<rfc category="info" ipr="none" docName="openid-authentication-2_0-08.xml">
+<rfc category="info" ipr="none" docName="openid-authentication-2_0-09.xml">
   <?xml-stylesheet type='text/xsl'
     href='http://xml.resource.org/authoring/rfc2629.xslt' ?>
 
@@ -16,9 +16,9 @@
   <?rfc private="Draft" ?>
 
   <front>
-    <title>OpenID Authentication 2.0 - Draft 08</title>
+    <title>OpenID Authentication 2.0 - Draft 09</title>
 
-    <author initials='D.R' surname="Recordon" fullname='David Recordon'>
+    <author initials="D.R" surname="Recordon" fullname="David Recordon">
       <organization abbrev="VeriSign">VeriSign, Inc.</organization>
       <address>
     	<postal>
@@ -31,7 +31,7 @@
       </address>
     </author>
 
-    <author initials='J.H' surname="Hoyt" fullname='Josh Hoyt'>
+    <author initials="J.H" surname="Hoyt" fullname="Josh Hoyt">
       <organization abbrev="JanRain">JanRain, Inc.</organization>
       <address>
       	<postal>
@@ -45,8 +45,21 @@
       </address>
     </author>
 
-    <author initials='B.F' surname="Fitzpatrick"
-            fullname='Brad Fitzpatrick'>
+    <author initials="D.H" surname="Hardt" fullname="Dick Hardt">
+      <organization abbrev="Sxip">Sxip Identity Corporation</organization>
+      <address>
+      	<postal>
+      	  <street>798 Beatty Street</street>
+      	  <city>Vancouver</city> <region>BC</region>
+      	  <code>V6B 2M1</code>
+      	  <country>Canada</country>
+      	</postal>
+    	<email>dick@sxip.com</email>
+      </address>
+    </author>
+
+    <author initials="B.F" surname="Fitzpatrick"
+            fullname="Brad Fitzpatrick">
       <organization abbrev="Six Apart">Six Apart, Ltd.</organization>
       <address>
       	<postal>
@@ -59,7 +72,7 @@
       </address>
     </author>
 
-    <date month="June" year="2006"/>
+    <date month="August" year="2006"/>
 
     <abstract>
       <t>
@@ -666,6 +679,11 @@ error:This is an example message
 
               The IdP MAY add additional keys to the response.
             </t>
+            <t>
+              The particular wire format of these messages will depend
+              on whether they are responses to direct or indirect
+              queries.
+            </t>
           </section>
         </section>
       </section>
@@ -700,6 +718,7 @@ error:This is an example message
             to the query string, as specified in <xref
             target="queries" />.
           </t>
+          <t>This method is deprecated as of OpenID version 2.0.</t>
         </section>
 
         <section title="HTML FORM Redirection">
@@ -813,37 +832,101 @@ error:This is an example message
         <t>
           Successful authentication messages from the Identity
           Provider to the Relying Party MUST be cryptographically
-          signed. The signed information is a subset of the mapping of
-          keys to values as specified in <xref target="formats"
-          />. A signed message contains of a list of signed fields, an
-          association handle, and a signature. The algorithm for
-          generating the signature depends on the type of association.
+          signed. 
         </t>
 
         <t>
-          To compute the signature from an association, an ordered
-          list of signed fields and a set of query parameters:
-
-          <list style="numbers">
-            <t>
-              Iterate
-              over the list of signed fields in order, taking the
-              field name as the key. For each key, find the value in
-              the query parameters whose key is equal to the field
-              name prefixed with "openid.".
-            </t>
-            <t>
-              Generate a <xref target="kvform">Key-Value Form
-              string</xref> with the pairs in the order that they
-              appear in the sequence of key-value pairs.
-            </t>
-            <t>
-              Generate the signature by evaluating the keyed message
-              digest function specified by the association on the
-              resulting Key-Value Form string.
-            </t>
-          </list>
+          Signing a message is a two-phase process. The first phase is
+          converting the response into an octet string to sign. The
+          second phase is generating a signature for that octet
+          string. The precise algorithm used for each phase depends on
+          the type of association being used.
         </t>
+
+        <t>
+          There are two algorithms for each phase that an IdP SHOULD
+          support. The two algorithms for converting the response to
+          an octet string are an algorithm with a list of signed
+          parameters, and an algorithm that signs all parameters. The
+          two algorithms for signing the generated octet string are
+          HMAC-SHA1 and HMAC-SHA256. Other algorithms for either phase
+          may be defined by extensions and used by Relying Parties and
+          IdPs which support them.
+        </t>
+
+        <section title="Signed List Algorithm" anchor="signed_list">
+
+          <t>
+            When using this algorithm to create an octet string, the
+            signed information is a subset of the mapping of keys to
+            values as specified in <xref target="formats" />. A signed
+            message contains of a list of signed fields, an association
+            handle, and a signature. The algorithm for generating the
+            signature depends on the type of association.
+          </t>
+
+          <t>
+            To compute the signature from an association, an ordered
+            list of signed fields and a set of query parameters:
+
+            <list style="numbers">
+              <t>
+                Iterate over the list of signed fields in order,
+                taking the field name as the key. For each key, find
+                the value in the query parameters whose key is equal
+                to the field name prefixed with "openid.".
+              </t>
+              <t>
+                Generate a <xref target="kvform">Key-Value Form
+                string</xref> built from the (field name, value) pairs
+                in the order that they appear in the sequence of
+                key-value pairs. (This results in the "openid." prefix
+                being stripped off the the keys from the original
+                message.)
+              </t>
+              <t>
+                Generate the signature by evaluating the keyed message
+                digest function specified by the association on the
+                resulting Key-Value Form string.
+              </t>
+            </list>
+          </t>
+
+        </section>
+
+        <section title="Sign-All Algorithm" anchor="sign_all">
+
+          <t>
+            When using this algorithm to create an octet string, the
+            signed information is the mapping of keys to values as
+            specified in <xref target="formats" />. A signed message
+            contains an association handle and a signature. The
+            algorithm for generating the signature depends on the type
+            of association.
+          </t>
+
+          <t>
+            To compute the signature from an association and a set of
+            query parameters:
+
+            <list style="numbers">
+              <t>
+                Generate a <xref target="kvform">Key-Value Form
+                string</xref> built from all the (key, value) pairs in
+                the message sorted in byte order.  (Unlike the Signed
+                List Algorithm, this doesn't result in the "openid."
+                prefixes being stripped off the keys in this format.)
+              </t>
+              <t>
+                Generate the signature by evaluating the keyed message
+                digest function specified by the association on the
+                resulting Key-Value Form string.
+              </t>
+            </list>
+          </t>
+
+        </section>
+
       </section>
 
       <section title="Association Handles">
@@ -882,11 +965,32 @@ error:This is an example message
           <t>
             HMAC-SHA1 associations have the association type
             "HMAC-SHA1". The size of the MAC key for HMAC-SHA1
-            associations is 160 bits.
+            associations is 160 bits. These associations use the
+            signed list method to generate the octet string to sign.
           </t>
         </section>
 
-        <section title="HMAC-SHA256 Associations" anchor="hmacsha256">
+        <section title="HMAC-SHA1-SIGNALL Associations" anchor="hmacsha1signall">
+          <figure>
+            <preamble>
+              An association of type HMAC-SHA1-SIGNALL
+              (<xref target="RFC2104" />, <xref target="RFC3174" />) 
+              uses the following algorithm to compute a signature of the
+              message:
+            </preamble>
+            <artwork>
+  HMAC-SHA1(MAC key, Key-Value Form message)
+</artwork>
+          </figure> 
+          <t>
+            HMAC-SHA1 sign-all associations have the association type
+            "HMAC-SHA1-SIGNALL". The size of the MAC key for HMAC-SHA1
+            associations is 160 bits. These associations use the
+            sign-all method to generate the octet string to sign.
+          </t>
+        </section>
+
+        <section title="HMAC-SHA256-SIGNALL Associations" anchor="hmacsha256signall">
           <figure>
             <preamble>
               An association of type HMAC-SHA256 
@@ -900,10 +1004,13 @@ error:This is an example message
           </figure>
           <t>
             HMAC-SHA256 associations have the association type
-            "HMAC-SHA256". The size of the MAC key for HMAC-SHA1
-            associations is 256 bits.
+            "HMAC-SHA256-SIGNALL". The size of the MAC key for
+            HMAC-SHA1 associations is 256 bits. These associations
+            use the sign-all method to generate the octet string to
+            sign.
           </t>
         </section>
+
       </section>
 
       <section title="Association Sessions">
@@ -1303,6 +1410,20 @@ Base 10 number | btwoc string representation
         <t>
           <list style='symbols'>
             <t>
+              openid.ns
+              <list style='empty'>
+                <t>
+                  Value: "http://openid.net/signon/2.0"
+                </t>
+                <t>
+                  Note: This defines the interpretation of the openid
+                  arguments without a namespace.  To be an OpenID 2.0
+                  request, the given value must be present.
+                </t>
+              </list>
+            </t>
+
+            <t>
               openid.mode
               <list style='empty'>
                 <t>
@@ -1327,8 +1448,9 @@ Base 10 number | btwoc string representation
                   available, otherwise the Claimed Identifier
                 </t>
                 <t>
-                  Note: The IdP MAY choose an identifier
-                  that belongs to the End User if this is not supplied.
+                  Note: The IdP MAY choose an identifier that belongs
+                  to the End User if this is set to the special value
+                  "http://openid.net/identifier_select/2.0".
                 </t>
               </list>
             </t>
@@ -1508,6 +1630,20 @@ Base 10 number | btwoc string representation
 
           <list style='symbols'>
             <t>
+              openid.ns
+              <list style='empty'>
+                <t>
+                  Value: "http://openid.net/signon/2.0"
+                </t>
+                <t>
+                  Note: This defines the interpretation of the openid
+                  arguments without a namespace.  To be an OpenID 2.0
+                  response, the given value must be present.
+                </t>
+              </list>
+            </t>
+
+            <t>
               openid.mode
               <list style='empty'>
                 <t>Value: "id_res"</t>
@@ -1592,11 +1728,19 @@ Base 10 number | btwoc string representation
             <t>
               openid.signed
               <list style='empty'>
-                <t>Value: Comma-separated list of signed fields.</t>
                 <t>
-                  Note: Fields without the "openid." prefix that the
+                  Value: (optional) Comma-separated list of signed
+                  fields.
+                </t>
+                <t>
+                  Note: If the association used to sign this response
+                  used the Signed-List algorithm, this MUST be
+                  present.  If it is present, this entry consists of
+                  the fields without the "openid." prefix that the
                   signature covers. This list MUST contain at least
-                  "identity", "return_to", and "nonce". For example,
+                  "return_to" and "nonce". Additionally, if the server
+                  is making an assertion about an identifier, the
+                  identity field MUST be present. For example,
                   "identity,return_to,nonce".
                 </t>
               </list>
@@ -1651,19 +1795,21 @@ Base 10 number | btwoc string representation
             Identifier that will be used and the information in the
             assertion MUST match the discovered information. When the
             Claimed Identifier was not present in the request
-            ("openid.identity" was not sent), the Relying Party MUST
-            perform discovery on the identifier in the response to
-            make sure that the IdP is authorized to make assertions
-            about the identifier.
+            ("openid.identity" was
+            "http://openid.net/identifier_select/2.0"), the Relying
+            Party MUST perform discovery on the identifier in the
+            response to make sure that the IdP is authorized to make
+            assertions about the identifier.
           </t>
 
           <t>
             To prevent replay attacks, the Relying Party SHOULD keep
             track of the nonce values included in positive assertions
-            and never accept the same value more than once for the same
-            association. The Relying Party MAY use the time-stamp to
-            reject responses that are too old, limiting the amount of
-            time that nonces must be stored to prevent replays.
+            and never accept the same value more than once for the
+            same association. The Relying Party MAY use the time-stamp
+            to reject responses that are outside of a range it has
+            chosen as accpetable, limiting the amount of time that
+            nonces must be stored to prevent replays.
           </t>
 
         </section>
@@ -1681,9 +1827,9 @@ Base 10 number | btwoc string representation
           <section title="Verifying with an Association" toc="exclude">
             <t>
               The Relying Party follows the same procedure that the
-              IdP followed in <xref target= "generating_signatures"
-              >generating the signature</xref>, and then compares
-              the signature in the response to the signature it
+              IdP followed in <xref target= "generating_signatures">
+              generating the signature</xref>, and then compares the
+              signature in the response to the signature it
               generates. If the signatures do not match, the assertion
               is invalid.
             </t>
@@ -1703,11 +1849,7 @@ Base 10 number | btwoc string representation
 
             <t>
               When the IdP is verifying the signature, the
-              "openid.mode" value MUST be changed to "id_res". The
-              "openid.signed" value MUST contain at least the values
-              specified for the "openid.signed" field in an
-              authentication request (<xref
-              target="positive_assertions" />).
+              "openid.mode" value MUST be changed to "id_res".
             </t>
 
             <t>
@@ -1748,19 +1890,8 @@ Base 10 number | btwoc string representation
                   </t>
 
                   <t>
-                    Exact copies of the following fields from the
-                    assertion (if present):
-
-                    <list style="symbols">
-                      <t>"openid.assoc_handle"</t>
-                      <t>"openid.sig"</t>
-                      <t>"openid.signed"</t>
-                      <t>"openid.invalidate_handle"</t>
-                      <t>All fields that appear in "openid.signed"</t>
-                    </list>
-
-                    Regardless of whether "mode" is in the signed list,
-                    send "check_authentication".
+                    Exact copies of all fields from the id_res
+                    response, except for "openid.mode".
                   </t>
                 </list>
               </t>
