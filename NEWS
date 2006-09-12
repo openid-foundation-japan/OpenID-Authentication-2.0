@@ -1,0 +1,359 @@
+.. -*- rst -*-
+
+.. sectnum::
+
+.. header::
+   :Author: Josh Hoyt
+   :Company: JanRain, Inc.
+   :Date: 11 Sept 2006
+
+Changes from OpenID 1.X to 2.0
+==================================================
+
+The OpenID 2.0 Authentication protocol is intended to be an
+incremental improvement that provides features to support use cases
+that are not covered by the OpenID 1.X protocol. It is intended to
+retain the simplicity and pragmatism that makes OpenID 1.X
+compelling. OpenID 2.0 is intended to be backwards-compatible in as
+many cases as possible to OpenID 1.X, as deployed.
+
+.. contents::
+   :depth: 2
+
+Proposals in Draft 9
+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+These proposed changes to the OpenID 1.X protocol have been included
+in draft 9 of the OpenID Authentication 2.0 specification.
+
+XRI Support
+--------------------------------------------------
+
+XRI is a new Internet-wide identifier scheme that mixes well with URIs
+and is designed to be more user-friendly. 
+
+Motivating Use Cases
+..................................................
+
+URLs are DNS-based. When URLs are used as persistent identifiers, the
+expiration of domain names allows someone who buys a domain name to
+assume any identities that are tied to that domain name. XRI has
+protection against this kind of failure.
+
+Proposed Implementation
+..................................................
+
+The discovery phase of OpenID authentication now includes XRI
+resolution as a mechanism for obtaining the IdP Endpoint URL and
+OpenID delegate identifier, instead of the HTML-based discovery from
+OpenID 1.X. Since XRI resolution libraries are not yet commonly
+deployed, a proxy XRI resolver is available to OpenID relying parties
+to ease deployment.
+
+See Also
+..................................................
+
+http://en.wikipedia.org/wiki/I-name
+
+http://inames.net/
+
+
+
+Yadis Support
+--------------------------------------------------
+
+Yadis is a discovery mechanism that was designed for specifying
+services related to a HTTP or HTTPS URI.
+
+Motivating Use Cases
+..................................................
+
+Yadis allows for specifying multiple OpenID servers for a given URL,
+as well as for specifying capabilities of each server. Yadis discovery
+allows for specifying priorities for each server. It is easily
+extensible, making it easy for OpenID service discovery to coexist
+with other service discovery.
+
+Yadis discovery also allows arbitrary content to be located at the
+OpenID Identifier URL (not just HTML).
+
+Proposed Implementation
+..................................................
+
+Yadis discovery is performed, and when it fails, the Relying Party
+falls back to HTML-based discovery (as in OpenID 1.X). Yadis uses the
+same file format as XRI resolution, and will eventually become a
+section of the XRI resolution specification.
+
+See Also
+..................................................
+
+http://www.openidenabled.com/yadis/yadis-notes/
+
+http://yadis.org/
+
+
+
+IdP-driven Identifier Selection
+--------------------------------------------------
+
+IdP-driven Identifier selection allows the IdP to choose what
+identifier to return to the Relying Party, rather than replying "yes"
+or "no" for a *given* identifier. This mechanism is based on ideas
+from the SXIP 1.0 and DIX protocols.
+
+Motivating Use Cases
+..................................................
+
+IdP-driven identifier selection allows for single-sign-on with
+"directed identity." When using directed identity, a user chooses from
+a set of identifiers that are not correlated with each other, so that
+they can retain as much anonymity as they desire while gaining the
+benefit of single-sign-on.
+
+Proposed Implementation
+..................................................
+
+When initiating an OpenID authentication request, the user may enter
+either his own identifier or an identifier of an IdP. If he enters an
+IdP identifier, the authentication request is made to that IdP
+endpoint without asking for a particular identifier, and the IdP may
+make an assertion about any identifier for which it is
+authoritative. An IdP Endpoint is authoritative for any identifier
+that lists it as a service (through any of the available discovery
+mechanisms). The relying party must independently verify that the IdP
+endpoint is, in fact, authorized to make assertions about the returned
+identifier.
+
+See Also
+..................................................
+
+http://en.wikipedia.org/wiki/Laws_of_Identity (number 4)
+
+
+Optional Identifier in Assertion
+--------------------------------------------------
+
+In OpenID 1.X, the identifier was the only information that the
+assertion could contain. In OpenID 2.0, the assertion can contain
+additional information, so the identifier is not required to be in
+responses where it makes sense to leave it out.
+
+Motivating Use Cases
+..................................................
+
+When a Relying Party needs not identify a particular user but just
+wants some information about that user, such as demographic
+information, it promotes privacy to allow the response to be free of
+an identifier.
+
+Proposed Implementation
+..................................................
+
+The assertion may not contain an identifier. It is up to the protocol
+user to determine whether this kind of assertion is useful.
+
+
+HTML Form-Based Redirection
+--------------------------------------------------
+
+OpenID 1.X communicates through the User-Agent via HTTP
+redirects. When both the Relying Party and the IdP are using the 
+OpenID 2.0 protocol, they communicate through generating HTML forms 
+that submit to the other party in the communication. This is the 
+mechanism that SXIP and DIX uses for transmitting data through the 
+User Agent.
+
+Motivating Use Cases
+..................................................
+
+Using redirects limits the size of the data that can be transferred to
+what can reasonably fit in a URL. Because the URLs must be able to be
+handled by unknown software (proxies, arbitrary user agents, etc.),
+long URLs can cause data loss or transaction failures. The size of
+data that can be transmitted via encoding into HTML forms is limited
+only by time and bandwidth requirements.
+
+Proposed Implementation
+..................................................
+
+To send data via HTML form POST, a HTML page is sent to the user's
+browser with an action URL pointing to the recipient of the
+message. The sender of the message may also include a script in the
+HTML that automates the submission of the form as a convenience for
+the end user.
+
+
+HMAC-SHA1-SIGNALL, HMAC-SHA256-SIGNALL Associations
+---------------------------------------------------
+
+An association that use HMAC-SHA256 to generate message 
+authentication codes (signatures) for protocol messages has been
+added.  
+
+The new asociations (\*-SIGNALL) use a sign-all algorithm that signs
+all key value pairs.
+
+Motivating Use Cases
+..................................................
+
+HMAC-SHA256 was a recommendation of security review.   Signing 
+all key values pairs allows the signature to cover all fields.
+
+Proposed Implementation
+..................................................
+
+HMAC-SHA256 associations are identical to HMAC-SHA1 associations,
+except that they use a different keyed MAC algorithm to generate
+signatures. Because the key length is different, an additional
+association session type, DH-SHA256, is also necessary.
+
+The new sign-all algorithm generates a Key-Value Form string 
+(Key-Value Form Encoding) built from all the (key, value) pairs 
+in the message sorted in byte order.
+
+
+Association Negotiation
+--------------------------------------------------
+
+Association negotiation provides a way for an IdP and RP to agree on
+an association type and an association session type.
+
+Motivating Use Cases
+..................................................
+
+Association negotiation provides an explicit way to reply negatively
+to an association request without protocol failure. It also increases
+the chance that associations will work by allowing the IdP to suggest
+trying another association type or session type.
+
+Proposed Implementation
+..................................................
+
+A reply type was added to the associate request that specifies that
+the requested association type or association session type is not
+supported by the IdP. In this response, the IdP may indicate supported
+association and session types, or omit them to refuse to create
+associations at all.
+
+
+Extensions
+--------------------------------------------------
+
+Extensions are additional data added to OpenID protocol messages that
+contain data about the user or the request. For example, the simple
+registration extension supports returning user data such as e-mail
+address to the relying party.
+
+Extensions allow for innovation on top of the OpenID Authentication
+protocol without needing to revise the base specification. This keeps
+the specification simple without limiting its flexibility.
+
+Motivating Use Cases
+..................................................
+
+The primary motivation for extensions has been to add support for
+requesting user profile data using the OpenID Authentication protocol.
+
+Extensions may also be used for supplying additional information with
+a request or response.
+
+Proposed Implementation
+..................................................
+
+Extensions add data to OpenID protocol messages. The data for each
+extension is namespaced in way similar to XML namespaces, with each
+namespace being identified by a URI. An extension specification must
+define the meaning of the data that is passed with each OpenID
+message.
+
+
+Nonce and Time stamp
+--------------------------------------------------
+
+OpenID 2.0 adds a nonce and time stamp to successful authentication
+assertions.
+
+Motivating Use Cases
+..................................................
+
+Unless additional precautions are undertaken, OpenID 1.0 messages may
+be freely replayed. The addition of a nonce and time stamp makes
+messages unique, which means that relying parties can refuse to accept
+the same message more than once.
+
+Proposed Implementation
+..................................................
+
+The IdP generates a unique nonce/time stamp pair for each successful
+authentication assertion. The relying party verifies that it has not
+seen an assertion with the given nonce and time stamp from the IdP.
+
+
+RFC3986 URI Normalization
+--------------------------------------------------
+
+OpenID 2.0 protocol initiation uses the rules from the URI syntax
+specification (RFC3986) to prevent some equivalent identifiers from
+appearing to be different.
+
+OpenID 1.X specified a minimal form of normalization that does not
+cover as many cases as RFC 3986.
+
+Motivating Use Cases
+..................................................
+
+Certain cases of equivalent URLs appearing to be different, such as
+standard ports appearing in URLs, have occurred in the wild. Better
+normalization reduces the number of such cases.
+
+Proposed Implementation
+..................................................
+
+Where OpenID 1.X specified its own normalization scheme, OpenID 2.0
+specifies RFC3986 normalization. When fetching an identifier URL
+results in a redirect, the OpenID 2.0 specification retains the
+behavior of OpenID 1.0 and uses the resulting URL (after following all
+redirects) as the user's identifier.
+
+
+
+New Recommended Form Field Name in Initiation
+--------------------------------------------------
+
+The field in the form that is used for protocol initiation on the
+relying party has changed to reflect the fact that the identifier is
+not necessarily a URL.
+
+Motivating Use Cases
+..................................................
+
+XRI support means that calling the field "openid_url" is misleading.
+
+Proposed Implementation
+..................................................
+
+Initiation forms should use the field name "openid_identifier" rather
+than "openid_url" as OpenID 1.0 recommended.
+
+
+Base Namespace
+--------------------------------------------------
+
+Allow explicit declaration of how to interpret an OpenID message
+
+Motivating Use Cases
+..................................................
+
+Currently, OpenID requests are backwards-compatible. If a change
+required incompatible changes to the message, declaring a namespace
+would allow the party interpreting the message to be able to determine
+the intended meaning of the parameters.
+
+Proposed Implementation
+..................................................
+
+openid.ns will have the value of "http://openid.net/signon/2.0" for 
+OpenID 2.0 messages.
+
+
