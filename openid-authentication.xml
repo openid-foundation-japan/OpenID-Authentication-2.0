@@ -1742,13 +1742,23 @@ Base 10 number | btwoc string representation
       
       <section title="Checking the Nonce">
         <t>
-          To prevent replay attacks, the Relying Party SHOULD keep
-          track of the nonce values included in positive assertions
-          and never accept the same value more than once for the
-          same IdP Endpoint URL. The Relying Party MAY use the time-stamp
-          to reject responses that are outside of a range it has
-          chosen as accpetable, limiting the amount of time that
-          nonces must be stored to prevent replays.
+          To prevent replay attacks, the agent checking the signature
+          SHOULD keep track of the nonce values included in positive
+          assertions and never accept the same value more than once
+          for the same IdP Endpoint URL. When using
+          "check_authentication", the IdP is responsible for
+          preventing replay attacks. When the Relying Party checks the
+          signature on an assertion, it is responsible for preventing
+          replay attacks.
+        </t>
+        <t>
+          The time-stamp may be used to reject responses that are too
+          far away from the current time, limiting the amount of time
+          that nonces must be stored to prevent replays. The
+          acceptable range is implementation dependent. A larger range
+          requires storing more nonces for a longer time. A shorter
+          range increases the chance that clock-skew and transaction
+          time will cause a spurious rejection.
         </t>
       </section>
 
