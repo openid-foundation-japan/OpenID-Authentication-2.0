@@ -1217,8 +1217,8 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            The MAC key sent by the IdP MUST be the same length as the
-            signature algorithm for this association.
+            The MAC key sent by the IdP MUST be the length specified
+            for this association in <xref target="sign_algos" />.
           </t>
 
         </section>
