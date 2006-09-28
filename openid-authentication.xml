@@ -593,7 +593,7 @@ Base 10 number | btwoc string representation
 
         <section title="Sign-All Algorithm" anchor="sign_all" toc="exclude">  
           <t>
-            The input to the Sign-All Algoritm is the message to be signed.
+            The input to the Sign-All Algorithm is the message to be signed.
           </t>
           <t>
             To compute the list of key/value pairs to be signed, sort
@@ -766,7 +766,7 @@ Base 10 number | btwoc string representation
         <section title="XRDS-Based Discovery">
           <t>
             If XRI or Yadis discovery was used, the result will be and
-            XRDS Document.  Thisis an XML document with
+            XRDS Document.  This is an XML document with
             entries for services that are related to the identifier.
             <!-- It is defined in <eref target=""></eref> -->.
           </t>
@@ -960,7 +960,7 @@ Base 10 number | btwoc string representation
               <t>openid.assoc_type 
                 <list style="empty">
                   <t> The preferred association type.  The association
-                    type defines the algorigthm to be used to sign
+                    type defines the algorithm to be used to sign
                     subsequent messages.</t>
                   <t> Value: A valid association type from <xref
                   target="assoc_types"/></t>
@@ -1203,7 +1203,7 @@ Base 10 number | btwoc string representation
                  toc="exclude">
           <t>
             In a "no-encryption" association session, the IdP sends
-            the association MAC key in plaintext to the Relying Party.
+            the association MAC key in plain-text to the Relying Party.
             This makes it possible for an eavesdropper to intercept
             the key, and forge messages to this Relying Party.
             Therefore, no-encryption association sessions SHOULD NOT
@@ -1491,7 +1491,7 @@ Base 10 number | btwoc string representation
         If no Identifier was specified in the request and there are
         Identifiers in the control of the End User, the IdP SHOULD
         allow the End User to choose which Identifier to use.  If an
-        Identifier was specified, the IdP SHOUD only issue assertions
+        Identifier was specified, the IdP SHOULD only issue assertions
         about the specified Identifier.
       </t>
       <t>
@@ -2084,7 +2084,7 @@ Base 10 number | btwoc string representation
           <t>
             SSL with certificates signed by a trusted authority
             prevents these kinds of attacks by verifying the results
-            of the DNS lookup against the certificate. Once the
+            of the DNS look-up against the certificate. Once the
             validity of the certificate has been established,
             tampering is not possible. Impersonating an SSL server
             requires forging or stealing a certificate, which is
