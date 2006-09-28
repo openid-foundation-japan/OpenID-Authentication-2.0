@@ -77,8 +77,8 @@
     <abstract>
       <t>
         OpenID Authentication provides a way to prove that an End User
-        owns an Identifier. It does this without passing around a
-        password, email address, or other sensitive information.
+        owns an Identifier. It does this without the Relying Party needing 
+        access to password, email address, or other sensitive information.
       </t>
 
       <t>
@@ -97,9 +97,15 @@
       </t>
 
       <t>
-        Extensions built on top of the foundation created by OpenID
-        Authentication provide a mechanism for exchanging arbitrary
-        End User-related data.
+        OpenID uses only standard HTTP requests and responses, so does
+        not require any special capabilities of the User-Agent or
+        other software.
+      </t>
+
+      <t>
+        The exchange of profile information, and other features not
+        covered in this specification, is addressed through additional
+        Service Types built on top of OpenID.
       </t>
     </abstract>
   </front>
@@ -116,15 +122,15 @@
       <t>
     <list style="hanging">
       <t hangText="End User:">
-        The person who wants to prove ownership of an Identifier to a
-        Relying Party.
+        The person who wants to prove ownership of an Identifier.
       </t>
 
       <t hangText="Identifier:">
         An Identifier is a URL or <eref
         target="http://www.oasis-open.org/committees/download.php/15376"
-        >XRI</eref>. The OpenID Authentication
-        protocol proves that an End User owns a URL or XRI.
+        >XRI</eref>.  An "Identifier" may be a Claimed Identifier,
+        Delegate Identifier, IdP Identifier, or Verified Identifier,
+        depending on context.
       </t>
 
       <t hangText="Claimed Identifier:">
@@ -135,6 +141,11 @@
       <t hangText="Verified Identifier:">
         An Identifier that the End User has proven to a Relying Party
         that they own.
+      </t>
+
+      <t hangText="Delegate Identifier:">
+        An alternate Identifier that can be included in the discovery
+        response. 
       </t>
 
       <t hangText="Relying Party:">
@@ -155,464 +166,199 @@
       <t hangText="User-Agent:">
         The End User's Web browser. See <xref target="RFC2616"/>.
       </t>
+      <t hangText="Diffie-Hellman Key Exchange:">
+         Diffie-Hellman Key Exchange is a protocol that allows two
+         parties to share a secret, while preventing eavesdroppers
+         from learning the secret.
+      </t>  
+
     </list>
       </t>
     </section>
 
-    <section title="Overview">
+    <section title="Protocol Overview">
 
       <t>
-        The OpenID Authentication protocol provides a way to prove
-        that an End User owns an Identifier. In essence, the protocol
-        allows a service to proxy its authentication decisions to
-        another service specified by the End User. OpenID uses only
-        standard HTTP requests and responses, so does not require any
-        special capabilities of the User-Agent or other software.
+        <list style="numbers">
+          <t>
+            The End User <xref target="initiation">initiates
+            authentication</xref> by supplying and Identifier to the
+            Relying Party. 
+          </t>
+          <t>
+            The Relying Party <xref target="discovery">performs
+            discovery</xref> on the Identifier and establishes the
+            location of the service that the End User uses for
+            authentication.
+          </t>
+          <t>
+            (optional) 
+
+            The Relying Party and the IdP establish an <xref
+            target="associations">association</xref> -- a shared secret
+            established using Diffie-Hellman key exchange.
+            Associations are used to sign subsequent messages and to
+            verify those messages.
+          </t>
+          <t>
+            The Relying Party redirects the End-User to the IdP
+            with an OpenID <xref
+            target="requesting_authentication">authentication
+            request</xref>.
+          </t>
+          <t>
+            The IdP establishes whether the End User is authorized
+            to perform OpenID authentication and wishes to do
+            so. 
+          </t>
+          <t>
+            The IdP sends the End User back to the Relying Party with
+            an indication either that <xref
+            target="positive_assertions">authentication is
+            approved</xref> or <xref
+            target="negative_assertions">authentication failed</xref>.
+          </t>
+          <t>
+            The Relying Party <xref
+            target="verification">verifies</xref> the information
+            received from the IdP.
+           </t>
+         </list>
       </t>
-
-      <t>
-        The End User initiates the protocol by providing either a
-        Claimed Identifier or an IdP Identifier. If an IdP Identifier
-        is provided, the IdP MAY assist the End User in selecting an
-        identifier. For example, the IdP might automatically generate
-        a different Identifier for each different Relying Party so
-        that the End User cannot be tracked across different sites.
-      </t>
-
-      <section title="Protocol Flow">
-        <t>
-          <list style="numbers">
-            <t>
-              The End User <xref target="initiation">initiates
-              authentication</xref> by supplying a Claimed Identifier
-              or IdP Identifier to the Relying Party. The
-              Relying Party <xref target="discovery">performs
-              discovery</xref> on the End User-provided identifier and
-              establishes the location of the service that the End User
-              uses for authentication.
-            </t>
-
-            <t>
-              (optional)
-
-              The Relying Party and IdP exchange information on how to
-              cryptographically sign the request and responses. This
-              information is referred to as an "association." <xref
-              target="associations">OpenID associations</xref> consist
-              of a "handle," which is an identifier for the
-              association, an "association type," and the data that is
-              needed by that association type for signing and
-              verifying signatures.
-            </t>
-
-            <t>
-              The Relying Party sends the End User to the IdP
-              with an OpenID <xref
-              target="requesting_authentication">authentication
-              request</xref>.
-            </t>
-
-            <t>
-              The IdP establishes whether the End User is authorized
-              to perform OpenID authentication and wishes to do
-              so. Depending on the form of the request, the IdP may be
-              able to interact with the End User in order to establish
-              that they are authorized to approve OpenID
-              authentication.
-            </t>
-
-            <t>
-              The IdP sends the End User back to the Relying Party
-              with a signed assertion if the <xref
-              target="positive_assertions">authentication is
-              approved</xref> or an indication that OpenID <xref
-              target="negative_assertions">authentication
-              failed</xref> if it was not approved.
-            </t>
-          </list>
-        </t>
-      </section>
     </section>
 
-    <section title="Initiation and Discovery">
-      <t>
-        The OpenID Authentication protocol starts with an End User
-        submitting an <xref target="identifying">Identifier</xref> to
-        the Relying Party. The Relying Party examines the user input,
-        normalizes it, and performs discovery based on the normalized
-        identifier. After successful discovery, the Relying Party has
-        sufficient information to submit an authentication request to
-        an IdP (see <xref target="requesting_authentication" />).
-      </t>
-
-      <section title="Initiation" anchor="initiation">
-        <t>
-          To initiate OpenID Authentication, the Relying Party SHOULD
-          present the End User with a form that has a field for
-          entering a Claimed Identifier or an IdP's Identifier.  It is
-          RECOMMENDED that every Relying Party places the <eref
-          target='http://openid.net/login-bg.gif'>OpenID logo</eref>
-          at the beginning of the form field where the End User enters
-          their Identifier. The form field's "name" attribute SHOULD
-          have the value "openid_identifier" so that User-Agents can
-          auto-complete the End User's Identifier.
-        </t>
-
-        <t>
-          The End User's input MUST be normalized into an
-          Identifier. If the End User supplies input that does not
-          include a scheme (http, https, or xri), then the application
-          needs to determine if the input is an XRI or a URL missing
-          the "http://". To do so, the application SHOULD examine the
-          first character of the input. If it is an XRI Global Context
-          Symbol (<xref target="XRI Syntax 2.0">Section 2.2.1.1 of XRI
-          Syntax</xref>), then the input SHOULD be treated as an
-          XRI<!-- convert the XRI to URI normal form? -->. If it is
-          not, then the input SHOULD be treated as an http URL, and
-          prefixed with the string "http://".
-        </t>
-
-        <t>
-          URL identifiers MUST be further normalized by applying the
-          rules in section 6 of RFC 3986, following redirects when
-          retrieving their content, and finally applying the rules in
-          section 6 of RFC 3986 (Normalization and Comparison) to the
-          final destination URL.
-        </t>
-      </section>
-
-      <section title="Discovery" anchor="discovery">
-        <t>
-          Discovery consists of taking a Claimed Identifier or IdP
-          Identifier and extracting the necessary information for
-          initiating authentication. OpenID has three paths through
-          which to do discovery. If the identifier is an XRI, <eref
-          target="http://www.oasis-open.org/committees/download.php/17293"
-          >XRI resolution</eref> will yield an XRDS document that
-          contains the necessary information. If it is a URL, the
-          <xref target="Yadis">Yadis protocol</xref> is first
-          attempted. If it succeeds, the result is again an XRDS
-          document. If the Yadis protocol fails, the URL is retrieved
-          and HTML-based discovery is attempted on the content located
-          by the URL.
-        </t>
-
-        <section title="Delegating Authentication"
-                 anchor="delegating_authentication">
-          <t>
-            A "Delegate Identifier" is an alternate Identifier that
-            can be included in the discovery response. When it is
-            present, the Relying Party requests authentication using
-            that identifier rather than the Claimed Identifier. Upon
-            successful authentication, the Relying Party recognizes
-            the End User using the Claimed Identifier. This mechanism
-            is called Delegation.
-          </t>
-
-          <t>
-            Delegation allows the End User to use a URL or XRI as an
-            Identifier without having to perform any configuration
-            other than specifying what should be returned by
-            discovery. This allows a broad range of URLs and XRIs to
-            be used. Delegation allows an End User to keep the same
-            Identifier over many years, even as services come and go;
-            they'll just keep changing the IdP Endpoint URL and
-            Delegate Identifier.
-          </t>
-        </section>
-
-        <section title="Discovered Information">
-          <t>
-            Upon successful completion of discovery, the Relying
-            Party will have the following information:
-
-            <list style="hanging">
-              <t hangText="IdP Endpoint URL:">
-                The URL that accepts authentication requests. This
-                MUST be an absolute URL.
-              </t>
-
-              <t hangText="Claimed Identifier:">
-                (optional) The normalized Identifier upon which
-                discovery was performed. The Claimed Identifier is
-                present unless the End User enters an IdP's
-                Identifier. The discovery process allows a Relying
-                Party to differentiate the two kinds of identifiers by
-                supplying different information in response to the
-                discovery request.
-              </t>
-
-              <t hangText="Delegate Identifier:">
-                (optional) The Identifier that should be sent in the
-                authentication request to the IdP. The Delegate
-                Identifier can only be present when the End User
-                enters a Claimed Identifier.
-              </t>
-            </list>
-          </t>
-        </section>
-
-        <section title="Using Yadis or XRI Resolution">
-          <t>
-            If a URL is supplied, the Relying Party MUST attempt the
-            Yadis protocol on that URL. The Yadis protocol and XRI
-            resolution both yield an XRDS document. This is an XML
-            document with entries for services that are related to the
-            identifier.
-          </t>
-
-          <t>
-            Once the Relying Party has obtained an XRDS document, it
-            MUST first check for an &lt;xrd:Service&gt; element
-            describing an IdP Endpoint. If no IdP Endpoint is found,
-            it MUST check for an &lt;xrd:Service&gt; element
-            describing a Claimed Identifier. <!-- XXX: unclear
-            wording, as the Service element we're attempting to refer
-            to here does in fact have the URI of the IdP
-            Endpoint. --><!-- XXX: fallback, round-robin,
-            etc... Hopefully the Yadis and XRI Resolution specs can
-            shoulder most of this. -->
-          </t>
-
-          <section title="IdP Identifiers" toc="exclude">
-            <t>
-              If the entered Identifier is an IdP
-              Identifier, the OpenID information is contained in a
-              service element with the following information:
-
-              <list style="symbols">
-                <t>An &lt;xrd:Type&gt; tag whose text content is
-                "http://openid.net/server/2.0"</t>
-
-                <t>An &lt;xrd:URI&gt; tag whose text content is The
-                IdP Endpoint URL</t>
-              </list>
-            </t>
-          </section>
-
-          <section title="Claimed Identifiers" toc="exclude">
-            <t>
-              If the entered Identifier is a Claimed
-              Identifier, the remaining OpenID information is contained
-              in a &lt;xrd:Service&gt; element with the following
-              information:
-
-              <list style="hanging">
-                <t>An &lt;xrd:Type&gt; tag whose text content is
-                "http://openid.net/signon/2.0"</t>
-
-                <t>An &lt;xrd:URI&gt; tag whose text content is the
-                IdP Endpoint URL</t>
-
-                <t>An &lt;openid:Delegate&gt; tag (optional) whose text
-                content is The Delegate Identifier</t>
-              </list>
-
-              The "openid" namespace is
-              "http://openid.net/signon/2.0". The "xrd" namespace is
-              "xri://$xrd*($v*2.0)".
-            </t>
-
-            <t>
-              For compatibility with deployed code, it is RECOMMENDED
-              that a Relying Party also accept
-              "http://openid.net/signon/1.0" for the value of
-              &lt;xrd:Type&gt;.
-            </t>
-
-            <t>
-              If an OpenID IdP supports extensions (<xref
-              target="extensions" />), the extensions SHOULD be listed
-              as additional &lt;xrd:Type&gt; child elements of the
-              &lt;xrd:Service&gt; element.
-            </t>
-
-            <section title="XRI and the CanonicalID Element" toc="exclude">
-              <t>
-                When the identifier is an XRI, the &lt;xrd:XRD&gt;
-                element that contains the OpenID &lt;xrd:Service&gt;
-                element will also contain a &lt;CanonicalID&gt;
-                element. The content of this element MUST be preserved
-                for use after a successful authentication request. See
-                <xref target="identifying" />.
-              </t>
-
-              <t>
-                The Relying Party MUST confirm that the provider of
-                the XRD that contains the &lt;CanonicalID&gt; element
-                is authoritative for that canonical ID. The provider
-                is identified by the contents of the
-                &lt;ProviderID&gt; element that is a child of the
-                &lt;XRD&gt; element. If the provider is not
-                authoritative for the canonical ID, the Relying Party
-                MUST resolve the canonical ID to confirm the OpenID
-                Service Endpoint information that was discovered. The
-                information discovered when resolving the canonical ID
-                MUST match the information discovered when resolving
-                the user-supplied identifier.
-              </t>
-
-              <t>
-                When using XRI resolution, the canonical ID MUST be
-                used as the Claimed Identifier. For an XRI to be a
-                valid identifier, both the &lt;ProviderID&gt; and
-                &lt;CanonicalID&gt; MUST be present in the discovery
-                result.
-              </t>
-
-              <t>
-                When using URL-based identifiers, the CanonicalID
-                element SHOULD be ignored.
-              </t>
-            </section>
-          </section>
-        </section>
-
-        <section title="HTML-Based Discovery">
-          <t>
-            In the interests of backward compatibility, the HTML-based
-            discovery mechanism from OpenID 1.1 MUST be supported by
-            Relying Parties.  The host of the HTML document MAY be
-            different from the End User's IdP's host.
-          </t>
-
-          <t>
-            To use HTML-based discovery, the following markup MUST be
-            added to the HEAD section of the HTML document located at
-            the identifier URL:
-            <list>
-              <t>
-                A &lt;LINK&gt; tag MUST be included with attributes
-                "rel" set to "openid.server", and "href" set to an IdP
-                Endpoint URL
-              </t>
-              <t>
-                A &lt;LINK&gt; tag MAY be included with attributes
-                "rel" set to "openid.delegate" and "href" set to the
-                End User's Delegate Identifier
-              </t>
-            </list>
-          </t>
-
-          <t>
-            The "openid.server" and "openid.delegate" URLs MUST NOT
-            include entities other than &amp;amp;, &amp;lt;, &amp;gt;,
-            and &amp;quot;. Other characters that would not be valid
-            in the HTML document or that cannot be represented in the
-            document's character encoding MUST be escaped using the
-            %xx mechanism as described in <xref target='RFC3986' />.
-          </t>
-        </section>
-      </section>
-    </section>
 
     <section title="Data Formats" anchor="formats">
-      <t>
-        The OpenID Authentication protocol consists of messages passed
-        between the Relying Party and the IdP. These messages consist
-        of a mapping of plain-text keys to plain-text values. The keys
-        and values are Unicode strings. When the keys and values need
-        to be converted to bytes, they MUST be encoded using UTF-8.
-        <!-- reference unicode, UTF-8! -->
-      </t>
-      <section title="Key-Value Form Encoding" anchor="kvform">
+
+      <section title="Protocol Messages">
+
         <t>
-          Key-Value Form is an encoding of an OpenID message to a byte
-          string. It is used for signature calculation and for direct
-          responses to relying parties.
+          The OpenID Authentication protocol messages are
+          mappings of plain-text keys to plain-text values. The keys and
+          values are Unicode strings. When the keys and values need to
+          be converted to bytes, they MUST be encoded using UTF-8.  <!--
+          reference unicode, UTF-8! -->
         </t>
-        <t>
-          A Key-Value form message is a sequence of lines, each
-          containing a pair of key and value. No key or value can
-          contain a newline. No key can contain a colon. Each
-          key-value pair is joined with a colon, and then a newline is
-          appended. Every line MUST end with a newline, codepoint 10
-          ("\n").  Additional characters, including whitespace, MUST
-          NOT be added before or after the colon or newline. The
-          Key-Value form representation of a mapping is the
-          concatenation of all of the lines generated from the pairs
-          in the mapping. The message MUST be encoded in UTF-8 to
-          produce a byte string.
-        </t>
-      </section>
-      <section title="Encoding Messages to HTTP Servers" anchor="queries">
-        <t>
-          When a message is sent to an HTTP server, it MUST be encoded
-          using a form encoding specified in section 17.13.4 of the
-          <xref target='HTML401'>HTML 4.01 specification</xref>.
-          Likewise, if the "Content-Type" header is included in the
-          request headers, its value MUST also be such an
-          encoding.
-        </t>
-        <t>
-          All of the keys in the message are prefixed with
-          "openid.". This prefix prevents interference with other
-          parameters that are passed along with the OpenID message.
-          When a message is sent as a POST, the application processing
-          the HTTP request MUST only use the values in the POST body
-          and MUST ignore any "openid." parameters that are present on
-          the request URL.
-        </t>
-        <t>
-          This model applies to messages from the User Agent to both
-          the Relying Party and the IdP, as well as messages from the
-          Relying Party to the IdP.
-        </t>
-      </section>
-      <section title="Example">
-        <t>
-          Non-normative
-        </t>
-        <t>
-          <figure>
-            <preamble>
-              The following examples encode the following information:
-            </preamble>
-            <artwork><![CDATA[
+        
+        <section title="Key-Value Form Encoding" anchor="kvform">
+          <t>
+            A Key-Value form message is a sequence of lines.  Each
+            line begins with a key, followed by a colon, and the value
+            associated with the key.  The line is terminated by a
+            single newline (codepoint 10, "/n"). No key or value can
+            contain a newline.
+          </t>
+          <t>
+            No key can contain a colon.  Additional characters,
+            including whitespace, MUST NOT be added before or after
+            the colon or newline. The message MUST be encoded in UTF-8
+            to produce a byte string.
+          </t>
+          <t>
+            Key-Value Form is used for signature calculation and for
+            direct responses to relying parties.
+          </t>
+        </section>
+ 
+        <section title="HTTP Encoding" anchor="queries">
+
+          <t>
+            When a message is sent to an HTTP server, it MUST be encoded
+            using a form encoding specified in section 17.13.4 of the
+            <xref target="HTML401"/>. Likewise, if the "Content-Type"
+            header is included in the request headers, its value MUST
+            also be such an encoding.
+          </t>
+          <t>
+            All of the keys in the message are prefixed with
+            "openid.". This prefix prevents interference with other
+            parameters that are passed along with the OpenID
+            message. When a message is sent as a POST, the application
+            processing the HTTP request MUST only use the values in the
+            POST body and MUST ignore any "openid." parameters that are
+            present on the request URL.
+          </t>
+          <t>
+            This model applies to messages from the User Agent to both
+            the Relying Party and the IdP, as well as messages from the
+            Relying Party to the IdP.
+          </t>
+        </section>
+        <section title="Example">
+          <t>
+            Non-normative
+          </t>
+          <t>
+            <figure>
+              <preamble>
+                The following examples encode the following information:
+              </preamble>
+              <artwork><![CDATA[
 Key     | Value
 --------+---------------------------
 mode    | error
 error   | This is an example message
-]]></artwork>
-          </figure>
-        </t>
-        <t>
-          <figure>
-            <preamble>
-              Key-Value Form encoded
-            </preamble>
-            <artwork><![CDATA[mode:error
+]]>
+              </artwork>
+            </figure>
+          </t>
+          <t>
+            <figure>
+              <preamble>
+                Key-Value Form encoded
+              </preamble>
+              <artwork><![CDATA[mode:error
 error:This is an example message
-]]></artwork>
-          </figure>
-          <figure>
-            <preamble>
-              x-www-urlencoded, as in a HTTP POST body or in a URL's
-              query (<xref target="RFC3986" /> section 3).
-            </preamble>
-            <artwork>openid.mode=error&amp;openid.error=This%20is%20an%20example%20message</artwork>
-          </figure>
+]]>
+              </artwork>
+            </figure>
+            <figure>
+              <preamble>
+                x-www-urlencoded, as in a HTTP POST body or in a URL's
+                query (<xref target="RFC3986" /> section 3).
+              </preamble>
+              <artwork>openid.mode=error&amp;openid.error=This%20is%20an%20example%20message</artwork>
+            </figure>
+          </t>
+        </section>
+      </section>
+
+      <section title="Integer Representations" anchor="btwoc">
+        <t>
+          Arbitrary precision integers MUST be encoded as big-endian
+          signed two's complement binary strings. Henceforth,
+          "btwoc" is a function that takes an arbitrary precision
+          integer and returns its shortest big-endian two's
+          complement representation. All integers that are used with
+          Diffie-Hellman are positive. This means that the left-most
+          bit of the two's complement representation MUST be
+          zero. If it is not, implementations MUST add a zero byte
+          at the front of the string.
         </t>
+        <t>Non-normative example:</t>
+        <figure>
+          <preamble />
+          <artwork>
+Base 10 number | btwoc string representation
+---------------+----------------------------
+0              | "\x00"
+127            | "\x7F"
+128            | "\x00\x80"
+255            | "\x00\xFF"
+32768          | "\x00\x80\x00"
+          </artwork>
+        </figure>
       </section>
     </section>
 
     <section title="Communication Types" anchor="communication">
-      <t>
-        Data is transferred between a Relying Party and IdP in two
-        different ways. Either the Relying Party directly connects to
-        the IdP, or the Relying Party or IdP sends data indirectly via
-        the User-Agent.  In no instance does the IdP directly connect
-        to the Relying Party.
-      </t>
       <section title="Direct Communication"
                anchor="direct_comm">
         <t>
-          Direct communication between a Relying Party and IdP is
-          accomplished using an HTTP POST (see <xref target='RFC2616'
-          />) initiated by a Relying Party to an IdP endpoint URL.
-          Direct communication is used for <xref
-          target="associations">establishing associations</xref>
-          and <xref target="check_auth">verifying authentication
+          Direct communication is initiated by a Relying Party to an
+          IdP endpoint URL.  It is used for <xref
+          target="associations">establishing associations</xref> and
+          <xref target="check_auth">verifying authentication
           assertions</xref>.
         </t>
         <section title="Direct Request" anchor="direct_request">
@@ -625,24 +371,23 @@ error:This is an example message
           <t>
             The body of a response to a <xref
             target="direct_request">Direct Request</xref> consists of
-            a mapping of keys to values encoded in Key-Value Form, as
-            specified by <xref target="kvform" />. The content-type
-            header of the response SHOULD be "text/plain".
+            an HTTP Response body in <xref target="kvform">Key-Value
+            Form</xref>. The content-type of the response SHOULD be
+            "text/plain".
           </t>
-
-          <section title="Successful Responses">
+           <section title="Successful Responses">
             <t>
-              The HTTP Status Code of a response to a valid request is
-              200. The contents of the resulting message depend on the
-              mode of the request.
+              A server receiving a properly formed request MUST send a
+              response with an HTTP status code of 200.
             </t>
           </section>
 
           <section title="Error Responses">
             <t>
               If a request is malformed or contains invalid arguments,
-              the HTTP Status Code of the response is 400. The message
-              encoded in the response will have the following form:
+              the server MUST send a response with a status code of
+              400. The response body will be a <xref target="kvform"/>
+              message withe following fields:
             </t>
             <t>
               <list style='symbols'>
@@ -676,8 +421,7 @@ error:This is an example message
                   </list>
                 </t>
               </list>
-
-              The IdP MAY add additional keys to the response.
+               The IdP MAY add additional keys to the response.
             </t>
             <t>
               The particular wire format of these messages will depend
@@ -690,24 +434,22 @@ error:This is an example message
       <section title="Indirect Communication"
                anchor="indirect_comm">
         <t>
-          Indirect communication between Relying Party and IdP passes
-          a message through the User-Agent. This can be initiated by
-          either the Relying Party or the IdP. Indirect communication
-          allows the messages to be associated with the End
-          User. There are two methods for indirect communication: HTTP
-          redirects and HTML form submission.
+          In indirect communication, messages are passed through the
+          User-Agent.  This can be initiated by either the Relying
+          Party or the IdP.  Indirect communication is used for <xref
+          target="requesting_authentication">authentication
+          requests</xref> and <xref
+          target="responding_to_authentication">authentication
+          responses</xref>.
         </t>
-
         <t>
+          There are two methods for indirect communication: HTTP
+          redirects and HTML form submission.
           Both form submission and redirection require that the sender
           know a recipient URL and that the recipient URL expect
           indirect messages, as specified in <xref target="queries"
           />.  The initiator of the communication chooses which method
-          of indirect communication is appropriate. <xref
-          target="requesting_authentication">Authentication
-          requests</xref> and <xref
-          target="responding_to_authentication">responses</xref> both
-          take the form of indirect communication.
+          of indirect communication is appropriate. 
         </t>
 
         <section title="HTTP Redirect">
@@ -720,7 +462,6 @@ error:This is an example message
           </t>
           <t>This method is deprecated as of OpenID version 2.0.</t>
         </section>
-
         <section title="HTML FORM Redirection">
           <t>
             A mapping of keys to values can be transferred by
@@ -764,7 +505,6 @@ error:This is an example message
                   </t>
                 </list>
               </t>
-
               <t>
                 openid.contact
                 <list style='empty'>
@@ -789,7 +529,6 @@ error:This is an example message
 
             The IdP MAY add additional keys to the response.
           </t>
-
           <t>
             If the "openid.return_to" value is missing or not a valid
             URL, the IdP SHOULD return a response to the End User
@@ -800,542 +539,596 @@ error:This is an example message
       </section>
     </section>
 
+    <section title="Generating Signatures" anchor="generating_signatures">
+      <t> 
+        The most common usage of an association is as a Message
+        Authentication Code (MAC) key used to sign OpenID messages.
+      </t>
+      <t>
+        When generating MAC keys, the recommendations in <xref
+        target="RFC1750" /> SHOULD be followed.
+      </t>
+
+      <section title="List Algorithms">
+        <t>
+          There are two methods for determining the list of keys and
+          values to be signed.  The "Signed List" algorithm only signs
+          those keys and values that have been explicitly requested.
+          The "Sign-All" algorithm signs all key-value pairs found.
+        </t>
+
+        <section title="Signed List Algorithm" anchor="signed_list"
+                 toc="exclude">
+
+          <t> The input to the Signed List Algorithm are the message
+            to be signed, and the list of message keys that are to be
+            signed with the "openid." prefix removed.
+          </t>
+          <t>
+            To compute the list of key/value pairs to be signed:
+            <list style="numbers">
+              <t> 
+              Iterate through the list of keys to be signed in
+              the order they appear.  For each key, find the value in
+              the message whose key is equal to the signed list key
+              prefixed with "openid."
+              </t>
+              <t>
+                Append the signed list key and the associated value to
+                the message to be signed.
+              </t>
+            </list>
+          </t>
+          <t> The output of this algorithm is the message to be
+            signed, and the list of keys that were signed.  A message
+            signed using this algorithm MUST append the list of signed
+            fields to message.
+          </t>
+          <t>
+            Because it strips the "openid." prefix from message
+            keys while looking for a match, this algorithm can only
+            sign elements that have keys beginning with "openid."
+          </t>
+        </section>
+
+        <section title="Sign-All Algorithm" anchor="sign_all" toc="exclude">  
+          <t>
+            The input to the Sign-All Algoritm is the message to be signed.
+          </t>
+          <t>
+            To compute the list of key/value pairs to be signed, sort
+            the key/value pairs in the message in byte order.
+          </t>
+          <t>
+            The output of this algorithm is the message to be signed.
+          </t>
+          <t> 
+            Unlike the Signed List Algorithm, Sign-All does not
+            strip the "openid." prefix from message keys.
+          </t>  
+        </section>
+      </section>
+
+      <section title="Signature Algorithms" anchor="sign_algos">
+        <t>
+          OpenID supports two signature algorithms: HMAC-SHA1(<xref
+          target="RFC2104" />, <xref target="RFC3174" />), and
+          HMAC-SHA256 (<xref target="RFC2104" />, <xref
+          target="FIPS180-2" />).
+        </t>
+      </section>
+
+
+      <section title="Procedure">
+        <t>
+          To generate a message signature:
+          <list style="numbers">
+            <t> 
+              Determine the appropriate signature list and signature
+              algorithm from the <xref
+              target="associations">association type</xref>.
+            </t>
+            <t> 
+              Generate the list to be signed using the correct list
+              algorithm.
+            </t>
+            <t> 
+              Convert the list to an octet string by encoding
+              with <xref target="kvform">Key Value Form</xref>
+            </t>
+            <t> 
+              Apply the correct signature algorithm to the
+              octet string.
+            </t>
+          </list>
+        </t>
+      </section>
+    </section>
+
+
+    <section title="Initiation and Discovery">
+
+      <section title="Initiation" anchor="initiation">
+        <t>
+          To initiate OpenID Authentication, the Relying Party SHOULD
+          present the End User with a form that has a field for
+          entering an Identifier. 
+        </t>
+        
+        <t>
+         It is RECOMMENDED that every Relying Party place the <eref
+          target='http://openid.net/login-bg.gif'>OpenID logo</eref>
+          at the beginning of the form field where the End User enters
+          their Identifier. 
+        </t>
+
+        <t>
+          The form field's "name" attribute SHOULD have the value
+          "openid_identifier".
+        </t>
+      </section>
+
+      <section title="Normalization" anchor="normalization">
+        <t>
+          The End User's input MUST be normalized into an
+          Identifier.  If the End User supplies input that does not
+          include a scheme (http, https, or xri), then the application
+          needs to determine if the input is an XRI or a URL missing
+          the "http://". To do so, the application SHOULD examine the
+          first character of the input. If it is an XRI Global Context
+          Symbol (<xref target="XRI Syntax 2.0">Section 2.2.1.1 of XRI
+          Syntax</xref>), then the input SHOULD be treated as an
+          XRI<!-- convert the XRI to URI normal form? -->. If it is
+          not, then the input SHOULD be treated as an http URL, and
+          prefixed with the string "http://".
+        </t>
+
+        <t>
+          URL identifiers MUST be further normalized by applying the
+          rules in section 6 of RFC 3986, following redirects when
+          retrieving their content, and finally applying the rules in
+          section 6 of RFC 3986 (Normalization and Comparison) to the
+          final destination URL.
+        </t>
+      </section>
+
+      <section title="Discovery" anchor="discovery">
+
+        <t>
+          Discovery is the process where the Relying Party uses the
+          Identifier to look up ("discover") the necessary information
+          for initiating authentication. OpenID has three paths
+          through which to do discovery:
+        </t>
+
+        <t>
+          <list style="numbers">
+
+            <t>
+              If the identifier is an XRI, <eref
+              target="http://www.oasis-open.org/committees/download.php/17293">XRI
+              resolution</eref> will yield an XRDS document that
+              contains the necessary information.
+            </t>
+
+            <t>
+              If it is a URL, the <xref target="Yadis">Yadis
+              protocol</xref> is first attempted. If it succeeds, the
+              result is again an XRDS document.
+            </t>
+
+            <t>
+              If the Yadis protocol fails, the URL is retrieved and
+              HTML-based discovery is attempted.                   
+            </t>
+
+          </list>
+
+        </t>
+
+        <section title="Discovered Information">
+          <t>
+            Upon successful completion of discovery, the Relying
+            Party will have the following information:
+
+            <list style="hanging">
+              <t hangText="IdP Endpoint URL:">
+                The URL that accepts authentication requests. This
+                MUST be an absolute URL.
+              </t>
+
+              <t hangText="Claimed Identifier:">
+                (optional) The normalized Identifier upon which
+                discovery was performed. The Claimed Identifier is
+                present unless the End User entered an IdP Identifier
+                during <xref target="initiation">initiation</xref>.
+              </t>
+
+              <t hangText="Delegate Identifier:">
+                (optional)
+                 
+                The identifier that the Relying Party SHOULD perform
+                authentication using.  Upon successful authentication,
+                the Relying Party SHOULD recognize the End User using
+                the Claimed Identifier.  The Delegate Identifier can
+                only be present when the End User enters a Claimed
+                Identifier.
+              </t>
+            </list>
+          </t>
+        </section>
+
+        <section title="XRDS-Based Discovery">
+          <t>
+            If XRI or Yadis discovery was used, the result will be and
+            XRDS Document.  Thisis an XML document with
+            entries for services that are related to the identifier.
+            <!-- It is defined in <eref target=""></eref> -->.
+          </t>
+
+
+          <section title="Service Elements">
+          
+            <section title="IdP Identifier Element">
+              <t> 
+                An IdP Identifier Element is a &lt;xrd:Service&gt;
+                element with the following information:
+
+                <list style="hanging">
+                  <t>An &lt;xrd:Type&gt; tag whose text content is
+                "http://openid.net/server/2.0"</t>
+
+                  <t>An &lt;xrd:URI&gt; tag whose text content is the
+                IdP Endpoint URL</t>
+                </list>
+              </t>
+            </section>
+
+            <section title="Claimed Identifier Element">
+              <t>
+                 A Claimed Identifier Element is an
+                 &lt;xrd:Service&gt; element with the following
+                 information:
+           
+                <list style="hanging">
+                  <t>An &lt;xrd:Type&gt; tag whose text content is
+                "http://openid.net/signon/2.0"</t>
+
+                  <t>An &lt;xrd:URI&gt; tag whose text content is the
+                IdP Endpoint URL</t>
+
+                  <t>An &lt;openid:Delegate&gt; tag (optional) whose text
+                content is The Delegate Identifier</t>
+                </list>
+              </t>
+            </section>
+          </section>
+
+          <section title="Extracting Authentication Data">
+            <t>
+              Once the Relying Party has obtained an XRDS document, it
+              MUST first search the document (following the rules
+              described in <eref target="">the XRDS
+              specification</eref>) for an IdP Identifier, and if none
+              is found, search for a Claimed Identifier Element.
+            </t>
+          </section>
+
+          <section title="XRI and the CanonicalID Element" toc="exclude">
+            <t>
+              When the identifier is an XRI, the &lt;xrd:XRD&gt;
+              element that contains the OpenID &lt;xrd:Service&gt;
+              element will also contain a &lt;CanonicalID&gt;
+              element. The content of this element MUST be preserved
+              for use after a successful authentication request. See
+              <xref target="identifying" />.
+            </t>
+
+            <t>
+              The Relying Party MUST confirm that the provider of
+              the XRD that contains the &lt;CanonicalID&gt; element
+              is authoritative for that canonical ID. The provider
+              is identified by the contents of the
+              &lt;ProviderID&gt; element that is a child of the
+              &lt;XRD&gt; element. If the provider is not
+              authoritative for the canonical ID, the Relying Party
+              MUST resolve the canonical ID to confirm the OpenID
+              Service Endpoint information that was discovered. The
+              information discovered when resolving the canonical ID
+              MUST match the information discovered when resolving
+              the user-supplied identifier.
+           </t>
+
+            <t>
+              When using XRI resolution, the canonical ID MUST be
+              used as the Claimed Identifier. For an XRI to be a
+              valid identifier, both the &lt;ProviderID&gt; and
+              &lt;CanonicalID&gt; MUST be present in the discovery
+              result.
+            </t>
+
+            <t>
+              When using URL-based identifiers, the CanonicalID
+              element SHOULD be ignored.
+            </t>
+          </section>
+
+          <section title="Additional Information">
+            <t>
+              The "openid" namespace is
+              "http://openid.net/signon/2.0". The "xrd" namespace is
+              "xri://$xrd*($v*2.0)".
+            </t>
+
+            <t>
+              For compatibility with deployed code, it is RECOMMENDED
+              that a Relying Party also accept
+              "http://openid.net/signon/1.0" for the value of
+              &lt;xrd:Type&gt;.
+            </t>
+
+            <t>
+              If an OpenID IdP supports extensions (<xref
+              target="extensions" />), the extensions SHOULD be listed
+              as additional &lt;xrd:Type&gt; child elements of the
+              &lt;xrd:Service&gt; element.
+            </t>
+
+          </section>
+
+        </section>
+
+        <section title="HTML-Based Discovery">
+          <t>
+            OpenID 1.1 HTML-based discovery MUST be supported by
+            Relying Parties.  The host of the HTML document MAY be
+            different from the End User's IdP's host.
+          </t>
+
+          <t>
+            To use HTML-based discovery, an HTML document MUST be
+            available at the URL of the Claimed Identifier. In the
+            HEAD section of the document:
+
+            <list>
+              <t>
+                A &lt;LINK&gt; tag MUST be included with attributes
+                "rel" set to "openid.server", and "href" set to an IdP
+                Endpoint URL
+              </t>
+              <t>
+                A &lt;LINK&gt; tag MAY be included with attributes
+                "rel" set to "openid.delegate" and "href" set to the
+                End User's Delegate Identifier
+              </t>
+            </list>
+          </t>
+
+          <t>
+            The "openid.server" and "openid.delegate" URLs MUST NOT
+            include entities other than &amp;amp;, &amp;lt;, &amp;gt;,
+            and &amp;quot;. Other characters that would not be valid
+            in the HTML document or that cannot be represented in the
+            document's character encoding MUST be escaped using the
+            %xx mechanism as described in <xref target='RFC3986' />.
+          </t>
+        </section>
+      </section>
+    </section>
+
+
     <section title="Establishing Associations" anchor="associations">
       <t>
-        An "association" is a set of information that allows a Relying
-        Party to check the cryptographic signature of a response from
-        the IdP.  An association is a relationship between a Relying
-        Party and an IdP. If a Relying Party is incapable of creating
-        or storing associations, OpenID provides a mechanism
-        (<xref target="verifying_signatures"/>) for authentication to
-        complete securely by using a back-channel between the Relying
-        Party and the IdP to verify the signature on the response
-        without of using an association. When a Relying Party is
-        operating without creating associations, it is said to be in
-        "stateless mode."
+        An "association" is a shared secret between the IdP and
+        Relying Party.  Once established, it is used to verify
+        subsequent protocol messages.
       </t>
-
       <t>
-        It is RECOMMENDED that a Relying Party form associations if it is
-        possible for it to do so. After the initial request, using an
-        association saves one HTTP request per authentication, which
-        saves network resources and improves performance.
+        It is RECOMMENDED that a Relying Party form associations if it
+        is possible for it to do so.  If a Relying Party is incapable
+        of creating or storing associations, <xref
+        target="verifying_signatures"/> provides an alternate
+        verification mechanism.
       </t>
 
-      <t>
-        When generating Message Authentication Code (MAC) keys, the
-        recommendations in <xref target="RFC1750" /> SHOULD be
-        followed.
-      </t>
-
-      <section title="Generating Signatures" anchor="generating_signatures">
+      <section title="Association Session Request">
         <t>
-          Successful authentication messages from the Identity
-          Provider to the Relying Party MUST be cryptographically
-          signed. 
+          An association session is initiated by a <xref
+          target="direct_comm">direct request</xref> from a Relying
+          Party to an IdP Endpoint URL with "open_id.mode" of
+          "associate".
         </t>
-
-        <t>
-          Signing a message is a two-phase process. The first phase is
-          converting the response into an octet string to sign. The
-          second phase is generating a signature for that octet
-          string. The precise algorithm used for each phase depends on
-          the type of association being used.
-        </t>
-
-        <t>
-          There are two algorithms for each phase that an IdP SHOULD
-          support. The two algorithms for converting the response to
-          an octet string are an algorithm with a list of signed
-          parameters, and an algorithm that signs all parameters. The
-          two algorithms for signing the generated octet string are
-          HMAC-SHA1 and HMAC-SHA256. Other algorithms for either phase
-          may be defined by extensions and used by Relying Parties and
-          IdPs which support them.
-        </t>
-
-        <section title="Signed List Algorithm" anchor="signed_list">
-
-          <t>
-            When using this algorithm to create an octet string, the
-            signed information is a subset of the mapping of keys to
-            values as specified in <xref target="formats" />. A signed
-            message contains of a list of signed fields, an association
-            handle, and a signature. The algorithm for generating the
-            signature depends on the type of association.
+         
+        <section title="Common Request Parameters" toc="exclude">
+          <t> 
+            These parameters MUST be present for all association
+            requests:
           </t>
-
           <t>
-            To compute the signature from an association, an ordered
-            list of signed fields and a set of query parameters:
-
-            <list style="numbers">
-              <t>
-                Iterate over the list of signed fields in order,
-                taking the field name as the key. For each key, find
-                the value in the query parameters whose key is equal
-                to the field name prefixed with "openid.".
-              </t>
-              <t>
-                Generate a <xref target="kvform">Key-Value Form
-                string</xref> built from the (field name, value) pairs
-                in the order that they appear in the sequence of
-                key-value pairs. (This results in the "openid." prefix
-                being stripped off the the keys from the original
-                message.)
-              </t>
-              <t>
-                Generate the signature by evaluating the keyed message
-                digest function specified by the association on the
-                resulting Key-Value Form string.
-              </t>
-            </list>
-          </t>
-
-        </section>
-
-        <section title="Sign-All Algorithm" anchor="sign_all">
-
-          <t>
-            When using this algorithm to create an octet string, the
-            signed information is the mapping of keys to values as
-            specified in <xref target="formats" />. A signed message
-            contains an association handle and a signature. The
-            algorithm for generating the signature depends on the type
-            of association.
-          </t>
-
-          <t>
-            To compute the signature from an association and a set of
-            query parameters:
-
-            <list style="numbers">
-              <t>
-                Generate a <xref target="kvform">Key-Value Form
-                string</xref> built from all the (key, value) pairs in
-                the message sorted in byte order.  (Unlike the Signed
-                List Algorithm, this doesn't result in the "openid."
-                prefixes being stripped off the keys in this format.)
-              </t>
-              <t>
-                Generate the signature by evaluating the keyed message
-                digest function specified by the association on the
-                resulting Key-Value Form string.
-              </t>
-            </list>
-          </t>
-
-        </section>
-
-      </section>
-
-      <section title="Association Handles">
-        <t>
-          Associations are referred to by a handle, which MUST be a
-          string 255 characters or less, and consist only of ASCII
-          characters in the range 33-126 inclusive (printable
-          non-whitespace characters). The handle is used to look up
-          stored associations.  A Relying Party SHOULD re-use the
-          association for a server until it expires or is instructed
-          to stop using it by the IdP.
-        </t>
-      </section>
-
-      <section title="Association Types" anchor="assoc_types">
-        <t>
-          An association type indicates the algorithm for computing
-          the signature of messages created with that
-          association. OpenID associations use keyed message digest
-          functions. The key for the message digest function is known
-          as a Message Authentication Code (MAC) key.
-        </t>
-
-        <section title="HMAC-SHA1 Associations" anchor="hmacsha1">
-          <figure>
-            <preamble>
-              An association of type HMAC-SHA1
-              (<xref target="RFC2104" />, <xref target="RFC3174" />) 
-              uses the following algorithm to compute a signature of the
-              message:
-            </preamble>
-            <artwork>
-  HMAC-SHA1(MAC key, Key-Value Form message)
-</artwork>
-          </figure> 
-          <t>
-            HMAC-SHA1 associations have the association type
-            "HMAC-SHA1". The size of the MAC key for HMAC-SHA1
-            associations is 160 bits. These associations use the
-            signed list method to generate the octet string to sign.
-          </t>
-        </section>
-
-        <section title="HMAC-SHA1-SIGNALL Associations" anchor="hmacsha1signall">
-          <figure>
-            <preamble>
-              An association of type HMAC-SHA1-SIGNALL
-              (<xref target="RFC2104" />, <xref target="RFC3174" />) 
-              uses the following algorithm to compute a signature of the
-              message:
-            </preamble>
-            <artwork>
-  HMAC-SHA1(MAC key, Key-Value Form message)
-</artwork>
-          </figure> 
-          <t>
-            HMAC-SHA1 sign-all associations have the association type
-            "HMAC-SHA1-SIGNALL". The size of the MAC key for HMAC-SHA1
-            associations is 160 bits. These associations use the
-            sign-all method to generate the octet string to sign.
-          </t>
-        </section>
-
-        <section title="HMAC-SHA256-SIGNALL Associations" anchor="hmacsha256signall">
-          <figure>
-            <preamble>
-              An association of type HMAC-SHA256 
-              (<xref target="RFC2104" />, <xref target="FIPS180-2" />) 
-              uses the following algorithm to compute a signature of the
-              message:
-            </preamble>
-            <artwork>
-  HMAC-SHA256(MAC key, Key-Value Form message)
-</artwork>
-          </figure>
-          <t>
-            HMAC-SHA256 associations have the association type
-            "HMAC-SHA256-SIGNALL". The size of the MAC key for
-            HMAC-SHA1 associations is 256 bits. These associations
-            use the sign-all method to generate the octet string to
-            sign.
-          </t>
-        </section>
-
-      </section>
-
-      <section title="Association Sessions">
-        <t>
-          An association session consists of an association request
-          from a Relying Party to the IdP Endpoint URL. An association
-          session is a direct request as specified in
-          <xref target="direct_comm" /> with "openid.mode" set to
-          "associate". There are several association session types
-          defined. All association session types have a common
-          parameter, "openid.assoc_type" that indicates the type of
-          the established association.
-        </t>
-
-        <t>
-          If the IdP supports the association session type and
-          association type requested by the Relying Party, an
-          association session is successful. If an IdP does not or
-          chooses not to support the requested association or
-          association session type, the association request is
-          unsuccessful.
-        </t>
-
-        <section title="Request Parameters" toc="exclude">
-          <t>
-            These parameters are common to all association requests.
-          </t>
-
-          <t>
-            <list style='symbols'>
-              <t>
-                openid.mode
-                <list style='empty'>
-                  <t>
-                    Value: "associate"
-                  </t>
+            <list style="symbols">
+              <t>openid.mode 
+                <list style="empty">
+                  <t> Value: "associate"</t>
                 </list>
               </t>
 
-              <t>
-                openid.session_type
-                <list style='empty'>
-                  <t>
-                    Value: "no-encryption", "DH-SHA1" or "DH-SHA256"
-                  </t>
-                  <t>
-                    Default: "no-encryption"
-                  </t>
-                  <t>
-                    Note: It is RECOMMENDED that DH-SHA1 or DH-SHA256
-                    be used to encrypt the MAC key.
-                  </t>
+              <t>openid.assoc_type 
+                <list style="empty">
+                  <t> The preferred association type.  The association
+                    type defines the algorigthm to be used to sign
+                    subsequent messages.</t>
+                  <t> Value: A valid association type from <xref
+                  target="assoc_types"/></t>
+                  <t> Default: "HMAC-SHA1".</t>
                 </list>
               </t>
 
-              <t>
-                openid.assoc_type
+              <t>openid.session_type 
                 <list style='empty'>
-                  <t>
-                    Value: Preferred association type. "HMAC-SHA1" or
-                    "HMAC-SHA256"
-                  </t>
-
-                  <t>
-                    Default: "HMAC-SHA1"
-                  </t>
-
-                  <t>
-                    Note: If using a <xref
-                    target="dh_sessions">Diffie-Hellman session
-                    type</xref>, the hash algorithm for the
-                    association session MUST have the same number of
-                    bits as the hash algorithm for the association.
-                  </t>
+                  <t> The preferred association session type.  This
+                  defines the method used to encrypt the association's
+                  MAC key in transit.</t>
+                  <t> Value: A valid association session type from
+                  <xref target="assoc_sess_types"/></t>
+                  <t>Default: "no-encryption"</t>
                 </list>
               </t>
-
             </list>
           </t>
         </section>
 
-        <section title="Successful Response Parameters" toc="exclude">
+        <section title="Diffie-Hellman Request Parameters" toc="exclude">
           <t>
-            The format of responses to associate requests is
-            <xref target="kvform">Key-Value pairs</xref>.
-            All association session responses share the following
-            fields:
+            When the requested session type is DH-SHA1 or DH-SHA256,
+            the following parameters MUST be present:
+          </t>
+          <t>
+            <list style="symbols">
+              <t>
+                openid.dh_modulus
+                <list style='empty'>
+                  <t>Value: base64(btwoc(p))</t>
+                  <t>Default: See <xref target='pvalue' /></t>
+                </list>
+              </t>
+              <t>
+                openid.dh_gen
+                <list style='empty'>
+                  <t>Value: base64(btwoc(g))</t>
+                  <t>Default: g = 2</t>
+                </list>
+              </t>
+              <t>
+                openid.dh_consumer_public
+                <list style='empty'>
+                  <t>Value: base64(btwoc(g ^ xa mod p))</t>
+                </list>
+              </t>
+            </list>
+          </t>
+          <t>
+          See <xref target="dh_sessions"/> for more information on
+          these parameters.
+          </t>
+          <t>
+            NOTE: the 'btwoc' function is defined in <xref
+            target="btwoc"/>.
+          </t>
+        </section> 
+      </section>
 
-            <list style='symbols'>
+      <section title="Association Session Response">
+        <t>
+          An association session response is a direct response from the
+          IdP to the Relying Party in <xref target="kvform">Key-Value
+          Form</xref>.
+        </t>
+
+        <section title="Common Response Parameters">
+          <t>
+            <list style="symbols">
               <t>
                 session_type
-                <list style='empty'>
-                  <t>
-                    Value: The method of exchanging association
-                    information that the IdP chose.
-                  </t>
-                  <t>
-                    Default: "no-encryption"
-                  </t>
-                  <t>
-                    Note: For backwards-compatibility, omit the
-                    session_type when making "no-encryption"
-                    responses, since the "no-encryption" session type
-                    was implied by an absence of session_type in
-                    previous specifications.
-                  </t>
+                <list style="empty">
+                  <t> The session type for this session. Valid values
+                    are listed in <xref target="assoc_types"/>, but
+                    the server MUST respond with either the same value
+                    as the request's "openid.session_type" parameter,
+                    or the value "no-encryption".  If the server is
+                    unable or unwilling to support either of these
+                    session types, it MUST return an unsuccessful
+                    response instead</t>
+                  <t>Default: "no-encryption"</t>
+                  <t>NOTE: For backwards compatibility, omit the
+                     session_type parameter when making "no-encryption"
+                     responses.</t> 
                 </list>
               </t>
-
               <t>
                 assoc_handle
-                <list style='empty'>
-                  <t>
-                    Value: The handle for the association data
-                    exchanged in this session.
-                  </t>
+                <list style="empty">
+                  <t>The association handle is used as a key to refer
+                    to this association in subsequent messages.</t>
+                  <t>Value: A string 255 characters or less, consisting
+                    only of ASCII characters in the range 33-126
+                    inclusive (printable non-whitespace
+                    characters). </t> 
                 </list>
               </t>
-
               <t>
                 assoc_type
-                <list style='empty'>
-                  <t>
-                    Value: The association type for the returned
-                    handle.
-                  </t>
-                  <t>
-                    Note: When storing associations, the Relying Party MUST
-                    map an assoc_handle to both its MAC key and its
-                    assoc_type in order to be able to check signatures.
-                  </t>
+                <list style="empty">
+                  <t>The value of the "openid.assoc_type" parameter
+                    from the request.  if the server is unwilling or
+                    unable to support this association type, it MUST
+                    return an unsuccessful response instead</t>
                 </list>
               </t>
-
               <t>
                 expires_in
-                <list style='empty'>
-                  <t>
-                    Value: The number of seconds this association
-                    handle is good for, represented in base 10 ASCII.
-                  </t>
-                  <t>
-                    Note: Relying Parties MUST NOT use the association
-                    resulting from this association session after the
-                    specified number of seconds has elapsed.
-                    <!-- XXX: recommendation on how to choose a value? -->
-                  </t>
+                <list style="empty">
+                  <t> The lifetime, in seconds, of this association.
+                    The Relying Party MUST NOT use the association
+                    after this time has expired.</t>
+                  <t>Value: an integer, represented in base 10 ASCII.</t>
                 </list>
               </t>
             </list>
           </t>
         </section>
 
-        <section title="Unencrypted Association Sessions">
+        <section title="Unencrypted response parameters">
           <t>
-            If the IdP's Endpoint URL is an HTTPS URL, a
-            "no-encryption" association session may be
-            used. "no-encryption" association sessions also allow for
-            Relying Parties or IdPs to be run in environments where
-            there is no support for arbitrary precision arithmetic. In
-            all other cases, "no-encryption" association sessions
-            SHOULD NOT be used.
+            <list style="symbols">
+              <t>
+                mac_key
+                <list style='empty'>
+                  <t> The MAC key (shared secret) for this
+                    association, <xref target="RFC3548">Base 64</xref>
+                    encoded.</t> </list>
+              </t>
+            </list>
           </t>
-
-          <t>
-            An IdP MAY respond to an association request with a
-            "no-encryption" association session response regardless of the
-            type of association session requested. For better
-            security, a Relying Party MAY choose not to use the
-            resulting association on subsequent authentication
-            requests.
-          </t>
-
-          <section title="Request Parameters" toc="exclude">
-            <t>
-              There are no extra parameters defined for a no-encryption
-              association session request. To request a no-encryption
-              association, leave blank the "openid.session_type" query
-              parameter on the request.
-            </t>
-          </section>
-
-          <section title="Response Parameters" toc="exclude">
-            <t>
-              The response to a no-encryption association session has the
-              following extra fields:
-
-              <list style="symbols">
-                <t>
-                  mac_key
-                  <list style='empty'>
-                    <t>
-                      The MAC key for this association, <xref
-                      target="RFC3548">Base 64</xref> encoded. The MAC
-                      key MUST be the appropriate size for the
-                      association type. For HMAC-SHA1, the MAC key
-                      MUST be 20 bytes. For HMAC-SHA256, the MAC key
-                      MUST be 32 bytes.
-                    </t>
-                  </list>
-
-                </t>
-              </list>
-            </t>
-          </section>
         </section>
 
-        <section title="Diffie-Hellman Association Sessions"
-                 anchor="dh_sessions">
+
+        <section title='Diffie-Hellman Response Parameters' toc="exclude">
           <t>
-            OpenID supports two different kinds of associations
-            based on Diffie-Hellman key exchange, "DH-SHA1" and
-            "DH-SHA256". The MAC key MUST be the same
-            length as the output of H, the hash function - 160 bits
-            (20 bytes) for DH-SHA1 or 256 bits (32 bytes) for
-            DH-SHA256.
+            <list style="symbols">
+              <t>
+                dh_server_public
+                <list style='empty'>
+                  <t>
+                    Value: base64(btwoc(g ^ xb mod p))
+                  </t>
+                  <t>
+                    Description: The Provider's Diffie-Hellman public
+                    key.  
+                  </t>
+                </list>
+              </t>
+              <t>
+                enc_mac_key
+                <list style='empty'>
+                  <t>
+                    Value: base64(H(btwoc(g ^ (xa * xb) mod p)) XOR MAC key)
+                  </t>
+                  <t>
+                    Description: The MAC key (shared secret),
+                    encrypted with the secret Diffie-Hellman value. H
+                    is either SHA1 or SHA256 depending on the session
+                    type.
+                  </t>
+                </list>
+              </t>
+            </list>
           </t>
-
           <t>
-            If the IdP does not support Diffie-Hellman,
-            it MUST ignore the Diffie-Hellman fields in the request
-            and reply with a no-encryption association session response.
-            Relying Parties MAY choose to use "stateless mode" in this case.
+            NOTE: the 'btwoc' function is defined in <xref
+            target="btwoc"/>
           </t>
-
-          <t>
-            The Relying Party specifies a modulus, p, and a generator,
-            g. The Relying Party chooses a random private key xa and
-            Identity provider chooses a random private key xb, both in
-            the range [1 .. p-1]. The shared secret used to encrypt
-            the MAC key is thus g ^ (xa * xb) mod p = (g ^ xa) ^ xb
-            mod p = (g ^ xb) ^ xa mod p. For more information, see
-            <xref target='RFC2631' />. For information on the
-            selection of random values, see <xref target="RFC1750" />.
-          </t>
-
-          <section title="Integer Representations" toc="exclude">
-            <t>
-              Arbitrary precision integers MUST be encoded as
-              big-endian signed two's complement binary
-              strings. Henceforth, "btwoc" is a function that takes an
-              arbitrary precision integer and returns its shortest
-              big-endian two's complement representation. All integers
-              that are used with Diffie-Hellman are positive. This
-              means that the left-most bit of the two's complement
-              representation MUST be zero. If it is not, add a zero
-              byte at the front of the string.
-            </t>
-            <t>Non-normative example:</t>
-            <figure>
-              <preamble />
-              <artwork>
-Base 10 number | btwoc string representation
----------------+----------------------------
-0              | "\x00"
-127            | "\x7F"
-128            | "\x00\x80"
-255            | "\x00\xFF"
-32768          | "\x00\x80\x00"
-              </artwork>
-            </figure>
-          </section>
-
-          <section title='Request Parameters' toc="exclude">
-            <t>
-              <list style="symbols">
-                <t>
-                  openid.dh_modulus
-                  <list style='empty'>
-                    <t>Value: base64(btwoc(p))</t>
-                    <t>Default: See <xref target='pvalue' /></t>
-                  </list>
-                </t>
-
-                <t>
-                  openid.dh_gen
-                  <list style='empty'>
-                    <t>Value: base64(btwoc(g))</t>
-                    <t>Default: g = 2</t>
-                  </list>
-                </t>
-
-                <t>
-                  openid.dh_consumer_public
-                  <list style='empty'>
-                    <t>Value: base64(btwoc(g ^ xa mod p))</t>
-                  </list>
-                </t>
-              </list>
-            </t>
-          </section>
-
-          <section title='Response Parameters' toc="exclude">
-            <t>
-              <list>
-                <t>
-                  dh_server_public
-                  <list style='empty'>
-                    <t>
-                      Value: base64(btwoc(g ^ xb mod p))
-                    </t>
-                    <t>
-                      Description: The Provider's Diffie-Hellman
-                      public key.
-                    </t>
-                  </list>
-                </t>
-
-                <t>
-                  enc_mac_key
-                  <list style='empty'>
-                    <t>
-                      Value: base64(H(btwoc(g ^ (xa * xb) mod p)) XOR MAC key)
-                    </t>
-                    <t>
-                      Description: The MAC key, encrypted with the
-                      secret Diffie-Hellman value. H is either SHA1 or
-                      SHA256 depending on the session type.
-                    </t>
-                  </list>
-                </t>
-              </list>
-            </t>
-          </section>
         </section>
+
         <section title="Unsuccessful Response Parameters">
           <t>
             If the IdP does not support an association session type or
@@ -1373,7 +1166,6 @@ Base 10 number | btwoc string representation
                   </t>
                 </list>
               </t>
-
               <t>
                 assoc_type
                 <list style='empty'>
@@ -1393,17 +1185,119 @@ Base 10 number | btwoc string representation
             the authentication process in stateless mode.
           </t>
         </section>
+      </section>   
+
+      <section title="Association Session Types" anchor="assoc_sess_types">
+
+        <t> 
+          OpenID defines three valid association session types:
+          "no-encryption", "DH-SHA1", and "DH-SHA256".
+        </t>
+
+        <section title="No-Encryption Association Sessions"
+                 toc="exclude">
+          <t>
+            In a "no-encryption" association session, the IdP sends
+            the association MAC key in plaintext to the Relying Party.
+            This makes it possible for an eavesdropper to intercept
+            the key, and forge messages to this Relying Party.
+            Therefore, no-encryption association sessions SHOULD NOT
+            be used unless the messages are using transport-level
+            encryption (HTTP).
+          </t>
+
+          <t>
+            The MAC key sent by the IdP MUST be the same length as the
+            signature algorithm for this association.
+          </t>
+
+        </section>
+
+        <section title="Diffie-Hellman Association Sessions"
+                     anchor="dh_sessions" toc="exclude">
+          <t> 
+            The "DH-SHA1" and DH-SHA256" association types use
+            Diffie-Hellman key exchange to securely transmit the
+            shared secret.
+          </t>
+          <t>
+            The MAC key MUST be the same length as the output of H,
+            the hash function - 160 bits (20 bytes) for DH-SHA1 or 256
+            bits (32 bytes) for DH-SHA256, as well as the output of
+            the signature algorithm of for this association.
+          </t>
+
+          <t>
+            If the IdP does not support Diffie-Hellman,
+            it MUST ignore the Diffie-Hellman fields in the request
+            and reply with a no-encryption association session response.
+            Relying Parties MAY choose to use "stateless mode" in this case.
+          </t>
+
+          <t>
+            The Relying Party specifies a modulus, p, and a generator,
+            g. The Relying Party chooses a random private key xa and
+            Identity provider chooses a random private key xb, both in
+            the range [1 .. p-1]. The shared secret used to encrypt
+            the MAC key is thus g ^ (xa * xb) mod p = (g ^ xa) ^ xb
+            mod p = (g ^ xb) ^ xa mod p. For more information, see
+            <xref target='RFC2631' />. For information on the
+            selection of random values, see <xref target="RFC1750" />.
+          </t>
+        </section>
+
+      </section>
+
+      <section title="Association Types" anchor="assoc_types">
+        <section title="HMAC-SHA1" anchor="hmacsha1">
+          <t>
+            An association of type "HMAC-SHA1" uses the <xref
+            target="sign_algos">HMAC-SHA1</xref> signature algorithm,
+            in combination with the <xref target="signed_list">Signed
+            List</xref> algorithm.
+          </t>
+          <t>
+            The size of the MAC key for HMAC-SHA1 associations is 160
+            bits.
+          </t>
+        </section>
+
+        <section title="HMAC-SHA1-SIGNALL" anchor="hmacsha1signall">
+          <t>
+            An association of type "HMAC-SHA1-SIGNALL" uses the <xref
+            target="sign_algos">HMAC-SHA1</xref> signature algorithm,
+            in combination with the <xref
+            target="sign_all">Sign-All</xref> algorithm.
+          </t>
+          <t>
+            The size of the MAC key for HMAC-SHA1 associations is 160
+            bits. 
+          </t>
+        </section>
+
+        <section title="HMAC-SHA256-SIGNALL" anchor="hmacsha256signall">
+          <t>
+            An association of type "HMAC-256-SIGNALL" uses the <xref
+            target="sign_algos">HMAC-SHA256</xref> signature
+            algorithm, in combination with the <xref
+            target="sign_all">Sign-All</xref> algorithm.
+          </t>
+          <t>
+            The size of the MAC key for HMAC-SHA256-SIGNALL is 256 bits.
+          </t>
+        </section>
       </section>
     </section>
+
 
     <section title="Requesting Authentication"
              anchor="requesting_authentication">
       <t>
         Once the Relying Party has successfully performed discovery
-        and optionally created an association with the discovered IdP
-        Endpoint URL, it can send the End User to the IdP to obtain an
-        assertion, using one of the mechanisms in <xref
-        target="indirect_comm" />.
+        and (optionally) created an association with the discovered
+        IdP Endpoint URL, it can send an authentication request to the
+        IdP to obtain an assertion. An authentication request is an
+        <xref target="indirect_comm">indirect request</xref>.
       </t>
 
       <section title="Request Parameters">
@@ -1448,9 +1342,10 @@ Base 10 number | btwoc string representation
                   available, otherwise the Claimed Identifier
                 </t>
                 <t>
-                  Note: The IdP MAY choose an identifier that belongs
-                  to the End User if this is set to the special value
-                  "http://openid.net/identifier_select/2.0".
+                  Note: If this is set to the special value
+                  "http://openid.net/identifier_select/2.0", the IdP
+                  MAY choose an identifier that belongs to the End
+                  User.
                 </t>
               </list>
             </t>
@@ -1525,9 +1420,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          The "openid.return_to" URL MUST match the
-          "openid.trust_root", or the IdP MUST return an error. A URL
-          matches a trust root if:
+          A URL matches a trust root if:
 
           <list style="symbols">
             <t>
@@ -1542,14 +1435,24 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              If the trust root's domain does not have a wild-card,
-              the character "*", the URL's domain is identical to the
-              trust root's domain. Otherwise, the trailing components
-              of the URL's domain is identical to the components of
-              the trust root following the wild-card.
-            </t>
+              Either:
+              <list style="numbers">
+                <t>
+                  The trust root's domain contains the wild-card
+                  characters "*.", and the trailing part of the URL's
+                  domain is identical to the part of the trust root
+                  following the "*." wildcard, or
+                </t>
+                <t> 
+                  The URL's domain is identical to the trust root's
+                  domain
+                </t>
+              </list>
+             </t>
           </list>
-                
+            
+          The "openid.return_to" URL MUST match the
+          "openid.trust_root", or the IdP MUST return an error.
         </t>
 
         <t>
@@ -1563,12 +1466,13 @@ Base 10 number | btwoc string representation
       <section title="Immediate Requests">
         <t>
           When requesting authentication, the Relying Party MAY
-          request that the IdP not interact with the End User, and
-          instead respond immediately with either an assertion that
-          they can and wants to proceed or a response indicating that
-          the request cannot be completed without further user
-          interaction.  This is accomplished by an authentication
-          request with "openid.mode" set to "checkid_immediate".
+          request that the IdP not interact with the End User.  In
+          this case the IdP MUST respond immediately with either an
+          assertion that authentication is successful, or a response
+          indicating that the request cannot be completed without
+          further user interaction.  This is accomplished by an
+          authentication request with "openid.mode" set to
+          "checkid_immediate".
         </t>
       </section>
     </section>
@@ -1576,58 +1480,48 @@ Base 10 number | btwoc string representation
     <section title="Responding to Authentication Requests"
              anchor="responding_to_authentication">
       <t>
-        An authentication request comes from the User-Agent. The IdP
-        SHOULD identify the User-Agent, through some method of
-        authentication or by browser session state, such as cookies.
-        How the End User authenticates to the IdP is outside of the
-        scope of OpenID Authentication. Once the End User has been
-        identified, the IdP should determine if the End User wishes
-        for this authentication request to complete. This
-        determination is also out of the scope of OpenID
-        Authentication. If the End User wishes for it to complete, the
-        End User has approved authentication, and a positive assertion
-        SHOULD be issued.
+        When an authentication request comes from the User-Agent, the
+        IdP SHOULD identify the User-Agent, and determine whether the
+        End User wishes to complete the authentication.  If the End
+        User can be identified and wishes to complete the
+        authentication, the IdP should send a <xref
+        target="positive_assertions">positive assertion</xref> to the
+        Relying Party.
       </t>
-
       <t>
-        Once the End User is known to the IdP, the IdP decides whether
-        to issue an assertion as specified in
-        <xref target="positive_assertions" />. If no Identifier was specified
-        and there are Identifiers that are in the control of the End User,
-        the IdP SHOULD allow the End User to choose an identifier to
-        assert control over to the Relying Party.  If an Identifier
-        was specified, the IdP SHOULD only issue assertions about the
-        specified Identifier.
+        Methods of identifying the end user and getting approval to
+        finish authentication are beyond the scope of this
+        specification.
       </t>
-
       <t>
-        In order to make an assertion, the IdP needs to have an
-        association for the response. If the Relying Party supplied an
-        association handle, the association information SHOULD be
-        looked up based on that handle. If the association is expired
-        or missing, the IdP SHOULD indicate to the Relying Party that
-        the association was invalid by setting the value of
-        "openid.invalidate_handle" to the Relying Party-specified
-        handle. If an invalid association was sent, aside from
-        including the "openid.invalidate_handle" parameter in the
-        response, the IdP should treat the request the same as a
-        request without an association handle specified.
+        If no Identifier was specified in the request and there are
+        Identifiers in the control of the End User, the IdP SHOULD
+        allow the End User to choose which Identifier to use.  If an
+        Identifier was specified, the IdP SHOUD only issue assertions
+        about the specified Identifier.
       </t>
-
       <t>
-        If no association handle is specified, the request is a "stateless
-        mode" request. The IdP will create a private
-        association for signing the response, and will respond to
-        later requests to check the signature of that response.
+        If the Relying Party supplied an association handle with the
+        authentication request, the IdP SHOULD attempt to look up an
+        association based on that handle.  If the association is
+        missing or expired, the IdP SHOULD the
+        "openid.invalidate_handle" parameter of the response to the
+        requests "openid.assoc_handle", and SHOULD proceed as if no
+        association handle was specified.
+      </t>
+      <t>
+        If no association handle is specified, the IdP SHOULD create a
+        private association for signing the response.  The IdP MUST
+        store this association and MUST respond to later requests to
+        check the signature of the response.
       </t>
 
       <section title="Positive Assertions" anchor="positive_assertions">
         <t>
-          If the End User approves the authentication, the Identity
-          Provider sends a response back through the User-Agent with
-          the following information as specified in
-          <xref target="indirect_comm" />:
-
+          Positive assertions are <xref target="indirect_comm">
+          indirect responses</xref> with the following fields:
+        </t>
+        <t>
           <list style='symbols'>
             <t>
               openid.ns
@@ -1753,236 +1647,26 @@ Base 10 number | btwoc string representation
                   Value: Base 64 encoded signature calculated as
                   specified in <xref target="generating_signatures"/>.
                 </t>
+
+                <t>
+                  Successful authentication messages from the Identity
+                  Provider to the Relying Party MUST be signed.
+                </t>
               </list>
             </t>
 
           </list>
+ 
         </t>
       </section>
 
-      <section title="Verifying Assertions">
-        <t>
-          If the Relying Party receives a positive assertion, it MUST
-          verify the following before accepting the assertion:
-
-          <list style="symbols">
-            <t>
-              An assertion has not yet been accepted from this
-              IdP with the same value for "openid.nonce"
-            </t>
-
-            <t>
-              The signature on the assertion is valid
-            </t>
-
-            <t>
-              Discovered information from the Identifier matches the
-              information in the assertion.
-            </t>
-          </list>
-        </t>
-
-        <section title="Verifying Discovered Information">
-          <t>
-            Either the Identifier in the assertion points to the
-            OpenID IdP making the assertion, or the assertion is being
-            made using <xref
-            target="delegating_authentication">delegation</xref> and
-            the Identifier with the delegate information points to
-            that IdP, and specifies the identifier in the assertion as
-            a delegate. Specifically, the Relying Party MUST have
-            performed <xref target="discovery">discovery</xref> on the
-            Identifier that will be used and the information in the
-            assertion MUST match the discovered information. When the
-            Claimed Identifier was not present in the request
-            ("openid.identity" was
-            "http://openid.net/identifier_select/2.0"), the Relying
-            Party MUST perform discovery on the identifier in the
-            response to make sure that the IdP is authorized to make
-            assertions about the identifier.
-          </t>
-
-          <t>
-            To prevent replay attacks, the Relying Party SHOULD keep
-            track of the nonce values included in positive assertions
-            and never accept the same value more than once for the
-            same association. The Relying Party MAY use the time-stamp
-            to reject responses that are outside of a range it has
-            chosen as accpetable, limiting the amount of time that
-            nonces must be stored to prevent replays.
-          </t>
-
-        </section>
-
-        <section title="Verifying Signatures"
-                 anchor="verifying_signatures">
-          <t>
-            If the Relying Party has stored an association with the
-            association handle specified in the assertion, it MUST
-            check the signature on the assertion itself. If no
-            association is found, it MUST request that the IdP verify
-            the signature.
-          </t>
-
-          <section title="Verifying with an Association" toc="exclude">
-            <t>
-              The Relying Party follows the same procedure that the
-              IdP followed in <xref target= "generating_signatures">
-              generating the signature</xref>, and then compares the
-              signature in the response to the signature it
-              generates. If the signatures do not match, the assertion
-              is invalid.
-            </t>
-          </section>
-
-          <section title="Verifying Directly with the Identity Provider"
-                   toc="exclude" anchor="check_auth">
-            <t>
-              If the association handle is not recognized, the Relying Party
-              MUST attempt to contact the IdP to verify
-              the signature. The Relying Party generates a POST to the
-              IdP Endpoint URL with the signed values from
-              the assertion and the association information. The
-              response to that request indicates whether the signature
-              is correct.
-            </t>
-
-            <t>
-              When the IdP is verifying the signature, the
-              "openid.mode" value MUST be changed to "id_res".
-            </t>
-
-            <t>
-              An IdP MUST NOT verify signatures for associations that
-              have shared MAC keys. If an IdP did verify signatures
-              for associations with shared MAC keys, it would be
-              possible for parties other than the IdP to create valid
-              assertions that seemed to come from the IdP.
-            </t>
-
-            <t>
-              The IdP SHOULD only return is_valid once for each
-              authentication request. An authentication request may be
-              identified by its "openid.nonce" value.
-            </t>
-
-            <t>
-              Implementation Note for Stateless Relying Parties:
-              The Relying Party must verify the signature at the same
-              IdP Endpoint from which it was issued.  In the event
-              that there are multiple endpoints defined for a Claimed
-              Identifier, this requires the Relying Party to remember
-              the endpoint with whom they are conversing.  The Relying
-              Party MAY choose to encode this information in a parameter
-              on the return_to URL it provides in the id_res request.
-              That encoded data MUST be signed to prevent tampering from
-              malicious agents.
-            </t>
-
-            <section title='Request Parameters' toc="exclude">
-              <t>
-                <list style='symbols'>
-                  <t>
-                    openid.mode
-                    <list style='empty'>
-                      <t>Value: "check_authentication"</t>
-                    </list>
-                  </t>
-
-                  <t>
-                    Exact copies of all fields from the id_res
-                    response, except for "openid.mode".
-                  </t>
-                </list>
-              </t>
-            </section>
-
-            <section title='Response Parameters' toc="exclude">
-              <t>Response format: Key-Value Pairs</t>
-
-              <t>
-                <list style='symbols'>
-                  <t>
-                    is_valid
-                    <list style='empty'>
-                      <t>Value: "true" or "false"</t>
-                      <t>Description: Boolean; whether the signature is
-                      valid.</t>
-                    </list>
-                  </t>
-
-                  <t>
-                    invalidate_handle
-                    <list style='empty'>
-                      <t>
-                        Value: (optional) An association handle
-                      </t>
-                      <t>
-                        Description: The association handle sent in
-                        the request, if the server confirms that it is
-                        invalid. After receiving an invalidate_handle
-                        for a particular association handle, the
-                        Relying Party SHOULD NOT use the association
-                        with that handle again.
-                      </t>
-                    </list>
-                  </t>
-                </list>
-              </t>
-            </section>
-          </section>
-        </section>
-      </section>
-
-      <section title="Identifying the End User" anchor="identifying">
-        <t>
-          A successful authentication response provides the Relying
-          Party with a Verified Identifier, which MAY be used as a
-          user-visible identifier.  Identifiers in OpenID MUST be URLs
-          or XRIs. If the identifier is a URL, its scheme MUST be
-          "http" or "https".  Except in the case that the Verified
-          Identifier is an XRI, the Relying Party SHOULD use the
-          Verified Identifier as a key for local storage of
-          information about the End User.  If the Verified Identifier
-          is an XRI, the discovered CanonicalID field from the XRD
-          SHOULD be used as a key for local storage of information
-          about the End User.
-        </t>
-
-        <t>
-          If a request is using delegation, the Verified Identifier is
-          the Identifier on which discovery was performed, and not the
-          identifier that is contained in the assertion. If an
-          assertion is made for an Identifier on which discovery has
-          not been performed, the Relying Party MUST perform discovery on
-          that Identifier and compare the discovered information to
-          that in the assertion.
-        </t>
-
-        <section title="HTTP and HTTPS URL Identifiers">
-          <t>
-            Relying Parties MUST differentiate between URL Identifiers
-            that have different schemes. When user input is processed
-            into a URL, it is processed into a HTTP URL. If the same
-            End User controls the same URL, differing only by scheme,
-            and it is desired that the Identifier be the HTTPS URL, it
-            is RECOMMENDED that a redirect be issued from the HTTP URL
-            to the HTTPS URL. Because the HTTP and HTTPS URLs are not
-            equivalent and the Identifier that is used is the URL
-            after following redirects, there is no reduction in
-            security when using this scheme. If an attacker could gain
-            control of the HTTP URL, it would have no effect on the
-            HTTPS URL, since the HTTP URL is not ever used as an
-            Identifier.
-          </t>
-        </section>
-      </section>
-        
       <section title="Negative Assertions" anchor="negative_assertions">
         <t>
-          The IdP sends a response back through the User-Agent if it
-          is unable to identify the End User or the End User does not
-          or cannot approve the request.
+          If the IdP is unable to identify the End User or the End
+          User does not or cannot approve the authentication request,
+          the IdP SHOULD send a negative assertion to the Relying
+          Party as an <xref target="indirect_comm">indirect
+          response</xref>.
         </t>
 
         <section title="In Response to Immediate Requests">
@@ -2039,6 +1723,229 @@ Base 10 number | btwoc string representation
           </t>
         </section>
       </section>
+    </section>
+
+    <section title="Verifying Assertions" anchor="verification">
+      <t>
+        If the Relying Party receives a positive assertion, it MUST
+        verify the following before accepting the assertion:
+
+        <list style="symbols">
+          <t>
+            An assertion has not yet been accepted from this
+            IdP with the same value for "openid.nonce"
+          </t>
+          <t>
+            The signature on the assertion is valid
+          </t>
+          <t>
+            Discovered information from the Identifier matches the
+            information in the assertion.
+          </t>
+        </list>
+      </t>
+
+      
+      <section title="Checking the Nonce">
+        <t>
+          To prevent replay attacks, the Relying Party SHOULD keep
+          track of the nonce values included in positive assertions
+          and never accept the same value more than once for the
+          same association. The Relying Party MAY use the time-stamp
+          to reject responses that are outside of a range it has
+          chosen as accpetable, limiting the amount of time that
+          nonces must be stored to prevent replays.
+        </t>
+      </section>
+
+      <section title="Verifying Signatures"
+               anchor="verifying_signatures">
+        <t>
+          If the Relying Party has stored an association with the
+          association handle specified in the assertion, it MUST check
+          the signature on the assertion itself. If it does not have
+          an association stored, it MUST request that the IdP verify
+          the signature.
+        </t>
+
+        <section title="Verifying with an Association" toc="exclude">
+          <t>
+            The Relying Party follows the same procedure that the
+            IdP followed in <xref target= "generating_signatures">
+            generating the signature</xref>, and then compares the
+            signature in the response to the signature it
+            generates. If the signatures do not match, the assertion
+            is invalid.
+          </t>
+        </section>
+
+        <section title="Verifying Directly with the Identity Provider"
+                 toc="exclude" anchor="check_auth">
+          <t>
+            To verify a signature directly with the IdP, the Relying
+            Party sends a direct request to the IdP.
+          </t>
+
+          <t>
+            Implementation Note for Stateless Relying Parties:
+            The Relying Party must verify the signature at the same
+            IdP Endpoint from which it was issued.  In the event
+            that there are multiple endpoints defined for a Claimed
+            Identifier, this requires the Relying Party to remember
+            the endpoint with whom they are conversing.  The Relying
+            Party MAY choose to encode this information in a parameter
+            on the return_to URL it provides in the id_res request.
+            That encoded data MUST be signed to prevent tampering from
+            malicious agents.
+          </t>
+
+          <section title='Request Parameters' toc="exclude">
+            <t>
+              <list style='symbols'>
+                <t>
+                  openid.mode
+                  <list style='empty'>
+                    <t>Value: "check_authentication"</t>
+                    <t>Note: The IdP MUST change this value back to
+                  "id_res" when checking the signature.</t>
+                   </list>
+                </t>
+
+                <t>
+                  Exact copies of all fields from the authentication
+                  response, except for "openid.mode".
+                </t>
+              </list>
+            </t>
+          </section>
+
+          <section title='Response Parameters' toc="exclude">
+            <t>
+              <list style='symbols'>
+                <t>
+                  is_valid
+                  <list style='empty'>
+                    <t>Value: "true" or "false"</t>
+                    <t>Description: Boolean; whether the signature is
+                    valid.</t>
+                  </list>
+                </t>
+
+                <t>
+                  invalidate_handle
+                  <list style='empty'>
+                    <t>
+                      Value: (optional) An association handle
+                    </t>
+                    <t>
+                      Description: The association handle sent in
+                      the request, if the server confirms that it is
+                      invalid. 
+                    </t>
+                  </list>
+                </t>
+              </list>
+            </t>
+            <t>
+              An IdP MUST NOT verify signatures for associations that
+              have shared MAC keys. If an IdP did verify signatures
+              for associations with shared MAC keys, it would be
+              possible for parties other than the IdP to create valid
+              assertions that seemed to come from the IdP.
+            </t>
+
+            <t>
+              The IdP SHOULD only return is_valid once for each
+              authentication request. An authentication request may be
+              identified by its "openid.nonce" value.
+            </t>
+
+          </section>
+        </section>
+      </section>
+
+      <section title="Verifying Discovered Information">
+        <t>
+          The Relying Party MUST have performed <xref
+          target="discovery">discovery</xref> on the Identifier that
+          will be used and the information in the assertion MUST
+          match the discovered information. 
+        </t>
+        <t>
+          Specifically, one of the following MUST be true:
+          <list style="numbers">
+            <t>
+              The Identifier in the assertion points to the IdP
+              making the assertion.
+            </t>
+            <t>
+              The Claimed Identifier specifies the identifier in the
+              assertion as a delegate, and the Delegate Identifier
+              points to the IdP making the assertion.
+            </t>
+          </list>
+        </t>
+        <t>
+          Note: The Relying Party must be able to look up the
+          Claimed Identifier in order to perform the second test.
+          Relying Parties unable to store information might append
+          the claimed identifier to the 'return_to' parameter in the
+          authentication request.
+        </t>
+        <t>
+          If the Claimed Identifier was not present in the request
+          ("openid.identity" was
+          "http://openid.net/identifier_select/2.0"), the Relying
+          Party MUST perform discovery on the identifier in the
+          response to make sure that the IdP is authorized to make
+          assertions about the identifier.
+        </t>
+      </section>
+
+      <section title="Identifying the End User" anchor="identifying">
+        <t>
+          A successful authentication response provides the Relying
+          Party with a Verified Identifier, which MAY be used as a
+          user-visible identifier.  Identifiers in OpenID MUST be URLs
+          or XRIs. If the identifier is a URL, its scheme MUST be
+          "http" or "https".  Except in the case that the Verified
+          Identifier is an XRI, the Relying Party SHOULD use the
+          Verified Identifier as a key for local storage of
+          information about the End User.  If the Verified Identifier
+          is an XRI, the discovered CanonicalID field from the XRD
+          SHOULD be used as a key for local storage of information
+          about the End User.
+        </t>
+
+        <t>
+          If a request is using delegation, the Verified Identifier is
+          the Identifier on which discovery was performed, and not the
+          identifier that is contained in the assertion. If an
+          assertion is made for an Identifier on which discovery has
+          not been performed, the Relying Party MUST perform discovery on
+          that Identifier and compare the discovered information to
+          that in the assertion.
+        </t>
+
+        <section title="HTTP and HTTPS URL Identifiers">
+          <t>
+            Relying Parties MUST differentiate between URL Identifiers
+            that have different schemes. When user input is processed
+            into a URL, it is processed into a HTTP URL. If the same
+            End User controls the same URL, differing only by scheme,
+            and it is desired that the Identifier be the HTTPS URL, it
+            is RECOMMENDED that a redirect be issued from the HTTP URL
+            to the HTTPS URL. Because the HTTP and HTTPS URLs are not
+            equivalent and the Identifier that is used is the URL
+            after following redirects, there is no reduction in
+            security when using this scheme. If an attacker could gain
+            control of the HTTP URL, it would have no effect on the
+            HTTPS URL, since the HTTP URL is not ever used as an
+            Identifier.
+          </t>
+        </section>
+      </section>
+        
 
     </section>
 
