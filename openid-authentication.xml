@@ -1788,19 +1788,6 @@ Base 10 number | btwoc string representation
             Party sends a direct request to the IdP.
           </t>
 
-          <t>
-            Implementation Note for Stateless Relying Parties:
-            The Relying Party must verify the signature at the same
-            IdP Endpoint from which it was issued.  In the event
-            that there are multiple endpoints defined for a Claimed
-            Identifier, this requires the Relying Party to remember
-            the endpoint with whom they are conversing.  The Relying
-            Party MAY choose to encode this information in a parameter
-            on the return_to URL it provides in the id_res request.
-            That encoded data MUST be signed to prevent tampering from
-            malicious agents.
-          </t>
-
           <section title='Request Parameters' toc="exclude">
             <t>
               <list style='symbols'>
