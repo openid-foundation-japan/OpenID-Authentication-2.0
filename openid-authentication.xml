@@ -681,7 +681,7 @@ Base 10 number | btwoc string representation
           needs to determine if the input is an XRI or a URL missing
           the "http://". To do so, the application SHOULD examine the
           first character of the input. If it is an XRI Global Context
-          Symbol (<xref target="XRI Syntax 2.0">Section 2.2.1.1 of XRI
+          Symbol (<xref target="XRI Syntax 2.0">Section 2.2.1.2 of XRI
           Syntax</xref>), then the input SHOULD be treated as an
           XRI<!-- convert the XRI to URI normal form? -->. If it is
           not, then the input SHOULD be treated as an http URL, and
