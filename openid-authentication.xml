@@ -1864,17 +1864,21 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              "invalidate_handle" will only be present when the
-              original authentication request to the IdP included an
-              association that the IdP deemed invalid. This implies
-              that it will only be present in this response if it was
-              also present in the <xref
+              If the IdP verifies responds with "is_valid" set to
+              "true", and "invalidate_handle" is present, the Relying
+              Party SHOULD NOT send further authentication requests
+              with that handle.  "invalidate_handle" will only be
+              present when the original authentication request to the
+              IdP included an association that the IdP deemed
+              invalid. This implies that it will only be present in
+              this response if it was also present in the <xref
               target="positive_assertions">"id_res"
               response</xref>. Including "invalidate_handle" in the
               direct verification is necessary to prevent an attacker
               from invalidating an association at will by adding it to
               an authentication response.
             </t>
+
           </section>
         </section>
       </section>
