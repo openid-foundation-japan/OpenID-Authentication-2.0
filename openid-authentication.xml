@@ -72,7 +72,7 @@
       </address>
     </author>
 
-    <date month="September" year="2006"/>
+    <date month="August" year="2006"/>
 
     <abstract>
       <t>
@@ -615,6 +615,11 @@ Base 10 number | btwoc string representation
           target="RFC2104" />, <xref target="RFC3174" />), and
           HMAC-SHA256 (<xref target="RFC2104" />, <xref
           target="FIPS180-2" />).
+        </t>
+        <t>
+          Keys for associations that use HMAC-SHA1 signatures are 160
+          bits. Keys for associations that use HMAC-SHA256 are 256
+          bits.
         </t>
       </section>
 
@@ -1256,10 +1261,6 @@ Base 10 number | btwoc string representation
             in combination with the <xref target="signed_list">Signed
             List</xref> algorithm.
           </t>
-          <t>
-            The size of the MAC key for HMAC-SHA1 associations is 160
-            bits.
-          </t>
         </section>
 
         <section title="HMAC-SHA1-SIGNALL" anchor="hmacsha1signall">
@@ -1269,10 +1270,6 @@ Base 10 number | btwoc string representation
             in combination with the <xref
             target="sign_all">Sign-All</xref> algorithm.
           </t>
-          <t>
-            The size of the MAC key for HMAC-SHA1 associations is 160
-            bits. 
-          </t>
         </section>
 
         <section title="HMAC-SHA256-SIGNALL" anchor="hmacsha256signall">
@@ -1281,9 +1278,6 @@ Base 10 number | btwoc string representation
             target="sign_algos">HMAC-SHA256</xref> signature
             algorithm, in combination with the <xref
             target="sign_all">Sign-All</xref> algorithm.
-          </t>
-          <t>
-            The size of the MAC key for HMAC-SHA256-SIGNALL is 256 bits.
           </t>
         </section>
       </section>
