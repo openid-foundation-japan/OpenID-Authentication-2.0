@@ -4,7 +4,7 @@
 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml'>
 ]>
 
-<rfc category="info" ipr="none" docName="openid-authentication-2_0-09.xml">
+<rfc category="info" ipr="none" docName="openid-authentication-2_0-10.xml">
   <?xml-stylesheet type='text/xsl'
     href='http://xml.resource.org/authoring/rfc2629.xslt' ?>
 
@@ -16,7 +16,7 @@
   <?rfc private="Draft" ?>
 
   <front>
-    <title>OpenID Authentication 2.0 - Draft 09</title>
+    <title>OpenID Authentication 2.0 - Draft 10</title>
 
     <author initials="D.R" surname="Recordon" fullname="David Recordon">
       <organization abbrev="VeriSign">VeriSign, Inc.</organization>
