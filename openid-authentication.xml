@@ -711,9 +711,9 @@ Base 10 number | btwoc string representation
 
             <t>
               If the identifier is an XRI, <eref
-              target="http://www.oasis-open.org/committees/download.php/17293">XRI
-              resolution</eref> will yield an XRDS document that
-              contains the necessary information.
+              target="http://www.oasis-open.org/committees/download.php/17293"
+              >XRI resolution</eref> will yield an XRDS document
+              that contains the necessary information.
             </t>
 
             <t>
