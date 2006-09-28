@@ -1035,18 +1035,23 @@ Base 10 number | btwoc string representation
               <t>
                 session_type
                 <list style="empty">
-                  <t> The session type for this session. Valid values
+                  <t>
+                    The session type for this session. Valid values
                     are listed in <xref target="assoc_types"/>, but
-                    the server MUST respond with either the same value
-                    as the request's "openid.session_type" parameter,
-                    or the value "no-encryption".  If the server is
-                    unable or unwilling to support either of these
-                    session types, it MUST return an unsuccessful
-                    response instead</t>
-                  <t>Default: "no-encryption"</t>
-                  <t>NOTE: For backwards compatibility, omit the
-                     session_type parameter when making "no-encryption"
-                     responses.</t> 
+                    the server MUST respond with the same value as the
+                    request's "openid.session_type" parameter.  If the
+                    server is unable or unwilling to support either of
+                    these session types, it MUST return an
+                    unsuccessful response instead
+                  </t>
+                  <t>
+                    Default: "no-encryption"
+                  </t>
+                  <t>
+                    NOTE: For backwards compatibility, omit the
+                    session_type parameter when making "no-encryption"
+                    responses.
+                  </t>
                 </list>
               </t>
               <t>
@@ -1230,13 +1235,6 @@ Base 10 number | btwoc string representation
             the hash function - 160 bits (20 bytes) for DH-SHA1 or 256
             bits (32 bytes) for DH-SHA256, as well as the output of
             the signature algorithm of for this association.
-          </t>
-
-          <t>
-            If the IdP does not support Diffie-Hellman,
-            it MUST ignore the Diffie-Hellman fields in the request
-            and reply with a no-encryption association session response.
-            Relying Parties MAY choose to use "stateless mode" in this case.
           </t>
 
           <t>
