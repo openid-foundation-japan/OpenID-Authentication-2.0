@@ -1594,9 +1594,10 @@ Base 10 number | btwoc string representation
               openid.invalidate_handle
               <list style='empty'>
                 <t>
-                  Value: (optional) If the Relying Party sent an invalid
-                  association handle with the request, it should be
-                  included here.
+                  Value: (optional) If the Relying Party sent an
+                  invalid association handle with the request, it
+                  should be included here. If it is present, this
+                  field SHOULD be signed.
                 </t>
               </list>
             </t>
@@ -1719,7 +1720,7 @@ Base 10 number | btwoc string representation
 
     <section title="Verifying Assertions" anchor="verification">
       <t>
-        If the Relying Party receives a positive assertion, it MUST
+        When the Relying Party receives a positive assertion, it MUST
         verify the following before accepting the assertion:
 
         <list style="symbols">
@@ -1778,6 +1779,19 @@ Base 10 number | btwoc string representation
             signature in the response to the signature it
             generates. If the signatures do not match, the assertion
             is invalid.
+          </t>
+
+          <t>
+            If an authentication request included an association
+            handle for an association between the IdP and the Relying
+            party, and the IdP no longer wishes to use that handle
+            (because it has expired or the secret has been
+            compromised, for instance), the IdP will send a response
+            that must be verified directly with the IdP, as specified
+            in <xref target="check_auth" />. In that instance, the IdP
+            will include the field "openid.invalidate_handle" set to
+            the association handle that the Relying party included
+            with the original request.
           </t>
         </section>
 
@@ -1849,6 +1863,18 @@ Base 10 number | btwoc string representation
               identified by its "openid.nonce" value.
             </t>
 
+            <t>
+              "invalidate_handle" will only be present when the
+              original authentication request to the IdP included an
+              association that the IdP deemed invalid. This implies
+              that it will only be present in this response if it was
+              also present in the <xref
+              target="positive_assertions">"id_res"
+              response</xref>. Including "invalidate_handle" in the
+              direct verification is necessary to prevent an attacker
+              from invalidating an association at will by adding it to
+              an authentication response.
+            </t>
           </section>
         </section>
       </section>
