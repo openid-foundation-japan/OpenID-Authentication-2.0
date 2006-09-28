@@ -1745,7 +1745,7 @@ Base 10 number | btwoc string representation
           To prevent replay attacks, the Relying Party SHOULD keep
           track of the nonce values included in positive assertions
           and never accept the same value more than once for the
-          same association. The Relying Party MAY use the time-stamp
+          same IdP Endpoint URL. The Relying Party MAY use the time-stamp
           to reject responses that are outside of a range it has
           chosen as accpetable, limiting the amount of time that
           nonces must be stored to prevent replays.
