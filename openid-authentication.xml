@@ -1571,7 +1571,7 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              openid.nonce
+              openid.response_nonce
               <list style='empty'>
                 <t>
                   Value: A string that MUST be unique to this
@@ -1625,10 +1625,10 @@ Base 10 number | btwoc string representation
                   present.  If it is present, this entry consists of
                   the fields without the "openid." prefix that the
                   signature covers. This list MUST contain at least
-                  "return_to" and "nonce". Additionally, if the server
+                  "return_to" and "response_nonce". Additionally, if the server
                   is making an assertion about an identifier, the
                   identity field MUST be present. For example,
-                  "identity,return_to,nonce".
+                  "identity,return_to,response_nonce".
                 </t>
               </list>
             </t>
@@ -1726,7 +1726,7 @@ Base 10 number | btwoc string representation
         <list style="symbols">
           <t>
             An assertion has not yet been accepted from this
-            IdP with the same value for "openid.nonce"
+            IdP with the same value for "openid.response_nonce"
           </t>
           <t>
             The signature on the assertion is valid
@@ -1860,7 +1860,7 @@ Base 10 number | btwoc string representation
             <t>
               The IdP SHOULD only return is_valid once for each
               authentication request. An authentication request may be
-              identified by its "openid.nonce" value.
+              identified by its "openid.response_nonce" value.
             </t>
 
             <t>

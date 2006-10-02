@@ -271,8 +271,8 @@ message.
 Nonce and Time stamp
 --------------------------------------------------
 
-OpenID 2.0 adds a nonce and time stamp to successful authentication
-assertions.
+OpenID 2.0 adds a nonce to the request from the IdP and time stamp to
+successful authentication assertions.
 
 Motivating Use Cases
 ..................................................
