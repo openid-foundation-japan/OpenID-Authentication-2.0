@@ -888,7 +888,7 @@ Base 10 number | btwoc string representation
             OpenID 1.1 HTML-based discovery SHOULD be supported by
             Relying Parties.  If a Relying Party locates an IdP using
             HTML-based discovery, it MUST use <xref
-            target="compat_mode">Compatibility Mode</xref> when
+            target="compat_mode">OpenID 1.1 Compatibility</xref> when
             communicating with that IdP.
           </t>
 
@@ -1316,7 +1316,7 @@ Base 10 number | btwoc string representation
                   with this parameter missing or with a lower version
                   number, it SHOULD still respond to the request.  If
                   it does respond it MUST use <xref
-                  target="compat_mode">Compatibility Mode</xref> when
+                  target="compat_mode">OpenID 1.1 Compatibility</xref> when
                   communicating with that Relying Party.
                 </t>
               </list>
@@ -1980,7 +1980,7 @@ Base 10 number | btwoc string representation
     </section>
 
 
-    <section title="Compatibility Mode" anchor="compat_mode">
+    <section title="OpenID 1.1 Compatibility" anchor="compat_mode">
       <t>
         OpenID 2.0 attempts to retain maximum compatibility with
         earlier versions of the OpenID specification, but this is not
