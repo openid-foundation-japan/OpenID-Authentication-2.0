@@ -1145,7 +1145,8 @@ Base 10 number | btwoc string representation
           </t>
         </section>
 
-        <section title="Unsuccessful Response Parameters">
+        <section anchor="refuse_assoc"
+                 title="Unsuccessful Response Parameters">
           <t>
             If the IdP does not support an association session type or
             association type, it MUST respond with a message
