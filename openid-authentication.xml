@@ -883,7 +883,7 @@ Base 10 number | btwoc string representation
 
         </section>
 
-        <section title="HTML-Based Discovery">
+        <section anchor="html_disco" title="HTML-Based Discovery">
           <t>
             OpenID 1.1 HTML-based discovery SHOULD be supported by
             Relying Parties.  If a Relying Party locates an IdP using
