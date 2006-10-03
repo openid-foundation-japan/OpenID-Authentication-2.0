@@ -885,9 +885,11 @@ Base 10 number | btwoc string representation
 
         <section title="HTML-Based Discovery">
           <t>
-            OpenID 1.1 HTML-based discovery MUST be supported by
-            Relying Parties.  The host of the HTML document MAY be
-            different from the End User's IdP's host.
+            OpenID 1.1 HTML-based discovery SHOULD be supported by
+            Relying Parties.  If a Relying Party locates an IdP using
+            HTML-based discovery, it MUST use <xref
+            target="compat_mode">Compatibility Mode</xref> when
+            communicating with that IdP.
           </t>
 
           <t>
@@ -907,6 +909,10 @@ Base 10 number | btwoc string representation
                 End User's Delegate Identifier
               </t>
             </list>
+          </t>
+
+          <t> The host of the HTML document MAY be different from the
+            End User's IdP's host.
           </t>
 
           <t>
@@ -1302,9 +1308,16 @@ Base 10 number | btwoc string representation
                   Value: "http://openid.net/signon/2.0"
                 </t>
                 <t>
-                  Note: This defines the interpretation of the openid
-                  arguments without a namespace.  To be an OpenID 2.0
-                  request, the given value must be present.
+                  This value MUST be present for the request to be a
+                  valid OpenID 2.0 request.
+                </t>
+                <t>
+                  Note: If an IdP receives an authentication request
+                  with this parameter missing or with a lower version
+                  number, it SHOULD still respond to the request.  If
+                  it does respond it MUST use <xref
+                  target="compat_mode">Compatibility Mode</xref> when
+                  communicating with that Relying Party.
                 </t>
               </list>
             </t>
@@ -1964,7 +1977,45 @@ Base 10 number | btwoc string representation
           </t>
         </section>
       </section>
-        
+    </section>
+
+
+    <section title="Compatibility Mode" anchor="compat_mode">
+      <t>
+        OpenID 2.0 attempts to retain maximum compatibility with
+        earlier versions of the OpenID specification, but this is not
+        universally possible.  This section lists the behavioral
+        changes REQUIRED of an OpenID 2.0 IdP or Relying Party when
+        communicating with an earlier-protocol peer.
+      </t>
+
+      <section title="Relying Parties">
+      <t>
+        <list style="symbols">
+          <t> openid.identity MUST NOT be the special value
+          "http://openid.net/identifier_select/2.0"</t>
+
+          <t> The Relying Party MUST accept an authentication response
+        that is missing the 'nonce' parameter.  It SHOULD implement an
+        out-of-band method for preventing replay attacks.</t> 
+
+        </list>
+      </t>
+      </section>
+
+      <section title="IdPs">
+        <t>
+          <list style="symbols">
+            <t>openid.identity MUST be sent in an authentication
+            response</t>
+
+            <t> Unsuccessful authentication responses MUST NOT be
+          sent.  The IdP SHOULD send a successful response with
+          openid.assoc_type set to 'no-encryption' instead.</t>
+
+          </list>
+        </t>
+      </section>
 
     </section>
 
