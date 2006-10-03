@@ -1053,11 +1053,6 @@ Base 10 number | btwoc string representation
                   <t>
                     Default: "no-encryption"
                   </t>
-                  <t>
-                    NOTE: For backwards compatibility, omit the
-                    session_type parameter when making "no-encryption"
-                    responses.
-                  </t>
                 </list>
               </t>
               <t>
@@ -1986,20 +1981,44 @@ Base 10 number | btwoc string representation
         OpenID 2.0 attempts to retain maximum compatibility with
         earlier versions of the OpenID specification, but this is not
         universally possible.  This section lists the behavioral
-        changes REQUIRED of an OpenID 2.0 IdP or Relying Party when
+        changes required of an OpenID 2.0 IdP or Relying Party when
         communicating with an earlier-protocol peer.
+      </t>
+
+      <t>
+        OpenID 2.0 implementations SHOULD support OpenID 1.1
+        compatibility, unless security considerations make it
+        undesireable.
+      </t>
+
+      <t>
+        All messages in OpenID 1.1 omit the "openid.ns"
+        parameter. OpenID 1.1 only supports HMAC-SHA1 associations.
       </t>
 
       <section title="Relying Parties">
       <t>
         <list style="symbols">
-          <t> openid.identity MUST NOT be the special value
-          "http://openid.net/identifier_select/2.0"</t>
+          <t>
+            Relying Parties MUST implement <xref
+            target="html_disco">HTML-Based Discovery</xref>.
+          </t>
 
-          <t> The Relying Party MUST accept an authentication response
-        that is missing the 'nonce' parameter.  It SHOULD implement an
-        out-of-band method for preventing replay attacks.</t> 
+          <t>
+            In <xref target="requesting_authentication">authentication
+            requests</xref>, the "openid.identity" parameter MUST NOT
+            be the special value
+            "http://openid.net/identifier_select/2.0", because OpenID
+            1.1 does not support IdP-driven identifier selection.
+          </t>
 
+          <t>
+            The Relying Party MUST accept an <xref
+            target="positive_assertions">authentication
+            response</xref> that is missing the 'nonce' parameter.  It
+            SHOULD implement an out-of-band method for preventing
+            replay attacks.
+          </t> 
         </list>
       </t>
       </section>
@@ -2007,12 +2026,27 @@ Base 10 number | btwoc string representation
       <section title="IdPs">
         <t>
           <list style="symbols">
-            <t>openid.identity MUST be sent in an authentication
-            response</t>
+            <t>
+              openid.identity MUST be sent in a <xref
+                  target="positive_assertions">positive authentication
+              assertion</xref>.
+            </t>
 
-            <t> Unsuccessful authentication responses MUST NOT be
-          sent.  The IdP SHOULD send a successful response with
-          openid.assoc_type set to 'no-encryption' instead.</t>
+            <t>
+              <xref target="refuse_assoc">Unsuccessful association
+              responses</xref> MUST NOT be sent, since they are not
+              part of the OpenID protocol.
+            </t>
+
+            <t>
+              IdPs MAY choose to return a successful "no-encryption"
+              response to any association request.
+            </t>
+
+            <t>
+              Omit the session_type parameter when making
+              "no-encryption" responses to "associate" requests.
+            </t>
 
           </list>
         </t>
