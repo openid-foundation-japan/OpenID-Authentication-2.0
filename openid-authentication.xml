@@ -387,7 +387,7 @@ Base 10 number | btwoc string representation
               If a request is malformed or contains invalid arguments,
               the server MUST send a response with a status code of
               400. The response body will be a <xref target="kvform"/>
-              message withe following fields:
+              message with the following fields:
             </t>
             <t>
               <list style='symbols'>
