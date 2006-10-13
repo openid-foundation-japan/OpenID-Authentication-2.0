@@ -1382,11 +1382,11 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              openid.trust_root
+              openid.realm
               <list style='empty'>
                 <t>
                   Value: (optional) URL pattern the Provider SHALL ask the End
-                  User to trust. See <xref target="trust_roots" />.
+                  User to trust. See <xref target="realms" />.
                 </t>
                 <t>
                   Default: return_to URL
@@ -1397,26 +1397,26 @@ Base 10 number | btwoc string representation
         </t>
       </section>
       
-      <section title="Trust Roots" anchor="trust_roots">
+      <section title="Realms" anchor="realms">
         <t>
-          A "trust root" is a pattern that represents the part of
+          A "realm" is a pattern that represents the part of
           URL-space for which an OpenID authentication request is
-          valid. A trust root SHOULD give the End User an indication
+          valid. A realm SHOULD give the End User an indication
           of the scope of the authentication request. IdPs SHOULD
-          present the trust root when requesting the End User's
+          present the realm when requesting the End User's
           approval for an authentication request. IdPs MAY use the
-          trust root to allow the End User to automate approval of
+          realm to allow the End User to automate approval of
           authentication requests.
         </t>
 
         <t>
-          A trust root pattern is a URL, with the following changes:
+          A realm pattern is a URL, with the following changes:
           <list style="symbols">
             <t>
-              A trust root MUST NOT contain a URI fragment
+              A realm MUST NOT contain a URI fragment
             </t>
             <t>
-              A trust root MAY contain a wild-card at the beginning of
+              A realm MAY contain a wild-card at the beginning of
               the URL authority section.  A wild-card consists of the
               characters "*." prepended to the DNS name in the
               authority section of the URL.
@@ -1425,31 +1425,31 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          A URL matches a trust root if:
+          A URL matches a realm if:
 
           <list style="symbols">
             <t>
               The URL scheme (<xref target="RFC3986">RFC 3986, section
               3.1</xref>) and port of the URL are identical to
-              those in the trust root.
+              those in the realm.
             </t>
 
             <t>
               The URL's path is equal to or a sub-directory of the
-              trust root's path.
+              realm's path.
             </t>
 
             <t>
               Either:
               <list style="numbers">
                 <t>
-                  The trust root's domain contains the wild-card
+                  The realm's domain contains the wild-card
                   characters "*.", and the trailing part of the URL's
-                  domain is identical to the part of the trust root
+                  domain is identical to the part of the realm
                   following the "*." wildcard, or
                 </t>
                 <t> 
-                  The URL's domain is identical to the trust root's
+                  The URL's domain is identical to the realm's
                   domain
                 </t>
               </list>
@@ -1457,13 +1457,13 @@ Base 10 number | btwoc string representation
           </list>
             
           The "openid.return_to" URL MUST match the
-          "openid.trust_root", or the IdP MUST return an error.
+          "openid.realm", or the IdP MUST return an error.
         </t>
 
         <t>
           It is RECOMMENDED that IdP's protect their End Users from
-          requests with overly-general trust roots, like http://*.com/
-          or http://*.co.uk/. Whether a trust root is overly-general
+          requests with overly-general realms, like http://*.com/
+          or http://*.co.uk/. Whether a realm is overly-general
           is at the discretion of the IdP.
         </t>
       </section>
@@ -2017,6 +2017,12 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
+            The "openid.realm" parameter in authentication requests
+            was known as "trust_root". The syntax and meaning were
+            identical.
+          </t>
+
+          <t>
             The Relying Party MUST accept an <xref
             target="positive_assertions">authentication
             response</xref> that is missing the 'nonce' parameter.  It
@@ -2050,6 +2056,12 @@ Base 10 number | btwoc string representation
             <t>
               Omit the session_type parameter when making
               "no-encryption" responses to "associate" requests.
+            </t>
+
+            <t>
+              The "openid.realm" parameter in authentication requests
+              was known as "trust_root". The syntax and meaning were
+              identical.
             </t>
 
           </list>
