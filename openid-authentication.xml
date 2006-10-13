@@ -994,8 +994,8 @@ Base 10 number | btwoc string representation
 
         <section title="Diffie-Hellman Request Parameters" toc="exclude">
           <t>
-            When the requested session type is DH-SHA1 or DH-SHA256,
-            the following parameters MUST be present:
+            The following parameters are common to requests whose
+            requested session type is DH-SHA1 or DH-SHA256:
           </t>
           <t>
             <list style="symbols">
