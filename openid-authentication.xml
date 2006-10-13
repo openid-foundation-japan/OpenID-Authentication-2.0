@@ -2303,7 +2303,7 @@ Base 10 number | btwoc string representation
 
         <t>
           <figure>
-            <preamble>For Example:</preamble>
+            <preamble>For example:</preamble>
             <artwork>
               ----------------------------------
               |[logo]example.com               | [Login Button]
