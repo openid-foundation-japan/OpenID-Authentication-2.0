@@ -551,105 +551,81 @@ Base 10 number | btwoc string representation
         target="RFC1750" /> SHOULD be followed.
       </t>
 
-      <section title="List Algorithms">
+      <section title="Signed List Algorithm" anchor="signed_list"
+               toc="exclude">
+
         <t>
-          There are two methods for determining the list of keys and
-          values to be signed.  The "Signed List" algorithm only signs
-          those keys and values that have been explicitly requested.
-          The "Sign-All" algorithm signs all key-value pairs found.
+          The input to the Signed List Algorithm are the message
+          to be signed, and the list of message keys that are to be
+          signed with the "openid." prefix removed.
         </t>
-
-        <section title="Signed List Algorithm" anchor="signed_list"
-                 toc="exclude">
-
-          <t> The input to the Signed List Algorithm are the message
-            to be signed, and the list of message keys that are to be
-            signed with the "openid." prefix removed.
-          </t>
-          <t>
-            To compute the list of key/value pairs to be signed:
-            <list style="numbers">
-              <t> 
+        <t>
+          To compute the list of key/value pairs to be signed:
+          <list style="numbers">
+            <t> 
               Iterate through the list of keys to be signed in
               the order they appear.  For each key, find the value in
               the message whose key is equal to the signed list key
               prefixed with "openid."
-              </t>
-              <t>
-                Append the signed list key and the associated value to
-                the message to be signed.
-              </t>
-            </list>
-          </t>
-          <t> The output of this algorithm is the message to be
-            signed, and the list of keys that were signed.  A message
-            signed using this algorithm MUST append the list of signed
-            fields to message.
-          </t>
-          <t>
-            Because it strips the "openid." prefix from message
-            keys while looking for a match, this algorithm can only
-            sign elements that have keys beginning with "openid."
-          </t>
-        </section>
-
-        <section title="Sign-All Algorithm" anchor="sign_all" toc="exclude">  
-          <t>
-            The input to the Sign-All Algorithm is the message to be signed.
-          </t>
-          <t>
-            To compute the list of key/value pairs to be signed, sort
-            the key/value pairs in the message in byte order.
-          </t>
-          <t>
-            The output of this algorithm is the message to be signed.
-          </t>
-          <t> 
-            Unlike the Signed List Algorithm, Sign-All does not
-            strip the "openid." prefix from message keys.
-          </t>  
-        </section>
-      </section>
-
-      <section title="Signature Algorithms" anchor="sign_algos">
-        <t>
-          OpenID supports two signature algorithms: HMAC-SHA1(<xref
-          target="RFC2104" />, <xref target="RFC3174" />), and
-          HMAC-SHA256 (<xref target="RFC2104" />, <xref
-          target="FIPS180-2" />).
-        </t>
-        <t>
-          Keys for associations that use HMAC-SHA1 signatures are 160
-          bits. Keys for associations that use HMAC-SHA256 are 256
-          bits.
-        </t>
-      </section>
-
-
-      <section title="Procedure">
-        <t>
-          To generate a message signature:
-          <list style="numbers">
-            <t> 
-              Determine the appropriate signature list and signature
-              algorithm from the <xref
-              target="associations">association type</xref>.
             </t>
-            <t> 
-              Generate the list to be signed using the correct list
-              algorithm.
-            </t>
-            <t> 
-              Convert the list to an octet string by encoding
-              with <xref target="kvform">Key Value Form</xref>
-            </t>
-            <t> 
-              Apply the correct signature algorithm to the
-              octet string.
+            <t>
+              Append the signed list key and the associated value to
+              the message to be signed.
             </t>
           </list>
         </t>
+        <t>
+          The output of this algorithm is the message to be
+          signed, and the list of keys that were signed.  A message
+          signed using this algorithm MUST append the list of signed
+          fields to message.
+        </t>
+        <t>
+          Because it strips the "openid." prefix from message
+          keys while looking for a match, this algorithm can only
+          sign elements that have keys beginning with "openid."
+        </t>
       </section>
+    </section>
+
+    <section title="Signature Algorithms" anchor="sign_algos">
+      <t>
+        OpenID supports two signature algorithms: HMAC-SHA1(<xref
+            target="RFC2104" />, <xref target="RFC3174" />), and
+        HMAC-SHA256 (<xref target="RFC2104" />, <xref
+            target="FIPS180-2" />).
+      </t>
+      <t>
+        Keys for associations that use HMAC-SHA1 signatures are 160
+        bits. Keys for associations that use HMAC-SHA256 are 256
+        bits.
+      </t>
+    </section>
+
+
+    <section title="Procedure">
+      <t>
+        To generate a message signature:
+        <list style="numbers">
+          <t> 
+            Determine the appropriate signature list and signature
+            algorithm from the <xref
+                target="associations">association type</xref>.
+          </t>
+          <t> 
+            Generate the list to be signed using the correct list
+            algorithm.
+          </t>
+          <t> 
+            Convert the list to an octet string by encoding
+            with <xref target="kvform">Key Value Form</xref>
+          </t>
+          <t> 
+            Apply the correct signature algorithm to the
+            octet string.
+          </t>
+        </list>
+      </t>
     </section>
 
 
@@ -1267,21 +1243,12 @@ Base 10 number | btwoc string representation
           </t>
         </section>
 
-        <section title="HMAC-SHA1-SIGNALL" anchor="hmacsha1signall">
+        <section title="HMAC-SHA256" anchor="hmacsha256">
           <t>
-            An association of type "HMAC-SHA1-SIGNALL" uses the <xref
-            target="sign_algos">HMAC-SHA1</xref> signature algorithm,
-            in combination with the <xref
-            target="sign_all">Sign-All</xref> algorithm.
-          </t>
-        </section>
-
-        <section title="HMAC-SHA256-SIGNALL" anchor="hmacsha256signall">
-          <t>
-            An association of type "HMAC-256-SIGNALL" uses the <xref
+            An association of type "HMAC-256" uses the <xref
             target="sign_algos">HMAC-SHA256</xref> signature
             algorithm, in combination with the <xref
-            target="sign_all">Sign-All</xref> algorithm.
+            target="signed_list">Signed List</xref> algorithm.
           </t>
         </section>
       </section>
