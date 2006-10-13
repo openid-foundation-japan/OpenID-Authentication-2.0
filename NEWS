@@ -184,21 +184,17 @@ HTML that automates the submission of the form as a convenience for
 the end user.
 
 
-HMAC-SHA1-SIGNALL, HMAC-SHA256-SIGNALL Associations
+HMAC-SHA256 Associations
 ---------------------------------------------------
 
 An association that use HMAC-SHA256 to generate message 
 authentication codes (signatures) for protocol messages has been
 added.  
 
-The new asociations (\*-SIGNALL) use a sign-all algorithm that signs
-all key value pairs.
-
 Motivating Use Cases
 ..................................................
 
-HMAC-SHA256 was a recommendation of security review.   Signing 
-all key values pairs allows the signature to cover all fields.
+HMAC-SHA256 was a recommendation of security review.
 
 Proposed Implementation
 ..................................................
@@ -207,10 +203,6 @@ HMAC-SHA256 associations are identical to HMAC-SHA1 associations,
 except that they use a different keyed MAC algorithm to generate
 signatures. Because the key length is different, an additional
 association session type, DH-SHA256, is also necessary.
-
-The new sign-all algorithm generates a Key-Value Form string 
-(Key-Value Form Encoding) built from all the (key, value) pairs 
-in the message sorted in byte order.
 
 
 Association Negotiation
