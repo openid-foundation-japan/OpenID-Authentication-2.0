@@ -957,8 +957,7 @@ Base 10 number | btwoc string representation
          
         <section title="Common Request Parameters" toc="exclude">
           <t> 
-            These parameters MUST be present for all association
-            requests:
+            These parameters are common to all association requests:
           </t>
           <t>
             <list style="symbols">
