@@ -349,3 +349,21 @@ openid.ns will have the value of "http://openid.net/signon/2.0" for
 OpenID 2.0 messages.
 
 
+
+trust_root Renamed to realm
+--------------------------------------------------
+
+Terminology fix to match common usage.
+
+Motivating Use Cases
+..................................................
+
+A "root" of "trust" has a specific meaning in Public Key
+cryptography. This meaning is different from the meaning of the
+trust_root parameter in OpenID 1, potentially causing confusion.
+
+Proposed Implementation
+--------------------------------------------------
+
+Use the name "realm" to refer to the domain over which an
+authentication decision is applicable.
