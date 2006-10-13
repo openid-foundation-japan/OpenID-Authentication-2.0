@@ -1219,7 +1219,7 @@ Base 10 number | btwoc string representation
             the key, and forge messages to this Relying Party.
             Therefore, no-encryption association sessions SHOULD NOT
             be used unless the messages are using transport-level
-            encryption (HTTP).
+            encryption.
           </t>
 
           <t>
