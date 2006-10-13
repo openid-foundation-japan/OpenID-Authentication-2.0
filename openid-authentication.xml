@@ -870,8 +870,11 @@ Base 10 number | btwoc string representation
             <t>
               For compatibility with deployed code, it is RECOMMENDED
               that a Relying Party also accept
-              "http://openid.net/signon/1.0" for the value of
-              &lt;xrd:Type&gt;.
+              "http://openid.net/signon/1.0" or
+              "http://openid.net/signon/1.1" for the value of
+              &lt;xrd:Type&gt;. When one of these values is used, the
+              Relying Party MUST use <xref target="compat_mode">OpenID
+              1.1 compatibility</xref>.
             </t>
 
             <t>
