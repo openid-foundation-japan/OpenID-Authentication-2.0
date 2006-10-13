@@ -1992,7 +1992,7 @@ Base 10 number | btwoc string representation
       <t>
         OpenID 2.0 implementations SHOULD support OpenID 1.1
         compatibility, unless security considerations make it
-        undesireable.
+        undesirable.
       </t>
 
       <t>
