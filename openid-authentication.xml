@@ -2169,7 +2169,7 @@ Base 10 number | btwoc string representation
             in the middle, except during discovery, association
             sessions and stateless mode. Altering signed fields
             without the shared secret requires breaking the
-            MAC. Currently, there is no tractable attack on the MACs
+            MAC. Currently, no tractable attack is known on the MACs
             used in this protocol. The quality of the protection
             provided by the MAC depends on the randomness of the
             shared MAC key, so it is important that an unguessable
