@@ -72,7 +72,7 @@
       </address>
     </author>
 
-    <date month="August" year="2006"/>
+    <date month="October" year="2006"/>
 
     <abstract>
       <t>
@@ -97,9 +97,9 @@
       </t>
 
       <t>
-        OpenID uses only standard HTTP requests and responses, so does
-        not require any special capabilities of the User-Agent or
-        other software.
+        OpenID Authentication uses only standard HTTP requests and
+	responses, so does not require any special capabilities of the
+	User-Agent or other software.
       </t>
 
       <t>
@@ -203,12 +203,12 @@
           <t>
             The Relying Party redirects the End-User to the IdP
             with an OpenID <xref
-            target="requesting_authentication">authentication
+            target="requesting_authentication">Authentication
             request</xref>.
           </t>
           <t>
             The IdP establishes whether the End User is authorized
-            to perform OpenID authentication and wishes to do
+            to perform OpenID Authentication and wishes to do
             so. 
           </t>
           <t>
@@ -458,11 +458,12 @@ Base 10 number | btwoc string representation
           <t>
             Data can be transferred by issuing a 302, 303, or 307 HTTP
             Redirect to the End User's User-Agent. The redirect URL is
-            the URL of the receiver with the OpenID message appended
-            to the query string, as specified in <xref
+            the URL of the receiver with the OpenID Authentication
+	    message appended to the query string, as specified in <xref
             target="queries" />.
           </t>
-          <t>This method is deprecated as of OpenID version 2.0.</t>
+          <t>This method is deprecated as of OpenID Authentication
+	  version 2.0.</t>
         </section>
         <section title="HTML FORM Redirection">
           <t>
@@ -544,7 +545,8 @@ Base 10 number | btwoc string representation
     <section title="Generating Signatures" anchor="generating_signatures">
       <t> 
         The most common usage of an association is as a Message
-        Authentication Code (MAC) key used to sign OpenID messages.
+        Authentication Code (MAC) key used to sign OpenID
+	Authentication messages.
       </t>
       <t>
         When generating MAC keys, the recommendations in <xref
@@ -590,10 +592,10 @@ Base 10 number | btwoc string representation
 
     <section title="Signature Algorithms" anchor="sign_algos">
       <t>
-        OpenID supports two signature algorithms: HMAC-SHA1(<xref
-            target="RFC2104" />, <xref target="RFC3174" />), and
-        HMAC-SHA256 (<xref target="RFC2104" />, <xref
-            target="FIPS180-2" />).
+        OpenID Authentication supports two signature algorithms:
+	HMAC-SHA1(<xref target="RFC2104" />, <xref target="RFC3174"
+	/>), and HMAC-SHA256 (<xref target="RFC2104" />, <xref
+	target="FIPS180-2" />).
       </t>
       <t>
         Keys for associations that use HMAC-SHA1 signatures are 160
@@ -680,8 +682,8 @@ Base 10 number | btwoc string representation
         <t>
           Discovery is the process where the Relying Party uses the
           Identifier to look up ("discover") the necessary information
-          for initiating authentication. OpenID has three paths
-          through which to do discovery:
+          for initiating authentication. OpenID Authentication has
+	  three paths through which to do discovery:
         </t>
 
         <t>
@@ -866,11 +868,11 @@ Base 10 number | btwoc string representation
 
         <section anchor="html_disco" title="HTML-Based Discovery">
           <t>
-            OpenID 1.1 HTML-based discovery SHOULD be supported by
-            Relying Parties.  If a Relying Party locates an IdP using
-            HTML-based discovery, it MUST use <xref
-            target="compat_mode">OpenID 1.1 Compatibility</xref> when
-            communicating with that IdP.
+            OpenID Authentication 1.1 HTML-based discovery SHOULD be
+	    supported by Relying Parties.  If a Relying Party locates
+	    an IdP using HTML-based discovery, it MUST use <xref
+	    target="compat_mode">OpenID Authentication 1.1
+	    Compatibility</xref> when communicating with that IdP.
           </t>
 
           <t>
@@ -1182,8 +1184,8 @@ Base 10 number | btwoc string representation
       <section title="Association Session Types" anchor="assoc_sess_types">
 
         <t> 
-          OpenID defines three valid association session types:
-          "no-encryption", "DH-SHA1", and "DH-SHA256".
+          OpenID Authentication defines three valid association
+	  session types: "no-encryption", "DH-SHA1", and "DH-SHA256".
         </t>
 
         <section title="No-Encryption Association Sessions"
@@ -1276,15 +1278,16 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   This value MUST be present for the request to be a
-                  valid OpenID 2.0 request.
+                  valid OpenID Authentication 2.0 request.
                 </t>
                 <t>
                   Note: If an IdP receives an authentication request
                   with this parameter missing or with a lower version
                   number, it SHOULD still respond to the request.  If
                   it does respond it MUST use <xref
-                  target="compat_mode">OpenID 1.1 Compatibility</xref> when
-                  communicating with that Relying Party.
+                  target="compat_mode">OpenID Authentication 1.1
+		  Compatibility</xref> when communicating with that
+		  Relying Party.
                 </t>
               </list>
             </t>
@@ -1367,7 +1370,7 @@ Base 10 number | btwoc string representation
       <section title="Realms" anchor="realms">
         <t>
           A "realm" is a pattern that represents the part of
-          URL-space for which an OpenID authentication request is
+          URL-space for which an OpenID Authentication request is
           valid. A realm SHOULD give the End User an indication
           of the scope of the authentication request. IdPs SHOULD
           present the realm when requesting the End User's
@@ -1503,8 +1506,9 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   Note: This defines the interpretation of the openid
-                  arguments without a namespace.  To be an OpenID 2.0
-                  response, the given value must be present.
+                  arguments without a namespace.  To be an OpenID
+		  Authentication 2.0 response, the given value must be
+		  present.
                 </t>
               </list>
             </t>
@@ -1947,24 +1951,26 @@ Base 10 number | btwoc string representation
     </section>
 
 
-    <section title="OpenID 1.1 Compatibility" anchor="compat_mode">
+    <section title="OpenID Authentication 1.1 Compatibility" anchor="compat_mode">
       <t>
-        OpenID 2.0 attempts to retain maximum compatibility with
-        earlier versions of the OpenID specification, but this is not
-        universally possible.  This section lists the behavioral
-        changes required of an OpenID 2.0 IdP or Relying Party when
-        communicating with an earlier-protocol peer.
+        OpenID Authentication 2.0 attempts to retain maximum
+	compatibility with earlier versions of the OpenID
+	Authentication specification, but this is not universally
+	possible.  This section lists the behavioral changes required
+	of an OpenID Authentication 2.0 IdP or Relying Party when
+	communicating with an earlier-protocol peer.
       </t>
 
       <t>
-        OpenID 2.0 implementations SHOULD support OpenID 1.1
-        compatibility, unless security considerations make it
-        undesirable.
+        OpenID Authentication 2.0 implementations SHOULD support
+	OpenID Authentication 1.1 compatibility, unless security
+	considerations make it undesirable.
       </t>
 
       <t>
-        All messages in OpenID 1.1 omit the "openid.ns"
-        parameter. OpenID 1.1 only supports HMAC-SHA1 associations.
+        All messages in OpenID Authentication 1.1 omit the "openid.ns"
+        parameter. OpenID Authentication 1.1 only supports HMAC-SHA1
+	associations.
       </t>
 
       <section title="Relying Parties">
@@ -2012,7 +2018,7 @@ Base 10 number | btwoc string representation
             <t>
               <xref target="refuse_assoc">Unsuccessful association
               responses</xref> MUST NOT be sent, since they are not
-              part of the OpenID protocol.
+              part of the OpenID Authentication protocol.
             </t>
 
             <t>
@@ -2040,7 +2046,7 @@ Base 10 number | btwoc string representation
     <section title="Extensions" anchor="extensions">
       <t>
         An Extension to OpenID is a protocol that rides on top of the
-        OpenID authentication request and response. Extensions are
+        OpenID Authentication request and response. Extensions are
         useful for providing extra information about an authentication
         request or response or providing extra information about the
         subject of the authentication response.
@@ -2320,15 +2326,16 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
 
     <!-- XXX: An example for Generating Signatures might be nice. -->
 
-    <appendix title="Changes from the Previous OpenID Specification">
+    <appendix title="Changes from the Previous OpenID Authentication Specification">
       <t>
         This specification is based on the original specification for
-        OpenID as written by Brad Fitzpatrick. That specification did
-        not have a version number, but was called OpenID 1.0, and then
-        OpenID 1.1 when it was revised.  The protocol outlined in this
-        specification is intended to be backwards-compatible with the
-        revised OpenID protocol.  The most significant changes to the
-        specification are outlined in this section.
+        OpenID Authentication as written by Brad Fitzpatrick. That
+	specification did not have a version number, but was called
+	OpenID 1.0, and then OpenID 1.1 when it was revised.  The
+	protocol outlined in this specification is intended to be
+	backwards-compatible with the revised OpenID protocol.  The
+	most significant changes to the specification are outlined in
+	this section.
       </t>
       <appendix title="Updated Initiation and Discovery">
         <t>
