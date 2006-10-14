@@ -122,7 +122,8 @@
       <t>
     <list style="hanging">
       <t hangText="Identifier:">
-        An Identifier is a URL or <eref
+        An Identifier is a "http" or "https" URI, which is commonly
+	referred to as a "URL" within this document, or <eref
         target="http://www.oasis-open.org/committees/download.php/15376"
         >XRI</eref>.  An "Identifier" may be a Claimed Identifier,
         Delegate Identifier, IdP Identifier, or Verified Identifier,
@@ -164,7 +165,7 @@
       </t>
 
       <t hangText="IdP Identifier:">
-        An Identifier which represents an IdP.
+        An Identifier for an Identity Provider.
       </t>
 
       <t hangText="Diffie-Hellman Key Exchange:">
@@ -183,7 +184,7 @@
           <t>
             The End User <xref target="initiation">initiates
             authentication</xref> by supplying an Identifier to the
-            Relying Party. 
+            Relying Party via their User Agent.
           </t>
           <t>
             The Relying Party <xref target="discovery">performs
@@ -713,7 +714,8 @@ Base 10 number | btwoc string representation
 
             <t>
               If the Yadis protocol fails, the URL is retrieved and
-              HTML-based discovery is attempted.                   
+              <xref target="html_disco">HTML-based discovery</xref> is
+	      attempted.
             </t>
 
           </list>
