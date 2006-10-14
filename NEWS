@@ -7,7 +7,7 @@
    :Company: JanRain, Inc.
    :Date: 11 Sept 2006
 
-Changes from OpenID 1.X to 2.0
+Changes from OpenID Authentication 1.X to 2.0
 ==================================================
 
 The OpenID 2.0 Authentication protocol is intended to be an
@@ -23,8 +23,8 @@ many cases as possible to OpenID 1.X, as deployed.
 Proposals in Draft 10
 ++++++++++++++++++++++++++++++++++++++++++++++++++
 
-These proposed changes to the OpenID 1.X protocol have been included
-in draft 9 of the OpenID Authentication 2.0 specification.
+These proposed changes to the OpenID Authentication 1.X protocol have
+been included in draft 9 of the OpenID Authentication 2.0 specification.
 
 XRI Support
 --------------------------------------------------
@@ -43,12 +43,12 @@ protection against this kind of failure.
 Proposed Implementation
 ..................................................
 
-The discovery phase of OpenID authentication now includes XRI
+The discovery phase of OpenID Authentication now includes XRI
 resolution as a mechanism for obtaining the IdP Endpoint URL and
 OpenID delegate identifier, instead of the HTML-based discovery from
-OpenID 1.X. Since XRI resolution libraries are not yet commonly
-deployed, a proxy XRI resolver is available to OpenID relying parties
-to ease deployment.
+OpenID Authentication 1.X. Since XRI resolution libraries are not yet
+commonly deployed, a proxy XRI resolver is available to OpenID relying
+parties to ease deployment.
 
 See Also
 ..................................................
