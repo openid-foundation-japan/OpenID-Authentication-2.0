@@ -556,84 +556,80 @@ Base 10 number | btwoc string representation
         target="RFC1750" /> SHOULD be followed.
       </t>
 
-      <section title="Signed List Algorithm" anchor="signed_list"
-               toc="exclude">
+      <section title="Procedure">
+	<t>
+	  To generate a message signature:
+	  <list style="numbers">
+	    <t> 
+	      Determine the appropriate signature list and signature
+	      algorithm from the <xref
+	      target="associations">association type</xref>.
+	    </t>
+	    <t> 
+	      Generate the list to be signed using the correct <xref
+	      target="signed_list">list algorithm</xref>.
+	    </t>
+	    <t> 
+	      Convert the list to an octet string by encoding
+	      with <xref target="kvform">Key Value Form</xref>
+	    </t>
+	    <t> 
+	      Apply the correct <xref target="sign_algos">signature
+	      algorithm</xref> to the octet string.
+	    </t>
+	  </list>
+	</t>
+      </section>
 
-        <t>
-          The input to the Signed List Algorithm are the message
-          to be signed, and the list of message keys that are to be
-          signed with the "openid." prefix removed.
-        </t>
-        <t>
-          To compute the list of key/value pairs to be signed:
-          <list style="numbers">
-            <t> 
-              Iterate through the list of keys to be signed in
-              the order they appear in the input to the algorithm.
+      <section title="Signed List Algorithm" anchor="signed_list">
+	<t>
+	  The input to the Signed List Algorithm are the message
+	  to be signed, and the list of message keys that are to be
+	  signed with the "openid." prefix removed.
+	</t>
+	<t>
+	  To compute the list of key/value pairs to be signed:
+	  <list style="numbers">
+	    <t> 
+	      Iterate through the list of keys to be signed in
+	      the order they appear in the input to the algorithm.
 	      For each key, find the value in the message whose key is
 	      equal to the signed list key prefixed with "openid."
-            </t>
-            <t>
-              Append the signed list key and the associated value to
-              the message to be signed.
-            </t>
-          </list>
-        </t>
-        <t>
-          The output of this algorithm is the message to be
-          signed, and the list of keys that were signed.  A message
-          signed using this algorithm MUST append the list of signed
-          fields to message.
-        </t>
-        <t>
-          As the algorithm strips the "openid." prefix from message
-          keys while looking for a match, it MUST only sign elements
+	    </t>
+	    <t>
+	      Append the signed list key and the associated value to
+	      the message to be signed.
+	    </t>
+	  </list>
+	</t>
+	<t>
+	  The output of this algorithm is the message to be
+	  signed, and the list of keys that were signed.  A message
+	  signed using this algorithm MUST append the list of signed
+	  fields to message.
+	</t>
+	<t>
+	  As the algorithm strips the "openid." prefix from message
+	  keys while looking for a match, it MUST only sign elements
 	  that have keys beginning with "openid."
-        </t>
+	</t>
+      </section>
+
+      <section title="Signature Algorithms" anchor="sign_algos">
+	<t>
+	  OpenID Authentication supports two signature algorithms:
+	  HMAC-SHA1(<xref target="RFC2104" />, <xref target="RFC3174"
+	  />), and HMAC-SHA256 (<xref target="RFC2104" />, <xref
+	  target="FIPS180-2" />).
+	</t>
+	<t>
+	  Keys for associations that use HMAC-SHA1 signatures are 160
+	  bits. Keys for associations that use HMAC-SHA256 are 256
+	  bits.  The use of HMAC-SHA256 is RECOMENDED though at the time
+	  of writing this document, library support seems lacking.
+	</t>
       </section>
     </section>
-
-    <section title="Signatures">
-     <section title="Signature Algorithms" anchor="sign_algos">
-       <t>
-	 OpenID Authentication supports two signature algorithms:
-	 HMAC-SHA1(<xref target="RFC2104" />, <xref target="RFC3174"
-	 />), and HMAC-SHA256 (<xref target="RFC2104" />, <xref
-	 target="FIPS180-2" />).
-       </t>
-       <t>
-	 Keys for associations that use HMAC-SHA1 signatures are 160
-	 bits. Keys for associations that use HMAC-SHA256 are 256
-	 bits.  The use of HMAC-SHA256 is RECOMENDED though at the time
-	 of writing this document, library support seems lacking.
-       </t>
-     </section>
-
-     <section title="Procedure">
-       <t>
-	 To generate a message signature:
-	 <list style="numbers">
-	   <t> 
-	     Determine the appropriate signature list and signature
-	     algorithm from the <xref
-	     target="associations">association type</xref>.
-	   </t>
-	   <t> 
-	     Generate the list to be signed using the correct list
-	     algorithm.
-	   </t>
-	   <t> 
-	     Convert the list to an octet string by encoding
-	     with <xref target="kvform">Key Value Form</xref>
-	   </t>
-	   <t> 
-	     Apply the correct signature algorithm to the
-	     octet string.
-	   </t>
-	 </list>
-       </t>
-     </section>
-   </section>
 
     <section title="Initiation and Discovery">
 
