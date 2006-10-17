@@ -4,19 +4,20 @@
 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml'>
 ]>
 
-<rfc category="info" ipr="none" docName="openid-authentication-2_0-10.xml">
+<rfc category="info" ipr="none" docName="openid-authentication-2_0-11.xml">
   <?xml-stylesheet type='text/xsl'
     href='http://xml.resource.org/authoring/rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
+  <?rfc tocdepth="2" ?>
   <?rfc symrefs="yes" ?>
   <?rfc sortrefs="yes"?>
   <?rfc iprnotified="no" ?>
   <?rfc strict="yes" ?>
-  <?rfc private="Draft" ?>
+  <?rfc private="Pre-Draft" ?>
 
   <front>
-    <title>OpenID Authentication 2.0 - Draft 10</title>
+    <title>OpenID Authentication 2.0 - Pre-Draft 11</title>
 
     <author initials="D.R" surname="Recordon" fullname="David Recordon">
       <organization abbrev="VeriSign">VeriSign, Inc.</organization>
@@ -84,28 +85,32 @@
       <t>
         OpenID is decentralized. No central authority must approve or
         register Relying Parties or Identity Providers. An End User
-        can freely choose which Identity Provider to use. They can
+        can freely choose which Identity Provider to use and they can
         preserve their Identifier if they switch Identity Providers.
       </t>
 
       <t>
         While nothing in the protocol requires JavaScript or modern
         browsers, the authentication scheme plays nicely with
-        "AJAX"-style setups, so an End User can prove their Identity
-        to a Relying Party without having to leave the page they are
-        on.
+        "AJAX"-style setups. This means an End User can prove their
+	Identity to a Relying Party without having to leave the page
+	they are on.
       </t>
 
       <t>
-        OpenID Authentication uses only standard HTTP requests and
-	responses, so does not require any special capabilities of the
-	User-Agent or other software.
+        As OpenID Authentication uses only standard HTTP requests and
+	responses, it does not require any special capabilities of the
+	User-Agent or other software. Extensions to User-Agent's can
+	simplify the End User interaction, though are not required to
+	utilize the protocol.
       </t>
 
       <t>
         The exchange of profile information, and other features not
         covered in this specification, is addressed through additional
-        Service Types built on top of OpenID.
+        Service Types built on top of OpenID. OpenID Authentication is
+	designed to provide a base framework to enable portable
+	user-centric digital identity in a free and decentralized manner.
       </t>
     </abstract>
   </front>
@@ -139,7 +144,7 @@
       </t>
 
       <t hangText="Claimed Identifier:">
-        An Identifier that the End User claims to own that has not yet
+        An Identifier that the End User claims to own which has not yet
         been verified by the Relying Party.
       </t>
 
@@ -247,7 +252,7 @@
             line begins with a key, followed by a colon, and the value
             associated with the key.  The line is terminated by a
             single newline (codepoint 10, "/n"). A key or value MUST NOT
-            contain a newline and a key MUST NOT either contain a colon.
+            contain a newline and a key also MUST NOT contain a colon.
           </t>
           <t>
             Additional characters, including whitespace, MUST NOT be
@@ -257,7 +262,7 @@
           <t>
             Key-Value Form encoding is used for signature calculation
 	    and for <xref target="direct_response">direct
-	    responses</xref> to relying parties.
+	    responses</xref> to Relying Parties.
           </t>
         </section>
  
@@ -265,19 +270,19 @@
 
           <t>
             When a message is sent to an HTTP server, it MUST be encoded
-            using a form encoding specified in section 17.13.4 of the
-            <xref target="HTML401"/>. Likewise, if the "Content-Type"
+            using a form encoding specified in Section 17.13.4 of
+            <xref target="HTML401" />. Likewise, if the "Content-Type"
             header is included in the request headers, its value MUST
             also be such an encoding.
           </t>
           <t>
-            All of the keys in the request message are prefixed with
-            "openid.". This prefix prevents interference with other
-            parameters that are passed along with the OpenID
-            message. When a message is sent as a POST, the application
-            processing the HTTP request MUST only use the values in the
-            POST body and MUST ignore any "openid." parameters that are
-            present on the request URL.
+            All of the keys in the request message MUST be prefixed
+	    with "openid.". This prefix prevents interference with
+	    other parameters that are passed along with the OpenID
+	    Authentication message. When a message is sent as a POST,
+	    the application processing the HTTP request MUST only use
+	    the values in the POST body and MUST ignore any GET
+	    parameters.
           </t>
           <t>
             This model applies to messages from the User Agent to both
@@ -306,7 +311,7 @@ error   | This is an example message
           <t>
             <figure>
               <preamble>
-                Key-Value Form encoded
+                Key-Value Form encoded:
               </preamble>
               <artwork><![CDATA[mode:error
 error:This is an example message
@@ -316,7 +321,7 @@ error:This is an example message
             <figure>
               <preamble>
                 x-www-urlencoded, as in a HTTP POST body or in a URL's
-                query (<xref target="RFC3986" /> section 3).
+                query string (<xref target="RFC3986" /> section 3):
               </preamble>
               <artwork>openid.mode=error&amp;openid.error=This%20is%20an%20example%20message</artwork>
             </figure>
@@ -336,9 +341,8 @@ error:This is an example message
           zero. If it is not, implementations MUST add a zero byte
           at the front of the string.
         </t>
-        <t>Non-normative example:</t>
         <figure>
-          <preamble />
+          <preamble>Non-normative example:</preamble>
           <artwork>
 Base 10 number | btwoc string representation
 ---------------+----------------------------
@@ -387,8 +391,8 @@ Base 10 number | btwoc string representation
             <t>
               If a request is malformed or contains invalid arguments,
               the server MUST send a response with a status code of
-              400. The response body MUST be a <xref target="kvform"/>
-              message with the following fields:
+              400. The response body MUST be a Key-Value Form <xref
+	      target="kvform"/> message with the following fields:
             </t>
             <t>
               <list style='symbols'>
@@ -405,10 +409,10 @@ Base 10 number | btwoc string representation
                   contact
                   <list style='empty'>
                     <t>
-                      Value: (optional) Contact address for the
-                      administrator of the IdP. The contact address
-                      may take any form, as it is intended to be
-                      displayed to a person.
+		      Value: (optional) Contact address for the
+		      administrator of the sever. The contact address
+		      may take any form, as it is intended to be
+		      displayed to a person.
                     </t>
                   </list>
                 </t>
@@ -424,12 +428,7 @@ Base 10 number | btwoc string representation
                   </list>
                 </t>
               </list>
-               The IdP MAY add additional keys to this response.
-            </t>
-            <t>
-              The particular wire format of these messages will depend
-              on whether they are responses to direct or indirect
-              requests.
+               The IdP MAY add additional fields to this response.
             </t>
           </section>
         </section>
@@ -465,7 +464,7 @@ Base 10 number | btwoc string representation
           </t>
           <t>This method is deprecated as of OpenID Authentication
 	  version 2.0 though is still required for implementation to
-	  aide in backwards compatibility.</t>
+	  aide in backward compatibility.</t>
         </section>
 
         <section title="HTML FORM Redirection">
@@ -488,10 +487,10 @@ Base 10 number | btwoc string representation
         </section>
         <section title="Indirect Error Responses">
           <t>
-            If a request is malformed or contains invalid arguments
-            and there is an "openid.return_to" argument whose value is
-            a valid URL, the IdP MUST redirect the User Agent to that URL
-            with a message of the following form:
+	    In the case of a malformed request or one that contains
+	    invalid arguments, the server MUST redirect the User Agent
+	    to the "openid.return_to" URL value if the value is a
+	    valid URL.
           </t>
           <t>
             <list style='symbols'>
@@ -515,8 +514,10 @@ Base 10 number | btwoc string representation
                 openid.contact
                 <list style='empty'>
                   <t>
-                    Value: (optional) Contact address for the
-                    administrator of the IdP.
+		    Value: (optional) Contact address for the
+		    administrator of the sever. The contact address
+		    may take any form, as it is intended to be
+		    displayed to a person.
                   </t>
                 </list>
               </t>
@@ -533,13 +534,13 @@ Base 10 number | btwoc string representation
               </t>
             </list>
 
-            The IdP MAY add additional keys to this response.
+            The server MAY add additional keys to this response.
           </t>
           <t>
             If the "openid.return_to" value is missing or not a valid
-            URL, the IdP SHOULD return a response to the End User
+            URL, the server SHOULD return a response to the End User
             indicating the error and that it is unable to return the
-            End User to the Relying Party.
+            End User to the initiating server.
           </t>
         </section>
       </section>
@@ -571,7 +572,8 @@ Base 10 number | btwoc string representation
 	    </t>
 	    <t> 
 	      Convert the list to an octet string by encoding
-	      with <xref target="kvform">Key Value Form</xref>
+	      with <xref target="kvform">Key-Value Form
+	      Encoding</xref>.
 	    </t>
 	    <t> 
 	      Apply the correct <xref target="sign_algos">signature
@@ -606,28 +608,39 @@ Base 10 number | btwoc string representation
 	  The output of this algorithm is the message to be
 	  signed, and the list of keys that were signed.  A message
 	  signed using this algorithm MUST append the list of signed
-	  fields to message.
+	  fields to the message.
 	</t>
 	<t>
 	  As the algorithm strips the "openid." prefix from message
 	  keys while looking for a match, it MUST only sign elements
-	  that have keys beginning with "openid."
+	  that have keys beginning with "openid." This is to prevent
+	  attacks where the Relying Party is malicious and tries to
+	  have the IdP sign arbitrary data.
 	</t>
       </section>
 
       <section title="Signature Algorithms" anchor="sign_algos">
 	<t>
 	  OpenID Authentication supports two signature algorithms:
-	  HMAC-SHA1(<xref target="RFC2104" />, <xref target="RFC3174"
-	  />), and HMAC-SHA256 (<xref target="RFC2104" />, <xref
-	  target="FIPS180-2" />).
-	</t>
-	<t>
-	  Keys for associations that use HMAC-SHA1 signatures are 160
-	  bits. Keys for associations that use HMAC-SHA256 are 256
-	  bits.  The use of HMAC-SHA256 is RECOMENDED though at the time
+	  <list style="symbols">
+	    <t>HMAC-SHA1(<xref target="RFC2104" /> and <xref
+	    target="RFC3174" />)</t>
+	    <t>HMAC-SHA256 (<xref target="RFC2104" /> and <xref
+	    target="FIPS180-2" /></t>
+	  </list>
+	  The use of HMAC-SHA256 is RECOMENDED though at the time
 	  of writing this document, library support seems lacking.
 	</t>
+	<texttable>
+	  <ttcol>Algorithm</ttcol>
+	  <ttcol>Key Length</ttcol>
+
+	  <c>HMAC-SHA1</c>
+	  <c>160 bits</c>
+
+	  <c>HMAC-SHA256</c>
+	  <c>256 bits</c>
+	</texttable>
       </section>
     </section>
 
@@ -641,7 +654,7 @@ Base 10 number | btwoc string representation
         </t>
         
         <t>
-         It is RECOMMENDED that every Relying Party place the <eref
+	  It is RECOMMENDED that every Relying Party place the <eref
           target='http://openid.net/login-bg.gif'>OpenID logo</eref>
           at the beginning of the form field where the End User enters
           their Identifier. This aides in End User recognition that
@@ -663,23 +676,26 @@ Base 10 number | btwoc string representation
           Identifier.  If the End User supplies input that does not
           include a scheme (http, https, or xri), then the application
           needs to determine if the input is an XRI or a URL missing
-          the "http://". To do so, the application SHOULD examine the
-          first character of the input. If it is an XRI Global Context
-          Symbol (=, @, +, $, or ! see <xref target="XRI Syntax 2.0">
-	  Section 2.2.1.2 of</xref>), then the input SHOULD be
-	  treated as an XRI<!-- convert the XRI to URI normal form?
-	  -->. If it is not, then the input SHOULD be treated as an
-	  http URL, and prefixed with the string "http://".
+          the scheme.
+	</t>
+
+	<t>
+	  To do so, the Relying Party SHOULD examine the first
+	  character of the input. If it is an XRI Global Context
+	  Symbol ("=", "@", "+", "$", or "!" see <xref target="XRI Syntax 2.0">
+	  Section 2.2.1.2 of</xref>), then the input
+	  SHOULD be treated as an XRI. If it is not, then the input
+	  SHOULD be treated as an http URL, and prefixed with the
+	  string "http://".
         </t>
 
         <t>
-          URL identifiers MUST be further normalized by applying the
-          rules in section 6 of RFC 3986, following redirects when
-          retrieving their content, and finally applying the rules in
-          section 6 of RFC 3986 (Normalization and Comparison) to the
+          URL identifiers MUST be further normalized by following
+	  redirects when retrieving their content and finally applying
+	  the rules in Section 6 of <xref target='RFC3986' /> to the
           final destination URL. This final URL should be noted by the
 	  Relying Party as the Claimed Identifier and used during
-	  authentication requests.
+	  future requests.
         </t>
       </section>
 
@@ -688,13 +704,12 @@ Base 10 number | btwoc string representation
         <t>
           Discovery is the process where the Relying Party uses the
           Identifier to look up ("discover") the necessary information
-          for initiating authentication. OpenID Authentication has
-	  three paths through which to do discovery:
+          for initiating requires. OpenID Authentication has three
+	  paths through which to do discovery:
         </t>
 
         <t>
           <list style="numbers">
-
             <t>
               If the identifier is an XRI, <eref
               target="http://www.oasis-open.org/committees/download.php/17293"
@@ -733,13 +748,13 @@ Base 10 number | btwoc string representation
                 (optional) The normalized Identifier upon which
                 discovery was performed. The Claimed Identifier is
                 present unless the End User entered an IdP Identifier
-                during <xref target="initiation">initiation</xref>.
+                during initiation.
               </t>
 
               <t hangText="Delegate Identifier:">
                 (optional)
                  
-                The identifier that the Relying Party SHOULD perform
+                The Identifier that the Relying Party SHOULD perform
                 authentication using.  Upon successful authentication,
                 the Relying Party SHOULD recognize the End User using
                 the Claimed Identifier.  The Delegate Identifier can
@@ -753,9 +768,11 @@ Base 10 number | btwoc string representation
         <section title="XRDS-Based Discovery">
           <t>
             If XRI or Yadis discovery was used, the result will be an
-            XRDS Document.  This is a XML document with
-            entries for services that are related to the identifier.
-            <!-- It is defined in <eref target=""></eref> -->
+	    XRDS Document.  This is a XML document with entries for
+	    services that are related to the Identifier.
+
+            It is defined in <eref target="REFERENCE XRDS
+	    DOCUMENT">REFERENCE XRDS DOCUMENT</eref>
           </t>
 
 
@@ -768,10 +785,10 @@ Base 10 number | btwoc string representation
 
                 <list style="hanging">
                   <t>An &lt;xrd:Type&gt; tag whose text content is
-                "http://openid.net/server/2.0"</t>
+		  "http://openid.net/server/2.0".</t>
 
                   <t>An &lt;xrd:URI&gt; tag whose text content is the
-                IdP Endpoint URL</t>
+		  IdP Endpoint URL</t>
                 </list>
               </t>
             </section>
@@ -790,7 +807,7 @@ Base 10 number | btwoc string representation
 		  IdP Endpoint URL.</t>
 
                   <t>An &lt;openid:Delegate&gt; tag (optional) whose text
-		  content is The Delegate Identifier.</t>
+		  content is the Delegate Identifier.</t>
                 </list>
               </t>
             </section>
@@ -800,20 +817,20 @@ Base 10 number | btwoc string representation
             <t>
               Once the Relying Party has obtained an XRDS document, it
               MUST first search the document (following the rules
-              described in <eref target="">the XRDS
-              specification</eref>) for an IdP Identifier, and if none
-              is found, search for a Claimed Identifier Element.
+              described in <eref target="REFERENCE XRDS DOCUMENT">the XRDS
+              specification</eref>) for an IdP Identifier. If none is
+	      found, the RP will search for a Claimed Identifier Element.
             </t>
           </section>
 
           <section title="XRI and the CanonicalID Element" toc="exclude">
             <t>
               When the identifier is an XRI, the &lt;xrd:XRD&gt;
-              element that contains the OpenID &lt;xrd:Service&gt;
-              element will also contain a &lt;CanonicalID&gt;
-              element. The content of this element MUST be preserved
-              for use after a successful authentication request. See
-              <xref target="identifying" />.
+              element that contains the OpenID Authentication
+	      &lt;xrd:Service&gt; element will also contain a
+	      &lt;CanonicalID&gt; element. The content of this element
+	      MUST be preserved for use after a successful
+	      authentication request, see <xref target="identifying" />.
             </t>
 
             <t>
@@ -835,13 +852,13 @@ Base 10 number | btwoc string representation
               When using XRI resolution, the canonical ID MUST be
               used as the Claimed Identifier. For an XRI to be a
               valid identifier, both the &lt;ProviderID&gt; and
-              &lt;CanonicalID&gt; MUST be present in the discovery
-              result.
+              &lt;CanonicalID&gt; MUST be present in the discovered
+	      XRDS document.
             </t>
 
             <t>
               When using URL-based identifiers, the CanonicalID
-              element SHOULD be ignored.
+              element SHOULD be ignored if present.
             </t>
           </section>
 
@@ -859,7 +876,7 @@ Base 10 number | btwoc string representation
               "http://openid.net/signon/1.1" for the value of
               &lt;xrd:Type&gt;. When one of these values is used, the
               Relying Party MUST use <xref target="compat_mode">OpenID
-              1.1 compatibility</xref>.
+	      Authentication 1.1 Compatibility</xref>.
             </t>
 
             <t>
@@ -907,11 +924,12 @@ Base 10 number | btwoc string representation
 
           <t>
             The "openid.server" and "openid.delegate" URLs MUST NOT
-            include entities other than &amp;amp;, &amp;lt;, &amp;gt;,
-            and &amp;quot;. Other characters that would not be valid
-            in the HTML document or that cannot be represented in the
-            document's character encoding MUST be escaped using the
-            %xx mechanism as described in <xref target='RFC3986' />.
+            include entities other than "&amp;amp;", "&amp;lt;",
+	    "&amp;gt;", and "&amp;quot;". Other characters that would
+	    not be valid in the HTML document or that cannot be
+	    represented in the document's character encoding MUST be
+	    escaped using the %xx mechanism as described in <xref
+	    target='RFC3986' />.
           </t>
         </section>
       </section>
@@ -929,15 +947,15 @@ Base 10 number | btwoc string representation
         is possible for it to do so.  If a Relying Party is incapable
         of creating or storing associations, <xref
         target="verifying_signatures"/> provides an alternate
-        verification mechanism.
+        verification mechanism referred to as Stateless Mode.
       </t>
 
       <section title="Association Session Request">
         <t>
           An association session is initiated by a <xref
           target="direct_comm">direct request</xref> from a Relying
-          Party to an IdP Endpoint URL with "openid.mode" of
-          "associate".
+          Party to an IdP Endpoint URL with the "openid.mode" key
+	  having the value of "associate".
         </t>
          
         <section title="Common Request Parameters" toc="exclude">
@@ -969,8 +987,12 @@ Base 10 number | btwoc string representation
                   defines the method used to encrypt the association's
                   MAC key in transit.</t>
                   <t> Value: A valid association session type from
-                  <xref target="assoc_sess_types"/></t>
+                  <xref target="assoc_sess_types"/>.</t>
                   <t>Default: "no-encryption"</t>
+		  <t>Note: Unless using transport layer encryption, it
+		  is NOT RECOMMENDED to use "no-encryption" on a
+		  public network, see <xref
+		  target="preventing_eavesdropping" />.</t>
                 </list>
               </t>
             </list>
@@ -980,7 +1002,7 @@ Base 10 number | btwoc string representation
         <section title="Diffie-Hellman Request Parameters" toc="exclude">
           <t>
             The following parameters are common to requests whose
-            requested session type is DH-SHA1 or DH-SHA256:
+            requested association type is "DH-SHA1" or "DH-SHA256":
           </t>
           <t>
             <list style="symbols">
@@ -1031,43 +1053,39 @@ Base 10 number | btwoc string representation
                 session_type
                 <list style="empty">
                   <t>
-                    The session type for this session. Valid values
-                    are listed in <xref target="assoc_types"/>, but
-                    the server MUST respond with the same value as the
-                    request's "openid.session_type" parameter.  If the
-                    server is unable or unwilling to support either of
-                    these session types, it MUST return an
-		    unsuccessful response.
+		    The session type for this association. If the IdP
+		    is unwilling or unable to support this association
+		    type, it MUST return an unsuccessful response.
                   </t>
                 </list>
               </t>
               <t>
                 assoc_handle
                 <list style="empty">
-                  <t>The association handle is used as a key to refer
-                    to this association in subsequent messages.</t>
-                  <t>Value: A string 255 characters or less, consisting
-                    only of ASCII characters in the range 33-126
-                    inclusive (printable non-whitespace
-                    characters). </t> 
+		  <t>The association handle is used as a key to refer
+		  to this association in subsequent messages.</t>
+		  <t>Value: A string 255 characters or less in length.
+		  It MUST consist only of ASCII characters in the
+		  range 33-126 inclusive (printable non-whitespace
+		  characters).</t> 
                 </list>
               </t>
               <t>
                 assoc_type
                 <list style="empty">
-                  <t>The value of the "openid.assoc_type" parameter
-                    from the request.  If the server is unwilling or
-                    unable to support this association type, it MUST
-                    return an unsuccessful response.</t>
+		  <t>The value of the "openid.assoc_type" parameter
+		  from the request.  If the IdP is unwilling or
+		  unable to support this association type, it MUST
+		  return an unsuccessful response.</t>
                 </list>
               </t>
               <t>
                 expires_in
                 <list style="empty">
-                  <t> The lifetime, in seconds, of this association.
-                    The Relying Party MUST NOT use the association
-                    after this time has expired.</t>
-                  <t>Value: an integer, represented in base 10 ASCII.</t>
+		  <t> The lifetime, in seconds, of this association.
+		  The Relying Party MUST NOT use the association
+		  after this time has expired.</t>
+		  <t>Value: An integer, represented in base 10 ASCII.</t>
                 </list>
               </t>
             </list>
@@ -1099,8 +1117,7 @@ Base 10 number | btwoc string representation
                     Value: base64(btwoc(g ^ xb mod p))
                   </t>
                   <t>
-                    Description: The Provider's Diffie-Hellman public
-                    key.  
+                    Description: The IdP's Diffie-Hellman public key.  
                   </t>
                 </list>
               </t>
@@ -1113,15 +1130,15 @@ Base 10 number | btwoc string representation
                   <t>
                     Description: The MAC key (shared secret),
                     encrypted with the secret Diffie-Hellman value. H
-                    is either SHA1 or SHA256 depending on the session
-                    type.
+                    is either "SHA1" or "SHA256" depending on the
+		    session type.
                   </t>
                 </list>
               </t>
             </list>
           </t>
           <t>
-            NOTE: the 'btwoc' function is defined in <xref
+            NOTE: The 'btwoc' function is defined in <xref
             target="btwoc"/>
           </t>
         </section>
@@ -1131,7 +1148,7 @@ Base 10 number | btwoc string representation
           <t>
             If the IdP does not support an association session type or
             association type, it MUST respond with a message
-            indicating that the association session failed. If there
+            indicating that the association request failed. If there
             is another association session type or association type
             that is supported, the IdP MAY include that information in
             the response.
@@ -1143,7 +1160,7 @@ Base 10 number | btwoc string representation
                 <list style='empty'>
                   <t>
                     Value: (optional) A human-readable message
-                    indicating why the association session failed
+                    indicating why the association request failed.
                   </t>
                 </list>
               </t>
@@ -1159,8 +1176,8 @@ Base 10 number | btwoc string representation
                 session_type
                 <list style='empty'>
                   <t>
-                    Value: (optional) A method of exchanging
-                    association information that the IdP supports.
+                    Value: (optional) A valid association session type
+		    from <xref target="assoc_sess_types" />.
                   </t>
                 </list>
               </t>
@@ -1169,7 +1186,7 @@ Base 10 number | btwoc string representation
                 <list style='empty'>
                   <t>
                     Value: (optional) An association type supported by
-                    the IdP
+                    the IdP from <xref target="assoc_types" />.
                   </t>
                 </list>
               </t>
@@ -1189,7 +1206,7 @@ Base 10 number | btwoc string representation
         <section title="HMAC-SHA1" anchor="hmacsha1">
           <t>
             An association of type "HMAC-SHA1" uses the <xref
-            target="sign_algos">HMAC-SHA1</xref> signature algorithm,
+            target="sign_algos">HMAC-SHA1</xref> signature algorithm
             in combination with the <xref target="signed_list">Signed
             List</xref> algorithm.
           </t>
@@ -1199,7 +1216,7 @@ Base 10 number | btwoc string representation
           <t>
             An association of type "HMAC-256" uses the <xref
             target="sign_algos">HMAC-SHA256</xref> signature
-            algorithm, in combination with the <xref
+            algorithm in combination with the <xref
             target="signed_list">Signed List</xref> algorithm.
           </t>
         </section>
@@ -1220,7 +1237,8 @@ Base 10 number | btwoc string representation
             the key, and forge messages to this Relying Party.
             Therefore, no-encryption association sessions SHOULD NOT
             be used unless the messages are using transport-level
-            encryption.
+            encryption. See <xref target="preventing_eavesdropping" />
+	    for more information.
           </t>
 
           <t>
@@ -1234,7 +1252,7 @@ Base 10 number | btwoc string representation
                      anchor="dh_sessions" toc="exclude">
           <t> 
             The "DH-SHA1" and DH-SHA256" association types use
-            Diffie-Hellman key exchange to securely transmit the
+            Diffie-Hellman Key Exchange to securely transmit the
             shared secret.
           </t>
           <t>
@@ -1319,8 +1337,8 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   Note: If this is set to the special value
-                  "http://openid.net/identifier_select/2.0", the IdP
-                  MAY choose an identifier that belongs to the End
+                  "http://openid.net/identifier_select/2.0" then the
+		  IdP MAY choose an Identifier that belongs to the End
                   User.
                 </t>
               </list>
@@ -1345,9 +1363,9 @@ Base 10 number | btwoc string representation
               openid.return_to
               <list style='empty'>
                 <t>
-                  Value: URL to which the IdP SHOULD return the
-                  User Agent with additional responses indicating the
-                  status of the request.
+                  Value: URL to which the IdP SHOULD return the User
+		  Agent with the response indicating the status of the
+		  request.
                 </t>
               </list>
             </t>
@@ -1356,8 +1374,8 @@ Base 10 number | btwoc string representation
               openid.realm
               <list style='empty'>
                 <t>
-                  Value: (optional) URL pattern the Provider SHALL ask the End
-                  User to trust. See <xref target="realms" />.
+                  Value: (optional) URL pattern the IdP SHOULD ask the
+		  End User to trust. See <xref target="realms" />.
                 </t>
                 <t>
                   Default: return_to URL
@@ -1372,9 +1390,9 @@ Base 10 number | btwoc string representation
         <t>
           A "realm" is a pattern that represents the part of
           URL-space for which an OpenID Authentication request is
-          valid. A realm SHOULD give the End User an indication
-          of the scope of the authentication request. IdPs SHOULD
-          present the realm when requesting the End User's
+          valid. A realm is designed to give the End User an
+	  indication of the scope of the authentication request. IdPs
+	  SHOULD present the realm when requesting the End User's
           approval for an authentication request. IdPs MAY use the
           realm to allow the End User to automate approval of
           authentication requests.
@@ -1456,16 +1474,17 @@ Base 10 number | btwoc string representation
     <section title="Responding to Authentication Requests"
              anchor="responding_to_authentication">
       <t>
-        When an authentication request comes from the User-Agent, the
-        IdP SHOULD identify the User-Agent, and determine whether the
-        End User wishes to complete the authentication.  If the End
-        User can be identified and wishes to complete the
-        authentication, the IdP should send a <xref
-        target="positive_assertions">positive assertion</xref> to the
-        Relying Party.
+        When an authentication request comes from the User-Agent via
+	<xref target="indirect_comm">indirect communication</xref>,
+	the IdP SHOULD identify the User-Agent, and determine whether
+	the End User wishes to complete the authentication.  If the
+	End User can be identified and wishes to complete the
+	authentication, the IdP should send a <xref
+	target="positive_assertions">positive assertion</xref> to the
+	Relying Party.
       </t>
       <t>
-        Methods of identifying the end user and getting approval to
+        Methods of identifying the End User and getting approval to
         finish authentication are beyond the scope of this
         specification.
       </t>
@@ -1481,15 +1500,17 @@ Base 10 number | btwoc string representation
         authentication request, the IdP SHOULD attempt to look up an
         association based on that handle.  If the association is
         missing or expired, the IdP SHOULD send the
-        "openid.invalidate_handle" parameter of the response to the
-        requests "openid.assoc_handle", and SHOULD proceed as if no
-        association handle was specified.
+        "openid.invalidate_handle" parameter as part of the response
+	with the value of the request's "openid.assoc_handle"
+	parameter, and SHOULD proceed as if no association handle was
+	specified.
       </t>
       <t>
         If no association handle is specified, the IdP SHOULD create a
         private association for signing the response.  The IdP MUST
         store this association and MUST respond to later requests to
-        check the signature of the response.
+        check the signature of the response in <xref
+	target="verifying_signatures">stateless mode</xref>.
       </t>
 
       <section title="Positive Assertions" anchor="positive_assertions">
@@ -1506,10 +1527,10 @@ Base 10 number | btwoc string representation
                   Value: "http://openid.net/signon/2.0"
                 </t>
                 <t>
-                  Note: This defines the interpretation of the openid
-                  arguments without a namespace.  To be an OpenID
-		  Authentication 2.0 response, the given value must be
-		  present.
+                  Note: This defines the interpretation of the OpenID
+		  Authentication arguments without a namespace.  To be
+		  an OpenID Authentication 2.0 response, the given
+		  value must be present.
                 </t>
               </list>
             </t>
@@ -1628,8 +1649,8 @@ Base 10 number | btwoc string representation
                 </t>
 
                 <t>
-                  Successful authentication messages from the Identity
-                  Provider to the Relying Party MUST be signed.
+                  Note: Successful authentication messages from the
+		  IdP to the Relying Party MUST be signed.
                 </t>
               </list>
             </t>
@@ -1739,7 +1760,7 @@ Base 10 number | btwoc string representation
         <t>
           The time-stamp may be used to reject responses that are too
           far away from the current time, limiting the amount of time
-          that nonces must be stored to prevent replays. The
+          that nonces must be stored to prevent attacks. The
           acceptable range is implementation dependent. A larger range
           requires storing more nonces for a longer time. A shorter
           range increases the chance that clock-skew and transaction
@@ -1755,7 +1776,7 @@ Base 10 number | btwoc string representation
           the signature on the assertion itself. If it does not have
           an association stored, it MUST <xref
 	  target="check_auth">request that the IdP verify the
-	  signature</xref>.
+	  signature</xref> via Stateless mode.
         </t>
 
         <section title="Verifying with an Association" toc="exclude">
@@ -1764,7 +1785,7 @@ Base 10 number | btwoc string representation
             IdP followed in <xref target= "generating_signatures">
             generating the signature</xref>, and then compares the
             signature in the response to the signature it
-            generates. If the signatures do not match, the assertion
+            generated. If the signatures do not match, the assertion
             is invalid.
           </t>
 
@@ -1786,7 +1807,9 @@ Base 10 number | btwoc string representation
                  toc="exclude" anchor="check_auth">
           <t>
             To verify a signature directly with the IdP, the Relying
-            Party sends a direct request to the IdP.
+            Party sends a <xref target="direct_request">direct
+	    request</xref> to the IdP. This is known as Stateless
+	    mode.
           </t>
 
           <section title='Request Parameters' toc="exclude">
@@ -1850,7 +1873,7 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              The IdP SHOULD only return is_valid once for each
+              The IdP SHOULD only return "is_valid" once for each
               authentication request. An authentication request may be
               identified by its "openid.response_nonce" value.
             </t>
@@ -1890,7 +1913,7 @@ Base 10 number | btwoc string representation
               making the assertion.
             </t>
             <t>
-              The Claimed Identifier specifies the identifier in the
+              The Claimed Identifier specifies the Identifier in the
               assertion as a delegate, and the Delegate Identifier
               points to the IdP making the assertion.
             </t>
@@ -1907,7 +1930,7 @@ Base 10 number | btwoc string representation
           If the Claimed Identifier was not present in the request
           ("openid.identity" was
           "http://openid.net/identifier_select/2.0"), the Relying
-          Party MUST perform discovery on the identifier in the
+          Party MUST perform discovery on the Identifier in the
           response to make sure that the IdP is authorized to make
           assertions about the Identifier.
         </t>
@@ -1917,15 +1940,15 @@ Base 10 number | btwoc string representation
         <t>
           A successful authentication response provides the Relying
           Party with a Verified Identifier, which MAY be used as a
-          user-visible Identifier.  Identifiers in OpenID MUST be URLs
-          or XRIs. If the Identifier is a URL, its scheme MUST be
+          user-visible Identifier.  Identifiers in OpenID MUST be
+	  URIs. If the Identifier is a URL, its scheme MUST be
           "http" or "https".  Except in the case that the Verified
           Identifier is an XRI, the Relying Party SHOULD use the
           Verified Identifier as a key for local storage of
           information about the End User.  If the Verified Identifier
-          is an XRI, the discovered CanonicalID field from the XRD
-          SHOULD be used as a key for local storage of information
-          about the End User.
+          is an XRI, the discovered "CanonicalID" field from the XRDS
+	  document SHOULD be used as a key for local storage of
+	  information about the End User.
         </t>
 
         <t>
@@ -1970,15 +1993,16 @@ Base 10 number | btwoc string representation
       </t>
 
       <t>
-        OpenID Authentication 2.0 implementations SHOULD however
-	support OpenID Authentication 1.1 compatibility, unless
-	security considerations make it undesirable.
+        OpenID Authentication 2.0 implementations SHOULD support
+	OpenID Authentication 1.1 compatibility, unlesss security
+	considerations make it undesirable.
       </t>
 
       <t>
         All messages in OpenID Authentication 1.1 omit the "openid.ns"
-        parameter. OpenID Authentication 1.1 only supports HMAC-SHA1
-	associations.
+        parameter, which is an easy way for an RP to determine if the
+	message is from an OpenID Authentication 1.x endpoint. OpenID
+	Authentication 1.1 only supports HMAC-SHA1 associations.
       </t>
 
       <section title="Relying Parties">
@@ -1994,21 +2018,23 @@ Base 10 number | btwoc string representation
             requests</xref>, the "openid.identity" parameter MUST NOT
             be the special value
             "http://openid.net/identifier_select/2.0", because OpenID
-            1.1 does not support IdP-driven identifier selection.
+	    Authentication 1.1 does not support IdP-driven identifier
+	    selection.
           </t>
 
           <t>
             The "openid.realm" parameter in authentication requests
-            was known as "trust_root". The syntax and meaning were
-            identical.
+            was known as "openid.trust_root". The syntax and meaning
+	    are identical.
           </t>
 
           <t>
             The Relying Party MUST accept an <xref
             target="positive_assertions">authentication
-            response</xref> that is missing the 'nonce' parameter.  It
-            SHOULD however implement an out-of-band method for
-	    preventing replay attacks.
+            response</xref> that is missing the
+	    "openid.response_nonce" parameter.  It SHOULD however
+	    implement an out-of-band method for preventing replay
+	    attacks.
           </t> 
         </list>
       </t>
@@ -2035,14 +2061,14 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              Omit the session_type parameter when making
-              "no-encryption" responses to "associate" requests.
+              Omit the "session_type" parameter when making
+              "no-encryption" responses to association requests.
             </t>
 
             <t>
               The "openid.realm" parameter in authentication requests
-              was known as "trust_root". The syntax and meaning were
-              identical.
+              was known as "openid.trust_root". The syntax and meaning
+	      are identical.
             </t>
 
           </list>
@@ -2056,8 +2082,8 @@ Base 10 number | btwoc string representation
         An Extension to OpenID Authentication is a protocol that rides
 	on top of the authentication request and response. Extensions are
         useful for providing extra information about an authentication
-        request or response or providing extra information about the
-        subject of the authentication response.
+        request or response as well as providing extra information
+	about the subject of the authentication response.
       </t>
 
       <t>
@@ -2090,20 +2116,19 @@ Base 10 number | btwoc string representation
         refer to the same namespace.
       </t>
 
-      <t>
-        <!-- XXX: fixme -->
-        Non-normative example: An extension's type URI is
-        &lt;http://example.com/ext/1.0&gt;.
+      <t>Non-normative example:</t>
+      <t>An extension's type URI is
+      "&lt;http://example.com/ext/1.0&gt;".
         
-        <list style="empty">
-          <t>openid.ns.x=http://example.com/ext/1.0</t>
-          <t>openid.x=example</t>
-          <t>openid.x.foo=bar</t>
-          <t>openid.xx=notx</t>
-        </list>
+      <list style="empty">
+	<t>openid.ns.x=http://example.com/ext/1.0</t>
+	<t>openid.x=example</t>
+	<t>openid.x.foo=bar</t>
+	<t>openid.xx=notx</t>
+      </list>
         
         In this example, the keys openid.x and openid.x.foo are
-        associated with the extension. The openid.xx key is not.
+        associated with the extension; the openid.xx key is not.
       </t>
     </section>
 
@@ -2135,7 +2160,7 @@ Base 10 number | btwoc string representation
     
     <section title="Security Considerations">
       <section title="Preventing Attacks">
-        <section title="Eavesdropping Attacks">
+        <section title="Eavesdropping Attacks" anchor="preventing_eavesdropping">
           <t>
             There are two places in this protocol that are
             vulnerable to eavesdropping attacks. An eavesdropper could
