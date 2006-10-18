@@ -988,7 +988,6 @@ Base 10 number | btwoc string representation
                   MAC key in transit.</t>
                   <t> Value: A valid association session type from
                   <xref target="assoc_sess_types"/>.</t>
-                  <t>Default: "no-encryption"</t>
 		  <t>Note: Unless using transport layer encryption, it
 		  is NOT RECOMMENDED to use "no-encryption" on a
 		  public network, see <xref
@@ -1176,8 +1175,8 @@ Base 10 number | btwoc string representation
                 session_type
                 <list style='empty'>
                   <t>
-                    Value: (optional) A valid association session type
-		    from <xref target="assoc_sess_types" />.
+                    Value: A valid association session type from <xref
+		    target="assoc_sess_types" />.
                   </t>
                 </list>
               </t>
