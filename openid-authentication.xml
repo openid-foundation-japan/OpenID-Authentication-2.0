@@ -1661,20 +1661,16 @@ Base 10 number | btwoc string representation
               openid.signed
               <list style='empty'>
                 <t>
-                  Value: (optional) Comma-separated list of signed
-                  fields.
+                  Value: Comma-separated list of signed fields.
                 </t>
                 <t>
-                  Note: If the association used to sign this response
-                  used the <xref target="signed_list">Signed
-		  List</xref> algorithm, this MUST be present.  If it
-		  is present, this entry consists of the fields
-		  without the "openid." prefix that the signature
-		  covers. This list MUST contain at least "return_to"
-		  and "response_nonce". Additionally, if the IdP is
-		  making an assertion about an Identifier, the
-		  "identity" field MUST be present. For example,
-		  "identity,return_to,response_nonce".
+                  Note: This entry consists of the fields
+                  without the "openid." prefix that the signature
+                  covers. This list MUST contain at least "return_to"
+                  and "response_nonce". Additionally, if the IdP is
+                  making an assertion about an Identifier, the
+                  "identity" field MUST be present. For example,
+                  "identity,return_to,response_nonce".
                 </t>
               </list>
             </t>
