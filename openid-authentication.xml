@@ -2314,11 +2314,11 @@ Base 10 number | btwoc string representation
             <preamble>
               To use www.example.com as their Identifier, but have
               Relying Parties actually verify
-              http://exampleuser.livejournal.com/ with the Identity
-              Provider located at
+              http://exampleuser.livejournal.com/ with the IdP
+              Endpoint URL
               http://www.livejournal.com/openid/server.bml, the
               following XML snippet should be present in the final XRD
-              in the XRDS file:
+              element in the XRDS file:
             </preamble>
             <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
@@ -2355,10 +2355,10 @@ Base 10 number | btwoc string representation
 
       <appendix title="Login Form">
         <t>
-          Continuing this example, the End User visits a Relying Party
-          site which supports OpenID Authentication.  The Relying
-          Party presents the End User with a form field for them to
-          enter their Identifier or their IdP's identifier.
+          The End User visits a Relying Party site which supports
+          OpenID Authentication.  The Relying Party presents the End
+          User with a form field for them to enter their Identifier or
+          their IdP's identifier.
         </t>
 
         <t>
