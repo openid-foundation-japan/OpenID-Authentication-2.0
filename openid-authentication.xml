@@ -2258,7 +2258,17 @@ Base 10 number | btwoc string representation
           <t>
             In order to get protection from SSL, SSL must be used for
             all parts of the interaction, including interaction with
-            the End User through the User Agent.
+            the End User through the User Agent.  While the protocol
+	    does not require SSL be used, its use is strongly
+	    RECOMMENDED.  Current best practicies dictate that an IdP
+	    SHOULD use SSL, with a certificate signed by a trusted
+	    authority, to secure its service endpoint.  In addition,
+	    SSL, with a certificate signed by a trusted authority,
+	    SHOULD be used so that a Relying Party can fetch the
+	    End User's URL in a secure manner.  Please keep in mind
+	    that a Relying Party MAY decide to not complete, or even
+	    begin, a transaction if SSL is not being correctly used
+	    at these various endpoints.
           </t>
         </section>
       </section>
