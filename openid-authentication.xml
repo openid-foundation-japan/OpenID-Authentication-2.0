@@ -73,7 +73,7 @@
       </address>
     </author>
 
-    <date month="October" year="2006"/>
+    <date month="December" year="2006"/>
 
     <abstract>
       <t>
@@ -98,7 +98,7 @@
       </t>
 
       <t>
-        As OpenID Authentication uses only standard HTTP requests and
+        As OpenID Authentication uses only standard HTTP(S) requests and
         responses, it does not require any special capabilities of the
         User-Agent or other software. Extensions to User-Agent's can
         simplify the End User interaction, though are not required to
@@ -672,7 +672,9 @@ Base 10 number | btwoc string representation
           The form field's "name" attribute SHOULD have the value
           "openid_identifier" as to allow User Agents to automatically
           prefill the End User's Identifier when visiting a Relying
-          Party.
+          Party. Rich User Agents that support OpenID Authentication
+	  may not detect a Relying Party's support if the value is not
+	  "openid_identifier".
         </t>
       </section>
 
@@ -1427,7 +1429,9 @@ Base 10 number | btwoc string representation
           of the authentication request. IdPs SHOULD present the realm
           when requesting the End User's approval for an
           authentication request. IdPs MAY use the realm to allow the
-          End User to automate approval of authentication requests.
+          End User to automate approval of authentication
+	  requests. The realm SHOULD be used by IdPs to uniquely
+	  identify Relying Parties.
         </t>
 
         <t>
@@ -1703,6 +1707,14 @@ Base 10 number | btwoc string representation
           Party as an <xref target="indirect_comm">indirect
           response</xref>.
         </t>
+
+	<t>
+	  when receiving a negative assertion, Relying Parties SHOULd
+	  construct a new authentication request using the
+	  "checkid_setup" mode to complete the transaction.  This is a
+	  change from OpenID Authentication 1.1 and more details can
+	  be found in <xref target="compat_mode" />.
+	</t>
 
         <section title="In Response to Immediate Requests">
           <t>
@@ -2068,6 +2080,16 @@ Base 10 number | btwoc string representation
             are identical.
           </t>
 
+	  <t>
+	    When responding with a negative assertion to a
+	    "checkid_immediate" mode authentication request, the
+	    "user_setup_url" paramater MUST be returned. This is a
+	    URL that the End User may visit to complete the
+	    request. The Relying Party may redirect the End User to
+	    this URL, or provide the End User with a link that
+	    points to this URL.
+	  </t>
+
           <t>
             The Relying Party MUST accept an <xref
             target="positive_assertions">authentication
@@ -2169,6 +2191,14 @@ Base 10 number | btwoc string representation
         
         In this example, the keys openid.x and openid.x.foo are
         associated with the extension; the openid.xx key is not.
+      </t>
+
+      <t>
+	Extensions MUST NOT define parameters with the same name. It
+	is RECOMMENDED that commas are used as value delimiters,
+	though recognized that other characters are better suited in
+	certain situations.  Another approach can be appending a
+	numeric value to each key to differentiate between each value.
       </t>
     </section>
 
