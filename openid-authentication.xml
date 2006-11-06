@@ -541,10 +541,13 @@ Base 10 number | btwoc string representation
             The server MAY add additional keys to this response.
           </t>
           <t>
-            If the "openid.return_to" value is missing or not a valid
-            URL, the server SHOULD return a response to the End User
-            indicating the error and that it is unable to return the
-            End User to the initiating server.
+            If the "openid.return_to" value not a valid URL, the
+	    server SHOULD return a response to the End User indicating
+	    the error and that it is unable to return the End User to
+	    the initiating server. If the parameter is ommitted in the
+	    request, it signifies that the initiating server does not
+	    wish to for the End User to be returned to it as something
+	    else useful will have been performed via an extension.
           </t>
         </section>
       </section>
@@ -1398,9 +1401,16 @@ Base 10 number | btwoc string representation
               openid.return_to
               <list style='empty'>
                 <t>
-                  Value: URL to which the IdP SHOULD return the User
-                  Agent with the response indicating the status of the
-                  request.
+                  Value: (optional) URL to which the IdP SHOULD return
+		  the User Agent with the response indicating the
+		  status of the request.
+                </t>
+                <t>
+                  Note: If this value is not sent in the request it
+		  signifies that the Relying Party does not wish to
+		  for the End User to be returned to it as something
+		  else useful will have been performed via an
+		  extension.
                 </t>
               </list>
             </t>
@@ -1411,6 +1421,8 @@ Base 10 number | btwoc string representation
                 <t>
                   Value: (optional) URL pattern the IdP SHOULD ask the
                   End User to trust. See <xref target="realms" />.
+		  This value MUST be sent if openid.return_to is
+		  ommitted.
                 </t>
                 <t>
                   Default: return_to URL
@@ -1546,6 +1558,12 @@ Base 10 number | btwoc string representation
         store this association and MUST respond to later requests to
         check the signature of the response in <xref
         target="verifying_signatures">stateless mode</xref>.
+      </t>
+      <t>
+	If the "openid.return_to" value is ommitted in the request, it
+	signifies that the initiating server does not wish to for the
+	End User to be returned to it as something else useful will
+	have been performed via an extension.
       </t>
 
       <section title="Positive Assertions" anchor="positive_assertions">
@@ -2133,6 +2151,14 @@ Base 10 number | btwoc string representation
               are identical.
             </t>
 
+	    <t>
+	      When responding with a negative assertion to a
+	      "checkid_immediate" mode authentication request, the
+	      "user_setup_url" paramater MUST be returned. This is a URL
+	      that the End User may visit to complete the request. The
+	      Relying Party may redirect the End User to this URL, or
+	      provide the End User with a link that points to this
+	      URL.
           </list>
         </t>
       </section>
