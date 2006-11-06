@@ -693,11 +693,12 @@ Base 10 number | btwoc string representation
         <t>
           To do so, the Relying Party SHOULD examine the first
           character of the input. If it is an XRI Global Context
-          Symbol ("=", "@", "+", "$", or "!" see <xref target="XRI
-          Syntax 2.0"> Section 2.2.1.2 of</xref>), then the input
-          SHOULD be treated as an XRI. If it is not, then the input
-          SHOULD be treated as an http URL, and prefixed with the
-          string "http://".
+          Symbol ("=", "@", "+", "$", or "!" see
+	  <xref target="XRI Syntax 2.0"> Section 2.2.1.2 of</xref>),
+	  then the input SHOULD be treated as an XRI. If it is not,
+	  then the input SHOULD be treated as an http URL, and
+	  prefixed with the string "http://". See <xref
+	  target='http_s_identifiers' /> for more information.
         </t>
 
         <t>
@@ -2030,7 +2031,7 @@ Base 10 number | btwoc string representation
           that in the assertion.
         </t>
 
-        <section title="HTTP and HTTPS URL Identifiers">
+        <section title="HTTP and HTTPS URL Identifiers" anchor="http_s_identifiers">
           <t>
             Relying Parties MUST differentiate between URL Identifiers
             that have different schemes. When user input is processed
@@ -2159,6 +2160,7 @@ Base 10 number | btwoc string representation
 	      Relying Party may redirect the End User to this URL, or
 	      provide the End User with a link that points to this
 	      URL.
+	    </t>
           </list>
         </t>
       </section>
