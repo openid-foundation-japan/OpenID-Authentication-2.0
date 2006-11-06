@@ -1709,7 +1709,7 @@ Base 10 number | btwoc string representation
         </t>
 
 	<t>
-	  when receiving a negative assertion, Relying Parties SHOULd
+	  When receiving a negative assertion, Relying Parties SHOULD
 	  construct a new authentication request using the
 	  "checkid_setup" mode to complete the transaction.  This is a
 	  change from OpenID Authentication 1.1 and more details can
