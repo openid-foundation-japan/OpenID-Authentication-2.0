@@ -1492,8 +1492,8 @@ Base 10 number | btwoc string representation
              </t>
           </list>
             
-          The "openid.return_to" URL MUST match the "openid.realm", or
-          the IdP MUST return an error.
+          When present, the "openid.return_to" URL MUST match the
+	  "openid.realm", or the IdP MUST return an error.
         </t>
 
         <t>
