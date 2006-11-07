@@ -695,7 +695,7 @@ Base 10 number | btwoc string representation
           To do so, the Relying Party SHOULD examine the first
           character of the input. If it is an XRI Global Context
           Symbol ("=", "@", "+", "$", or "!" see
-	  <xref target="XRI Syntax 2.0"> Section 2.2.1.2 of</xref>),
+	  <xref target="XRI Syntax 2.0">Section 2.2.1.2 of</xref>),
 	  then the input SHOULD be treated as an XRI. If it is not,
 	  then the input SHOULD be treated as an http URL, and
 	  prefixed with the string "http://". See <xref
@@ -724,10 +724,9 @@ Base 10 number | btwoc string representation
         <t>
           <list style="numbers">
             <t>
-              If the identifier is an XRI, <eref
-              target="http://www.oasis-open.org/committees/download.php/17293"
-              >XRI resolution</eref> will yield an XRDS document
-              that contains the necessary information.
+              If the identifier is an XRI,
+	      <xref target="XRI Resolution 2.0" /> will yield an XRDS
+	      document that contains the necessary information.
             </t>
 
             <t>
@@ -785,8 +784,8 @@ Base 10 number | btwoc string representation
             If XRI or Yadis discovery was used, the result will be an
             XRDS Document.  This is a XML document with entries for
             services that are related to the Identifier.  It is
-            defined in <eref target="REFERENCE XRDS
-            DOCUMENT">REFERENCE XRDS DOCUMENT</eref>
+            defined in <xref target="XRI Resolution 2.0">Section 3
+	    of</xref>.
           </t>
 
 
@@ -2755,7 +2754,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
         <seriesInfo name="RFC" value="3174" />
       </reference>
       <reference anchor="XRI Syntax 2.0"
-                 target="http://www.oasis-open.org/committees/download.php/15376#_Toc117301848" >
+                 target="http://www.oasis-open.org/committees/download.php/15376" >
 
         <front>
           <title>Extensible Resource Identifier (XRI) Syntax V2.0</title>
@@ -2771,6 +2770,32 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
         <format type="PDF" target=
                 "http://www.oasis-open.org/committees/download.php/15377" />
       </reference>
+
+      <reference anchor="XRI Resolution 2.0"
+                 target="http://www.oasis-open.org/committees/download.php/17293" >
+        <front>
+          <title>Extensible Resource Identifier (XRI) Resolution V2.0
+	  - Working Draft 10</title>
+          <author initials='G.W' surname='Wachob' fullname="Gabe Wachob">
+            <organization>Visa International</organization>
+	  </author>
+          <author initials='D.R' surname='Reed' fullname="Drummond Reed">
+            <organization>Cordance</organization>
+          </author>
+          <author initials='L.C' surname='Chasen' fullname="Les Chasen">
+            <organization>NeuStar</organization>
+          </author>
+          <author initials='W.T' surname='Tan' fullname="William Tan">
+            <organization>NeuStar</organization>
+          </author>
+          <author initials='S.C' surname='Churchill' fullname="Steve Churchill">
+            <organization>XDI.ORG</organization>
+          </author>
+        </front>
+        <format type="PDF" target=
+                "http://www.oasis-open.org/committees/download.php/17293" />
+      </reference>
+
       <reference anchor="Yadis"
                  target="http://yadis.org/papers/yadis-v1.0.pdf" >
         <front>
