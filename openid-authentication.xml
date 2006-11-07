@@ -764,7 +764,7 @@ Base 10 number | btwoc string representation
 
               <t hangText="IdP-Specific Identifier:">
                 (optional) An identifier that allows an IdP to
-                identify the user of a portable identifier. If no
+                identify the user of a Claimed Identifier. If no
                 IdP-specific identifier is present in the discovered
                 information, the Claimed Identifier is also the
                 IdP-Specific Identifier.
@@ -1364,13 +1364,13 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              openid.portable
+              openid.claimed_id
               <list style='empty'>
                 <t>
                   Value: (optional) The Claimed Identifier.
                 </t>
                 <t>
-                  Note: If the portable identifier is not specified,
+                  Note: If the Claimed Identifier is not specified,
                   it is assumed to be the same as the IdP-specific
                   identifier.
                 </t>
@@ -1606,16 +1606,18 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              openid.portable
+              openid.claimed_id
               <list style='empty'>
                 <t>
-                  <t>
-                    Value: (optional) The Claimed Identifier
-                  </t>
-                  <t>
-                    Note: If this value is absent, it defaults to the
-                    value of "openid.identity".
-                  </t>
+                  Value: (optional) The Claimed Identifier
+                </t>
+                <t>
+                  Note: If the Claimed Identifier is not specified,
+                  it is assumed to be the same as the IdP-specific
+                  identifier. If neither value is present, the
+                  assertion is not about an identifier, and will
+                  contain other information in its payload, using
+                  <xref target="extensions">extensions</xref>.
                 </t>
               </list>
             </t>
@@ -1714,8 +1716,8 @@ Base 10 number | btwoc string representation
                   "openid." prefix that the signature covers. This
                   list MUST contain at least "return_to" and
                   "response_nonce", and if present in the response,
-                  "portable" and "identity". For example,
-                  "identity,portable,return_to,response_nonce".
+                  "claimed_id" and "identity". For example,
+                  "identity,claimed_id,return_to,response_nonce".
                 </t>
               </list>
             </t>
@@ -2366,7 +2368,7 @@ Base 10 number | btwoc string representation
     <appendix title="Examples">
       <t>Non-normative</t>
 
-      <appendix title="Portable Identifiers">
+      <appendix title="IdP-Specific Identifiers">
         <t>
           An End User wants to use http://www.example.com/ as their
           Claimed Identifier. The End User has an account with
