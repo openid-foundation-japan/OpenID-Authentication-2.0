@@ -2368,12 +2368,12 @@ Base 10 number | btwoc string representation
 
       <appendix title="Portable Identifiers">
         <t>
-          For example, an End User wants to use
-          http://www.example.com/ as their Identifier, but
-          http://www.example.com/ doesn't have the means, or desire,
-          to run an IdP. LiveJournal is an Identity Provider, so if
-          the End User has a LiveJournal OpenID Identifier, they can
-          delegate their authentication to LiveJournal.
+          An End User wants to use http://www.example.com/ as their
+          Claimed Identifier. The End User has an account with
+          LiveJournal, an Identity Provider, they can use the
+          LiveJournal IdP Endpoint URL to do authentication for
+          http://www.example.com/, using their LiveJournal-issued
+          identifier as an IdP-Specific Identifier.
         </t>
       </appendix>
 
