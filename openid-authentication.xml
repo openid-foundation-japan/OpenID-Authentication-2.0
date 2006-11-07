@@ -2116,6 +2116,17 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
+            Relying Parties MUST send a blank session_type parameter
+            in "no-encryption" association requests.
+          </t>
+
+          <t>
+            Relying Parties MUST accept a "no-encryption" association
+            response with a blank or missing session_type parameter,
+            if they choose to accept "no-encryption" sessions.
+          </t>
+
+          <t>
             In <xref target="requesting_authentication">authentication
             requests</xref>, the "openid.identity" parameter MUST NOT
             be the special value
@@ -2162,6 +2173,17 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
+              IdPs MUST accept a "no-encryption" association request
+              with a blank session_type parameter, if they choose to
+              accept "no-encryption" sessions.
+            </t>
+
+            <t>
+              IdPs MUST accept association requests with no assoc_type
+              parameter, and assume them to be of type HMAC-SHA1.
+            </t>
+
+            <t>
               <xref target="refuse_assoc">Unsuccessful association
               responses</xref> MUST NOT be sent, since they are not
               part of the OpenID Authentication 1.1 protocol.
@@ -2173,8 +2195,8 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              Omit the "session_type" parameter when making
-              "no-encryption" responses to association requests.
+              Omit or set to blank the "session_type" parameter when
+              making "no-encryption" responses to association requests.
             </t>
 
             <t>
