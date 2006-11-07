@@ -2026,12 +2026,9 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          If a request is using a portable identifier, the Verified
-          Identifier is the Identifier on which discovery was
-          performed, and not the Identifier that is contained in the
-          assertion. If an assertion is made for an Identifier on
-          which discovery has not been performed, the Relying Party
-          MUST perform discovery on that Identifier and compare the
+          If an assertion is made for a Claimed Identifier on which
+          discovery has not been performed, the Relying Party MUST
+          perform discovery on that Identifier and compare the
           discovered information to that in the assertion.
         </t>
 
