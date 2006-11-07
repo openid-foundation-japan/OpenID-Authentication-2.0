@@ -384,7 +384,7 @@ Base 10 number | btwoc string representation
           </t>
            <section title="Successful Responses">
             <t>
-              A server receiving a properly formed request MUST send a
+              A server receiving a valid request MUST send a
               response with an HTTP status code of 200.
             </t>
           </section>
