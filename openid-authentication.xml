@@ -1072,6 +1072,14 @@ Base 10 number | btwoc string representation
           <t>
             <list style="symbols">
               <t>
+                ns
+                <list style="empty">
+                  <t>
+                    Value: "http://openid.net/signon/2.0"
+                  </t>
+                </list>
+              </t>
+              <t>
                 session_type
                 <list style="empty">
                   <t>
@@ -1190,6 +1198,14 @@ Base 10 number | btwoc string representation
           </t>
           <t>
             <list style='symbols'>
+              <t>
+                ns
+                <list style="empty">
+                  <t>
+                    Value: "http://openid.net/signon/2.0"
+                  </t>
+                </list>
+              </t>
               <t>
                 error
                 <list style='empty'>
@@ -1934,6 +1950,15 @@ Base 10 number | btwoc string representation
           <section title='Response Parameters' toc="exclude">
             <t>
               <list style='symbols'>
+                <t>
+                  ns
+                  <list style="empty">
+                    <t>
+                      Value: "http://openid.net/signon/2.0"
+                    </t>
+                  </list>
+                </t>
+
                 <t>
                   mode
                   <list style='empty'>
