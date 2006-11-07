@@ -132,8 +132,8 @@
         referred to as a "URL" within this document, or <eref
         target="http://www.oasis-open.org/committees/download.php/15376"
         >XRI</eref>.  An "Identifier" may be a Claimed Identifier,
-        Delegate Identifier, IdP Identifier, or Verified Identifier,
-        depending on context.
+        IdP-Specific Identifier, IdP Identifier, or Verified
+        Identifier, depending on context.
       </t>
 
       <t hangText="End User:">
@@ -154,7 +154,7 @@
         that they own.
       </t>
 
-      <t hangText="Delegate Identifier:">
+      <t hangText="IdP-Specific Identifier:">
         An alternate Identifier that can be included in the discovery
         response.
       </t>
@@ -757,21 +757,17 @@ Base 10 number | btwoc string representation
               </t>
 
               <t hangText="Claimed Identifier:">
-                (optional) The normalized Identifier upon which
-                discovery was performed. The Claimed Identifier is
-                present unless the End User entered an IdP Identifier
-                during initiation.
+                (optional) The identifier that is the subject of this
+                authentication request. This is the identifier upon
+                which discovery was performed.
               </t>
 
-              <t hangText="Delegate Identifier:">
-                (optional)
-                 
-                The Identifier that the Relying Party SHOULD perform
-                authentication using.  Upon successful authentication,
-                the Relying Party SHOULD recognize the End User using
-                the Claimed Identifier.  The Delegate Identifier can
-                only be present when the End User enters a Claimed
-                Identifier.
+              <t hangText="IdP-Specific Identifier:">
+                (optional) An identifier that allows an IdP to
+                identify the user of a portable identifier. If no
+                IdP-specific identifier is present in the discovered
+                information, the Claimed Identifier is also the
+                IdP-Specific Identifier.
               </t>
             </list>
           </t>
@@ -826,8 +822,8 @@ Base 10 number | btwoc string representation
                   </t>
 
                   <t>
-                    An &lt;openid:Delegate&gt; tag (optional) whose
-		            text content is the Delegate Identifier.
+                    An &lt;openid:Delegate&gt; tag (optional) whose text
+                    content is the IdP-Specific Identifier.
                   </t>
                 </list>
               </t>
@@ -934,7 +930,7 @@ Base 10 number | btwoc string representation
               <t>
                 A &lt;LINK&gt; tag MAY be included with attributes
                 "rel" set to "openid.delegate" and "href" set to the
-                End User's Delegate Identifier
+                End User's IdP-Specific Identifier
               </t>
             </list>
           </t>
@@ -1368,11 +1364,24 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
+              openid.portable
+              <list style='empty'>
+                <t>
+                  Value: (optional) The Claimed Identifier.
+                </t>
+                <t>
+                  Note: If the portable identifier is not specified,
+                  it is assumed to be the same as the IdP-specific
+                  identifier.
+                </t>
+              </list>
+            </t>
+
+            <t>
               openid.identity
               <list style='empty'>
                 <t>
-                  Value: (optional) Delegate Identifier when
-                  available, otherwise the Claimed Identifier
+                  Value: (optional) The IdP-Specific Identifier.
                 </t>
                 <t>
                   Note: If this is set to the special value
@@ -1597,11 +1606,25 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
+              openid.portable
+              <list style='empty'>
+                <t>
+                  <t>
+                    Value: (optional) The Claimed Identifier
+                  </t>
+                  <t>
+                    Note: If this value is absent, it defaults to the
+                    value of "openid.identity".
+                  </t>
+                </t>
+              </list>
+            </t>
+
+            <t>
               openid.identity
               <list style='empty'>
                 <t>
-                  Value: (optional) The Identifier about which the IdP
-                  is making a positive authentication assertion.
+                  Value: (optional) The IdP-Specific Identifier
                 </t>
                 <t>
                   Note: The Identifier MAY be omitted if an extension
@@ -1687,13 +1710,12 @@ Base 10 number | btwoc string representation
                   Value: Comma-separated list of signed fields.
                 </t>
                 <t>
-                  Note: This entry consists of the fields
-                  without the "openid." prefix that the signature
-                  covers. This list MUST contain at least "return_to"
-                  and "response_nonce". Additionally, if the IdP is
-                  making an assertion about an Identifier, the
-                  "identity" field MUST be present. For example,
-                  "identity,return_to,response_nonce".
+                  Note: This entry consists of the fields without the
+                  "openid." prefix that the signature covers. This
+                  list MUST contain at least "return_to" and
+                  "response_nonce", and if present in the response,
+                  "portable" and "identity". For example,
+                  "identity,portable,return_to,response_nonce".
                 </t>
               </list>
             </t>
@@ -1813,6 +1835,9 @@ Base 10 number | btwoc string representation
             information in the assertion.
           </t>
         </list>
+
+        If all three of these conditions are met, the Claimed
+        Identifier in the response is now a Verified Identifier.
       </t>
 
       
@@ -1971,30 +1996,9 @@ Base 10 number | btwoc string representation
       <section title="Verifying Discovered Information">
         <t>
           The Relying Party MUST have performed <xref
-          target="discovery">discovery</xref> on the Identifier that
-          will be used and the information in the assertion MUST
-          match the discovered information. 
-        </t>
-        <t>
-          Specifically, one of the following MUST be true:
-          <list style="numbers">
-            <t>
-              The Identifier in the assertion points to the IdP
-              making the assertion.
-            </t>
-            <t>
-              The Claimed Identifier specifies the Identifier in the
-              assertion as a delegate, and the Delegate Identifier
-              points to the IdP making the assertion.
-            </t>
-          </list>
-        </t>
-        <t>
-          Note: The Relying Party must be able to look up the Claimed
-          Identifier in order to perform the second test.  Relying
-          Parties unable to store information might append the Claimed
-          Identifier to the "openid.return_to" parameter in the
-          request.
+          target="discovery">discovery</xref> on the Claimed
+          Identifier and the information in the assertion MUST exactly
+          match the discovered information.
         </t>
         <t>
           If the Claimed Identifier was not present in the request
@@ -2022,13 +2026,13 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          If a request is using delegation, the Verified Identifier is
-          the Identifier on which discovery was performed, and not the
-          Identifier that is contained in the assertion. If an
-          assertion is made for an Identifier on which discovery has
-          not been performed, the Relying Party MUST perform discovery on
-          that Identifier and compare the discovered information to
-          that in the assertion.
+          If a request is using a portable identifier, the Verified
+          Identifier is the Identifier on which discovery was
+          performed, and not the Identifier that is contained in the
+          assertion. If an assertion is made for an Identifier on
+          which discovery has not been performed, the Relying Party
+          MUST perform discovery on that Identifier and compare the
+          discovered information to that in the assertion.
         </t>
 
         <section title="HTTP and HTTPS URL Identifiers" anchor="http_s_identifiers">
@@ -2365,7 +2369,7 @@ Base 10 number | btwoc string representation
     <appendix title="Examples">
       <t>Non-normative</t>
 
-      <appendix title="Delegation">
+      <appendix title="Portable Identifiers">
         <t>
           For example, an End User wants to use
           http://www.example.com/ as their Identifier, but
