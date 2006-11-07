@@ -706,8 +706,8 @@ Base 10 number | btwoc string representation
           URL identifiers MUST be further normalized by following
           redirects when retrieving their content and finally applying
           the rules in Section 6 of <xref target='RFC3986' /> to the
-          final destination URL. This final URL should be noted by the
-          Relying Party as the Claimed Identifier and used during
+          final destination URL. This final URL MUST be noted by the
+          Relying Party as the Claimed Identifier and be used during
           future requests.
         </t>
       </section>
@@ -1422,7 +1422,7 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   Value: (optional) A handle for an association
-                  between the Relying Party and the IdP that should be
+                  between the Relying Party and the IdP that SHOULD be
                   used to sign the response.
                 </t>
                 <t>
