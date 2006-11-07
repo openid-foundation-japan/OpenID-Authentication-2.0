@@ -569,17 +569,18 @@ Base 10 number | btwoc string representation
           To generate a message signature:
           <list style="numbers">
             <t> 
-              Determine the appropriate signature list and signature
-              algorithm from the <xref
+              Determine the appropriate list of keys to be signed
+              and signature algorithm from the <xref
                   target="associations">association type</xref>.
             </t>
             <t> 
-              Generate the list to be signed using the correct <xref
+              Generate the list of key/value pairs to be signed using
+              the correct <xref
                   target="signed_list">list algorithm</xref>.
             </t>
             <t> 
-              Convert the list to an octet string by encoding
-              with <xref target="kvform">Key-Value Form
+              Convert the list of key/value pairs to be signed to an octet
+              string by encoding with <xref target="kvform">Key-Value Form
               Encoding</xref>.
             </t>
             <t> 
@@ -607,13 +608,13 @@ Base 10 number | btwoc string representation
         </t>
         <t>
           Append the signed list key and the associated value to
-          the message to be signed.
+          the list of key/value pairs to be signed.
         </t>
       </list>
     </t>
     <t>
-      The output of this algorithm is the message to be
-      signed, and the list of keys that were signed.  A message
+      The output of this algorithm is the list of key/value pairs
+      to be signed, and the list of keys to be signed. A message
       signed using this algorithm MUST append the list of signed
       fields to the message.
     </t>
