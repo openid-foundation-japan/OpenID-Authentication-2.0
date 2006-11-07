@@ -768,6 +768,12 @@ Base 10 number | btwoc string representation
                 information, the Claimed Identifier is also the
                 IdP-Specific Identifier.
               </t>
+
+              <t hangText="Protocol Version:">
+                The OpenID protocol version of the discovered
+                Identity Provider(s). This is determined by the
+                &lt;xrd:Type&gt; tag of the IdP Identifier Element.
+              </t>
             </list>
           </t>
         </section>
