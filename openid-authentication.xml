@@ -245,6 +245,7 @@
           values are Unicode strings. When the keys and values need to
           be converted to bytes, they MUST be encoded using UTF-8.  <!--
           reference unicode, UTF-8! -->
+          Messages MUST NOT contain multiple parameters with the same name.  
         </t>
         
         <section title="Key-Value Form Encoding" anchor="kvform">
