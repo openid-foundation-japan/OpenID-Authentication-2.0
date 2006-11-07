@@ -253,7 +253,7 @@
             A Key-Value form message is a sequence of lines.  Each
             line begins with a key, followed by a colon, and the value
             associated with the key.  The line is terminated by a
-            single newline (codepoint 10, "/n"). A key or value MUST NOT
+            single newline (codepoint 10, "\n"). A key or value MUST NOT
             contain a newline and a key also MUST NOT contain a colon.
           </t>
           <t>
