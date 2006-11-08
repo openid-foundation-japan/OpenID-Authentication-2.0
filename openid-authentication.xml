@@ -228,7 +228,11 @@
           <t>
             The Relying Party <xref
             target="verification">verifies</xref> the information
-            received from the IdP.
+            received from the IdP including checking the nonce,
+	    verifying the signature by using the shared key
+	    established during the association or by sending a direct
+	    request to the IdP, and verifying the discovered
+	    information.
            </t>
          </list>
       </t>
