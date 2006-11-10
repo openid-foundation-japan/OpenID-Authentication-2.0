@@ -1104,7 +1104,7 @@ Base 10 number | btwoc string representation
                 <list style="empty">
                   <t>
                     The session type for this association. If the IdP
-                    is unwilling or unable to support this association
+                    is unwilling or unable to support this session
                     type, it MUST return an unsuccessful response.
                   </t>
                 </list>
