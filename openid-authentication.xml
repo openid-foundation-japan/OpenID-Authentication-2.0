@@ -2023,8 +2023,8 @@ Base 10 number | btwoc string representation
 
             <t>
               The IdP SHOULD only return "is_valid" once for each
-              authentication request. An authentication request may be
-              identified by its "openid.response_nonce" value.
+              authentication response. An authentication response may
+              be identified by its "openid.response_nonce" value.
             </t>
 
             <t>
