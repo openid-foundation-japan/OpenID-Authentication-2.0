@@ -1425,7 +1425,9 @@ Base 10 number | btwoc string representation
                   Note: If this is set to the special value
                   "http://openid.net/identifier_select/2.0" then the
                   IdP MAY choose an Identifier that belongs to the End
-                  User.
+                  User.  This parameter MAY be omitted if an extension
+                  is in use that makes the request meaningful without
+                  it (see openid.disco_id above).
                 </t>
               </list>
             </t>
@@ -1668,9 +1670,9 @@ Base 10 number | btwoc string representation
                   Value: (optional) The IdP-Specific Identifier
                 </t>
                 <t>
-                  Note: The Identifier MAY be omitted if an extension
-                  is in use that makes the response meaningful without
-                  it.
+                  Note: The openid.identity field MAY be omitted if an
+                  extension is in use that makes the response
+                  meaningful without it (see openid.disco_id above).
                 </t>
               </list>
             </t>
