@@ -385,6 +385,25 @@ Base 10 number | btwoc string representation
             The message MUST be encoded as a POST body, as specified
             by <xref target="queries" />.
           </t>
+          <t>
+            All direct requests must contain the following field:
+          </t>
+          <t>
+            <list style='symbols'>
+              <t>
+                openid.ns
+                <list style='empty'>
+                  <t>
+                    Value: "http://openid.net/signon/2.0"
+                  </t>
+                  <t>
+                    This value MUST be present for the request to
+                    be a valid OpenID 2.0 direct request.
+                  </t>
+                </list>
+              </t>
+            </list>
+          </t>
         </section>
         <section title="Direct Response" anchor="direct_response">
           <t>
@@ -394,6 +413,26 @@ Base 10 number | btwoc string representation
             Form</xref>. The content-type of the response SHOULD be
             "text/plain".
           </t>
+          <t>
+            All direct responses must contain the following field:
+          </t>
+          <t>
+            <list style='symbols'>
+              <t>
+                ns
+                <list style='empty'>
+                  <t>
+                    Value: "http://openid.net/signon/2.0"
+                  </t>
+                  <t>
+                    This value MUST be present for the response to
+                    be a valid OpenID 2.0 direct response.
+                  </t>
+                </list>
+              </t>
+            </list>
+          </t>
+
            <section title="Successful Responses">
             <t>
               A server receiving a valid request MUST send a
@@ -410,6 +449,19 @@ Base 10 number | btwoc string representation
             </t>
             <t>
               <list style='symbols'>
+                <t>
+                  ns
+                  <list style='empty'>
+                    <t>
+                        Value: "http://openid.net/signon/2.0"
+                    </t>
+                    <t>
+                        This value MUST be present for the response to
+                        be a valid OpenID 2.0 direct error response.
+                    </t>
+                  </list>
+                </t>
+
                 <t>
                   error
                   <list style='empty'>
@@ -467,6 +519,25 @@ Base 10 number | btwoc string representation
           />. The initiator of the communication chooses which method
           of indirect communication is appropriate. 
         </t>
+        <t>
+          All indirect messages must contain the following field:
+        </t>
+        <t>
+          <list style='symbols'>
+            <t>
+              openid.ns
+              <list style='empty'>
+                <t>
+                  Value: "http://openid.net/signon/2.0"
+                </t>
+                <t>
+                  This value MUST be present for the message to
+                  be a valid OpenID 2.0 indirect message.
+                </t>
+              </list>
+            </t>
+          </list>
+        </t>
 
         <section title="HTTP Redirect">
           <t>
@@ -510,6 +581,19 @@ Base 10 number | btwoc string representation
           </t>
           <t>
             <list style='symbols'>
+              <t>
+                openid.ns
+                <list style='empty'>
+                  <t>
+                    Value: "http://openid.net/signon/2.0"
+                  </t>
+                  <t>
+                    This value MUST be present for the response to
+                    be a valid OpenID 2.0 indirect error response.
+                  </t>
+                </list>
+              </t>
+
               <t>
                 openid.mode
                 <list style='empty'>
@@ -1000,6 +1084,17 @@ Base 10 number | btwoc string representation
           </t>
           <t>
             <list style="symbols">
+              <t>openid.ns
+                <list style='empty'>
+                  <t>
+                    Value: "http://openid.net/signon/2.0"
+                  </t>
+                  <t>
+                    This value MUST be present for the request to
+                    be a valid OpenID 2.0 association request.
+                  </t>
+                </list>
+              </t>
               <t>openid.mode 
                 <list style="empty">
                   <t> Value: "associate"</t>
@@ -1096,6 +1191,10 @@ Base 10 number | btwoc string representation
                 <list style="empty">
                   <t>
                     Value: "http://openid.net/signon/2.0"
+                  </t>
+                  <t>
+                    This value MUST be present for the response to
+                    be a valid OpenID 2.0 association response.
                   </t>
                 </list>
               </t>
@@ -1223,6 +1322,10 @@ Base 10 number | btwoc string representation
                 <list style="empty">
                   <t>
                     Value: "http://openid.net/signon/2.0"
+                  </t>
+                  <t>
+                    This value MUST be present for the response to
+                    be a valid OpenID 2.0 association failure response.
                   </t>
                 </list>
               </t>
@@ -1634,7 +1737,7 @@ Base 10 number | btwoc string representation
                   Note: This defines the interpretation of the OpenID
                   Authentication arguments without a namespace.  To be
                   an OpenID Authentication 2.0 response, the given
-                  value must be present.
+                  value MUST be present.
                 </t>
               </list>
             </t>
@@ -1811,6 +1914,18 @@ Base 10 number | btwoc string representation
             following form:
             <list style='symbols'>
               <t>
+                openid.ns
+                <list style='empty'>
+                  <t>
+                    Value: "http://openid.net/signon/2.0"
+                  </t>
+                  <t>
+                    This value MUST be present for the response to
+                    be a valid OpenID 2.0 immediate negative assertion.
+                  </t>
+                </list>
+              </t>
+              <t>
                 openid.mode
                 <list style='empty'>
                   <t>Value: "id_res"</t>
@@ -1841,6 +1956,18 @@ Base 10 number | btwoc string representation
             takes the following form:
 
             <list style='symbols'>
+              <t>
+                openid.ns
+                <list style='empty'>
+                  <t>
+                    Value: "http://openid.net/signon/2.0"
+                  </t>
+                  <t>
+                    This value MUST be present for the response to
+                    be a valid OpenID 2.0 non-immediate negative assertion.
+                  </t>
+                </list>
+              </t>
               <t>
                 openid.mode
                 <list style='empty'>
@@ -1978,6 +2105,10 @@ Base 10 number | btwoc string representation
                   <list style="empty">
                     <t>
                       Value: "http://openid.net/signon/2.0"
+                    </t>
+                    <t>
+                      This value MUST be present for the response to
+                      be a valid OpenID 2.0 verification response.
                     </t>
                   </list>
                 </t>
