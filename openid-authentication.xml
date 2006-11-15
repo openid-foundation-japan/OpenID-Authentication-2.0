@@ -2827,14 +2827,15 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
                 "http://www.oasis-open.org/committees/download.php/17293" />
       </reference>
 
-      <reference anchor="Yadis"
-                 target="http://yadis.org/papers/yadis-v1.0.pdf" >
+      <reference anchor="Yadis">
         <front>
           <title>Yadis Specification 1.0</title>
           <author initials='J.M' surname='Miller' fullname="Joaquin Miller">
             <organization>NetMesh</organization>
           </author>
         </front>
+	<format type='PDF' target="http://yadis.org/papers/yadis-v1.0.pdf" />
+	<format type='ODT' target="http://yadis.org/papers/yadis-v1.0.odt" />
       </reference>
     </references>
   </back>
