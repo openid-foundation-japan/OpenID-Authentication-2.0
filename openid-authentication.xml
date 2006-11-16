@@ -83,9 +83,9 @@
 
       <t>
         OpenID is decentralized. No central authority must approve or
-        register Relying Parties or Identity Providers. An End User
-        can freely choose which Identity Provider to use and they can
-        preserve their Identifier if they switch Identity Providers.
+        register Relying Parties or OpenID Providers. An End User
+        can freely choose which OpenID Provider to use and they can
+        preserve their Identifier if they switch OpenID Providers.
       </t>
 
       <t>
@@ -133,7 +133,7 @@
         referred to as a "URL" within this document, or <eref
         target="http://www.oasis-open.org/committees/download.php/15376"
         >XRI</eref>.  An "Identifier" may be a Claimed Identifier,
-        IdP-Specific Identifier, IdP Identifier, or Verified
+        OP-Specific Identifier, OP Identifier, or Verified
         Identifier, depending on context.
       </t>
 
@@ -149,7 +149,7 @@
       <t hangText="Claimed Identifier:">
         An Identifier that the End User claims to own which has not yet
         been verified by the Relying Party.  During the initiation
-	phase of the protocol, an IdP-Specific Identifier may be
+	phase of the protocol, an OP-Specific Identifier may be
 	entered as the Claimed Identifier.
       </t>
 
@@ -158,9 +158,9 @@
         that they own.
       </t>
 
-      <t hangText="IdP-Specific Identifier:">
+      <t hangText="OP-Specific Identifier:">
         An alternate Identifier that can be included in the discovery
-        response and that represents an IdP versus an End User.
+        response and that represents an OP versus an End User.
       </t>
 
       <t hangText="Relying Party:">
@@ -168,14 +168,14 @@
         Identifier.
       </t>
 
-      <t hangText="Identity Provider:">
-        IdP. This is the OpenID Authentication server
+      <t hangText="OpenID Provider:">
+        OP. This is the OpenID Authentication server
         that a Relying Party contacts for cryptographic proof that the
         End User owns an Identifier.
       </t>
 
-      <t hangText="IdP Identifier:">
-        An Identifier for an Identity Provider.
+      <t hangText="OP Identifier:">
+        An Identifier for an OpenID Provider.
       </t>
 
       <t hangText="Diffie-Hellman Key Exchange:">
@@ -199,34 +199,34 @@
           <t>
             The Relying Party <xref target="discovery">performs
             discovery</xref> on the Claimed Identifier and establishes
-            the location of the IdP's endpoint that the End User uses
+            the location of the OP's endpoint that the End User uses
             for authentication.
           </t>
           <t>
             (optional) 
 
-            The Relying Party and the IdP establish an <xref
+            The Relying Party and the OP establish an <xref
             target="associations">association</xref> -- a shared
             secret established using Diffie-Hellman Key Exchange. The
-            IdP uses an association to sign subsequent messages and
+            OP uses an association to sign subsequent messages and
             the Relying Party to verify those messages; this removes
 	    the need for subsequent direct requests to verify the
 	    signature after each authentication request.
           </t>
           <t>
             The Relying Party redirects the End User's User Agent to
-            the IdP with an OpenID <xref
+            the OP with an OpenID <xref
             target="requesting_authentication">Authentication
             request</xref>.
           </t>
           <t>
-            The IdP establishes whether the End User is authorized to
+            The OP establishes whether the End User is authorized to
             perform OpenID Authentication and wishes to do so. The
-            manner in which the End User authenticates to their IdP is
+            manner in which the End User authenticates to their OP is
             beyond the scope of this document.
           </t>
           <t>
-            The IdP redirects the End User's User Agent back to the
+            The OP redirects the End User's User Agent back to the
             Relying Party with cyrptographic proof asserting either
 	    that <xref target="positive_assertions">authentication is
             approved</xref> or <xref
@@ -235,10 +235,10 @@
           <t>
             The Relying Party <xref
             target="verification">verifies</xref> the information
-            received from the IdP including checking the nonce,
+            received from the OP including checking the nonce,
 	    verifying the signature by using either the shared key
 	    established during the association or by sending a direct
-	    request to the IdP, and verifying the discovered
+	    request to the OP, and verifying the discovered
 	    information.
            </t>
          </list>
@@ -300,8 +300,8 @@
           </t>
           <t>
             This model applies to messages from the User Agent to both
-            the Relying Party and the IdP, as well as messages from the
-            Relying Party to the IdP.
+            the Relying Party and the OP, as well as messages from the
+            Relying Party to the OP.
           </t>
         </section>
         <section title="Example">
@@ -375,7 +375,7 @@ Base 10 number | btwoc string representation
                anchor="direct_comm">
         <t>
           Direct communication is initiated by a Relying Party to an
-          IdP endpoint URL.  It is used for <xref
+          OP endpoint URL.  It is used for <xref
           target="associations">establishing associations</xref> and
           <xref target="check_auth">verifying authentication
           assertions</xref>.
@@ -494,7 +494,7 @@ Base 10 number | btwoc string representation
                   </list>
                 </t>
               </list>
-               The IdP MAY add additional fields to this response.
+               The OP MAY add additional fields to this response.
             </t>
           </section>
         </section>
@@ -504,7 +504,7 @@ Base 10 number | btwoc string representation
         <t>
           In indirect communication, messages are passed through the
           User-Agent.  This can be initiated by either the Relying
-          Party or the IdP.  Indirect communication is used for <xref
+          Party or the OP.  Indirect communication is used for <xref
           target="requesting_authentication">authentication
           requests</xref> and <xref
           target="responding_to_authentication">authentication
@@ -719,7 +719,7 @@ Base 10 number | btwoc string representation
       keys while looking for a match, it MUST only sign elements
       that have keys beginning with "openid." This is to prevent
       attacks where the Relying Party is malicious and tries to
-      have the IdP sign arbitrary data.
+      have the OP sign arbitrary data.
     </t>
       </section>
 
@@ -846,7 +846,7 @@ Base 10 number | btwoc string representation
             Party will have the following information:
 
             <list style="hanging">
-              <t hangText="IdP Endpoint URL:">
+              <t hangText="OP Endpoint URL:">
                 The URL that accepts authentication requests. This
                 MUST be an absolute URL.
               </t>
@@ -857,18 +857,18 @@ Base 10 number | btwoc string representation
                 which discovery was performed.
               </t>
 
-              <t hangText="IdP-Specific Identifier:">
-                (optional) An identifier that allows an IdP to
+              <t hangText="OP-Specific Identifier:">
+                (optional) An identifier that allows an OP to
                 identify the End User of a Claimed Identifier. If no
-                IdP-specific identifier is present in the discovered
+                OP-specific identifier is present in the discovered
                 information, the Claimed Identifier is also the
-                IdP-Specific Identifier.
+                OP-Specific Identifier.
               </t>
 
               <t hangText="Protocol Version:">
                 The OpenID protocol version of the discovered
-                Identity Provider(s). This is determined by the
-                &lt;xrd:Type&gt; tag of the IdP Identifier Element.
+                OpenID Provider(s). This is determined by the
+                &lt;xrd:Type&gt; tag of the OP Identifier Element.
               </t>
             </list>
           </t>
@@ -887,9 +887,9 @@ Base 10 number | btwoc string representation
 
           <section title="Service Elements">
           
-            <section title="IdP Identifier Element">
+            <section title="OP Identifier Element">
               <t> 
-                An IdP Identifier Element is a &lt;xrd:Service&gt;
+                An OP Identifier Element is a &lt;xrd:Service&gt;
                 element with the following information:
 
                 <list style="hanging">
@@ -900,7 +900,7 @@ Base 10 number | btwoc string representation
 
                   <t>
                     An &lt;xrd:URI&gt; tag whose text content is the
-                    IdP Endpoint URL
+                    OP Endpoint URL
                   </t>
                 </list>
               </t>
@@ -920,12 +920,12 @@ Base 10 number | btwoc string representation
 
                   <t>
                     An &lt;xrd:URI&gt; tag whose text content is the
-                    IdP Endpoint URL.
+                    OP Endpoint URL.
                   </t>
 
                   <t>
                     An &lt;openid:Delegate&gt; tag (optional) whose text
-                    content is the IdP-Specific Identifier.
+                    content is the OP-Specific Identifier.
                   </t>
                 </list>
               </t>
@@ -937,7 +937,7 @@ Base 10 number | btwoc string representation
               Once the Relying Party has obtained an XRDS document, it
               MUST first search the document (following the rules
               described in <xref target="XRI Resolution 2.0" />) for
-	      an IdP Identifier. If none is found, the RP will search
+	      an OP Identifier. If none is found, the RP will search
 	      for a Claimed Identifier Element.
             </t>
           </section>
@@ -999,7 +999,7 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              If an OpenID IdP supports extensions (<xref
+              If an OpenID OP supports extensions (<xref
               target="extensions" />), the extensions SHOULD be listed
               as additional &lt;xrd:Type&gt; child elements of the
               &lt;xrd:Service&gt; element.
@@ -1013,9 +1013,9 @@ Base 10 number | btwoc string representation
           <t>
             OpenID Authentication 1.1 HTML-based discovery MUST be
             supported by Relying Parties.  If a Relying Party locates
-            an IdP using HTML-based discovery, it MUST use <xref
+            an OP using HTML-based discovery, it MUST use <xref
                 target="compat_mode">OpenID Authentication 1.1
-            Compatibility</xref> when communicating with that IdP.
+            Compatibility</xref> when communicating with that OP.
           </t>
 
           <t>
@@ -1026,19 +1026,19 @@ Base 10 number | btwoc string representation
             <list>
               <t>
                 A &lt;LINK&gt; tag MUST be included with attributes
-                "rel" set to "openid.server", and "href" set to an IdP
+                "rel" set to "openid.server", and "href" set to an OP
                 Endpoint URL
               </t>
               <t>
                 A &lt;LINK&gt; tag MAY be included with attributes
                 "rel" set to "openid.delegate" and "href" set to the
-                End User's IdP-Specific Identifier
+                End User's OP-Specific Identifier
               </t>
             </list>
           </t>
 
           <t> The host of the HTML document MAY be different from the
-            End User's IdP's host.
+            End User's OP's host.
           </t>
 
           <t>
@@ -1057,7 +1057,7 @@ Base 10 number | btwoc string representation
 
     <section title="Establishing Associations" anchor="associations">
       <t>
-        An "association" is a shared secret between the IdP and
+        An "association" is a shared secret between the OP and
         Relying Party.  Once established, it is used to verify
         subsequent protocol messages and reduces round trips.
       </t>
@@ -1074,7 +1074,7 @@ Base 10 number | btwoc string representation
         <t>
           An association session is initiated by a <xref
           target="direct_comm">direct request</xref> from a Relying
-          Party to an IdP Endpoint URL with the "openid.mode" key
+          Party to an OP Endpoint URL with the "openid.mode" key
           having the value of "associate".
         </t>
          
@@ -1179,7 +1179,7 @@ Base 10 number | btwoc string representation
       <section title="Association Session Response">
         <t>
           An association session response is a direct response from the
-          IdP to the Relying Party in <xref target="kvform">Key-Value
+          OP to the Relying Party in <xref target="kvform">Key-Value
           Form</xref>.
         </t>
 
@@ -1202,7 +1202,7 @@ Base 10 number | btwoc string representation
                 session_type
                 <list style="empty">
                   <t>
-                    The session type for this association. If the IdP
+                    The session type for this association. If the OP
                     is unwilling or unable to support this session
                     type, it MUST return an unsuccessful response.
                   </t>
@@ -1228,7 +1228,7 @@ Base 10 number | btwoc string representation
                 <list style="empty">
                   <t>
                     The value of the "openid.assoc_type" parameter
-                    from the request.  If the IdP is unwilling or
+                    from the request.  If the OP is unwilling or
                     unable to support this association type, it MUST
                     return an unsuccessful response.
                   </t>
@@ -1279,7 +1279,7 @@ Base 10 number | btwoc string representation
                     Value: base64(btwoc(g ^ xb mod p))
                   </t>
                   <t>
-                    Description: The IdP's Diffie-Hellman public key.  
+                    Description: The OP's Diffie-Hellman public key.
                   </t>
                 </list>
               </t>
@@ -1308,11 +1308,11 @@ Base 10 number | btwoc string representation
         <section anchor="refuse_assoc"
                  title="Unsuccessful Response Parameters">
           <t>
-            If the IdP does not support an association session type or
+            If the OP does not support an association session type or
             association type, it MUST respond with a message
             indicating that the association request failed. If there
             is another association session type or association type
-            that is supported, the IdP MAY include that information in
+            that is supported, the OP MAY include that information in
             the response.
           </t>
           <t>
@@ -1360,7 +1360,7 @@ Base 10 number | btwoc string representation
                 <list style='empty'>
                   <t>
                     Value: (optional) An association type supported by
-                    the IdP from <xref target="assoc_types" />.
+                    the OP from <xref target="assoc_types" />.
                   </t>
                 </list>
               </t>
@@ -1405,7 +1405,7 @@ Base 10 number | btwoc string representation
         <section title="No-Encryption Association Sessions"
                  toc="exclude">
           <t>
-            In a "no-encryption" association session, the IdP sends
+            In a "no-encryption" association session, the OP sends
             the association MAC key in plain-text to the Relying Party.
             This makes it possible for an eavesdropper to intercept
             the key, and forge messages to this Relying Party.
@@ -1416,7 +1416,7 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            The MAC key sent by the IdP MUST be the length specified
+            The MAC key sent by the OP MUST be the length specified
             for this association in <xref target="sign_algos" />.
           </t>
 
@@ -1439,7 +1439,7 @@ Base 10 number | btwoc string representation
           <t>
             The Relying Party specifies a modulus, p, and a generator,
             g. The Relying Party chooses a random private key xa and
-            Identity Provider chooses a random private key xb, both in
+            OpenID Provider chooses a random private key xb, both in
             the range [1 .. p-1]. The shared secret used to encrypt
             the MAC key is thus g ^ (xa * xb) mod p = (g ^ xa) ^ xb
             mod p = (g ^ xb) ^ xa mod p. For more information, see
@@ -1455,8 +1455,8 @@ Base 10 number | btwoc string representation
       <t>
         Once the Relying Party has successfully performed discovery
         and (optionally) created an association with the discovered
-        IdP Endpoint URL, it can send an authentication request to the
-        IdP to obtain an assertion. An authentication request is an
+        OP Endpoint URL, it can send an authentication request to the
+        OP to obtain an assertion. An authentication request is an
         <xref target="indirect_comm">indirect request</xref>.
       </t>
 
@@ -1474,7 +1474,7 @@ Base 10 number | btwoc string representation
                   valid OpenID Authentication 2.0 request.
                 </t>
                 <t>
-                  Note: If an IdP receives an authentication request
+                  Note: If an OP receives an authentication request
                   with this parameter missing or with a lower version
                   number, it SHOULD still respond to the request.  If
                   it does respond it MUST use <xref
@@ -1493,9 +1493,9 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   Note: If the Relying Party wishes the End User to be
-                  able to interact with the IdP, "checkid_setup"
+                  able to interact with the OP, "checkid_setup"
                   should be used. An example of a situation where
-                  interaction between the End User and the IdP is not
+                  interaction between the End User and the OP is not
                   desired is when the authentication request is
                   happening asynchronously in JavaScript.
                 </t>
@@ -1511,7 +1511,7 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   Note: The Claimed Identifier is the same as the
-                  IdP-specific identifier unless it is using
+                  OP-specific identifier unless it is using
                   delegation. If the request is not about an
                   identifier (for instance, an attribute exchange
                   request), this parameter will be absent.
@@ -1523,12 +1523,12 @@ Base 10 number | btwoc string representation
               openid.identity
               <list style='empty'>
                 <t>
-                  Value: (optional) The IdP-Specific Identifier.
+                  Value: (optional) The OP-Specific Identifier.
                 </t>
                 <t>
                   Note: If this is set to the special value
                   "http://openid.net/identifier_select/2.0" then the
-                  IdP MAY choose an Identifier that belongs to the End
+                  OP MAY choose an Identifier that belongs to the End
                   User.  This parameter MAY be omitted if an extension
                   is in use that makes the request meaningful without
                   it (see openid.disco_id above).
@@ -1541,7 +1541,7 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   Value: (optional) A handle for an association
-                  between the Relying Party and the IdP that SHOULD be
+                  between the Relying Party and the OP that SHOULD be
                   used to sign the response.
                 </t>
                 <t>
@@ -1555,7 +1555,7 @@ Base 10 number | btwoc string representation
               openid.return_to
               <list style='empty'>
                 <t>
-                  Value: (optional) URL to which the IdP SHOULD return
+                  Value: (optional) URL to which the OP SHOULD return
 		  the User Agent with the response indicating the
 		  status of the request.
                 </t>
@@ -1573,7 +1573,7 @@ Base 10 number | btwoc string representation
               openid.realm
               <list style='empty'>
                 <t>
-                  Value: (optional) URL pattern the IdP SHOULD ask the
+                  Value: (optional) URL pattern the OP SHOULD ask the
                   End User to trust. See <xref target="realms" />.
 		  This value MUST be sent if openid.return_to is
 		  ommitted.
@@ -1592,11 +1592,11 @@ Base 10 number | btwoc string representation
           A "realm" is a pattern that represents the part of URL-space
           for which an OpenID Authentication request is valid. A realm
           is designed to give the End User an indication of the scope
-          of the authentication request. IdPs SHOULD present the realm
+          of the authentication request. OPs SHOULD present the realm
           when requesting the End User's approval for an
-          authentication request. IdPs MAY use the realm to allow the
+          authentication request. OPs MAY use the realm to allow the
           End User to automate approval of authentication
-	  requests. The realm SHOULD be used by IdPs to uniquely
+	  requests. The realm SHOULD be used by OPs to uniquely
 	  identify Relying Parties.
         </t>
 
@@ -1647,22 +1647,22 @@ Base 10 number | btwoc string representation
           </list>
             
           When present, the "openid.return_to" URL MUST match the
-	  "openid.realm", or the IdP MUST return an error.
+	  "openid.realm", or the OP MUST return an error.
         </t>
 
         <t>
-          It is RECOMMENDED that IdP's protect their End Users from
+          It is RECOMMENDED that OP's protect their End Users from
           requests with overly-general realms, like http://*.com/ or
           http://*.co.uk/. Determining if a realm is overly-general is
-          at the discretion of the IdP.
+          at the discretion of the OP.
         </t>
       </section>
 
       <section title="Immediate Requests">
         <t>
           When requesting authentication, the Relying Party MAY
-          request that the IdP not interact with the End User.  In
-          this case the IdP MUST respond immediately with either an
+          request that the OP not interact with the End User.  In
+          this case the OP MUST respond immediately with either an
           assertion that authentication is successful, or a response
           indicating that the request cannot be completed without
           further user interaction.  This is accomplished by an
@@ -1677,10 +1677,10 @@ Base 10 number | btwoc string representation
       <t>
         When an authentication request comes from the User-Agent via
         <xref target="indirect_comm">indirect communication</xref>,
-        the IdP SHOULD identify the User-Agent, and determine whether
+        the OP SHOULD identify the User-Agent, and determine whether
         the End User wishes to complete the authentication.  If the
         End User can be identified and wishes to complete the
-        authentication, the IdP should send a <xref
+        authentication, the OP should send a <xref
         target="positive_assertions">positive assertion</xref> to the
         Relying Party.
       </t>
@@ -1691,24 +1691,24 @@ Base 10 number | btwoc string representation
       </t>
       <t>
         If no Identifier was specified in the request and there are
-        Identifiers in the control of the End User, the IdP SHOULD
+        Identifiers in the control of the End User, the OP SHOULD
         allow the End User to choose which Identifier to use.  If an
-        Identifier was specified, the IdP SHOULD only issue assertions
+        Identifier was specified, the OP SHOULD only issue assertions
         about the specified Identifier.
       </t>
       <t>
         If the Relying Party supplied an association handle with the
-        authentication request, the IdP SHOULD attempt to look up an
+        authentication request, the OP SHOULD attempt to look up an
         association based on that handle.  If the association is
-        missing or expired, the IdP SHOULD send the
+        missing or expired, the OP SHOULD send the
         "openid.invalidate_handle" parameter as part of the response
         with the value of the request's "openid.assoc_handle"
         parameter, and SHOULD proceed as if no association handle was
         specified.
       </t>
       <t>
-        If no association handle is specified, the IdP SHOULD create a
-        private association for signing the response.  The IdP MUST
+        If no association handle is specified, the OP SHOULD create a
+        private association for signing the response.  The OP MUST
         store this association and MUST respond to later requests to
         check the signature of the response in <xref
         target="verifying_signatures">stateless mode</xref>.
@@ -1758,7 +1758,7 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   Note: The Claimed Identifier is the same as the
-                  IdP-specific identifier if there is no delegate
+                  OP-specific identifier if there is no delegate
                   specified. If neither value is present, the
                   assertion is not about an identifier, and will
                   contain other information in its payload, using
@@ -1771,7 +1771,7 @@ Base 10 number | btwoc string representation
               openid.identity
               <list style='empty'>
                 <t>
-                  Value: (optional) The IdP-Specific Identifier
+                  Value: (optional) The OP-Specific Identifier
                 </t>
                 <t>
                   Note: The openid.identity field MAY be omitted if an
@@ -1791,7 +1791,7 @@ Base 10 number | btwoc string representation
 
                 <t>
                   Note: Because the "openid.return_to" URL is signed
-                  by the IdP, a Relying Party can make sure outside
+                  by the OP, a Relying Party can make sure outside
                   parties haven't sent responses with query parameters
                   that were not included in the "openid.return_to"
                   URL.
@@ -1877,7 +1877,7 @@ Base 10 number | btwoc string representation
 
                 <t>
                   Note: Successful authentication messages from the
-                  IdP to the Relying Party MUST be signed.
+                  OP to the Relying Party MUST be signed.
                 </t>
               </list>
             </t>
@@ -1889,9 +1889,9 @@ Base 10 number | btwoc string representation
 
       <section title="Negative Assertions" anchor="negative_assertions">
         <t>
-          If the IdP is unable to identify the End User or the End
+          If the OP is unable to identify the End User or the End
           User does not or cannot approve the authentication request,
-          the IdP SHOULD send a negative assertion to the Relying
+          the OP SHOULD send a negative assertion to the Relying
           Party as an <xref target="indirect_comm">indirect
           response</xref>.
         </t>
@@ -1908,7 +1908,7 @@ Base 10 number | btwoc string representation
         <section title="In Response to Immediate Requests">
           <t>
             If the request was an immediate request, there is no chance
-            for the End User to interact with pages on the IdP to provide
+            for the End User to interact with pages on the OP to provide
             identifying credentials or approval of a request.
             A negative assertion of an immediate request takes the
             following form:
@@ -1950,7 +1950,7 @@ Base 10 number | btwoc string representation
 
         <section title="In Response to Non-Immediate Requests">
           <t>
-            Since the IdP may display pages to the End User and
+            Since the OP may display pages to the End User and
             request credentials from the End User, a negative response
             to a request that is not immediate is definitive.  It
             takes the following form:
@@ -1997,7 +1997,7 @@ Base 10 number | btwoc string representation
         <list style="symbols">
           <t>
             An assertion has not yet been accepted from this
-            IdP with the same value for "openid.response_nonce"
+            OP with the same value for "openid.response_nonce"
           </t>
           <t>
             The signature on the assertion is valid
@@ -2018,8 +2018,8 @@ Base 10 number | btwoc string representation
           To prevent replay attacks, the agent checking the signature
           SHOULD keep track of the nonce values included in positive
           assertions and never accept the same value more than once
-          for the same IdP Endpoint URL. When using
-          "check_authentication", the IdP is responsible for
+          for the same OP Endpoint URL. When using
+          "check_authentication", the OP is responsible for
           preventing replay attacks. When the Relying Party checks the
           signature on an assertion, it is responsible for preventing
           replay attacks.
@@ -2042,14 +2042,14 @@ Base 10 number | btwoc string representation
           association handle specified in the assertion, it MUST check
           the signature on the assertion itself. If it does not have
           an association stored, it MUST <xref
-          target="check_auth">request that the IdP verify the
+          target="check_auth">request that the OP verify the
           signature</xref> via Stateless mode.
         </t>
 
         <section title="Verifying with an Association" toc="exclude">
           <t>
             The Relying Party follows the same procedure that the
-            IdP followed in <xref target= "generating_signatures">
+            OP followed in <xref target= "generating_signatures">
             generating the signature</xref>, and then compares the
             signature in the response to the signature it
             generated. If the signatures do not match, the assertion
@@ -2058,24 +2058,24 @@ Base 10 number | btwoc string representation
 
           <t>
             If an authentication request included an association
-            handle for an association between the IdP and the Relying
-            party, and the IdP no longer wishes to use that handle
+            handle for an association between the OP and the Relying
+            party, and the OP no longer wishes to use that handle
             (because it has expired or the secret has been
-            compromised, for instance), the IdP will send a response
-            that must be verified directly with the IdP, as specified
-            in <xref target="check_auth" />. In that instance, the IdP
+            compromised, for instance), the OP will send a response
+            that must be verified directly with the OP, as specified
+            in <xref target="check_auth" />. In that instance, the OP
             will include the field "openid.invalidate_handle" set to
             the association handle that the Relying Party included
             with the original request.
           </t>
         </section>
 
-        <section title="Verifying Directly with the Identity Provider"
+        <section title="Verifying Directly with the OpenID Provider"
                  toc="exclude" anchor="check_auth">
           <t>
-            To verify a signature directly with the IdP, the Relying
+            To verify a signature directly with the OP, the Relying
             Party sends a <xref target="direct_request">direct
-            request</xref> to the IdP. This is known as Stateless
+            request</xref> to the OP. This is known as Stateless
             mode.
           </t>
 
@@ -2145,26 +2145,26 @@ Base 10 number | btwoc string representation
               </list>
             </t>
             <t>
-              An IdP MUST NOT verify signatures for associations that
-              have shared MAC keys. If an IdP did verify signatures
+              An OP MUST NOT verify signatures for associations that
+              have shared MAC keys. If an OP did verify signatures
               for associations with shared MAC keys, it would be
-              possible for parties other than the IdP to create valid
-              assertions that seemed to come from the IdP.
+              possible for parties other than the OP to create valid
+              assertions that seemed to come from the OP.
             </t>
 
             <t>
-              The IdP SHOULD only return "is_valid" once for each
+              The OP SHOULD only return "is_valid" once for each
               authentication response. An authentication response may
               be identified by its "openid.response_nonce" value.
             </t>
 
             <t>
-              If the IdP verifies responds with "is_valid" set to
+              If the OP verifies responds with "is_valid" set to
               "true", and "invalidate_handle" is present, the Relying
               Party SHOULD NOT send further authentication requests
               with that handle.  "invalidate_handle" will only be
               present when the original authentication request to the
-              IdP included an association that the IdP deemed
+              OP included an association that the OP deemed
               invalid. This implies that it will only be present in
               this response if it was also present in the <xref
               target="positive_assertions">"id_res"
@@ -2190,7 +2190,7 @@ Base 10 number | btwoc string representation
           ("openid.identity" was
           "http://openid.net/identifier_select/2.0"), the Relying
           Party MUST perform discovery on the Identifier in the
-          response to make sure that the IdP is authorized to make
+          response to make sure that the OP is authorized to make
           assertions about the Identifier.
         </t>
       </section>
@@ -2245,7 +2245,7 @@ Base 10 number | btwoc string representation
         compatibility with earlier versions of the OpenID
         Authentication specification, but this is not universally
         possible.  This section lists the behavioral changes required
-        of an OpenID Authentication 2.0 IdP or Relying Party when
+        of an OpenID Authentication 2.0 OP or Relying Party when
         communicating with an earlier-protocol peer.
       </t>
 
@@ -2287,7 +2287,7 @@ Base 10 number | btwoc string representation
             requests</xref>, the "openid.identity" parameter MUST NOT
             be the special value
             "http://openid.net/identifier_select/2.0", because OpenID
-            Authentication 1.1 does not support IdP-driven identifier
+            Authentication 1.1 does not support OP-driven identifier
             selection.
           </t>
 
@@ -2302,7 +2302,7 @@ Base 10 number | btwoc string representation
 	    "checkid_immediate" mode authentication request, the
 	    "user_setup_url" paramater MUST be returned. This is a
 	    URL that the End User may visit to complete the
-	    request. The IdP may redirect the End User to
+	    request. The OP may redirect the End User to
 	    this URL, or provide the End User with a link that
 	    points to this URL.
 	  </t>
@@ -2319,7 +2319,7 @@ Base 10 number | btwoc string representation
       </t>
       </section>
 
-      <section title="Identity Providers">
+      <section title="OpenID Providers">
         <t>
           <list style="symbols">
             <t>
@@ -2329,13 +2329,13 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              IdPs MUST accept a "no-encryption" association request
+              OPs MUST accept a "no-encryption" association request
               with a blank session_type parameter, if they choose to
               accept "no-encryption" sessions.
             </t>
 
             <t>
-              IdPs MUST accept association requests with no assoc_type
+              OPs MUST accept association requests with no assoc_type
               parameter, and assume them to be of type HMAC-SHA1.
             </t>
 
@@ -2346,7 +2346,7 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              IdPs MAY choose to return a successful "no-encryption"
+              OPs MAY choose to return a successful "no-encryption"
               response to any association request.
             </t>
 
@@ -2473,7 +2473,7 @@ Base 10 number | btwoc string representation
             There are two places in this protocol that are vulnerable
             to eavesdropping attacks. An eavesdropper could intercept
             an unencrypted association session and recover the shared
-            secret, allowing an attacker to masquerade as the IdP to
+            secret, allowing an attacker to masquerade as the OP to
             that relying party. An eavesdropper could also intercept a
             successful authentication assertion and re-use it, if the
             nonce is not checked.
@@ -2505,11 +2505,11 @@ Base 10 number | btwoc string representation
           <t>
             If DNS resolution or the transport layer is compromised,
             signatures on messages are not adequate, since the
-            attacker can impersonate the IdP and issue its own
+            attacker can impersonate the OP and issue its own
             associations, or its own decisions in stateless mode. If
             an attacker can tamper with the discovery process, he can
-            specify any IdP, and so does not have to impersonate the
-            IdP.
+            specify any OP, and so does not have to impersonate the
+            OP.
           </t>
 
           <t>
@@ -2527,7 +2527,7 @@ Base 10 number | btwoc string representation
             all parts of the interaction, including interaction with
             the End User through the User Agent.  While the protocol
 	    does not require SSL be used, its use is strongly
-	    RECOMMENDED.  Current best practicies dictate that an IdP
+	    RECOMMENDED.  Current best practicies dictate that an OP
 	    SHOULD use SSL, with a certificate signed by a trusted
 	    authority, to secure its service endpoint.  In addition,
 	    SSL, with a certificate signed by a trusted authority,
@@ -2554,8 +2554,8 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          Cross-site-scripting attacks against IdPs may be used to the
-          same effect. For the best security, IdPs should not depend
+          Cross-site-scripting attacks against OPs may be used to the
+          same effect. For the best security, OPs should not depend
           on scripting so that User Agents without scripting enabled
           can make authentication decisions.
         </t>
@@ -2563,10 +2563,10 @@ Base 10 number | btwoc string representation
 
       <section title="User Interface Considerations">
         <t>
-          The Relying Party SHOULD redirect the End User to the IdP
+          The Relying Party SHOULD redirect the End User to the OP
           Endpoint URL in a top-level browser window with all controls
           visible. This allows better protection for the End User
-          against IdP look-alike sites (phishing).
+          against OP look-alike sites (phishing).
         </t>
       </section>
     </section>
@@ -2574,14 +2574,14 @@ Base 10 number | btwoc string representation
     <appendix title="Examples">
       <t>Non-normative</t>
 
-      <appendix title="IdP-Specific Identifiers">
+      <appendix title="OP-Specific Identifiers">
         <t>
           An End User wants to use http://www.example.com/ as their
           Claimed Identifier. The End User has an account with
-          LiveJournal, an Identity Provider, they can use the
-          LiveJournal IdP Endpoint URL to do authentication for
+          LiveJournal, an OpenID Provider, they can use the
+          LiveJournal OP Endpoint URL to do authentication for
           http://www.example.com/, using their LiveJournal-issued
-          identifier as an IdP-Specific Identifier.
+          identifier as an OP-Specific Identifier.
         </t>
       </appendix>
 
@@ -2591,7 +2591,7 @@ Base 10 number | btwoc string representation
             <preamble>
               To use www.example.com as their Identifier, but have
               Relying Parties actually verify
-              http://exampleuser.livejournal.com/ with the IdP
+              http://exampleuser.livejournal.com/ with the OP
               Endpoint URL
               http://www.livejournal.com/openid/server.bml, the
               following XML snippet should be present in the final XRD
@@ -2615,7 +2615,7 @@ Base 10 number | btwoc string representation
           <preamble>
             To use www.example.com as their Identifier, but have
             Relying Parties actually verify
-            http://exampleuser.livejournal.com/ with the Identity
+            http://exampleuser.livejournal.com/ with the OpenID
             Provider located at
             http://www.livejournal.com/openid/server.bml, the
             following markup should be present in the &lt;head&gt;
@@ -2635,7 +2635,7 @@ Base 10 number | btwoc string representation
           The End User visits a Relying Party site which supports
           OpenID Authentication.  The Relying Party presents the End
           User with a form field for them to enter their Identifier or
-          their IdP's identifier.
+          their OP's identifier.
         </t>
 
         <t>
@@ -2693,15 +2693,15 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
         <t>
           <list style="symbols">
             <t>
-              Supports IdP-driven identifier selection. This new
+              Supports OP-driven identifier selection. This new
               variation of the protocol flow is initiated by entering
-              an Identifier for an IdP instead of an Identifier for an
-              End User, and allows the IdP to assist the End User in
+              an Identifier for an OP instead of an Identifier for an
+              End User, and allows the OP to assist the End User in
               selecting an Identifier.
             </t>
             <t>
               Supports the use of XRIs as Identifiers. XRIs may be
-              used as Identifiers for both End Users and IdPs.
+              used as Identifiers for both End Users and OPs.
             </t>
             <t>
               When URLs are used as Identifiers, they are normalized
@@ -2710,8 +2710,8 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
             </t>
             <t>
               Uses the Yadis protocol for discovery. This allows for
-              using multiple IdPs for a single Identifier, for
-              load-balancing and fallback in the case of IdP
+              using multiple OPs for a single Identifier, for
+              load-balancing and fallback in the case of OP
               failure. Additionally, it allows for discovery of
               supported extensions.
             </t>
@@ -2735,7 +2735,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
       <appendix title="Extensions">
         <t>
           Extensions are now an officially supported mechanism to
-	  support data exchange and other Relying Party-IdP
+	  support data exchange and other Relying Party-OP
 	  communication along with the authentication
 	  exchange. Extensions allow for the exchange of arbitrary
 	  attributes, as well as for protocol extensions,
