@@ -149,12 +149,6 @@
 	target="RFC2616"/>.
       </t>
 
-      <t hangText="Rich User-Agent:">
-	A User Agent that contains additional code for the specific
-	purpose of augmenting or automating the End User experience of
-	OpenID Authentication.
-      </t>
-
       <t hangText="Claimed Identifier:">
         An Identifier that the End User claims to own which has not yet
         been verified by the Relying Party.  During the initiation
@@ -807,9 +801,9 @@ Base 10 number | btwoc string representation
           The form field's "name" attribute SHOULD have the value
           "openid_identifier" as to allow User Agents to automatically
           prefill the End User's preferred Identifier when visiting a
-	  Relying Party. Browser extensions or other Rich User Agents
-	  that support OpenID Authentication may not detect a Relying
-	  Party's support if the value is not this value.
+          Relying Party. Browser extensions or other software that
+          support OpenID Authentication may not detect a Relying
+          Party's support if the value is not this value.
         </t>
       </section>
 
