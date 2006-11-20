@@ -72,19 +72,20 @@
       </address>
     </author>
 
-    <date month="December" year="2006"/>
+    <date month="November" year="2006"/>
 
     <abstract>
       <t>
         OpenID Authentication provides a way to prove that an End User
-        owns an Identifier. It does this without the Relying Party needing 
-        access to password, email address, or other sensitive information.
+        controls an Identifier. It does this without the Relying Party
+	needing access to End User credentials such as a password or
+	to other sensitive information such as an email address.
       </t>
 
       <t>
         OpenID is decentralized. No central authority must approve or
         register Relying Parties or OpenID Providers. An End User
-        can freely choose which OpenID Provider to use and they can
+        can freely choose which OpenID Provider to use, and can
         preserve their Identifier if they switch OpenID Providers.
       </t>
 
@@ -92,27 +93,27 @@
         While nothing in the protocol requires JavaScript or modern
         browsers, the authentication scheme plays nicely with
         "AJAX"-style setups. This means an End User can prove their
-        Identity to a Relying Party without having to leave the page
-        they are on.
+        Identity to a Relying Party without having to leave their
+	current Web page.
       </t>
 
       <t>
-        As OpenID Authentication uses only standard HTTP(S) requests and
-        responses, it does not require any special capabilities of the
+        OpenID Authentication uses only standard HTTP(S) requests and
+        responses, so it does not require any special capabilities of the
         User-Agent or other software. OpenID is not tied to the use of
 	cookies or any other specific mechanism of Relying Party
-	session management.  Extensions to User-Agent's can simplify
+	session management.  Extensions to User-Agents can simplify
 	the End User interaction, though are not required to utilize
 	the protocol.
       </t>
 
       <t>
         The exchange of profile information, or the exchange of other
-	information not covered in this specification, is addressed
-	through additional Service Types built on top of
-	OpenID. OpenID Authentication is designed to provide a base
-	framework to enable portable user-centric digital identity in
-	a free and decentralized manner.
+	information not covered in this specification, can be addressed
+	through additional Service Types built on top of this
+	protocol to create a framework. OpenID Authentication is
+	designed to provide a base service to enable portable,
+	user-centric digital identity in a free and decentralized manner.
       </t>
     </abstract>
   </front>
@@ -128,13 +129,15 @@
     <section title="Terminology">
       <t>
     <list style="hanging">
-      <t hangText="Identifier:">
-        An Identifier is a "http" or "https" URI, which is commonly
-        referred to as a "URL" within this document, or <eref
+      <t hangText="OpenID Identifier:">
+        Idenitifier. An Identifier is either a "http" or "https" URI,
+	(commonly referred to as a "URL" within this document), or <eref
         target="http://www.oasis-open.org/committees/download.php/15376"
-        >XRI</eref>.  An "Identifier" may be a Claimed Identifier,
+        >XRI</eref>.  An Identifier may be a Claimed Identifier,
         OP-Specific Identifier, OP Identifier, or Verified
-        Identifier, depending on context.
+        Identifier, depending on context.  These Identifiers may also
+	be either a Public Identifier or Private Identifier depending
+	on the authentication context.
       </t>
 
       <t hangText="End User:">
@@ -146,11 +149,21 @@
 	target="RFC2616"/>.
       </t>
 
+      <t hangText="Rich User-Agent:">
+	A User Agent that contains additional code for the specific
+	purpose of augmenting or automating the End User experience of
+	OpenID Authentication.
+      </t>
+
       <t hangText="Claimed Identifier:">
         An Identifier that the End User claims to own which has not yet
         been verified by the Relying Party.  During the initiation
-	phase of the protocol, an OP-Specific Identifier may be
-	entered as the Claimed Identifier.
+	phase of the protocol, an End User may enter either a Public
+	Identifier or an OP-Specific Identifier as their Claimed
+	Identifier.  If an OP-Specific Identifier is used, the OP may
+	then assist the End User in selecting either a Public
+	Identifier or a Private Identifier to share with the Relying
+	Party.
       </t>
 
       <t hangText="Verified Identifier:">
@@ -159,23 +172,36 @@
       </t>
 
       <t hangText="OP-Specific Identifier:">
-        An alternate Identifier that can be included in the discovery
-        response and that represents an OP versus an End User.
+        An alternate Identifier for an End User that is specific to a
+	particular OP and thus not necessarily under the End User's
+	control.
       </t>
 
       <t hangText="Relying Party:">
-        RP. A Web application that wants proof that the End User owns an
-        Identifier.
+        RP. A Web application that wants proof that the End User
+	controls an Identifier.
       </t>
 
       <t hangText="OpenID Provider:">
-        OP. This is the OpenID Authentication server
-        that a Relying Party contacts for cryptographic proof that the
-        End User owns an Identifier.
+        OP. The party operating an OpenID Authentication server on
+	which a Relying Party relies for cryptographic proof that the
+        End User controls a Claimed Identifier.
       </t>
 
       <t hangText="OP Identifier:">
         An Identifier for an OpenID Provider.
+      </t>
+
+      <t hangText="Public Identifier:">
+	An Identifier that is intended to be public information and
+	not specific to the End User's relationship with one or more
+	Relying Parties, for example a blog URL or an i-name.
+      </t>
+
+      <t hangText="Private Identifier:">
+	An Identifier that is intended to be private information used
+	only in the context of the End User's relationship with one or
+	more specific Relying Parties.
       </t>
 
       <t hangText="Diffie-Hellman Key Exchange:">
@@ -183,6 +209,12 @@
          protocol that allows two parties to create a shared a secret,
 	 while preventing eavesdroppers from learning the secret.
       </t>  
+
+      <t hangText="OP Service Endpoint URL:">
+	The URL which accepts OpenID Authentication requests,
+	discovered by dereferencing the End User's Identifier.  This
+	value MUST be an absolute URL.
+      </t>
     </list>
       </t>
     </section>
@@ -193,14 +225,15 @@
         <list style="numbers">
           <t>
             The End User <xref target="initiation">initiates
-            authentication</xref> by supplying a Claimed Identifier to
-	    the Relying Party via their User Agent.
+            authentication</xref> by supplying a Claimed Identifier
+	    (either a Public Identifier, a Private Identifier, or an
+	    OP Identifier) to the Relying Party via their User Agent.
           </t>
           <t>
             The Relying Party <xref target="discovery">performs
             discovery</xref> on the Claimed Identifier and establishes
-            the location of the OP's endpoint that the End User uses
-            for authentication.
+            the URL of the OP's OpenID Authentication service endpoint
+	    that the End User uses for authentication.
           </t>
           <t>
             (optional) 
@@ -222,8 +255,9 @@
           <t>
             The OP establishes whether the End User is authorized to
             perform OpenID Authentication and wishes to do so. The
-            manner in which the End User authenticates to their OP is
-            beyond the scope of this document.
+            manner in which the End User authenticates to their OP and
+	    any policies surrounding such authentication is out of
+	    scope for this document.
           </t>
           <t>
             The OP redirects the End User's User Agent back to the
@@ -253,20 +287,21 @@
         <t>
           The OpenID Authentication protocol messages are
           mappings of plain-text keys to plain-text values. The keys and
-          values are Unicode strings. When the keys and values need to
-          be converted to/from bytes, they MUST be encoded using <xref
-	  target="RFC2044">UTF-8</xref>.
+          values permit the full Unicode character set (UCS). When the
+	  keys and values need to be converted to/from bytes, they
+	  MUST be encoded using <xref target="RFC3629">UTF-8</xref>.
 
           Messages MUST NOT contain multiple parameters with the same name.  
         </t>
         
         <section title="Key-Value Form Encoding" anchor="kvform">
           <t>
-            A Key-Value form message is a sequence of lines.  Each
+            A message in Key-Value form is a sequence of lines.  Each
             line begins with a key, followed by a colon, and the value
             associated with the key.  The line is terminated by a
-            single newline (codepoint 10, "\n"). A key or value MUST NOT
-            contain a newline and a key also MUST NOT contain a colon.
+            single newline (UCS codepoint 10, "\n"). A key or value
+	    MUST NOT contain a newline and a key also MUST NOT contain
+	    a colon.
           </t>
           <t>
             Additional characters, including whitespace, MUST NOT be
@@ -548,8 +583,8 @@ Base 10 number | btwoc string representation
             <xref target="queries" />.
           </t>
           <t>
-            This method is deprecated as of OpenID Authentication
-            version 2.0 though is still required for implementation to
+            As of OpenID Authentication version 2.0, this method is
+	    deprecated, though is still required for implementation to
             aid in backward compatibility.
           </t>
         </section>
@@ -761,21 +796,20 @@ Base 10 number | btwoc string representation
         </t>
         
         <t>
-          It is RECOMMENDED that every Relying Party place the <eref
+          It is RECOMMENDED that a Relying Party place the <eref
           target='http://openid.net/login-bg.gif'>OpenID logo</eref>
           at the beginning of the form field where the End User enters
           their Identifier. This aides in End User recognition that
-          they can use their OpenID Identifier at the specific Relying
-          Party.
+          they can use an OpenID Identifier at the Relying Party.
         </t>
 
         <t>
           The form field's "name" attribute SHOULD have the value
           "openid_identifier" as to allow User Agents to automatically
-          prefill the End User's Identifier when visiting a Relying
-          Party. Rich User Agents, or browser extensions, that support
-	  OpenID Authentication may not detect a Relying Party's
-	  support if the value is not "openid_identifier".
+          prefill the End User's preferred Identifier when visiting a
+	  Relying Party. Browser extensions or other Rich User Agents
+	  that support OpenID Authentication may not detect a Relying
+	  Party's support if the value is not this value.
         </t>
       </section>
 
@@ -843,12 +877,12 @@ Base 10 number | btwoc string representation
         <section title="Discovered Information">
           <t>
             Upon successful completion of discovery, the Relying
-            Party will have the following information:
+            Party will have the following information (see the
+	    Terminology section for definitions):
 
             <list style="hanging">
-              <t hangText="OP Endpoint URL:">
-                The URL that accepts authentication requests. This
-                MUST be an absolute URL.
+              <t hangText="OP Service Endpoint URL:">
+                The absolute URL on the OP that accepts authentication requests.
               </t>
 
               <t hangText="Claimed Identifier:">
@@ -937,7 +971,7 @@ Base 10 number | btwoc string representation
               Once the Relying Party has obtained an XRDS document, it
               MUST first search the document (following the rules
               described in <xref target="XRI Resolution 2.0" />) for
-	      an OP Identifier. If none is found, the RP will search
+	      an OP Identifier Element. If none is found, the RP will search
 	      for a Claimed Identifier Element.
             </t>
           </section>
@@ -946,25 +980,30 @@ Base 10 number | btwoc string representation
             <t>
               When the identifier is an XRI, the &lt;xrd:XRD&gt;
               element that contains the OpenID Authentication
-              &lt;xrd:Service&gt; element will also contain a
+              &lt;xrd:Service&gt; element MUST also contain a
               &lt;CanonicalID&gt; element. The content of this element
-              MUST be preserved for use after a successful
-              authentication request, see <xref target="identifying" />.
+              MUST be used as the Claimed Identifier (see <xref
+	      target="identifying" />).  This is a vital security
+	      consideration because a primary purpose of the
+	      &lt;CanonicalID&gt; element is to assert a persistent
+	      identifier that will never be reassigned, thus
+	      preventing the possibility of an XRI being "taken over"
+	      by a new registrant.
             </t>
 
             <t>
               The Relying Party MUST confirm that the provider of
               the XRD that contains the &lt;CanonicalID&gt; element
-              is authoritative for that canonical ID. The provider
+              is authoritative for that Canonical ID. The provider
               is identified by the contents of the
-              &lt;ProviderID&gt; element that is a child of the
-              &lt;XRD&gt; element. If the provider is not
-              authoritative for the canonical ID, the Relying Party
-              MUST resolve the canonical ID to confirm the OpenID
-              Service Endpoint information that was discovered. The
+              &lt;xrd:ProviderID&gt; element that is a child of the
+              &lt;xrd:XRD&gt; element. If the provider is not
+              authoritative for the Canonical ID, the Relying Party
+              MUST resolve the Canonical ID to confirm the OP Service
+	      Endpoint URL information that was discovered. The
               information discovered when resolving the canonical ID
               MUST match the information discovered when resolving
-              the user-supplied identifier.
+              the user-supplied Identifier.
            </t>
 
             <t>
@@ -1047,8 +1086,8 @@ Base 10 number | btwoc string representation
             "&amp;gt;", and "&amp;quot;". Other characters that would
             not be valid in the HTML document or that cannot be
             represented in the document's character encoding MUST be
-            escaped using the %xx mechanism as described in <xref
-                target='RFC3986' />.
+            escaped using the percent-encoding (%xx) mechanism
+	    described in <xref target='RFC3986' />.
           </t>
         </section>
       </section>
@@ -1066,8 +1105,9 @@ Base 10 number | btwoc string representation
         is possible for it to do so.  If a Relying Party is incapable
         of creating or storing associations, <xref
         target="verifying_signatures"/> provides an alternate
-        verification mechanism referred to as Stateless Mode though
-	was referred to as "dumb mode" in previous specifications.
+        verification mechanism referred to as Stateless Mode (note
+	that this was referred to as "dumb mode" in previous versions
+	of this specification).
       </t>
 
       <section title="Association Session Request">
@@ -1506,15 +1546,16 @@ Base 10 number | btwoc string representation
               openid.disco_id
               <list style='empty'>
                 <t>
-                  Value: (optional) The Claimed Identifier. (The identifier on
-                  which discovery was performed)
+                  Value: (optional) The Claimed Identifier; the identifier on
+                  which discovery was performed.
                 </t>
                 <t>
                   Note: The Claimed Identifier is the same as the
-                  OP-specific identifier unless it is using
-                  delegation. If the request is not about an
-                  identifier (for instance, an attribute exchange
-                  request), this parameter will be absent.
+                  OP-Specific Identifier if a different OP-Specific
+		  Identifier is not supplied. If neither value is
+		  present, the assertion is not about an identifier,
+		  and will contain other information in its payload,
+		  using <xref target="extensions">extensions</xref>.
                 </t>
               </list>
             </t>
@@ -1620,9 +1661,9 @@ Base 10 number | btwoc string representation
 
           <list style="symbols">
             <t>
-              The URL scheme (<xref target="RFC3986">RFC 3986, section
-              3.1</xref>) and port of the URL are identical to those
-              in the realm.
+              The URL scheme and port of the URL are identical to those
+              in the realm.  See <xref target="RFC3986">RFC
+	      3986</xref>, section 3.1 for rules about URI matching.
             </t>
 
             <t>
@@ -1685,9 +1726,9 @@ Base 10 number | btwoc string representation
         Relying Party.
       </t>
       <t>
-        Methods of identifying the End User and getting approval to
-        finish authentication are beyond the scope of this
-        specification.
+        Methods of identifying and authenticating the End User and
+	obtaining approval to return an OpenID Authentication
+	assertion are beyond the scope of this specification.
       </t>
       <t>
         If no Identifier was specified in the request and there are
@@ -1753,16 +1794,16 @@ Base 10 number | btwoc string representation
               openid.disco_id
               <list style='empty'>
                 <t>
-                  Value: The Claimed Identifier (The identifier on
-                  which discovery was run)
+                  Value: The Claimed Identifier; the identifier on
+                  which discovery was performed.
                 </t>
                 <t>
                   Note: The Claimed Identifier is the same as the
-                  OP-specific identifier if there is no delegate
-                  specified. If neither value is present, the
-                  assertion is not about an identifier, and will
-                  contain other information in its payload, using
-                  <xref target="extensions">extensions</xref>.
+                  OP-Specific Identifier if a different OP-Specific
+		  Identifier is not supplied. If neither value is
+		  present, the assertion is not about an identifier,
+		  and will contain other information in its payload,
+		  using <xref target="extensions">extensions</xref>.
                 </t>
               </list>
             </t>
@@ -2191,7 +2232,7 @@ Base 10 number | btwoc string representation
           "http://openid.net/identifier_select/2.0"), the Relying
           Party MUST perform discovery on the Identifier in the
           response to make sure that the OP is authorized to make
-          assertions about the Identifier.
+          assertions about the Claimed Identifier.
         </t>
       </section>
 
@@ -2201,20 +2242,19 @@ Base 10 number | btwoc string representation
           Party with a Verified Identifier, which MAY be used as a
           user-visible Identifier.  Identifiers in OpenID MUST be
           URIs. If the Identifier is a URL, its scheme MUST be "http"
-          or "https".  Except in the case that the Verified Identifier
-          is an XRI, the Relying Party SHOULD use the Verified
-          Identifier as a key for local storage of information about
-          the End User.  If the Verified Identifier is an XRI, the
-          discovered "CanonicalID" field from the XRDS document SHOULD
-          be used as a key for local storage of information about the
-          End User.
+          or "https", and the Relying Party SHOULD use it as a key for
+	  local storage of information about the End User.  If the
+	  Verified Identifier is an XRI, the value of the discovered
+	  "CanonicalID" element from the XRDS document SHOULD be used
+	  as a key for local storage of information about the End User.
         </t>
 
         <t>
           If an assertion is made for a Claimed Identifier on which
           discovery has not been performed, the Relying Party MUST
-          perform discovery on that Identifier and compare the
-          discovered information to that in the assertion.
+          perform discovery on that Identifier and verify that the
+          discovered information matches that in the assertion,
+	  including that the OP is authoritative for the Identifier.
         </t>
 
         <section title="HTTP and HTTPS URL Identifiers" anchor="http_s_identifiers">
@@ -2246,7 +2286,8 @@ Base 10 number | btwoc string representation
         Authentication specification, but this is not universally
         possible.  This section lists the behavioral changes required
         of an OpenID Authentication 2.0 OP or Relying Party when
-        communicating with an earlier-protocol peer.
+        communicating with another party using OpenID Authentication
+	1.1.
       </t>
 
       <t>
@@ -2287,8 +2328,8 @@ Base 10 number | btwoc string representation
             requests</xref>, the "openid.identity" parameter MUST NOT
             be the special value
             "http://openid.net/identifier_select/2.0", because OpenID
-            Authentication 1.1 does not support OP-driven identifier
-            selection.
+            Authentication 1.1 does not support the use of OP
+	    Identifiers and privacy-protected login.
           </t>
 
           <t>
@@ -2378,19 +2419,19 @@ Base 10 number | btwoc string representation
 
     <section title="Extensions" anchor="extensions">
       <t>
-        An Extension to OpenID Authentication is a protocol that rides
-        on top of the authentication request and response. Extensions
+        An Extension to OpenID Authentication is a protocol that
+	"piggybacks" on the authentication request and response. Extensions
         are useful for providing extra information about an
         authentication request or response as well as providing extra
         information about the subject of the authentication response.
       </t>
 
       <t>
-        OpenID extensions are identified by a URI. The URI MAY be used
-        as the value of an &lt;xrd:Type&gt; element of an OpenID
-        &lt;xrd:Service&gt; element in an XRDS document associated
-        with a Claimed Identifier. It is also used to associate
-        key-value pairs in messages with the extension.
+        OpenID extensions are identified by a Type URI. The Type URI
+	MAY be used as the value of an &lt;xrd:Type&gt; element of an
+	OpenID &lt;xrd:Service&gt; element in an XRDS document
+	associated with a Claimed Identifier.  The Type URI is also
+	used to associate key-value pairs in messages with the extension.
       </t>
       
       <t>
@@ -2433,8 +2474,8 @@ Base 10 number | btwoc string representation
       <t>
 	Extensions MUST NOT define parameters with the same name. It
 	is RECOMMENDED that commas are used as value delimiters,
-	though recognized that other characters are better suited in
-	certain situations.  Another approach can be appending a
+	though other characters my are better suited in
+	certain situations.  Another approach is to append a
 	numeric value to each key to differentiate between each value.
       </t>
     </section>
@@ -2447,11 +2488,11 @@ Base 10 number | btwoc string representation
       </t>
       
       <t>
-        The Relying Party's XRDS document's &lt;xrd:Service&gt; entry
-        should have the return_to URL as the content of the
-        &lt;xrd:URI&gt; tag and should have
-        http://openid.net/return_to/2.0 as the content of the
-        &lt;xrd:Type&gt; tag.
+        In this case, the XRDS document published by the Relying
+	Party, SHOULD have an &lt;xrd:Service&gt; element where the
+	content of the &lt;xrd:URI&gt; tag is the return_to URL and
+	the content of the &lt;xrd:Type&gt; tag is
+	"http://openid.net/return_to/2.0".
       </t>
       
       <figure>
@@ -2532,10 +2573,10 @@ Base 10 number | btwoc string representation
 	    authority, to secure its service endpoint.  In addition,
 	    SSL, with a certificate signed by a trusted authority,
 	    SHOULD be used so that a Relying Party can fetch the
-	    End User's URL in a secure manner.  Please keep in mind
-	    that a Relying Party MAY decide to not complete, or even
-	    begin, a transaction if SSL is not being correctly used
-	    at these various endpoints.
+	    End User's URL in a secure manner.  Following its own
+	    security policies, a Relying Party MAY choose to not
+	    complete, or even begin, a transaction if SSL is not being
+	    correctly used at these various endpoints.
           </t>
         </section>
       </section>
@@ -2548,7 +2589,7 @@ Base 10 number | btwoc string representation
           other malware, which limits the strength of the
           authentication assertion, since untrusted software makes it
           impossible to know whether the authentication decision has
-          been made with the End User's approval. With this said, many
+          been made with the End User's approval. With that said, many
           web applications and protocols today rely on the security of
           the Web browser and their hosts.
         </t>
@@ -2556,8 +2597,9 @@ Base 10 number | btwoc string representation
         <t>
           Cross-site-scripting attacks against OPs may be used to the
           same effect. For the best security, OPs should not depend
-          on scripting so that User Agents without scripting enabled
-          can make authentication decisions.
+          on scripting.  This enables User Agents that do not support
+	  scripting, or have scripting disabled, to still employ the
+	  protocol.
         </t>
       </section>
 
@@ -2568,6 +2610,14 @@ Base 10 number | btwoc string representation
           visible. This allows better protection for the End User
           against OP look-alike sites (phishing).
         </t>
+
+	<t>
+	  OPs SHOULD educate their End Users about the potential for
+	  OpenID phishing attaches and SHOULD equip their End Users
+	  with the tools to defeat such attachs, for example browser
+	  plugins that verify the authenticity of the OP's
+	  Authentication Service Endpoint URL.
+	</t>
       </section>
     </section>
 
@@ -2576,34 +2626,48 @@ Base 10 number | btwoc string representation
 
       <appendix title="OP-Specific Identifiers">
         <t>
-          An End User wants to use http://www.example.com/ as their
+          An End User wants to use "http://www.example.com/" as their
           Claimed Identifier. The End User has an account with
-          LiveJournal, an OpenID Provider, they can use the
-          LiveJournal OP Endpoint URL to do authentication for
-          http://www.example.com/, using their LiveJournal-issued
-          identifier as an OP-Specific Identifier.
+          Example Provider, which functions as an OpenID Provider,.  The
+	  End User's OP-Specific Identifier is
+	  "https://exampleuser.exampleprovider.com/".
         </t>
+
+	<t>
+	  In this scenerio, with the proper configuration of Yadis or
+	  HTML-based Discovery (see <xref target="discovery" /> and
+	  <xref target="XRDS Sample" /> below), a Relying Party will
+	  discover the following information about the End User:
+
+	  <list style="hanging">
+	    <t hangText="Claimed Identifier">
+	      http://www.example.com/
+	    </t>
+	    <t hangText="OP-Specific Identifier">
+	      https://exampleuser.exampleprovider.com/
+	    </t>
+	  </list>
+	</t>
       </appendix>
 
       <appendix title="XRDS" anchor="XRDS Sample">
         <t>
           <figure>
             <preamble>
-              To use www.example.com as their Identifier, but have
-              Relying Parties actually verify
-              http://exampleuser.livejournal.com/ with the OP
+              For an End User to use "http://www.example.com/" as
+	      their Identifier, but have Relying Parties actually
+	      verify https://exampleuser.exampleprovider.com/ with the OP
               Endpoint URL
-              http://www.livejournal.com/openid/server.bml, the
+              https://www.exampleprovider.com/endpoint/, the
               following XML snippet should be present in the final XRD
-              element in the XRDS file:
+              element in the XRDS file when discovery is preformed on
+	      "http://www.example.com":
             </preamble>
             <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
   <Type>http://openid.net/signon/2.0</Type>
-  <URI>http://www.livejournal.com/openid/server.bml</URI>
-  <Delegate xmlns="http://openid.net/signon/2.0">
-    http://exampleuser.livejournal.com/
-  </Delegate>
+  <URI>https://www.exampleprovider.com/endpoint/</URI>
+  <LocalID>https://exampleuser.exampleprovider.com/</LocalID>
 </Service>
 ]]></artwork>
           </figure> 
@@ -2634,8 +2698,8 @@ Base 10 number | btwoc string representation
         <t>
           The End User visits a Relying Party site which supports
           OpenID Authentication.  The Relying Party presents the End
-          User with a form field for them to enter their Identifier or
-          their OP's identifier.
+          User with a form field for them to enter their Claimed
+	  Identifier or their OP Identifier.
         </t>
 
         <t>
@@ -2652,11 +2716,15 @@ Base 10 number | btwoc string representation
 
       <appendix title="XRI CanonicalID">
         <t>
-          For example, if =example and =exmpl both yield an XRD
-          document with the CanonicalID xri://(example)!1234 then
-          those identifiers should be treated as equivalent. For
-          applications with user accounts, those identifiers should
-          both be attached to the same account.
+          For example, if the XRI i-names =example and =exmpl both
+	  yield an XRDS document with the CanonicalID
+	  xri://(example)!1234 then those Identifiers should be
+	  treated as equivalent. For applications with user accounts,
+	  the persistant Canonical ID xri://(example)!1234 should be
+	  used the the primary key for the account.  Although the
+	  i-names =example and =exmpl may also be stored for reference
+	  as display names, they are reassignable identifier and
+	  should not be used as persistent keys.
         </t>
       </appendix>
     </appendix>
@@ -2693,27 +2761,34 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
         <t>
           <list style="symbols">
             <t>
-              Supports OP-driven identifier selection. This new
-              variation of the protocol flow is initiated by entering
-              an Identifier for an OP instead of an Identifier for an
-              End User, and allows the OP to assist the End User in
-              selecting an Identifier.
+              Supports OP Identifiers and privacy-protecting
+	      login. This new variation of the protocol flow is
+	      initiated by an End User entering an OP Identifier
+	      instead of a Public Identifier.  This allows the OP to
+	      assist the End User in selecting an Identifier, which
+	      may be either a Public Identifier (one of multiple
+	      "personas"), or a Private Identifier (which may be
+	      generated by the OP to be used only in the context of a
+	      single RP).
             </t>
             <t>
               Supports the use of XRIs as Identifiers. XRIs may be
-              used as Identifiers for both End Users and OPs.
+              used as Identifiers for both End Users and OPs, and
+	      provide automatic mapping from one or more reassignable
+	      i-names to a synonymous persistent Canonical ID that
+	      will never be reassigned.
             </t>
             <t>
               When URLs are used as Identifiers, they are normalized
-              according to RFC 3986, for better compatibility with
-              existing Web infrastructure.
+              according to the guidelines in <xref target='RFC3986'
+	      />, for better compatibility with existing Web infrastructure.
             </t>
             <t>
               Uses the Yadis protocol for discovery. This allows for
               using multiple OPs for a single Identifier, for
               load-balancing and fallback in the case of OP
               failure. Additionally, it allows for discovery of
-              supported extensions.
+              supported extensions and other associated services.
             </t>
           </list>
         </t>
@@ -2722,7 +2797,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
       <appendix title="Security improvements">
         <t>
           A nonce is now part of the protocol for built-in protection
-          against replay attacks, which previously was done out of
+          against replay attacks, which was previously implemented out of
 	  band by each library or application.
         </t>
         <t>
@@ -2752,7 +2827,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
 
   <back>
     <references title='Normative References'>
-      <reference anchor='RFC2044'>
+      <reference anchor='RFC3629'>
         <front>
           <title>
 	    UTF-8, a transformation format of Unicode and ISO 10646
@@ -2761,7 +2836,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
             <organization />
           </author>
         </front>
-        <seriesInfo name="RFC" value="2044" />
+        <seriesInfo name="RFC" value="3629" />
       </reference>
       <reference anchor='RFC2119'>
         <front>
