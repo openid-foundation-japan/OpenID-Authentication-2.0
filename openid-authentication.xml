@@ -129,15 +129,12 @@
     <section title="Terminology">
       <t>
     <list style="hanging">
-      <t hangText="OpenID Identifier:">
-        An Identifier is either a "http" or "https" URI,
-        (commonly referred to as a "URL" within this document), or <eref
-        target="http://www.oasis-open.org/committees/download.php/15376"
-        >XRI</eref>.  An "Identifier" may be a User-supplied Identifier,
-        Claimed Identifier, OP-Specific Identifier, or OP Identifier
-        depending on context. These Identifiers
-        may also be either a Public Identifier or Private Identifier
-        depending on the authentication context.
+      <t hangText="Identifier:">
+        An Identifier is either a "http" or "https" URI, (commonly
+        referred to as a "URL" within this document), or an <xref
+        target="XRI Syntax 2.0" >XRI</xref>.  This document defines
+        various kinds of Identifiers, designed for use in different
+        contexts.
       </t>
 
       <t hangText="User-Agent:">
@@ -799,7 +796,7 @@ Base 10 number | btwoc string representation
           target='http://openid.net/login-bg.gif'>OpenID logo</eref>
           at the beginning of the form field where the end user enters
           their Identifier. This aides in end user recognition that
-          they can use an OpenID Identifier at the Relying Party.
+          they can use an OpenID enabled Identifier at the Relying Party.
         </t>
 
         <t>
