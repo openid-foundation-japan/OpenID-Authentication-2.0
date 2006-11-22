@@ -76,15 +76,15 @@
 
     <abstract>
       <t>
-        OpenID Authentication provides a way to prove that an End User
+        OpenID Authentication provides a way to prove that an end user
         controls an Identifier. It does this without the Relying Party
-        needing access to End User credentials such as a password or
+        needing access to end user credentials such as a password or
         to other sensitive information such as an email address.
       </t>
 
       <t>
         OpenID is decentralized. No central authority must approve or
-        register Relying Parties or OpenID Providers. An End User
+        register Relying Parties or OpenID Providers. An end user
         can freely choose which OpenID Provider to use, and can
         preserve their Identifier if they switch OpenID Providers.
       </t>
@@ -92,7 +92,7 @@
       <t>
         While nothing in the protocol requires JavaScript or modern
         browsers, the authentication scheme plays nicely with
-        "AJAX"-style setups. This means an End User can prove their
+        "AJAX"-style setups. This means an end user can prove their
         Identity to a Relying Party without having to leave their
         current Web page.
       </t>
@@ -103,7 +103,7 @@
         User-Agent or other software. OpenID is not tied to the use of
         cookies or any other specific mechanism of Relying Party
         session management.  Extensions to User-Agents can simplify
-        the End User interaction, though are not required to utilize
+        the end user interaction, though are not required to utilize
         the protocol.
       </t>
 
@@ -140,26 +140,22 @@
         depending on the authentication context.
       </t>
 
-      <t hangText="End User:">
-        The person who wants to prove ownership of an Identifier.
-      </t>
-
       <t hangText="User-Agent:">
-        The End User's Web browser which implements HTTP/1.1 <xref
+        The end user's Web browser which implements HTTP/1.1 <xref
         target="RFC2616"/>.
       </t>
 
       <t hangText="User-supplied Identifier">
-        An Identifier that was presented by the End User to the Relying Party.
-        During the initiation phase of the protocol, an End User may enter
+        An Identifier that was presented by the end user to the Relying Party.
+        During the initiation phase of the protocol, an end user may enter
         either a Public Identifier or an OP Identifier. If an OP Identifier
-        is used, the OP may then assist the End User in selecting either a
+        is used, the OP may then assist the end user in selecting either a
         Public Identifier or a Private Identifier to share with the Relying
         Party.
       </t>
 
       <t hangText="Claimed Identifier:">
-        An Identifier that the End User claims to own which has not yet
+        An Identifier that the end user claims to own which has not yet
         been verified by the Relying Party. This is:
       </t>
           <t>
@@ -173,20 +169,20 @@
           </t>
 
       <t hangText="OP-Specific Identifier:">
-        An alternate Identifier for an End User that is specific to a
-        particular OP and thus not necessarily under the End User's
+        An alternate Identifier for an end user that is specific to a
+        particular OP and thus not necessarily under the end user's
         control.
       </t>
 
       <t hangText="Relying Party:">
-        RP. A Web application that wants proof that the End User
+        RP. A Web application that wants proof that the end user
         controls an Identifier.
       </t>
 
       <t hangText="OpenID Provider:">
         OP. The party operating an OpenID Authentication server on
         which a Relying Party relies for cryptographic proof that the
-        End User controls a Claimed Identifier.
+        end user controls a Claimed Identifier.
       </t>
 
       <t hangText="OP Identifier:">
@@ -195,13 +191,13 @@
 
       <t hangText="Public Identifier:">
         An Identifier that is intended to be public information and
-        not specific to the End User's relationship with one or more
+        not specific to the end user's relationship with one or more
         Relying Parties, for example a blog URL or an i-name.
       </t>
 
       <t hangText="Private Identifier:">
         An Identifier that is intended to be private information used
-        only in the context of the End User's relationship with one or
+        only in the context of the end user's relationship with one or
         more specific Relying Parties.
       </t>
 
@@ -213,7 +209,7 @@
 
       <t hangText="OP Service Endpoint URL:">
         The URL which accepts OpenID Authentication requests,
-        discovered by dereferencing the End User's Identifier.  This
+        discovered by dereferencing the end user's Identifier.  This
         value MUST be an absolute URL.
       </t>
     </list>
@@ -225,7 +221,7 @@
       <t>
         <list style="numbers">
           <t>
-            The End User <xref target="initiation">initiates
+            The end user <xref target="initiation">initiates
             authentication</xref> by presenting a User-supplied Identifier
             to the Relying Party via their User Agent.
           </t>
@@ -233,7 +229,7 @@
             After normalizing the User-supplied Identifier, The Relying
             Party <xref target="discovery">performs discovery</xref> on
             it and establishes the URL of the OP's OpenID Authentication
-            service endpoint that the End User uses for authentication.
+            service endpoint that the end user uses for authentication.
           </t>
           <t>
             (optional) 
@@ -247,20 +243,20 @@
             signature after each authentication request.
           </t>
           <t>
-            The Relying Party redirects the End User's User Agent to
+            The Relying Party redirects the end user's User Agent to
             the OP with an OpenID <xref
             target="requesting_authentication">Authentication
             request</xref>.
           </t>
           <t>
-            The OP establishes whether the End User is authorized to
+            The OP establishes whether the end user is authorized to
             perform OpenID Authentication and wishes to do so. The
-            manner in which the End User authenticates to their OP and
+            manner in which the end user authenticates to their OP and
             any policies surrounding such authentication is out of
             scope for this document.
           </t>
           <t>
-            The OP redirects the End User's User Agent back to the
+            The OP redirects the end user's User Agent back to the
             Relying Party with cyrptographic proof asserting either
             that <xref target="positive_assertions">authentication is
             approved</xref> or <xref
@@ -577,7 +573,7 @@ Base 10 number | btwoc string representation
         <section title="HTTP Redirect">
           <t>
             Data can be transferred by issuing a 302, 303, or 307 HTTP
-            Redirect to the End User's User-Agent. The redirect URL is
+            Redirect to the end user's User-Agent. The redirect URL is
             the URL of the receiver with the OpenID Authentication
             message appended to the query string, as specified in
             <xref target="queries" />.
@@ -673,11 +669,11 @@ Base 10 number | btwoc string representation
           </t>
           <t>
             If the "openid.return_to" value is not a valid URL, the
-            server SHOULD return a response to the End User indicating
-            the error and that it is unable to return the End User to
+            server SHOULD return a response to the end user indicating
+            the error and that it is unable to return the end user to
             the initiating server. If the parameter is ommitted in the
             request, it signifies that the initiating server does not
-            wish to for the End User to be returned to it as something
+            wish to for the end user to be returned to it as something
             else useful will have been performed via an extension.
           </t>
         </section>
@@ -791,22 +787,22 @@ Base 10 number | btwoc string representation
       <section title="Initiation" anchor="initiation">
         <t>
           To initiate OpenID Authentication, the Relying Party SHOULD
-          present the End User with a form that has a field for
+          present the end user with a form that has a field for
           entering an Identifier. 
         </t>
         
         <t>
           It is RECOMMENDED that a Relying Party place the <eref
           target='http://openid.net/login-bg.gif'>OpenID logo</eref>
-          at the beginning of the form field where the End User enters
-          their Identifier. This aides in End User recognition that
+          at the beginning of the form field where the end user enters
+          their Identifier. This aides in end user recognition that
           they can use an OpenID Identifier at the Relying Party.
         </t>
 
         <t>
           The form field's "name" attribute SHOULD have the value
           "openid_identifier" as to allow User Agents to automatically
-          prefill the End User's preferred Identifier when visiting a
+          prefill the end user's preferred Identifier when visiting a
           Relying Party. Browser extensions or other software that
           support OpenID Authentication may not detect a Relying
           Party's support if the value is not this value.
@@ -815,8 +811,8 @@ Base 10 number | btwoc string representation
 
       <section title="Normalization" anchor="normalization">
         <t>
-          The End User's input MUST be normalized into an
-          Identifier.  If the End User supplies input that does not
+          The end user's input MUST be normalized into an
+          Identifier.  If the end user supplies input that does not
           include a scheme (http, https, or xri), then the application
           needs to determine if the input is an XRI or a URL missing
           the scheme.
@@ -901,7 +897,7 @@ Base 10 number | btwoc string representation
 
               <t hangText="OP-Specific Identifier:">
                 (optional) An identifier that allows an OP to
-                identify the End User of a Claimed Identifier. If no
+                identify the end user of a Claimed Identifier. If no
                 OP-specific identifier is present in the discovered
                 information, the Claimed Identifier is also the
                 OP-Specific Identifier.
@@ -1080,13 +1076,13 @@ Base 10 number | btwoc string representation
               <t>
                 A &lt;LINK&gt; tag MAY be included with attributes
                 "rel" set to "openid.delegate" and "href" set to the
-                End User's OP-Specific Identifier
+                end user's OP-Specific Identifier
               </t>
             </list>
           </t>
 
           <t> The host of the HTML document MAY be different from the
-            End User's OP's host.
+            end user's OP's host.
           </t>
 
           <t>
@@ -1541,10 +1537,10 @@ Base 10 number | btwoc string representation
                   Value: "checkid_immediate" or "checkid_setup"
                 </t>
                 <t>
-                  Note: If the Relying Party wishes the End User to be
+                  Note: If the Relying Party wishes the end user to be
                   able to interact with the OP, "checkid_setup"
                   should be used. An example of a situation where
-                  interaction between the End User and the OP is not
+                  interaction between the end user and the OP is not
                   desired is when the authentication request is
                   happening asynchronously in JavaScript.
                 </t>
@@ -1578,8 +1574,8 @@ Base 10 number | btwoc string representation
                 <t>
                   Note: If this is set to the special value
                   "http://openid.net/identifier_select/2.0" then the
-                  OP MAY choose an Identifier that belongs to the End
-                  User. This parameter MAY be omitted if the request is
+                  OP MAY choose an Identifier that belongs to the end
+                  user. This parameter MAY be omitted if the request is
                   not about an identifier (for instance if an extension
                   is in use that makes the request meaningful without
                   it; see openid.claimed_id above).
@@ -1613,7 +1609,7 @@ Base 10 number | btwoc string representation
                 <t>
                   Note: If this value is not sent in the request it
                   signifies that the Relying Party does not wish to
-                  for the End User to be returned to it as something
+                  for the end user to be returned to it as something
                   else useful will have been performed via an
                   extension.
                 </t>
@@ -1625,7 +1621,7 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   Value: (optional) URL pattern the OP SHOULD ask the
-                  End User to trust. See <xref target="realms" />.
+                  end user to trust. See <xref target="realms" />.
                   This value MUST be sent if openid.return_to is
                   ommitted.
                 </t>
@@ -1642,11 +1638,11 @@ Base 10 number | btwoc string representation
         <t>
           A "realm" is a pattern that represents the part of URL-space
           for which an OpenID Authentication request is valid. A realm
-          is designed to give the End User an indication of the scope
+          is designed to give the end user an indication of the scope
           of the authentication request. OPs SHOULD present the realm
-          when requesting the End User's approval for an
+          when requesting the end user's approval for an
           authentication request. OPs MAY use the realm to allow the
-          End User to automate approval of authentication
+          end user to automate approval of authentication
           requests. The realm SHOULD be used by OPs to uniquely
           identify Relying Parties.
         </t>
@@ -1702,7 +1698,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          It is RECOMMENDED that OP's protect their End Users from
+          It is RECOMMENDED that OP's protect their end users from
           requests with overly-general realms, like http://*.com/ or
           http://*.co.uk/. Determining if a realm is overly-general is
           at the discretion of the OP.
@@ -1712,7 +1708,7 @@ Base 10 number | btwoc string representation
       <section title="Immediate Requests">
         <t>
           When requesting authentication, the Relying Party MAY
-          request that the OP not interact with the End User.  In
+          request that the OP not interact with the end user.  In
           this case the OP MUST respond immediately with either an
           assertion that authentication is successful, or a response
           indicating that the request cannot be completed without
@@ -1729,21 +1725,21 @@ Base 10 number | btwoc string representation
         When an authentication request comes from the User-Agent via
         <xref target="indirect_comm">indirect communication</xref>,
         the OP SHOULD identify the User-Agent, and determine whether
-        the End User wishes to complete the authentication.  If the
-        End User can be identified and wishes to complete the
+        the end user wishes to complete the authentication.  If the
+        end user can be identified and wishes to complete the
         authentication, the OP should send a <xref
         target="positive_assertions">positive assertion</xref> to the
         Relying Party.
       </t>
       <t>
-        Methods of identifying and authenticating the End User and
+        Methods of identifying and authenticating the end user and
         obtaining approval to return an OpenID Authentication
         assertion are beyond the scope of this specification.
       </t>
       <t>
         If no Identifier was specified in the request and there are
-        Identifiers in the control of the End User, the OP SHOULD
-        allow the End User to choose which Identifier to use.  If an
+        Identifiers in the control of the end user, the OP SHOULD
+        allow the end user to choose which Identifier to use.  If an
         Identifier was specified, the OP SHOULD only issue assertions
         about the specified Identifier.
       </t>
@@ -1767,7 +1763,7 @@ Base 10 number | btwoc string representation
       <t>
         If the "openid.return_to" value is ommitted in the request, it
         signifies that the initiating server does not wish to for the
-        End User to be returned to it as something else useful will
+        end user to be returned to it as something else useful will
         have been performed via an extension.
       </t>
 
@@ -1942,8 +1938,8 @@ Base 10 number | btwoc string representation
 
       <section title="Negative Assertions" anchor="negative_assertions">
         <t>
-          If the OP is unable to identify the End User or the End
-          User does not or cannot approve the authentication request,
+          If the OP is unable to identify the end user or the end
+          user does not or cannot approve the authentication request,
           the OP SHOULD send a negative assertion to the Relying
           Party as an <xref target="indirect_comm">indirect
           response</xref>.
@@ -1961,7 +1957,7 @@ Base 10 number | btwoc string representation
         <section title="In Response to Immediate Requests">
           <t>
             If the request was an immediate request, there is no chance
-            for the End User to interact with pages on the OP to provide
+            for the end user to interact with pages on the OP to provide
             identifying credentials or approval of a request.
             A negative assertion of an immediate request takes the
             following form:
@@ -1989,10 +1985,10 @@ Base 10 number | btwoc string representation
                 openid.user_setup_url
                 <list style='empty'>
                   <t>
-                    Value: A URL that the End User may visit to
+                    Value: A URL that the end user may visit to
                     complete the request. The Relying Party may
-                    redirect the End User to this URL, or provide the
-                    End User with a link that points to this URL.  The
+                    redirect the end user to this URL, or provide the
+                    end user with a link that points to this URL.  The
                     request is no longer immediate.
                   </t>
                 </list>
@@ -2003,8 +1999,8 @@ Base 10 number | btwoc string representation
 
         <section title="In Response to Non-Immediate Requests">
           <t>
-            Since the OP may display pages to the End User and
-            request credentials from the End User, a negative response
+            Since the OP may display pages to the end user and
+            request credentials from the end user, a negative response
             to a request that is not immediate is definitive.  It
             takes the following form:
 
@@ -2034,7 +2030,7 @@ Base 10 number | btwoc string representation
 
           <t>
             In a lot of cases, the Relying Party won't get a cancel
-            mode response; the End User will just quit or press back
+            mode response; the end user will just quit or press back
             within their User-Agent. But if it is returned, the
             Relying Party SHOULD return to what it was doing.
           </t>
@@ -2248,12 +2244,12 @@ Base 10 number | btwoc string representation
         </t>
       </section>
 
-      <section title="Identifying the End User" anchor="identifying">
+      <section title="Identifying the end user" anchor="identifying">
         <t>
           The Claimed Identifier in a successful authentication
           response MAY be used as a user-visible Identifier. The
           Relying Party SHOULD use it as a key for local storage of
-          information about the End User.
+          information about the end user.
         </t>
 
         <t>
@@ -2269,7 +2265,7 @@ Base 10 number | btwoc string representation
             Relying Parties MUST differentiate between URL Identifiers
             that have different schemes. When user input is processed
             into a URL, it is processed into a HTTP URL. If the same
-            End User controls the same URL, differing only by scheme,
+            end user controls the same URL, differing only by scheme,
             and it is desired that the Identifier be the HTTPS URL, it
             is RECOMMENDED that a redirect be issued from the HTTP URL
             to the HTTPS URL. Because the HTTP and HTTPS URLs are not
@@ -2349,9 +2345,9 @@ Base 10 number | btwoc string representation
             When responding with a negative assertion to a
             "checkid_immediate" mode authentication request, the
             "user_setup_url" paramater MUST be returned. This is a
-            URL that the End User may visit to complete the
-            request. The OP may redirect the End User to
-            this URL, or provide the End User with a link that
+            URL that the end user may visit to complete the
+            request. The OP may redirect the end user to
+            this URL, or provide the end user with a link that
             points to this URL.
           </t>
 
@@ -2413,9 +2409,9 @@ Base 10 number | btwoc string representation
               When responding with a negative assertion to a
               "checkid_immediate" mode authentication request, the
               "user_setup_url" paramater MUST be returned. This is a URL
-              that the End User may visit to complete the request. The
-              Relying Party may redirect the End User to this URL, or
-              provide the End User with a link that points to this
+              that the end user may visit to complete the request. The
+              Relying Party may redirect the end user to this URL, or
+              provide the end user with a link that points to this
               URL.
             </t>
           </list>
@@ -2573,14 +2569,14 @@ Base 10 number | btwoc string representation
           <t>
             In order to get protection from SSL, SSL must be used for
             all parts of the interaction, including interaction with
-            the End User through the User Agent.  While the protocol
+            the end user through the User Agent.  While the protocol
             does not require SSL be used, its use is strongly
             RECOMMENDED.  Current best practicies dictate that an OP
             SHOULD use SSL, with a certificate signed by a trusted
             authority, to secure its service endpoint.  In addition,
             SSL, with a certificate signed by a trusted authority,
             SHOULD be used so that a Relying Party can fetch the
-            End User's URL in a secure manner.  Following its own
+            end user's URL in a secure manner.  Following its own
             security policies, a Relying Party MAY choose to not
             complete, or even begin, a transaction if SSL is not being
             correctly used at these various endpoints.
@@ -2596,7 +2592,7 @@ Base 10 number | btwoc string representation
           other malware, which limits the strength of the
           authentication assertion, since untrusted software makes it
           impossible to know whether the authentication decision has
-          been made with the End User's approval. With that said, many
+          been made with the end user's approval. With that said, many
           web applications and protocols today rely on the security of
           the Web browser and their hosts.
         </t>
@@ -2612,15 +2608,15 @@ Base 10 number | btwoc string representation
 
       <section title="User Interface Considerations">
         <t>
-          The Relying Party SHOULD redirect the End User to the OP
+          The Relying Party SHOULD redirect the end user to the OP
           Endpoint URL in a top-level browser window with all controls
-          visible. This allows better protection for the End User
+          visible. This allows better protection for the end user
           against OP look-alike sites (phishing).
         </t>
 
         <t>
-          OPs SHOULD educate their End Users about the potential for
-          OpenID phishing attaches and SHOULD equip their End Users
+          OPs SHOULD educate their end users about the potential for
+          OpenID phishing attaches and SHOULD equip their end users
           with the tools to defeat such attachs, for example browser
           plugins that verify the authenticity of the OP's
           Authentication Service Endpoint URL.
@@ -2633,10 +2629,10 @@ Base 10 number | btwoc string representation
 
       <appendix title="OP-Specific Identifiers">
         <t>
-          An End User wants to use "http://www.example.com/" as their
-          Claimed Identifier. The End User has an account with
+          An end user wants to use "http://www.example.com/" as their
+          Claimed Identifier. The end user has an account with
           Example Provider, which functions as an OpenID Provider,.  The
-          End User's OP-Specific Identifier is
+          end user's OP-Specific Identifier is
           "https://exampleuser.exampleprovider.com/".
         </t>
 
@@ -2644,7 +2640,7 @@ Base 10 number | btwoc string representation
           In this scenerio, with the proper configuration of Yadis or
           HTML-based Discovery (see <xref target="discovery" /> and
           <xref target="XRDS Sample" /> below), a Relying Party will
-          discover the following information about the End User:
+          discover the following information about the end user:
 
           <list style="hanging">
             <t hangText="Claimed Identifier">
@@ -2661,7 +2657,7 @@ Base 10 number | btwoc string representation
         <t>
           <figure>
             <preamble>
-              For an End User to use "http://www.example.com/" as
+              For an end user to use "http://www.example.com/" as
               their Identifier, but have Relying Parties actually
               verify https://exampleuser.exampleprovider.com/ with the OP
               Endpoint URL
@@ -2703,9 +2699,9 @@ Base 10 number | btwoc string representation
 
       <appendix title="Login Form">
         <t>
-          The End User visits a Relying Party site which supports
-          OpenID Authentication.  The Relying Party presents the End
-          User with a form field for them to enter their Claimed
+          The end user visits a Relying Party site which supports
+          OpenID Authentication.  The Relying Party presents the end
+          user with a form field for them to enter their Claimed
           Identifier or their OP Identifier.
         </t>
 
@@ -2770,9 +2766,9 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
             <t>
               Supports OP Identifiers and privacy-protecting
               login. This new variation of the protocol flow is
-              initiated by an End User entering an OP Identifier
+              initiated by an end user entering an OP Identifier
               instead of a Public Identifier.  This allows the OP to
-              assist the End User in selecting an Identifier, which
+              assist the end user in selecting an Identifier, which
               may be either a Public Identifier (one of multiple
               "personas"), or a Private Identifier (which may be
               generated by the OP to be used only in the context of a
@@ -2780,7 +2776,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
             </t>
             <t>
               Supports the use of XRIs as Identifiers. XRIs may be
-              used as Identifiers for both End Users and OPs, and
+              used as Identifiers for both end users and OPs, and
               provide automatic mapping from one or more reassignable
               i-names to a synonymous persistent Canonical ID that
               will never be reassigned.
