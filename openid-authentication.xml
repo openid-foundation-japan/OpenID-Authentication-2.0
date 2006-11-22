@@ -155,18 +155,21 @@
       </t>
 
       <t hangText="Claimed Identifier:">
-        An Identifier that the end user claims to own which has not yet
-        been verified by the Relying Party. This is:
-      </t>
+        An Identifier that the end user claims to own. The overall aim
+        of the protocol is verifying this Identifier. The Claimed
+        Identifier is either:
+        <list style="symbols">
           <t>
             The Identifier obtained by <xref target="normalization">
-            normalizing </xref> the User-supplied Identifier, if it
+            normalizing</xref> the User-supplied Identifier, if it
             was an URL.
           </t>
           <t>
-            The <xref target="canonicalid"> CanonicalID </xref>, if the
-            User-supplied Identifier was an XRI.
+            The <xref target="canonicalid">CanonicalID</xref>, if it
+            was an XRI.
           </t>
+        </list>
+      </t>
 
       <t hangText="OP-Specific Identifier:">
         An alternate Identifier for an end user that is specific to a
