@@ -1880,8 +1880,7 @@ Base 10 number | btwoc string representation
                 <t>
                   Value: (optional) If the Relying Party sent an
                   invalid association handle with the request, it
-                  SHOULD be included here. If it is present, this
-                  field MUST be signed.
+                  SHOULD be included here.
                 </t>
               </list>
             </t>
