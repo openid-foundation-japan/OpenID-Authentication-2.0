@@ -2762,7 +2762,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
       </t>
       <appendix title="Updated Initiation and Discovery">
         <t>
-          <list style="symbols>"
+          <list style="symbols">
             <t>
               Supports OP Identifiers. This new variation of the
               protocol flow is initiated by an end user entering an OP
