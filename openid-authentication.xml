@@ -134,8 +134,8 @@
         (commonly referred to as a "URL" within this document), or <eref
         target="http://www.oasis-open.org/committees/download.php/15376"
         >XRI</eref>.  An "Identifier" may be a User-supplied Identifier,
-        Claimed Identifier, OP-Specific Identifier, OP Identifier, or
-        Verified Identifier, depending on context. These Identifiers
+        Claimed Identifier, OP-Specific Identifier, or OP Identifier
+        depending on context. These Identifiers
         may also be either a Public Identifier or Private Identifier
         depending on the authentication context.
       </t>
@@ -171,12 +171,6 @@
             The <xref target="canonicalid"> CanonicalID </xref>, if the
             User-supplied Identifier was an XRI.
           </t>
-
-      <t hangText="Verified Identifier:">
-        A Claimed Identifier that the End User has proven to a Relying Party
-        that they own. The Relying Party will use the Verified Identifier to
-        identify the user.
-      </t>
 
       <t hangText="OP-Specific Identifier:">
         An alternate Identifier for an End User that is specific to a
@@ -2068,7 +2062,7 @@ Base 10 number | btwoc string representation
         </list>
 
         If all three of these conditions are met, the Claimed
-        Identifier in the response is now a Verified Identifier.
+        Identifier in the response is now verified.
       </t>
 
       
@@ -2256,13 +2250,10 @@ Base 10 number | btwoc string representation
 
       <section title="Identifying the End User" anchor="identifying">
         <t>
-          A successful authentication response provides the Relying
-          Party with a Verified Identifier, which MAY be used as a
-          user-visible Identifier.  Identifiers in OpenID MUST be
-          URIs. If the Identifier is a URL, its scheme MUST be "http"
-          or "https".  The Relying Party SHOULD use the Verified
-          Identifier as a key for local storage of information about
-          the End User.
+          The Claimed Identifier in a successful authentication
+          response MAY be used as a user-visible Identifier. The
+          Relying Party SHOULD use it as a key for local storage of
+          information about the End User.
         </t>
 
         <t>
