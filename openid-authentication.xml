@@ -130,14 +130,14 @@
       <t>
     <list style="hanging">
       <t hangText="OpenID Identifier:">
-        Idenitifier. An Identifier is either a "http" or "https" URI,
+        An Identifier is either a "http" or "https" URI,
         (commonly referred to as a "URL" within this document), or <eref
         target="http://www.oasis-open.org/committees/download.php/15376"
-        >XRI</eref>.  An Identifier may be a Claimed Identifier,
-        OP-Specific Identifier, OP Identifier, or Verified
-        Identifier, depending on context.  These Identifiers may also
-        be either a Public Identifier or Private Identifier depending
-        on the authentication context.
+        >XRI</eref>.  An "Identifier" may be a User-supplied Identifier,
+        Claimed Identifier, OP-Specific Identifier, OP Identifier, or
+        Verified Identifier, depending on context. These Identifiers
+        may also be either a Public Identifier or Private Identifier
+        depending on the authentication context.
       </t>
 
       <t hangText="End User:">
@@ -149,20 +149,33 @@
         target="RFC2616"/>.
       </t>
 
-      <t hangText="Claimed Identifier:">
-        An Identifier that the End User claims to own which has not yet
-        been verified by the Relying Party.  During the initiation
-        phase of the protocol, an End User may enter either a Public
-        Identifier or an OP-Specific Identifier as their Claimed
-        Identifier.  If an OP-Specific Identifier is used, the OP may
-        then assist the End User in selecting either a Public
-        Identifier or a Private Identifier to share with the Relying
+      <t hangText="User-supplied Identifier">
+        An Identifier that was presented by the End User to the Relying Party.
+        During the initiation phase of the protocol, an End User may enter
+        either a Public Identifier or an OP Identifier. If an OP Identifier
+        is used, the OP may then assist the End User in selecting either a
+        Public Identifier or a Private Identifier to share with the Relying
         Party.
       </t>
 
+      <t hangText="Claimed Identifier:">
+        An Identifier that the End User claims to own which has not yet
+        been verified by the Relying Party. This is:
+      </t>
+          <t>
+            The Identifier obtained by <xref target="normalization">
+            normalizing </xref> the User-supplied Identifier, if it
+            was an URL.
+          </t>
+          <t>
+            The <xref target="canonicalid"> CanonicalID </xref>, if the
+            User-supplied Identifier was an XRI.
+          </t>
+
       <t hangText="Verified Identifier:">
-        An Identifier that the End User has proven to a Relying Party
-        that they own.
+        A Claimed Identifier that the End User has proven to a Relying Party
+        that they own. The Relying Party will use the Verified Identifier to
+        identify the user.
       </t>
 
       <t hangText="OP-Specific Identifier:">
@@ -219,15 +232,14 @@
         <list style="numbers">
           <t>
             The End User <xref target="initiation">initiates
-            authentication</xref> by supplying a Claimed Identifier
-            (either a Public Identifier, a Private Identifier, or an
-            OP Identifier) to the Relying Party via their User Agent.
+            authentication</xref> by presenting a User-supplied Identifier
+            to the Relying Party via their User Agent.
           </t>
           <t>
-            The Relying Party <xref target="discovery">performs
-            discovery</xref> on the Claimed Identifier and establishes
-            the URL of the OP's OpenID Authentication service endpoint
-            that the End User uses for authentication.
+            After normalizing the User-supplied Identifier, The Relying
+            Party <xref target="discovery">performs discovery</xref> on
+            it and establishes the URL of the OP's OpenID Authentication
+            service endpoint that the End User uses for authentication.
           </t>
           <t>
             (optional) 
@@ -881,9 +893,17 @@ Base 10 number | btwoc string representation
 
               <t hangText="Claimed Identifier:">
                 (optional) The identifier that is the subject of this
-                authentication request. This is the identifier upon
-                which discovery was performed.
+                authentication request. This is:
               </t>
+                  <t>
+                    The Identifier obtained by <xref target="normalization">
+                    normalizing </xref> the User-supplied Identifier,
+                    if it was an URL.
+                  </t>
+                  <t>
+                    The <xref target="canonicalid"> CanonicalID </xref>,
+                    if the User-supplied Identifier was an XRI.
+                  </t>
 
               <t hangText="OP-Specific Identifier:">
                 (optional) An identifier that allows an OP to
@@ -970,7 +990,8 @@ Base 10 number | btwoc string representation
             </t>
           </section>
 
-          <section title="XRI and the CanonicalID Element" toc="exclude">
+          <section title="XRI and the CanonicalID Element" anchor="canonicalid"
+                   toc="exclude">
             <t>
               When the identifier is an XRI, the &lt;xrd:XRD&gt;
               element that contains the OpenID Authentication
@@ -997,7 +1018,7 @@ Base 10 number | btwoc string representation
               Endpoint URL information that was discovered. The
               information discovered when resolving the canonical ID
               MUST match the information discovered when resolving
-              the user-supplied Identifier.
+              the User-supplied Identifier.
            </t>
 
             <t>
@@ -1537,11 +1558,11 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              openid.disco_id
+              openid.claimed_id
               <list style='empty'>
                 <t>
-                  Value: (optional) The Claimed Identifier; the identifier on
-                  which discovery was performed.
+                  Value: (optional) The Claimed Identifier. MUST be present
+                  if, and only if, openid.identity is present.
                 </t>
                 <t>
                   Note: The Claimed Identifier is the same as the
@@ -1564,9 +1585,10 @@ Base 10 number | btwoc string representation
                   Note: If this is set to the special value
                   "http://openid.net/identifier_select/2.0" then the
                   OP MAY choose an Identifier that belongs to the End
-                  User.  This parameter MAY be omitted if an extension
+                  User. This parameter MAY be omitted if the request is
+                  not about an identifier (for instance if an extension
                   is in use that makes the request meaningful without
-                  it (see openid.disco_id above).
+                  it; see openid.claimed_id above).
                 </t>
               </list>
             </t>
@@ -1785,11 +1807,13 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              openid.disco_id
+              openid.claimed_id
               <list style='empty'>
                 <t>
-                  Value: The Claimed Identifier; the identifier on
-                  which discovery was performed.
+                  Value: (optional) The Claimed Identifier. Verbatim copy
+                  of the openid.claimed_id received in the authentication
+                  request (if present). MUST be present if, and only if,
+                  openid.identity is present.
                 </t>
                 <t>
                   Note: The Claimed Identifier is the same as the
@@ -1811,7 +1835,7 @@ Base 10 number | btwoc string representation
                 <t>
                   Note: The openid.identity field MAY be omitted if an
                   extension is in use that makes the response
-                  meaningful without it (see openid.disco_id above).
+                  meaningful without it (see openid.claimed_id above).
                 </t>
               </list>
             </t>
@@ -2215,10 +2239,10 @@ Base 10 number | btwoc string representation
 
       <section title="Verifying Discovered Information">
         <t>
-          The Relying Party MUST have performed <xref
-          target="discovery">discovery</xref> on the Claimed
-          Identifier and the information in the assertion MUST exactly
-          match the discovered information.
+          The Claimed Identifier MUST have been <xref
+          target="discovery">discovered</xref> by the Relying Party
+          and the information in the assertion MUST exactly match the
+          discovered information.
         </t>
         <t>
           If the Claimed Identifier was not present in the request
@@ -2236,16 +2260,14 @@ Base 10 number | btwoc string representation
           Party with a Verified Identifier, which MAY be used as a
           user-visible Identifier.  Identifiers in OpenID MUST be
           URIs. If the Identifier is a URL, its scheme MUST be "http"
-          or "https", and the Relying Party SHOULD use it as a key for
-          local storage of information about the End User.  If the
-          Verified Identifier is an XRI, the value of the discovered
-          "CanonicalID" element from the XRDS document SHOULD be used
-          as a key for local storage of information about the End User.
+          or "https".  The Relying Party SHOULD use the Verified
+          Identifier as a key for local storage of information about
+          the End User.
         </t>
 
         <t>
-          If an assertion is made for a Claimed Identifier on which
-          discovery has not been performed, the Relying Party MUST
+          If an assertion is made for a Claimed Identifier which
+          has not been discovered, the Relying Party MUST
           perform discovery on that Identifier and verify that the
           discovered information matches that in the assertion,
           including that the OP is authoritative for the Identifier.
