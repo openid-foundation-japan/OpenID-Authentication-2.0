@@ -142,6 +142,23 @@
         target="RFC2616"/>.
       </t>
 
+      <t hangText="Relying Party:">
+        RP. A Web application that wants proof that the end user
+        controls an Identifier.
+      </t>
+
+      <t hangText="OpenID Provider:">
+        OP. The party operating an OpenID Authentication server on
+        which a Relying Party relies for an assertion that the end
+        user controls an Identifier.
+      </t>
+
+      <t hangText="OP Endpoint URL:">
+        The URL which accepts OpenID Authentication requests,
+        discovered by dereferencing the end user's Identifier.  This
+        value MUST be an absolute URL.
+      </t>
+
       <t hangText="User-supplied Identifier">
         An Identifier that was presented by the end user to the Relying Party.
         During the initiation phase of the protocol, an end user may enter
@@ -174,16 +191,6 @@
         control.
       </t>
 
-      <t hangText="Relying Party:">
-        RP. A Web application that wants proof that the end user
-        controls an Identifier.
-      </t>
-
-      <t hangText="OpenID Provider:">
-        OP. The party operating an OpenID Authentication server on
-        which a Relying Party relies for cryptographic proof that the
-        end user controls a Claimed Identifier.
-      </t>
 
       <t hangText="OP Identifier:">
         An Identifier for an OpenID Provider.
@@ -205,13 +212,8 @@
          Diffie-Hellman Key Exchange <xref target="RFC2631" /> is a
          protocol that allows two parties to create a shared a secret,
          while preventing eavesdroppers from learning the secret.
-      </t>  
-
-      <t hangText="OP Service Endpoint URL:">
-        The URL which accepts OpenID Authentication requests,
-        discovered by dereferencing the end user's Identifier.  This
-        value MUST be an absolute URL.
       </t>
+
     </list>
       </t>
     </section>
@@ -877,7 +879,7 @@ Base 10 number | btwoc string representation
             Terminology section for definitions):
 
             <list style="hanging">
-              <t hangText="OP Service Endpoint URL:">
+              <t hangText="OP Endpoint URL:">
                 The absolute URL on the OP that accepts authentication requests.
               </t>
 
@@ -997,18 +999,17 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              The Relying Party MUST confirm that the provider of
-              the XRD that contains the &lt;CanonicalID&gt; element
-              is authoritative for that Canonical ID. The provider
-              is identified by the contents of the
-              &lt;xrd:ProviderID&gt; element that is a child of the
-              &lt;xrd:XRD&gt; element. If the provider is not
-              authoritative for the Canonical ID, the Relying Party
-              MUST resolve the Canonical ID to confirm the OP Service
-              Endpoint URL information that was discovered. The
-              information discovered when resolving the canonical ID
-              MUST match the information discovered when resolving
-              the User-supplied Identifier.
+              The Relying Party MUST confirm that the provider of the
+              XRD that contains the &lt;CanonicalID&gt; element is
+              authoritative for that Canonical ID. The provider is
+              identified by the contents of the &lt;xrd:ProviderID&gt;
+              element that is a child of the &lt;xrd:XRD&gt;
+              element. If the provider is not authoritative for the
+              Canonical ID, the Relying Party MUST resolve the
+              Canonical ID to confirm the OP Endpoint URL information
+              that was discovered. The information discovered when
+              resolving the canonical ID MUST match the information
+              discovered when resolving the User-supplied Identifier.
            </t>
 
             <t>
