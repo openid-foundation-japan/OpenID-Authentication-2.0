@@ -550,7 +550,8 @@ Base 10 number | btwoc string representation
           know a recipient URL and that the recipient URL expect
           indirect messages, as specified in <xref target="queries"
           />. The initiator of the communication chooses which method
-          of indirect communication is appropriate. 
+          of indirect communication is appropriate depending on
+          capabilities, message size, or other external factors.
         </t>
         <t>
           All indirect messages must contain the following field:
@@ -579,11 +580,6 @@ Base 10 number | btwoc string representation
             the URL of the receiver with the OpenID Authentication
             message appended to the query string, as specified in
             <xref target="queries" />.
-          </t>
-          <t>
-            As of OpenID Authentication version 2.0, this method is
-            deprecated, though is still required for implementation to
-            aid in backward compatibility.
           </t>
         </section>
 
