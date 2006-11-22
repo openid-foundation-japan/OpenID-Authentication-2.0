@@ -1907,8 +1907,8 @@ Base 10 number | btwoc string representation
                   "openid." prefix that the signature covers. This
                   list MUST contain at least "return_to" and
                   "response_nonce", and if present in the response,
-                  "disco_id" and "identity". For example,
-                  "identity,disco_id,return_to,response_nonce".
+                  "claimed_id" and "identity". For example,
+                  "identity,claimed_id,return_to,response_nonce".
                 </t>
               </list>
             </t>
