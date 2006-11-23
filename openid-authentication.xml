@@ -2204,7 +2204,7 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              If the OP verifies responds with "is_valid" set to
+              If the OP responds with "is_valid" set to
               "true", and "invalidate_handle" is present, the Relying
               Party SHOULD NOT send further authentication requests
               with that handle.  "invalidate_handle" will only be
@@ -2473,7 +2473,7 @@ Base 10 number | btwoc string representation
       <t>
         Extensions MUST NOT define parameters with the same name. It
         is RECOMMENDED that commas are used as value delimiters,
-        though other characters my are better suited in
+        though other characters may be better suited in
         certain situations.  Another approach is to append a
         numeric value to each key to differentiate between each value.
       </t>
@@ -2612,8 +2612,8 @@ Base 10 number | btwoc string representation
 
         <t>
           OPs SHOULD educate their end users about the potential for
-          OpenID phishing attaches and SHOULD equip their end users
-          with the tools to defeat such attachs, for example browser
+          OpenID phishing attacks and SHOULD equip their end users
+          with the tools to defeat such attacks, for example browser
           plugins that verify the authenticity of the OP's
           Authentication Service Endpoint URL.
         </t>
@@ -2627,7 +2627,7 @@ Base 10 number | btwoc string representation
         <t>
           An end user wants to use "http://www.example.com/" as their
           Claimed Identifier. The end user has an account with
-          Example Provider, which functions as an OpenID Provider,.  The
+          Example Provider, which functions as an OpenID Provider.  The
           end user's OP-Specific Identifier is
           "https://exampleuser.exampleprovider.com/".
         </t>
