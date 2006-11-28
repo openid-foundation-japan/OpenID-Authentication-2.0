@@ -24,7 +24,7 @@
         <postal>
           <street>487 E Middlefield Road</street>
           <city>Mountain View</city> <region>CA</region>
-          <code>94109</code>
+          <code>94043</code>
           <country>USA</country>
         </postal>
         <email>drecordon@verisign.com</email>
@@ -2616,6 +2616,33 @@ Base 10 number | btwoc string representation
           with the tools to defeat such attacks, for example browser
           plugins that verify the authenticity of the OP's
           Authentication Service Endpoint URL.
+        </t>
+      </section>
+
+      <section title="HTTP and HTTPS URL Identifiers">
+        <t>
+          While these types of Identifiers have been <xref
+          target='http_s_identifiers'>previously discussed</xref>,
+          they are worth mentioning again.  As previously stated, the
+          RECOMMENDED method of an End User expressing control over a
+          URL differing only be scheme is to setup a redirect from the
+          HTTP URL to the HTTPS URL.  Relying Parties will never store
+          the HTTP URL as during the discovery and initiation phase
+          will follow the redirect and use the HTTPS URL as the
+          Claimed Identifier.
+        </t>
+
+        <t>
+          End Users with concerns over this recommendation should
+          directly enter their HTTPS URL at each Relying Party.  This
+          thus removes the step where the Relying Party follows the
+          redirect to the HTTPS URL.  The single security
+          consideration currently seen is if an attacker were to
+          compromise the integrity of the HTTP URL by removing the
+          redirect and pointing the Identifier at a rogue OP.  This
+          however will alter the user experience, is detectable by
+          anti-phishing technologies, and the security of the
+          Identifier itself is a fundamental principle within OpenID.
         </t>
       </section>
     </section>
