@@ -234,7 +234,7 @@
             service endpoint that the end user uses for authentication.
           </t>
           <t>
-            (optional) 
+            (optional)
 
             The Relying Party and the OP establish an <xref
             target="associations">association</xref> -- a shared
@@ -289,9 +289,9 @@
           keys and values need to be converted to/from bytes, they
           MUST be encoded using <xref target="RFC3629">UTF-8</xref>.
 
-          Messages MUST NOT contain multiple parameters with the same name.  
+          Messages MUST NOT contain multiple parameters with the same name.
         </t>
-        
+
         <section title="Key-Value Form Encoding" anchor="kvform">
           <t>
             A message in Key-Value form is a sequence of lines.  Each
@@ -312,7 +312,7 @@
             responses</xref> to Relying Parties.
           </t>
         </section>
- 
+
         <section title="HTTP Encoding" anchor="queries">
 
           <t>
@@ -679,7 +679,7 @@ Base 10 number | btwoc string representation
     </section>
 
     <section title="Generating Signatures" anchor="generating_signatures">
-      <t> 
+      <t>
         The most common usage of an association is as a Message
         Authentication Code (MAC) key used to sign OpenID
         Authentication messages.
@@ -693,22 +693,22 @@ Base 10 number | btwoc string representation
         <t>
           To generate a message signature:
           <list style="numbers">
-            <t> 
+            <t>
               Determine the appropriate list of keys to be signed
               and signature algorithm from the <xref
                   target="associations">association type</xref>.
             </t>
-            <t> 
+            <t>
               Generate the list of key/value pairs to be signed using
               the correct <xref
                   target="signed_list">list algorithm</xref>.
             </t>
-            <t> 
+            <t>
               Convert the list of key/value pairs to be signed to an octet
               string by encoding with <xref target="kvform">Key-Value Form
               Encoding</xref>.
             </t>
-            <t> 
+            <t>
               Apply the correct <xref target="sign_algos">signature
               algorithm</xref> to the octet string.
             </t>
@@ -725,7 +725,7 @@ Base 10 number | btwoc string representation
     <t>
       To compute the list of key/value pairs to be signed:
       <list style="numbers">
-        <t> 
+        <t>
           Iterate through the list of keys to be signed in
           the order they appear in the input to the algorithm.
           For each key, find the value in the message whose key is
@@ -786,9 +786,9 @@ Base 10 number | btwoc string representation
         <t>
           To initiate OpenID Authentication, the Relying Party SHOULD
           present the end user with a form that has a field for
-          entering an Identifier. 
+          entering an Identifier.
         </t>
-        
+
         <t>
           It is RECOMMENDED that a Relying Party place the <eref
           target='http://openid.net/login-bg.gif'>OpenID logo</eref>
@@ -922,9 +922,9 @@ Base 10 number | btwoc string representation
 
 
           <section title="Service Elements">
-          
+
             <section title="OP Identifier Element">
-              <t> 
+              <t>
                 An OP Identifier Element is a &lt;xrd:Service&gt;
                 element with the following information:
 
@@ -1119,9 +1119,9 @@ Base 10 number | btwoc string representation
           Party to an OP Endpoint URL with the "openid.mode" key
           having the value of "associate".
         </t>
-         
+
         <section title="Common Request Parameters" toc="exclude">
-          <t> 
+          <t>
             These parameters are common to all association requests:
           </t>
           <t>
@@ -1137,13 +1137,13 @@ Base 10 number | btwoc string representation
                   </t>
                 </list>
               </t>
-              <t>openid.mode 
+              <t>openid.mode
                 <list style="empty">
                   <t> Value: "associate"</t>
                 </list>
               </t>
 
-              <t>openid.assoc_type 
+              <t>openid.assoc_type
                 <list style="empty">
                   <t> The preferred association type.  The association
                     type defines the algorithm to be used to sign
@@ -1154,7 +1154,7 @@ Base 10 number | btwoc string representation
                 </list>
               </t>
 
-              <t>openid.session_type 
+              <t>openid.session_type
                 <list style='empty'>
                   <t>
                     The preferred association session type.  This
@@ -1215,7 +1215,7 @@ Base 10 number | btwoc string representation
             NOTE: the 'btwoc' function is defined in <xref
             target="btwoc"/>.
           </t>
-        </section> 
+        </section>
       </section>
 
       <section title="Association Session Response">
@@ -1262,7 +1262,7 @@ Base 10 number | btwoc string representation
                     It MUST consist only of ASCII characters in the
                     range 33-126 inclusive (printable non-whitespace
                     characters).
-                  </t> 
+                  </t>
                 </list>
               </t>
               <t>
@@ -1416,7 +1416,7 @@ Base 10 number | btwoc string representation
             the authentication process in stateless mode.
           </t>
         </section>
-      </section>   
+      </section>
 
       <section title="Association Types" anchor="assoc_types">
         <section title="HMAC-SHA1" anchor="hmacsha1">
@@ -1439,7 +1439,7 @@ Base 10 number | btwoc string representation
       </section>
 
       <section title="Association Session Types" anchor="assoc_sess_types">
-        <t> 
+        <t>
           OpenID Authentication defines three valid association
           session types: "no-encryption", "DH-SHA1", and "DH-SHA256".
         </t>
@@ -1466,7 +1466,7 @@ Base 10 number | btwoc string representation
 
         <section title="Diffie-Hellman Association Sessions"
                      anchor="dh_sessions" toc="exclude">
-          <t> 
+          <t>
             The "DH-SHA1" and DH-SHA256" association types use
             Diffie-Hellman Key Exchange to securely transmit the
             shared secret.
@@ -1630,7 +1630,7 @@ Base 10 number | btwoc string representation
           </list>
         </t>
       </section>
-      
+
       <section title="Realms" anchor="realms">
         <t>
           A "realm" is a pattern that represents the part of URL-space
@@ -1683,13 +1683,13 @@ Base 10 number | btwoc string representation
                   identical to the part of the realm following the
                   "*." wildcard, or
                 </t>
-                <t> 
+                <t>
                   The URL's domain is identical to the realm's domain
                 </t>
               </list>
              </t>
           </list>
-            
+
           When present, the "openid.return_to" URL MUST match the
           "openid.realm", or the OP MUST return an error.
         </t>
@@ -1928,7 +1928,7 @@ Base 10 number | btwoc string representation
             </t>
 
           </list>
- 
+
         </t>
       </section>
 
@@ -2057,7 +2057,7 @@ Base 10 number | btwoc string representation
         Identifier in the response is now verified.
       </t>
 
-      
+
       <section title="Checking the Nonce">
         <t>
           To prevent replay attacks, the agent checking the signature
@@ -2183,7 +2183,7 @@ Base 10 number | btwoc string representation
                     <t>
                       Description: The association handle sent in
                       the request, if the server confirms that it is
-                      invalid. 
+                      invalid.
                     </t>
                   </list>
                 </t>
@@ -2553,8 +2553,8 @@ Base 10 number | btwoc string representation
             integrity of the information returned during the discovery
             process, by altering the XRDS document, the need for a man
             in the middle is removed.  One method to prevent this sort
-            of attack, is by digitally signing the XRDS file as per
-            XMLDSIG.  The keying material is not specified, since the
+            of attack is by digitally signing the XRDS file as per
+            XMLDSIG. The keying material is not specified, since the
             RP ultimately needs to make its own decision whether to
             trust keys used for such signature.
           </t>
@@ -2657,7 +2657,7 @@ Base 10 number | btwoc string representation
         <t>
           Within the protocol there are places where a rogue RP could
           launch a denial of service attack against an OP since there
-          is nothing in this message that allows the IdP to quickly
+          is nothing in this message that allows the OP to quickly
           check that it is a genuine request.  This can be done by the
           RP repeatedly requesting associations, authentication, or
           verification of a signature.  
