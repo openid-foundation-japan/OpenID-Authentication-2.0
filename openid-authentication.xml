@@ -554,7 +554,7 @@ Base 10 number | btwoc string representation
           capabilities, message size, or other external factors.
         </t>
         <t>
-          All indirect messages must contain the following field:
+          All indirect messages must contain the following fields:
         </t>
         <t>
           <list style='symbols'>
@@ -567,6 +567,15 @@ Base 10 number | btwoc string representation
                 <t>
                   This value MUST be present for the message to
                   be a valid OpenID 2.0 indirect message.
+                </t>
+              </list>
+            </t>
+            <t>
+              openid.mode
+              <list style='empty'>
+                <t>
+                  Indirect messages can be identified by the presence and
+                  value of the this parameter.
                 </t>
               </list>
             </t>
@@ -604,9 +613,9 @@ Base 10 number | btwoc string representation
         <section title="Indirect Error Responses">
           <t>
             In the case of a malformed request or one that contains
-            invalid arguments, the server MUST redirect the User-Agent
-            to the "openid.return_to" URL value if the value is a
-            valid URL.
+            invalid arguments, the OpenID Provider MUST redirect the
+            User-Agent to the "openid.return_to" URL value if the value
+            is present and it is a valid URL.
           </t>
           <t>
             <list style='symbols'>
@@ -666,13 +675,10 @@ Base 10 number | btwoc string representation
             The server MAY add additional keys to this response.
           </t>
           <t>
-            If the "openid.return_to" value is not a valid URL, the
-            server SHOULD return a response to the end user indicating
-            the error and that it is unable to return the end user to
-            the initiating server. If the parameter is ommitted in the
-            request, it signifies that the initiating server does not
-            wish to for the end user to be returned to it as something
-            else useful will have been performed via an extension.
+            If the malformed or invalid message is received by the Relying
+            Party, or "openid.return_to" is not present or its value is not
+            a valid URL, the server SHOULD return a response to the
+            end user indicating the error and that it is unable to continue.
           </t>
         </section>
       </section>
