@@ -1608,7 +1608,9 @@ Base 10 number | btwoc string representation
                   signifies that the Relying Party does not wish to
                   for the end user to be returned to it as something
                   else useful will have been performed via an
-                  extension.
+                  extension. If the RP needs to ensure that query
+                  parameters are not modified by outside parties,
+                  it must prevent this through an out-of-band method.
                 </t>
               </list>
             </t>
@@ -1834,15 +1836,6 @@ Base 10 number | btwoc string representation
                   Value: Verbatim copy of the return_to URL parameter
                   sent in the request.
                 </t>
-
-                <t>
-                  Note: Because the "openid.return_to" URL is signed
-                  by the OP, a Relying Party can make sure outside
-                  parties haven't sent responses with query parameters
-                  that were not included in the "openid.return_to"
-                  URL.
-                </t>
-
               </list>
             </t>
 
@@ -2857,8 +2850,8 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
       <appendix title="Security improvements">
         <t>
           A nonce is now part of the protocol for built-in protection
-          against replay attacks, which was previously implemented out of
-          band by each library or application.
+          against replay attacks, which was previously implemented
+          out-of-band by each library or application.
         </t>
         <t>
           A new association type, HMAC-SHA256, and a new association
