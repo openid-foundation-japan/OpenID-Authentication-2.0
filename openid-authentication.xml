@@ -1969,19 +1969,6 @@ Base 10 number | btwoc string representation
                   <t>Value: "id_res"</t>
                 </list>
               </t>
-
-              <t>
-                openid.user_setup_url
-                <list style='empty'>
-                  <t>
-                    Value: A URL that the end user may visit to
-                    complete the request. The Relying Party may
-                    redirect the end user to this URL, or provide the
-                    end user with a link that points to this URL.  The
-                    request is no longer immediate.
-                  </t>
-                </list>
-              </t>
             </list>
           </t>
         </section>
