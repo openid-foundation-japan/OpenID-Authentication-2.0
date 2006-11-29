@@ -2305,6 +2305,12 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
+            "openid.identity" MUST be sent in a <xref
+                target="responding_to_authentication">authentication
+            request</xref>.
+          </t>
+
+          <t>
             Relying Parties MUST send a blank session_type parameter
             in "no-encryption" association requests.
           </t>
