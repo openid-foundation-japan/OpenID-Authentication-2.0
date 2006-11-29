@@ -2549,7 +2549,14 @@ Base 10 number | btwoc string representation
             associations, or its own decisions in stateless mode. If
             an attacker can tamper with the discovery process, he can
             specify any OP, and so does not have to impersonate the
-            OP.
+            OP.  Addtionally, if an attacker can compromise the
+            integrity of the information returned during the discovery
+            process, by altering the XRDS document, the need for a man
+            in the middle is removed.  One method to prevent this sort
+            of attack, is by digitally signing the XRDS file as per
+            XMLDSIG.  The keying material is not specified, since the
+            RP ultimately needs to make its own decision whether to
+            trust keys used for such signature.
           </t>
 
           <t>
@@ -2643,6 +2650,34 @@ Base 10 number | btwoc string representation
           however will alter the user experience, is detectable by
           anti-phishing technologies, and the security of the
           Identifier itself is a fundamental principle within OpenID.
+        </t>
+      </section>
+
+      <section title="Denial of Service Attacks">
+        <t>
+          Within the protocol there are places where a rogue RP could
+          launch a denial of service attack against an OP since there
+          is nothing in this message that allows the IdP to quickly
+          check that it is a genuine request.  This can be done by the
+          RP repeatedly requesting associations, authentication, or
+          verification of a signature.  
+        </t>
+
+        <t>
+          The potentially most severe attack is during the association
+          phase as each message requires the OP to execute a discrete
+          exponentiation.  Since the RP has the ability to specify
+          modulus and generator per message, an attacker can even
+          force the OP to perform this exponentiation in real time
+          prior to responding for each message.
+        </t>
+
+        <t>
+          While this could be particularly harmful, OpenID Providers
+          can easily use generic IP based rate-limiting and banning
+          techniques to help combat these sorts of attacks.  OPs can
+          also look at banning requests based on the "openid.realm"
+          and "openid.return_to" values.
         </t>
       </section>
     </section>
