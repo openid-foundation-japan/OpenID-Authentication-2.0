@@ -861,7 +861,9 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              If the Yadis protocol fails, the URL is retrieved and
+              If the Yadis protocol fails or no
+              <xref target="service_elements">Service Elements</xref>
+              are found in the XRDS document, the URL is retrieved and
               <xref target="html_disco">HTML-based discovery</xref>
               SHALL be attempted.
             </t>
@@ -921,7 +923,7 @@ Base 10 number | btwoc string representation
           </t>
 
 
-          <section title="Service Elements">
+          <section title="Service Elements" anchor="service_elements">
 
             <section title="OP Identifier Element">
               <t>
@@ -2292,6 +2294,17 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
+            Relying Parties SHOULD extract and use OpenID 1.x service
+            elements from XRDS documents, if Yadis succeeds on an URL
+            identifier. Such service elements are identified by
+            &lt;xrd:Type&gt; tags whose text contents are
+            "http://openid.net/server/1.0" or "http://openid.net/server/1.1".
+            Although this is not specified in the previous version
+            of the protocol, it is a generally accepted practice of
+            advertising OpenID 1.x services through Yadis.
+          </t>
+
+          <t>
             "openid.identity" MUST be sent in a <xref
                 target="responding_to_authentication">authentication
             request</xref>.
@@ -2681,7 +2694,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          In this scenerio, with the proper configuration of Yadis or
+          In this scenario, with the proper configuration of Yadis or
           HTML-based Discovery (see <xref target="discovery" /> and
           <xref target="XRDS Sample" /> below), a Relying Party will
           discover the following information about the end user:
