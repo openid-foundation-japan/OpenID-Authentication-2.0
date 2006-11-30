@@ -2685,6 +2685,118 @@ Base 10 number | btwoc string representation
           and "openid.return_to" values.
         </t>
       </section>
+
+      <section title="Protocol Variants">
+        <t>
+          The following are known variations in the protocol which may
+          or may not directly effect the security of the use of the
+          protocol.  It is imagined that these values could be used in
+          the creation of security profiles for this protocol.  The
+          following list of variant are from the perspective of an
+          OpenID Provider.
+        </t>
+
+        <texttable anchor="table_variants"> 
+          <ttcol align='left'>Number</ttcol> 
+          <ttcol align='left'>Variant</ttcol> 
+          <ttcol align='center'>Values</ttcol> 
+
+          <c>1.</c>
+          <c>
+            Are wildcards allowed in realms?
+          </c> 
+          <c>
+            One of Yes/No
+          </c> 
+
+          <c>2.</c>
+          <c>
+            Require prior association?  Does the OP require the RP
+            first create an association before requesting
+            authentication.
+          </c>
+          <c>
+            One of Yes/No
+          </c>
+
+          <c>3.</c>
+          <c>
+            Types of claimed identifiers accepted.
+          </c>
+          <c>
+            Set of HTTP/HTTPS/XRI
+          </c>
+          
+          <c>4.</c>
+          <c>
+            Are self-issued certificates allowed for authentication?
+            This applies to all SSL traffic. If 'no' here, then OP
+            *probably* requires all HTTPS identifiers to chain up to
+            known trust roots, but that's intentionally not implied.
+          </c>
+          <c>
+            One of Yes/No
+          </c>
+
+          <c>5.</c>
+          <c>
+            Must the XRDS file be signed? Signature on the XRDS as per
+            XMLDSIG. Keying material not specified, since the RP
+            ultimately needs to make own decision whether to trust
+            keys used for such signature.
+          </c>
+          <c>
+            One of Yes/No
+          </c>
+
+          <c>6.</c>
+          <c>
+            Must the XRDS file be retrieved over secure channel? This does not
+            imply SSL.
+          </c>
+          <c>
+            One of Yes/No
+          </c>
+
+          <c>7.</c>
+          <c> 
+            What types of session types can be used when creating
+            associations?
+          </c>
+          <c>
+            Set of no-encryption/DH-SHA1/DH-SHA256
+          </c>
+
+          <c>8.</c>
+          <c>
+            Must the RP have an XRDS document?
+          </c>
+          <c>
+            One of Yes/No
+          </c>
+          
+          <c>9.</c>
+          <c>
+            What association types the OP agrees to use for
+            signatures.
+          </c>
+          <c>
+            Set of HMAC-SHA1/HMAC-SHA256
+          </c>
+
+          <c>10.</c>
+          <c>
+            Must the association request take place over secure channel?
+          </c>
+          <c>
+            One of Yes/No
+          </c>
+
+          <postamble>
+            Identified security variants.
+          </postamble> 
+          </texttable>
+      </section>
     </section>
 
     <appendix title="Examples">
