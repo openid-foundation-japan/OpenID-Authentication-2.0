@@ -2689,25 +2689,25 @@ Base 10 number | btwoc string representation
       <section title="Protocol Variants">
         <t>
           The following are known variations in the protocol which may
-          or may not directly effect the security of the use of the
+          or may not directly affect the security of the use of the
           protocol.  It is imagined that these values could be used in
           the creation of security profiles for this protocol.  The
-          following list of variant are from the perspective of an
+          following list of variants are from the perspective of an
           OpenID Provider.
         </t>
 
-        <texttable anchor="table_variants"> 
-          <ttcol align='left'>Number</ttcol> 
-          <ttcol align='left'>Variant</ttcol> 
-          <ttcol align='center'>Values</ttcol> 
+        <texttable anchor="table_variants">
+          <ttcol align='left'>Number</ttcol>
+          <ttcol align='left'>Variant</ttcol>
+          <ttcol align='left'>Values</ttcol>
 
           <c>1.</c>
           <c>
             Are wildcards allowed in realms?
-          </c> 
+          </c>
           <c>
             One of Yes/No
-          </c> 
+          </c>
 
           <c>2.</c>
           <c>
@@ -2726,7 +2726,7 @@ Base 10 number | btwoc string representation
           <c>
             Set of HTTP/HTTPS/XRI
           </c>
-          
+
           <c>4.</c>
           <c>
             Are self-issued certificates allowed for authentication?
@@ -2759,7 +2759,7 @@ Base 10 number | btwoc string representation
           </c>
 
           <c>7.</c>
-          <c> 
+          <c>
             What types of session types can be used when creating
             associations?
           </c>
@@ -2774,7 +2774,7 @@ Base 10 number | btwoc string representation
           <c>
             One of Yes/No
           </c>
-          
+
           <c>9.</c>
           <c>
             What association types the OP agrees to use for
@@ -2794,7 +2794,7 @@ Base 10 number | btwoc string representation
 
           <postamble>
             Identified security variants.
-          </postamble> 
+          </postamble>
           </texttable>
       </section>
     </section>
