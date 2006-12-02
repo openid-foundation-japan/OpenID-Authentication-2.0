@@ -367,3 +367,28 @@ Proposed Implementation
 
 Use the name "realm" to refer to the domain over which an
 authentication decision is applicable.
+
+
+
+Send Claimed Identifier with checkid_* requests and id_res responses
+--------------------------------------------------
+
+An additional field that makes portable identifier use easier to
+understand and debug has been added.
+
+Motivating Use Cases
+..................................................
+
+IdP-driven identifier selection could only send assertions about
+identifiers that did not use delegation.
+
+Proposed Implementation
+..................................................
+
+Send the field "claimed_id" along with the checkid_* request and the
+id_res response so that the IdP can present a better interface to the
+user and the relying party does not have to keep that state.
+
+It is always necessary for the relying party to have performed
+discovery on the claimed identifier before honoring an assertion for
+that claimed identifier.
