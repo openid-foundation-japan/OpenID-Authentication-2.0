@@ -1579,7 +1579,7 @@ Base 10 number | btwoc string representation
                 <t>
                   Note: If this is set to the special value
                   "http://openid.net/identifier_select/2.0" then the
-                  OP MAY choose an Identifier that belongs to the end
+                  OP SOULD choose an Identifier that belongs to the end
                   user. This parameter MAY be omitted if the request is
                   not about an identifier (for instance if an extension
                   is in use that makes the request meaningful without
@@ -1807,10 +1807,8 @@ Base 10 number | btwoc string representation
               openid.claimed_id
               <list style='empty'>
                 <t>
-                  Value: (optional) The Claimed Identifier. Verbatim copy
-                  of the openid.claimed_id received in the authentication
-                  request (if present). MUST be present if, and only if,
-                  openid.identity is present.
+                  Value: (optional) The Claimed Identifier.  MUST be
+                  present if, and only if, openid.identity is present.
                 </t>
                 <t>
                   Note: The Claimed Identifier is the same as the
@@ -1830,7 +1828,12 @@ Base 10 number | btwoc string representation
                   Value: (optional) The OP-Specific Identifier
                 </t>
                 <t>
-                  Note: The openid.identity field MAY be omitted if an
+                  Note: Relying Parties MUST accept assertions about
+                  Identifiers for which they have not requested
+                  authentication. OpenID Providers MAY assist the end
+                  users in selecting the Claimed and OP-Specific
+                  Identifiers about which the assertion is made.
+                  The openid.identity field MAY be omitted if an
                   extension is in use that makes the response
                   meaningful without it (see openid.claimed_id above).
                 </t>
@@ -2338,7 +2341,7 @@ Base 10 number | btwoc string representation
         </t>
         <t>
           Because extensions can transfer arbitrary data, the
-          Identifier is now optional in the response.
+          Identifier is now optional in authentication messages.
         </t>
       </section>
 
