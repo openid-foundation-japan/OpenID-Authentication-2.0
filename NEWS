@@ -363,7 +363,7 @@ cryptography. This meaning is different from the meaning of the
 trust_root parameter in OpenID 1, potentially causing confusion.
 
 Proposed Implementation
---------------------------------------------------
+..................................................
 
 Use the name "realm" to refer to the domain over which an
 authentication decision is applicable.
