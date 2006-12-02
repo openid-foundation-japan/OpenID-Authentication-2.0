@@ -1744,11 +1744,11 @@ Base 10 number | btwoc string representation
         assertion are beyond the scope of this specification.
       </t>
       <t>
-        If no Identifier was specified in the request and there are
+        If the relying party requested OP-driven identifier selection
+        by setting "openid.identity" to
+        "http://openid.net/identifier_select/2.0" and there are
         Identifiers in the control of the end user, the OP SHOULD
-        allow the end user to choose which Identifier to use.  If an
-        Identifier was specified, the OP SHOULD only issue assertions
-        about the specified Identifier.
+        allow the end user to choose which Identifier to use.
       </t>
       <t>
         If the Relying Party supplied an association handle with the
