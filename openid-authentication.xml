@@ -2268,157 +2268,224 @@ Base 10 number | btwoc string representation
     <section title="OpenID Authentication 1.1 Compatibility"
              anchor="compat_mode">
       <t>
-        OpenID Authentication 2.0 attempts to retain maximum
-        compatibility with earlier versions of the OpenID
-        Authentication specification, but this is not universally
-        possible.  This section lists the behavioral changes required
-        of an OpenID Authentication 2.0 OP or Relying Party when
-        communicating with another party using OpenID Authentication
-        1.1.
+        This specification is based on the original specification for
+        OpenID Authentication as written by Brad Fitzpatrick. That
+        specification did not have a version number, but was called
+        OpenID 1.0, and then OpenID 1.1 when it was revised.  The
+        protocol outlined in this specification is intended to be
+        backwards-compatible with the revised OpenID protocol.  The
+        changes to the specification are outlined in this section.
       </t>
 
-      <t>
-        OpenID Authentication 2.0 implementations SHOULD support
-        OpenID Authentication 1.1 compatibility, unlesss security
-        considerations make it undesirable.
-      </t>
-
-      <t>
-        All messages in OpenID Authentication 1.1 omit the "openid.ns"
-        parameter, which is an easy way for an RP to determine if the
-        message is from an OpenID Authentication 1.1 endpoint. OpenID
-        Authentication 1.1 in practice only supports HMAC-SHA1
-        associations.
-      </t>
-
-      <section title="Relying Parties">
-      <t>
-        <list style="symbols">
-          <t>
-            Relying Parties MUST implement <xref
-            target="html_disco">HTML-Based Discovery</xref>.
-          </t>
-
-          <t>
-            Relying Parties SHOULD extract and use OpenID 1.x service
-            elements from XRDS documents, if Yadis succeeds on an URL
-            identifier. Such service elements are identified by
-            &lt;xrd:Type&gt; tags whose text contents are
-            "http://openid.net/server/1.0" or "http://openid.net/server/1.1".
-            Although this is not specified in the previous version
-            of the protocol, it is a generally accepted practice of
-            advertising OpenID 1.x services through Yadis.
-          </t>
-
-          <t>
-            "openid.identity" MUST be sent in a <xref
-                target="responding_to_authentication">authentication
-            request</xref>.
-          </t>
-
-          <t>
-            Relying Parties MUST send a blank session_type parameter
-            in "no-encryption" association requests.
-          </t>
-
-          <t>
-            Relying Parties MUST accept a "no-encryption" association
-            response with a blank or missing session_type parameter,
-            if they choose to accept "no-encryption" sessions.
-          </t>
-
-          <t>
-            In <xref target="requesting_authentication">authentication
-            requests</xref>, the "openid.identity" parameter MUST NOT
-            be the special value
-            "http://openid.net/identifier_select/2.0", because OpenID
-            Authentication 1.1 does not support the use of OP
-            Identifiers.
-          </t>
-
-          <t>
-            The "openid.realm" parameter in authentication requests
-            was known as "openid.trust_root". The syntax and meaning
-            are identical.
-          </t>
-
-          <t>
-            When responding with a negative assertion to a
-            "checkid_immediate" mode authentication request, the
-            "user_setup_url" paramater MUST be returned. This is a
-            URL that the end user may visit to complete the
-            request. The OP may redirect the end user to
-            this URL, or provide the end user with a link that
-            points to this URL.
-          </t>
-
-          <t>
-            The Relying Party MUST accept an <xref
-            target="positive_assertions">authentication
-            response</xref> that is missing the
-            "openid.response_nonce" parameter.  It SHOULD however
-            implement an out-of-band method for preventing replay
-            attacks.
-          </t> 
-        </list>
-      </t>
-      </section>
-
-      <section title="OpenID Providers">
+      <section title="Updated Initiation and Discovery">
         <t>
           <list style="symbols">
             <t>
-              "openid.identity" MUST be sent in a <xref
-                  target="positive_assertions">positive authentication
-              assertion</xref>.
+              Supports OP Identifiers. This new variation of the
+              protocol flow is initiated by an end user entering an OP
+              Identifier instead of a Public Identifier.  This allows
+              the OP to assist the end user in selecting an
+              Identifier, which may be either a Public Identifier (one
+              of multiple "personas"), or a Private Identifier (which
+              may be generated by the OP to be used only in the
+              context of a single RP).
             </t>
-
             <t>
-              OPs MUST accept a "no-encryption" association request
-              with a blank session_type parameter, if they choose to
-              accept "no-encryption" sessions.
+              Supports the use of XRIs as Identifiers. XRIs may be
+              used as Identifiers for both end users and OPs, and
+              provide automatic mapping from one or more reassignable
+              i-names to a synonymous persistent Canonical ID that
+              will never be reassigned.
             </t>
-
             <t>
-              OPs MUST accept association requests with no assoc_type
-              parameter, and assume them to be of type HMAC-SHA1.
+              When URLs are used as Identifiers, they are normalized
+              according to the guidelines in <xref target='RFC3986'
+              />, for better compatibility with existing Web infrastructure.
             </t>
-
             <t>
-              <xref target="refuse_assoc">Unsuccessful association
-              responses</xref> MUST NOT be sent, since they are not
-              part of the OpenID Authentication 1.1 protocol.
-            </t>
-
-            <t>
-              OPs MAY choose to return a successful "no-encryption"
-              response to any association request.
-            </t>
-
-            <t>
-              Omit or set to blank the "session_type" parameter when
-              making "no-encryption" responses to association requests.
-            </t>
-
-            <t>
-              The "openid.realm" parameter in authentication requests
-              was known as "openid.trust_root". The syntax and meaning
-              are identical.
-            </t>
-
-            <t>
-              When responding with a negative assertion to a
-              "checkid_immediate" mode authentication request, the
-              "user_setup_url" paramater MUST be returned. This is a URL
-              that the end user may visit to complete the request. The
-              Relying Party may redirect the end user to this URL, or
-              provide the end user with a link that points to this
-              URL.
+              Uses the Yadis protocol for discovery. This allows for
+              using multiple OPs for a single Identifier, for
+              load-balancing and fallback in the case of OP
+              failure. Additionally, it allows for discovery of
+              supported extensions and other associated services.
             </t>
           </list>
         </t>
       </section>
 
+      <section title="Security improvements">
+        <t>
+          A nonce is now part of the protocol for built-in protection
+          against replay attacks, which was previously implemented
+          out-of-band by each library or application.
+        </t>
+        <t>
+          A new association type, HMAC-SHA256, and a new association
+          session type, DH-SHA256, allow for stronger signatures on
+          authentication assertions.
+        </t>
+      </section>
+
+      <section title="Extensions">
+        <t>
+          Extensions are now an officially supported mechanism to
+          support data exchange and other Relying Party-OP
+          communication along with the authentication
+          exchange. Extensions allow for the exchange of arbitrary
+          attributes, as well as for protocol extensions,
+          such as the inclusion of additional information about the
+          Relying Party in the authentication request.
+        </t>
+        <t>
+          Because extensions can transfer arbitrary data, the
+          Identifier is now optional in the response.
+        </t>
+      </section>
+
+      <section title="Implementing OpenID 1.1 Authentication Compatibility">
+
+        <t>
+          OpenID Authentication 2.0 implementations SHOULD support
+          OpenID Authentication 1.1 compatibility, unlesss security
+          considerations make it undesirable.
+        </t>
+
+        <t>
+          All messages in OpenID Authentication 1.1 omit the
+          "openid.ns" parameter, which is an easy way for an RP to
+          determine if the message is from an OpenID Authentication
+          1.1 endpoint. OpenID Authentication 1.1 supports only
+          HMAC-SHA1 associations.
+        </t>
+
+        <section title="Relying Parties">
+          <t>
+            <list style="symbols">
+              <t>
+                Relying Parties MUST implement <xref
+                    target="html_disco">HTML-Based Discovery</xref>.
+              </t>
+
+              <t>
+                Relying Parties SHOULD extract and use OpenID 1.x service
+                elements from XRDS documents, if Yadis succeeds on an URL
+                identifier. Such service elements are identified by
+                &lt;xrd:Type&gt; tags whose text contents are
+                "http://openid.net/server/1.0" or "http://openid.net/server/1.1".
+                Although this is not specified in the previous version
+                of the protocol, it is a generally accepted practice of
+                advertising OpenID 1.x services through Yadis.
+              </t>
+
+              <t>
+                "openid.identity" MUST be sent in a <xref
+                    target="responding_to_authentication">authentication
+                request</xref>.
+              </t>
+
+              <t>
+                Relying Parties MUST send a blank session_type parameter
+                in "no-encryption" association requests.
+              </t>
+
+              <t>
+                Relying Parties MUST accept a "no-encryption" association
+                response with a blank or missing session_type parameter,
+                if they choose to accept "no-encryption" sessions.
+              </t>
+
+              <t>
+                In <xref target="requesting_authentication">authentication
+                requests</xref>, the "openid.identity" parameter MUST NOT
+                be the special value
+                "http://openid.net/identifier_select/2.0", because OpenID
+                Authentication 1.1 does not support the use of OP
+                Identifiers.
+              </t>
+
+              <t>
+                The "openid.realm" parameter in authentication requests
+                was known as "openid.trust_root". The syntax and meaning
+                are identical.
+              </t>
+
+              <t>
+                When responding with a negative assertion to a
+                "checkid_immediate" mode authentication request, the
+                "user_setup_url" paramater MUST be returned. This is a
+                URL that the end user may visit to complete the
+                request. The OP may redirect the end user to
+                this URL, or provide the end user with a link that
+                points to this URL.
+              </t>
+
+              <t>
+                The Relying Party MUST accept an <xref
+                    target="positive_assertions">authentication
+                response</xref> that is missing the
+                "openid.response_nonce" parameter.  It SHOULD however
+                implement an out-of-band method for preventing replay
+                attacks.
+              </t> 
+            </list>
+          </t>
+        </section>
+
+        <section title="OpenID Providers">
+          <t>
+            <list style="symbols">
+              <t>
+                "openid.identity" MUST be sent in a <xref
+                    target="positive_assertions">positive authentication
+                assertion</xref>.
+              </t>
+
+              <t>
+                OPs MUST accept a "no-encryption" association request
+                with a blank session_type parameter, if they choose to
+                accept "no-encryption" sessions.
+              </t>
+
+              <t>
+                OPs MUST accept association requests with no assoc_type
+                parameter, and assume them to be of type HMAC-SHA1.
+              </t>
+
+              <t>
+                <xref target="refuse_assoc">Unsuccessful association
+                responses</xref> MUST NOT be sent, since they are not
+                part of the OpenID Authentication 1.1 protocol.
+              </t>
+
+              <t>
+                OPs MAY choose to return a successful "no-encryption"
+                response to any association request.
+              </t>
+
+              <t>
+                Omit or set to blank the "session_type" parameter when
+                making "no-encryption" responses to association requests.
+              </t>
+
+              <t>
+                The "openid.realm" parameter in authentication requests
+                was known as "openid.trust_root". The syntax and meaning
+                are identical.
+              </t>
+
+              <t>
+                When responding with a negative assertion to a
+                "checkid_immediate" mode authentication request, the
+                "user_setup_url" paramater MUST be returned. This is a URL
+                that the end user may visit to complete the request. The
+                Relying Party may redirect the end user to this URL, or
+                provide the end user with a link that points to this
+                URL.
+              </t>
+            </list>
+          </t>
+        </section>
+      </section>
     </section>
 
     <section title="Extensions" anchor="extensions">
@@ -2924,82 +2991,6 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
 
     <!-- XXX: An example for Generating Signatures might be nice. -->
 
-    <appendix title="Changes from the Previous OpenID Authentication Specification">
-      <t>
-        This specification is based on the original specification for
-        OpenID Authentication as written by Brad Fitzpatrick. That
-        specification did not have a version number, but was called
-        OpenID 1.0, and then OpenID 1.1 when it was revised.  The
-        protocol outlined in this specification is intended to be
-        backwards-compatible with the revised OpenID protocol.  The
-        most significant changes to the specification are outlined in
-        this section.
-      </t>
-      <appendix title="Updated Initiation and Discovery">
-        <t>
-          <list style="symbols">
-            <t>
-              Supports OP Identifiers. This new variation of the
-              protocol flow is initiated by an end user entering an OP
-              Identifier instead of a Public Identifier.  This allows
-              the OP to assist the end user in selecting an
-              Identifier, which may be either a Public Identifier (one
-              of multiple "personas"), or a Private Identifier (which
-              may be generated by the OP to be used only in the
-              context of a single RP).
-            </t>
-            <t>
-              Supports the use of XRIs as Identifiers. XRIs may be
-              used as Identifiers for both end users and OPs, and
-              provide automatic mapping from one or more reassignable
-              i-names to a synonymous persistent Canonical ID that
-              will never be reassigned.
-            </t>
-            <t>
-              When URLs are used as Identifiers, they are normalized
-              according to the guidelines in <xref target='RFC3986'
-              />, for better compatibility with existing Web infrastructure.
-            </t>
-            <t>
-              Uses the Yadis protocol for discovery. This allows for
-              using multiple OPs for a single Identifier, for
-              load-balancing and fallback in the case of OP
-              failure. Additionally, it allows for discovery of
-              supported extensions and other associated services.
-            </t>
-          </list>
-        </t>
-      </appendix>
-
-      <appendix title="Security improvements">
-        <t>
-          A nonce is now part of the protocol for built-in protection
-          against replay attacks, which was previously implemented
-          out-of-band by each library or application.
-        </t>
-        <t>
-          A new association type, HMAC-SHA256, and a new association
-          session type, DH-SHA256, allow for stronger signatures on
-          authentication assertions.
-        </t>
-      </appendix>
-
-      <appendix title="Extensions">
-        <t>
-          Extensions are now an officially supported mechanism to
-          support data exchange and other Relying Party-OP
-          communication along with the authentication
-          exchange. Extensions allow for the exchange of arbitrary
-          attributes, as well as for protocol extensions,
-          such as the inclusion of additional information about the
-          Relying Party in the authentication request.
-        </t>
-        <t>
-          Because extensions can transfer arbitrary data, the
-          Identifier is now optional in the response.
-        </t>
-      </appendix>
-    </appendix>
   </middle>
 
   <back>
