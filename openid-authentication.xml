@@ -58,6 +58,19 @@
       </address>
     </author>
 
+    <author initials="J.B" surname="Bufu" fullname="Johnny Bufu">
+      <organization abbrev="Sxip">Sxip Identity Corporation</organization>
+      <address>
+        <postal>
+          <street>798 Beatty Street</street>
+          <city>Vancouver</city> <region>BC</region>
+          <code>V6B 2M1</code>
+          <country>Canada</country>
+        </postal>
+        <email>johnny@sxip.com</email>
+      </address>
+    </author>
+
     <author initials="B.F" surname="Fitzpatrick"
             fullname="Brad Fitzpatrick">
       <organization abbrev="Six Apart">Six Apart, Ltd.</organization>
