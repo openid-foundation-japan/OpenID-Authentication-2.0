@@ -260,9 +260,9 @@
           </t>
           <t>
             The OP redirects the end user's User-Agent back to the
-            Relying Party with cyrptographic proof asserting either
-            that <xref target="positive_assertions">authentication is
-            approved</xref> or <xref
+            Relying Party with either an assertion that <xref
+            target="positive_assertions">authentication is
+            approved</xref> or a message that <xref
             target="negative_assertions">authentication failed</xref>.
           </t>
           <t>
@@ -771,7 +771,7 @@ Base 10 number | btwoc string representation
           </list>
 
           HMAC-SHA1 is the default for authentication requests though
-          the use of HMAC-SHA256 is RECOMENDED. At the time of writing
+          the use of HMAC-SHA256 is RECOMMENDED. At the time of writing
           this document, library support for SHA256 seems lacking.
         </t>
         <texttable>
@@ -807,7 +807,7 @@ Base 10 number | btwoc string representation
         <t>
           The form field's "name" attribute SHOULD have the value
           "openid_identifier" as to allow User-Agents to automatically
-          prefill the end user's preferred Identifier when visiting a
+          pre-fill the end user's preferred Identifier when visiting a
           Relying Party. Browser extensions or other software that
           support OpenID Authentication may not detect a Relying
           Party's support if the value is not this value.
@@ -1625,7 +1625,7 @@ Base 10 number | btwoc string representation
                   Value: (optional) URL pattern the OP SHOULD ask the
                   end user to trust. See <xref target="realms" />.
                   This value MUST be sent if openid.return_to is
-                  ommitted.
+                  omitted.
                 </t>
                 <t>
                   Default: return_to URL
@@ -1763,7 +1763,7 @@ Base 10 number | btwoc string representation
         target="verifying_signatures">stateless mode</xref>.
       </t>
       <t>
-        If the "openid.return_to" value is ommitted in the request, it
+        If the "openid.return_to" value is omitted in the request, it
         signifies that the initiating server does not wish to for the
         end user to be returned to it as something else useful will
         have been performed via an extension.
@@ -2385,7 +2385,7 @@ Base 10 number | btwoc string representation
 
         <t>
           OpenID Authentication 2.0 implementations SHOULD support
-          OpenID Authentication 1.1 compatibility, unlesss security
+          OpenID Authentication 1.1 compatibility, unless security
           considerations make it undesirable.
         </t>
 
@@ -2468,7 +2468,7 @@ Base 10 number | btwoc string representation
               <t>
                 When responding with a negative assertion to a
                 "checkid_immediate" mode authentication request, the
-                "user_setup_url" paramater MUST be returned. This is a
+                "user_setup_url" parameter MUST be returned. This is a
                 URL that the end user may visit to complete the
                 request. The OP may redirect the end user to
                 this URL, or provide the end user with a link that
@@ -2532,7 +2532,7 @@ Base 10 number | btwoc string representation
               <t>
                 When responding with a negative assertion to a
                 "checkid_immediate" mode authentication request, the
-                "user_setup_url" paramater MUST be returned. This is a URL
+                "user_setup_url" parameter MUST be returned. This is a URL
                 that the end user may visit to complete the request. The
                 Relying Party may redirect the end user to this URL, or
                 provide the end user with a link that points to this
@@ -2677,7 +2677,7 @@ Base 10 number | btwoc string representation
             associations, or its own decisions in stateless mode. If
             an attacker can tamper with the discovery process he can
             specify any OP, and so does not have to impersonate the
-            OP.  Addtionally, if an attacker can compromise the
+            OP.  Additionally, if an attacker can compromise the
             integrity of the information returned during the discovery
             process, by altering the XRDS document, the need for a man
             in the middle is removed.  One method to prevent this sort
@@ -2702,7 +2702,7 @@ Base 10 number | btwoc string representation
             all parts of the interaction, including interaction with
             the end user through the User-Agent.  While the protocol
             does not require SSL be used, its use is strongly
-            RECOMMENDED.  Current best practicies dictate that an OP
+            RECOMMENDED.  Current best practices dictate that an OP
             SHOULD use SSL, with a certificate signed by a trusted
             authority, to secure its service endpoint.  In addition,
             SSL, with a certificate signed by a trusted authority,
@@ -2749,7 +2749,7 @@ Base 10 number | btwoc string representation
           OpenID Providers SHOULD educate their end users about the
           potential for OpenID phishing attacks and SHOULD equip their
           end users with the tools to defeat such attacks, for example
-          browser plugins that verify the authenticity of the OP's
+          browser plug-ins that verify the authenticity of the OP's
           Authentication Service Endpoint URL.
         </t>
       </section>
@@ -3021,7 +3021,7 @@ Base 10 number | btwoc string representation
           yield an XRDS document with the CanonicalID
           xri://(example)!1234 then those Identifiers should be
           treated as equivalent. For applications with user accounts,
-          the persistant Canonical ID xri://(example)!1234 should be
+          the persistent Canonical ID xri://(example)!1234 should be
           used the the primary key for the account.  Although the
           i-names =example and =exmpl may also be stored for reference
           as display names, they are reassignable identifier and
