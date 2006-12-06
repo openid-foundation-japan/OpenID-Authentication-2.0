@@ -2037,7 +2037,7 @@ Base 10 number | btwoc string representation
         <list style="symbols">
           <t>
             The value of "openid.return_to" matches the URL that
-            accepted this assertion
+            is processing this assertion
           </t>
           <t>
             Discovered information from the Identifier matches the
@@ -2059,7 +2059,7 @@ Base 10 number | btwoc string representation
       <section title="Verifying the Return URL">
         <t>
           To verify that the "openid.return_to" URL matches the URL
-          that accepted the assertion:
+          that is processing this assertion:
 
           <list style="symbols">
             <t>
