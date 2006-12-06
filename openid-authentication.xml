@@ -2657,13 +2657,13 @@ Base 10 number | btwoc string representation
           </t>
         </section>
 
-        <section title="Man-in-the-Middle Attcks">
+        <section title="Man-in-the-Middle Attacks">
           <t>
             Associations prevent tampering of signed fields by a man
-            in the middle, except during discovery, association
+            in the middle except during discovery, association
             sessions and stateless mode. Altering signed fields
             without the shared secret requires breaking the
-            MAC. Currently, no tractable attack is known on the MACs
+            MAC. Currently no tractable attack is known on the MACs
             used in this protocol. The quality of the protection
             provided by the MAC depends on the randomness of the
             shared MAC key, so it is important that an unguessable
@@ -2671,11 +2671,11 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            If DNS resolution or the transport layer is compromised,
+            If DNS resolution or the transport layer is compromised
             signatures on messages are not adequate, since the
             attacker can impersonate the OP and issue its own
             associations, or its own decisions in stateless mode. If
-            an attacker can tamper with the discovery process, he can
+            an attacker can tamper with the discovery process he can
             specify any OP, and so does not have to impersonate the
             OP.  Addtionally, if an attacker can compromise the
             integrity of the information returned during the discovery
@@ -2746,10 +2746,10 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          OPs SHOULD educate their end users about the potential for
-          OpenID phishing attacks and SHOULD equip their end users
-          with the tools to defeat such attacks, for example browser
-          plugins that verify the authenticity of the OP's
+          OpenID Providers SHOULD educate their end users about the
+          potential for OpenID phishing attacks and SHOULD equip their
+          end users with the tools to defeat such attacks, for example
+          browser plugins that verify the authenticity of the OP's
           Authentication Service Endpoint URL.
         </t>
       </section>
@@ -2768,7 +2768,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          End Users with concerns over this recommendation should
+          End users with concerns over this recommendation should
           directly enter their HTTPS URL at each Relying Party.  This
           thus removes the step where the Relying Party follows the
           redirect to the HTTPS URL.  The single security
