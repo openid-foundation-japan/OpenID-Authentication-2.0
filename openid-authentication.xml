@@ -1799,6 +1799,15 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
+              openid.op_endpoint
+              <list style='empty'>
+                <t>
+                  The OP Endpoint URL.
+                </t>
+              </list>
+            </t>
+
+            <t>
               openid.claimed_id
               <list style='empty'>
                 <t>
@@ -1903,9 +1912,9 @@ Base 10 number | btwoc string representation
                 <t>
                   Note: This entry consists of the fields without the
                   "openid." prefix that the signature covers. This
-                  list MUST contain at least "return_to" and
-                  "response_nonce", and if present in the response,
-                  "claimed_id" and "identity". For example,
+                  list MUST contain at least "op_endpoint", "return_to"
+                  "response_nonce" and "assoc_handle", and if present in
+                  the response, "claimed_id" and "identity". For example,
                   "identity,claimed_id,return_to,response_nonce".
                 </t>
               </list>
@@ -2473,7 +2482,7 @@ Base 10 number | btwoc string representation
                 "openid.response_nonce" parameter.  It SHOULD however
                 implement an out-of-band method for preventing replay
                 attacks.
-              </t> 
+              </t>
             </list>
           </t>
         </section>
@@ -2551,7 +2560,7 @@ Base 10 number | btwoc string representation
         associated with a Claimed Identifier.  The Type URI is also
         used to associate key-value pairs in messages with the extension.
       </t>
-      
+
       <t>
         <!-- XXX: openid. only for indirect messages -->
         To associate keys and values in a message with an extension,
@@ -2577,14 +2586,14 @@ Base 10 number | btwoc string representation
       <t>Non-normative example:</t>
       <t>An extension's type URI is
       "&lt;http://example.com/ext/1.0&gt;".
-        
+
       <list style="empty">
         <t>openid.ns.x=http://example.com/ext/1.0</t>
         <t>openid.x=example</t>
         <t>openid.x.foo=bar</t>
         <t>openid.xx=notx</t>
       </list>
-        
+
         In this example, the keys openid.x and openid.x.foo are
         associated with the extension; the openid.xx key is not.
       </t>
@@ -2604,7 +2613,7 @@ Base 10 number | btwoc string representation
         publish their return_to URL. This allows for automated
         discovery of OpenID Relying Parties.
       </t>
-      
+
       <t>
         In this case, the XRDS document published by the Relying
         Party, SHOULD have an &lt;xrd:Service&gt; element where the
@@ -2612,7 +2621,7 @@ Base 10 number | btwoc string representation
         the content of the &lt;xrd:Type&gt; tag is
         "http://openid.net/return_to/2.0".
       </t>
-      
+
       <figure>
         <preamble>For example:</preamble>
         <artwork><![CDATA[
@@ -2623,7 +2632,7 @@ Base 10 number | btwoc string representation
 ]]></artwork>
       </figure>
     </section>
-    
+
     <section title="Security Considerations">
       <section title="Preventing Attacks">
         <section title="Eavesdropping Attacks"
@@ -2779,7 +2788,7 @@ Base 10 number | btwoc string representation
           is nothing in this message that allows the OP to quickly
           check that it is a genuine request.  This can be done by the
           RP repeatedly requesting associations, authentication, or
-          verification of a signature.  
+          verification of a signature.
         </t>
 
         <t>
@@ -2962,7 +2971,7 @@ Base 10 number | btwoc string representation
   <LocalID>https://exampleuser.exampleprovider.com/</LocalID>
 </Service>
 ]]></artwork>
-          </figure> 
+          </figure>
         </t>
       </appendix>
 
