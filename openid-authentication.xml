@@ -1823,13 +1823,13 @@ Base 10 number | btwoc string representation
                   Value: (optional) The OP-Specific Identifier
                 </t>
                 <t>
-                  Note: Relying Parties MUST accept assertions about
-                  Identifiers for which they have not requested
-                  authentication. OpenID Providers MAY assist the end
-                  users in selecting the Claimed and OP-Specific
-                  Identifiers about which the assertion is made.
-                  The openid.identity field MAY be omitted if an
-                  extension is in use that makes the response
+                  Note: Relying Parties SHOULD accept and verify
+                  assertions about Identifiers for which they have not
+                  requested authentication. OpenID Providers MAY
+                  assist the end users in selecting the Claimed and
+                  OP-Specific Identifiers about which the assertion is
+                  made.  The openid.identity field MAY be omitted if
+                  an extension is in use that makes the response
                   meaningful without it (see openid.claimed_id above).
                 </t>
               </list>
@@ -2027,15 +2027,19 @@ Base 10 number | btwoc string representation
 
         <list style="symbols">
           <t>
+            The value of "openid.return_to" matches the URL that
+            accepted this assertion
+          </t>
+          <t>
+            Discovered information from the Identifier matches the
+            information in the assertion
+          </t>
+          <t>
             An assertion has not yet been accepted from this
             OP with the same value for "openid.response_nonce"
           </t>
           <t>
             The signature on the assertion is valid
-          </t>
-          <t>
-            Discovered information from the Identifier matches the
-            information in the assertion.
           </t>
         </list>
 
@@ -2043,17 +2047,48 @@ Base 10 number | btwoc string representation
         Identifier in the response is now verified.
       </t>
 
+      <section title="Verifying the Return URL">
+        <t>
+          To verify that the "openid.return_to" URL matches the URL
+          that accepted the assertion:
+
+          <list style="symbols">
+            <t>
+              The URL scheme, authority, and path MUST be the same
+              between the two URLs.
+            </t>
+            <t>
+              Any query parameters that are present in the
+              "openid.return_to" URL MUST also be present with the
+              same values in the accepting URL.
+            </t>
+          </list>
+        </t>
+      </section>
+
 
       <section title="Checking the Nonce">
         <t>
           To prevent replay attacks, the agent checking the signature
-          SHOULD keep track of the nonce values included in positive
+          keeps track of the nonce values included in positive
           assertions and never accept the same value more than once
-          for the same OP Endpoint URL. When using
-          "check_authentication", the OP is responsible for
-          preventing replay attacks. When the Relying Party checks the
-          signature on an assertion, it is responsible for preventing
-          replay attacks.
+          for the same OP Endpoint URL.
+        </t>
+        <t>
+          <list style="symbols">
+            <t>
+              When using "check_authentication", the OP MUST ensure
+              that an assertion has not yet been accepted with the
+              same value for "openid.response_nonce".
+            </t>
+            <t>
+              When the Relying Party checks the signature on an
+              assertion, the Relying Party SHOULD ensure that an
+              assertion has not yet been accepted with the same value
+              for "openid.response_nonce" from the same OP Endpoint
+              URL.
+            </t>
+          </list>
         </t>
         <t>
           The time-stamp may be used to reject responses that are too
