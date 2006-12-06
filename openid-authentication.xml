@@ -968,7 +968,7 @@ Base 10 number | btwoc string representation
                   </t>
 
                   <t>
-                    An &lt;openid:Delegate&gt; tag (optional) whose text
+                    An &lt;xrd:LocalID&gt; tag (optional) whose text
                     content is the OP-Specific Identifier.
                   </t>
                 </list>
@@ -1075,12 +1075,12 @@ Base 10 number | btwoc string representation
             <list>
               <t>
                 A &lt;LINK&gt; tag MUST be included with attributes
-                "rel" set to "openid.server", and "href" set to an OP
+                "rel" set to "openid2.provider", and "href" set to an OP
                 Endpoint URL
               </t>
               <t>
                 A &lt;LINK&gt; tag MAY be included with attributes
-                "rel" set to "openid.delegate" and "href" set to the
+                "rel" set to "openid2.local_id" and "href" set to the
                 end user's OP-Specific Identifier
               </t>
             </list>
@@ -1091,7 +1091,7 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            The "openid.server" and "openid.delegate" URLs MUST NOT
+            The "openid2.provider" and "openid2.local_id" URLs MUST NOT
             include entities other than "&amp;amp;", "&amp;lt;",
             "&amp;gt;", and "&amp;quot;". Other characters that would
             not be valid in the HTML document or that cannot be
@@ -2365,8 +2365,25 @@ Base 10 number | btwoc string representation
           <t>
             <list style="symbols">
               <t>
-                Relying Parties MUST implement <xref
-                    target="html_disco">HTML-Based Discovery</xref>.
+                When HTML discovery is performed, the OP endpoint URL
+                is marked by the link relationship "openid.server"
+                rather than "openid2.provider". The user's OP-specific
+                identifier is marked by the link relationship
+                "openid.delegate" rather than "openid2.local_id". HTML
+                allows multiple link relationships to be specified for
+                a single link, so if a OP provides both OpenID 1.1 and
+                OpenID 2.0, "openid2.provider" and "openid.server" may
+                appear in the same "rel" attribute.
+              </t>
+
+              <t>
+                When XRDS-based discovery is performed, the user's
+                OP-specific identifier appears in the
+                &lt;xrd:LocalID&gt; tag of the OpenID
+                &lt;xrd:Service&gt; element rather than in the
+                &lt;openid:Delegate&gt; tag. In order to support
+                currently-deployed discovery code, both tags MAY
+                appear in the &lt;xrd:Service&gt; element.
               </t>
 
               <t>
@@ -2934,9 +2951,9 @@ Base 10 number | btwoc string representation
             of the HTML document located by the identifier URL:
           </preamble>
           <artwork><![CDATA[
-<link rel="openid.server"
+<link rel="openid2.provider openid.server"
       href="http://www.livejournal.com/openid/server.bml"/>
-<link rel="openid.delegate"
+<link rel="openid2.local_id openid.delegate"
       href="http://exampleuser.livejournal.com/"/>
 ]]></artwork>
         </figure> 
