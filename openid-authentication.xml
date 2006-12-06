@@ -1006,15 +1006,9 @@ Base 10 number | btwoc string representation
             <t>
               The Relying Party MUST confirm that the provider of the
               XRD that contains the &lt;CanonicalID&gt; element is
-              authoritative for that Canonical ID. The provider is
-              identified by the contents of the &lt;xrd:ProviderID&gt;
-              element that is a child of the &lt;xrd:XRD&gt;
-              element. If the provider is not authoritative for the
-              Canonical ID, the Relying Party MUST resolve the
-              Canonical ID to confirm the OP Endpoint URL information
-              that was discovered. The information discovered when
-              resolving the canonical ID MUST match the information
-              discovered when resolving the User-supplied Identifier.
+              authoritative for that Canonical ID. Relying Parties
+              should either do this manually or ensure that their
+              resolver does this.
            </t>
 
             <t>
@@ -1027,7 +1021,7 @@ Base 10 number | btwoc string representation
 
             <t>
               When using URL-based identifiers, the CanonicalID
-              element SHOULD be ignored if present.
+              element MUST be ignored if present.
             </t>
           </section>
 
