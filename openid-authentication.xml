@@ -2080,7 +2080,7 @@ Base 10 number | btwoc string representation
         <t>
           To prevent replay attacks, the agent checking the signature
           keeps track of the nonce values included in positive
-          assertions and never accept the same value more than once
+          assertions and never accepts the same value more than once
           for the same OP Endpoint URL.
         </t>
         <t>
