@@ -2407,7 +2407,7 @@ Base 10 number | btwoc string representation
                 identifier is marked by the link relationship
                 "openid.delegate" rather than "openid2.local_id". HTML
                 allows multiple link relationships to be specified for
-                a single link, so if a OP provides both OpenID 1.1 and
+                a single link, so if an OP provides both OpenID 1.1 and
                 OpenID 2.0, "openid2.provider" and "openid.server" may
                 appear in the same "rel" attribute.
               </t>
@@ -2415,9 +2415,9 @@ Base 10 number | btwoc string representation
               <t>
                 When XRDS-based discovery is performed, the user's
                 OP-specific identifier appears in the
-                &lt;xrd:LocalID&gt; tag of the OpenID
+                &lt;openid:Delegate&gt; tag of the OpenID
                 &lt;xrd:Service&gt; element rather than in the
-                &lt;openid:Delegate&gt; tag. In order to support
+                &lt;xrd:LocalID&gt; tag. In order to support
                 currently-deployed discovery code, both tags MAY
                 appear in the &lt;xrd:Service&gt; element.
               </t>
