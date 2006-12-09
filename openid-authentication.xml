@@ -168,8 +168,8 @@
 
       <t hangText="OP Endpoint URL:">
         The URL which accepts OpenID Authentication requests,
-        discovered by dereferencing the end user's Identifier.  This
-        value MUST be an absolute URL.
+        obtained by performing discovery on the the User-supplied
+        Identifier. This value MUST be an absolute URL.
       </t>
 
       <t hangText="User-supplied Identifier">
@@ -597,8 +597,8 @@ Base 10 number | btwoc string representation
           <t>
             A mapping of keys to values can be transferred by
             returning an HTML page to the User-Agent that contains an
-            HTML form element. Form submission MAY be automated
-            using JavaScript.
+            HTML form element. Form submission MAY be automated,
+            for example by using JavaScript.
           </t>
           <t>
             The &lt;form&gt; element's "action" attribute value MUST
@@ -880,12 +880,16 @@ Base 10 number | btwoc string representation
         <section title="Discovered Information">
           <t>
             Upon successful completion of discovery, the Relying
-            Party will have the following information (see the
-            Terminology section for definitions):
+            Party will have one or more sets of the following
+            information (see the Terminology section for definitions).
+            If more than one set of the following information has
+            been discovered, the precedence rules defined in
+            [XRI-Resolution] are to be applied.
 
             <list style="hanging">
               <t hangText="OP Endpoint URL:">
-                The absolute URL on the OP that accepts authentication requests.
+                The absolute URL of the OP where it accepts OpenID
+                authentication requests.
               </t>
 
               <t hangText="Claimed Identifier:">
@@ -2020,10 +2024,13 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            In a lot of cases, the Relying Party won't get a cancel
-            mode response; the end user will just quit or press back
-            within their User-Agent. But if it is returned, the
-            Relying Party SHOULD return to what it was doing.
+            Often, if the user does not wish to or cannot complete
+            the authentication, the OpenID authentication process
+            will be aborted and the Relying Party will not get a
+            cancel mode response (the end user may quit or press the
+            back button in their User-Agent instead of continuing).
+            If a RP receives the "cancel" response, authentication was
+            unsuccessful and the RP MUST treat the user as non-authenticated.
           </t>
         </section>
       </section>
@@ -2338,8 +2345,8 @@ Base 10 number | btwoc string representation
             </t>
             <t>
               When URLs are used as Identifiers, they are normalized
-              according to the guidelines in <xref target='RFC3986'
-              />, for better compatibility with existing Web infrastructure.
+              according to the guidelines in <xref target='RFC3986' />,
+              for better compatibility with the existing Web infrastructure.
             </t>
             <t>
               Uses the Yadis protocol for discovery. This allows for
@@ -2836,7 +2843,7 @@ Base 10 number | btwoc string representation
           <c>
             Require prior association?  Does the OP require the RP
             first create an association before requesting
-            authentication.
+            authentication?
           </c>
           <c>
             One of Yes/No
@@ -2875,7 +2882,7 @@ Base 10 number | btwoc string representation
           <c>6.</c>
           <c>
             Must the XRDS file be retrieved over secure channel? This does not
-            imply SSL.
+            imply SSL?
           </c>
           <c>
             One of Yes/No
@@ -2901,7 +2908,7 @@ Base 10 number | btwoc string representation
           <c>9.</c>
           <c>
             What association types the OP agrees to use for
-            signatures.
+            signatures?
           </c>
           <c>
             Set of HMAC-SHA1/HMAC-SHA256
@@ -2962,7 +2969,7 @@ Base 10 number | btwoc string representation
               https://www.exampleprovider.com/endpoint/, the
               following XML snippet should be present in the final XRD
               element in the XRDS file when discovery is preformed on
-              "http://www.example.com":
+              "http://www.example.com/":
             </preamble>
             <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
