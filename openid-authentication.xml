@@ -1930,7 +1930,7 @@ Base 10 number | btwoc string representation
                   list MUST contain at least "op_endpoint", "return_to"
                   "response_nonce" and "assoc_handle", and if present in
                   the response, "claimed_id" and "identity". For example,
-                  "identity,claimed_id,return_to,response_nonce".
+                  "op_endpoint,identity,claimed_id,return_to,assoc_handle,response_nonce".
                 </t>
               </list>
             </t>
