@@ -2323,7 +2323,67 @@ Base 10 number | btwoc string representation
       </section>
     </section>
 
+    <section title="Extensions" anchor="extensions">
+      <t>
+        An Extension to OpenID Authentication is a protocol that
+        "piggybacks" on the authentication request and response. Extensions
+        are useful for providing extra information about an
+        authentication request or response as well as providing extra
+        information about the subject of the authentication response.
+      </t>
 
+      <t>
+        OpenID extensions are identified by a Type URI. The Type URI
+        MAY be used as the value of an &lt;xrd:Type&gt; element of an
+        OpenID &lt;xrd:Service&gt; element in an XRDS document
+        associated with a Claimed Identifier.  The Type URI is also
+        used to associate key-value pairs in messages with the extension.
+      </t>
+
+      <t>
+        <!-- XXX: openid. only for indirect messages -->
+        To associate keys and values in a message with an extension,
+        the key MUST be associated with the Type URI. To associate
+        keys with a Type URI, establish an alias by adding a key
+        prefixed with "openid.ns." and ending with the alias text
+        whose value is the Type URI. Once an alias has been
+        established, all pairs in the message whose keys start with
+        "openid." followed by the alias text, followed by a period or
+        the end of the key are associated with that extension.
+      </t>
+
+      <t>
+        A namespace alias MUST NOT contain a period, MUST NOT be the
+        name of a field in a message defined in this specification,
+        and MUST NOT be the same as another namespace alias in the
+        same message. A namespace MUST NOT be assigned more than one
+        alias in the same message. If a message is a response to
+        another message, the response MAY use a different alias to
+        refer to the same namespace.
+      </t>
+
+      <t>Non-normative example:</t>
+      <t>An extension's type URI is
+      "&lt;http://example.com/ext/1.0&gt;".
+
+      <list style="empty">
+        <t>openid.ns.x=http://example.com/ext/1.0</t>
+        <t>openid.x=example</t>
+        <t>openid.x.foo=bar</t>
+        <t>openid.xx=notx</t>
+      </list>
+
+        In this example, the keys openid.x and openid.x.foo are
+        associated with the extension; the openid.xx key is not.
+      </t>
+
+      <t>
+        Extensions MUST NOT define multiple parameters with the same name.
+        Extensions that need to send multiple values for the same parameter
+        name must define their own conventions for doing so.
+      </t>
+    </section>
+    
     <section title="OpenID Authentication 1.1 Compatibility"
              anchor="compat_mode">
       <t>
@@ -2559,67 +2619,6 @@ Base 10 number | btwoc string representation
           </t>
         </section>
       </section>
-    </section>
-
-    <section title="Extensions" anchor="extensions">
-      <t>
-        An Extension to OpenID Authentication is a protocol that
-        "piggybacks" on the authentication request and response. Extensions
-        are useful for providing extra information about an
-        authentication request or response as well as providing extra
-        information about the subject of the authentication response.
-      </t>
-
-      <t>
-        OpenID extensions are identified by a Type URI. The Type URI
-        MAY be used as the value of an &lt;xrd:Type&gt; element of an
-        OpenID &lt;xrd:Service&gt; element in an XRDS document
-        associated with a Claimed Identifier.  The Type URI is also
-        used to associate key-value pairs in messages with the extension.
-      </t>
-
-      <t>
-        <!-- XXX: openid. only for indirect messages -->
-        To associate keys and values in a message with an extension,
-        the key MUST be associated with the Type URI. To associate
-        keys with a Type URI, establish an alias by adding a key
-        prefixed with "openid.ns." and ending with the alias text
-        whose value is the Type URI. Once an alias has been
-        established, all pairs in the message whose keys start with
-        "openid." followed by the alias text, followed by a period or
-        the end of the key are associated with that extension.
-      </t>
-
-      <t>
-        A namespace alias MUST NOT contain a period, MUST NOT be the
-        name of a field in a message defined in this specification,
-        and MUST NOT be the same as another namespace alias in the
-        same message. A namespace MUST NOT be assigned more than one
-        alias in the same message. If a message is a response to
-        another message, the response MAY use a different alias to
-        refer to the same namespace.
-      </t>
-
-      <t>Non-normative example:</t>
-      <t>An extension's type URI is
-      "&lt;http://example.com/ext/1.0&gt;".
-
-      <list style="empty">
-        <t>openid.ns.x=http://example.com/ext/1.0</t>
-        <t>openid.x=example</t>
-        <t>openid.x.foo=bar</t>
-        <t>openid.xx=notx</t>
-      </list>
-
-        In this example, the keys openid.x and openid.x.foo are
-        associated with the extension; the openid.xx key is not.
-      </t>
-
-      <t>
-        Extensions MUST NOT define multiple parameters with the same name.
-        Extensions that need to send multiple values for the same parameter
-        name must define their own conventions for doing so.
-      </t>
     </section>
 
     <section title="Discovering OpenID Relying Parties">
