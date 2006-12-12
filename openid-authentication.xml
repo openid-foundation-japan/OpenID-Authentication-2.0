@@ -289,8 +289,15 @@
           values permit the full Unicode character set (UCS). When the
           keys and values need to be converted to/from bytes, they
           MUST be encoded using <xref target="RFC3629">UTF-8</xref>.
+        </t>
 
+        <t>
           Messages MUST NOT contain multiple parameters with the same name.
+        </t>
+
+        <t>
+          Throughout this document, all OpenID message parameters are
+          REQUIRED, unless specifically marked as OPTIONAL.
         </t>
 
         <section title="Key-Value Form Encoding" anchor="kvform">
@@ -328,9 +335,8 @@
             with "openid.". This prefix prevents interference with
             other parameters that are passed along with the OpenID
             Authentication message. When a message is sent as a POST,
-            the application processing the HTTP request MUST only use
-            the values in the POST body and MUST ignore any GET
-            parameters.
+            OpenID parameters MUST only be sent in and extracted from
+            the POST body.
           </t>
           <t>
             This model applies to messages from the User-Agent to both
@@ -500,7 +506,8 @@ Base 10 number | btwoc string representation
                   error
                   <list style='empty'>
                     <t>
-                      Value: Unstructured text error message.
+                      Value: A human-readable message indicating the cause
+                      of the error.
                     </t>
                   </list>
                 </t>
@@ -645,7 +652,8 @@ Base 10 number | btwoc string representation
                 openid.error
                 <list style='empty'>
                   <t>
-                    Value: Unstructured text error message.
+                    Value: A human-readable message indicating the cause
+                    of the error.
                   </t>
                 </list>
               </t>
@@ -770,9 +778,8 @@ Base 10 number | btwoc string representation
                 target="FIPS180-2" /></t>
           </list>
 
-          HMAC-SHA1 is the default for authentication requests though
-          the use of HMAC-SHA256 is RECOMMENDED. At the time of writing
-          this document, library support for SHA256 seems lacking.
+          HMAC-SHA1 is the default for authentication requests.
+          If supported, the use of HMAC-SHA256 is RECOMMENDED.
         </t>
         <texttable>
           <ttcol>Algorithm</ttcol>
@@ -1615,9 +1622,10 @@ Base 10 number | btwoc string representation
                   signifies that the Relying Party does not wish to
                   for the end user to be returned to it as something
                   else useful will have been performed via an
-                  extension. If the RP needs to ensure that query
-                  parameters are not modified by outside parties,
-                  it must prevent this through an out-of-band method.
+                  extension. This document does not define a mechanism
+                  by which the RP can ensure that query parameters are
+                  not modified by outside parties; such a mechanism can
+                  be defined by the RP itself.
                 </t>
               </list>
             </t>
@@ -1646,11 +1654,10 @@ Base 10 number | btwoc string representation
           for which an OpenID Authentication request is valid. A realm
           is designed to give the end user an indication of the scope
           of the authentication request. OPs SHOULD present the realm
-          when requesting the end user's approval for an
-          authentication request. OPs MAY use the realm to allow the
-          end user to automate approval of authentication
-          requests. The realm SHOULD be used by OPs to uniquely
-          identify Relying Parties.
+          when requesting the end user's approval for an authentication
+          request. The realm SHOULD be used by OPs to uniquely identify
+          Relying Parties. For example, OPs MAY use the realm to allow
+          the end user to automate approval of authentication requests.
         </t>
 
         <t>
@@ -1733,7 +1740,7 @@ Base 10 number | btwoc string representation
         the OP SHOULD identify the User-Agent, and determine whether
         the end user wishes to complete the authentication.  If the
         end user can be identified and wishes to complete the
-        authentication, the OP should send a <xref
+        authentication, the OP SHOULD send a <xref
         target="positive_assertions">positive assertion</xref> to the
         Relying Party.
       </t>
@@ -1746,8 +1753,9 @@ Base 10 number | btwoc string representation
         If the relying party requested OP-driven identifier selection
         by setting "openid.identity" to
         "http://openid.net/identifier_select/2.0" and there are
-        Identifiers in the control of the end user, the OP SHOULD
-        allow the end user to choose which Identifier to use.
+        Identifiers for which the user is authorized to issue
+        authentication responses, the OP SHOULD allow the end user
+        to choose which Identifier to use.
       </t>
       <t>
         If the Relying Party supplied an association handle with the
@@ -1815,8 +1823,9 @@ Base 10 number | btwoc string representation
               openid.claimed_id
               <list style='empty'>
                 <t>
-                  Value: (optional) The Claimed Identifier.  MUST be
-                  present if, and only if, openid.identity is present.
+                  Value: (optional) The Claimed Identifier.
+                  "openid.claimed_id" and "openid.identity" SHALL
+                  be either both present or both absent.
                 </t>
                 <t>
                   Note: The Claimed Identifier is the same as the
@@ -1864,12 +1873,13 @@ Base 10 number | btwoc string representation
                 <t>
                   Value: A string that MUST be unique to this
                   particular successful authentication response. The
-                  nonce MUST start with the current time on the
-                  server, and MAY have additional characters appended
-                  to the end as necessary to make each response
-                  unique. The date and time MUST be formatted as
-                  specified in section 5.6 of <xref target="RFC3339"
-                  />, with the following restrictions:
+                  nonce MUST start with the current time on the server,
+                  and MAY contain up to 16 additional ASCII characters
+                  in the range 33-126 inclusive (printable non-whitespace
+                  characters), as necessary to make each response unique.
+                  The date and time MUST be formatted as specified in
+                  section 5.6 of <xref target="RFC3339" />,
+                  with the following restrictions:
 
                   <list style="symbols">
                     <t>
@@ -2606,11 +2616,9 @@ Base 10 number | btwoc string representation
       </t>
 
       <t>
-        Extensions MUST NOT define parameters with the same name. It
-        is RECOMMENDED that commas are used as value delimiters,
-        though other characters may be better suited in
-        certain situations.  Another approach is to append a
-        numeric value to each key to differentiate between each value.
+        Extensions MUST NOT define multiple parameters with the same name.
+        Extensions that need to send multiple values for the same parameter
+        name must define their own conventions for doing so.
       </t>
     </section>
 
@@ -2646,12 +2654,18 @@ Base 10 number | btwoc string representation
                  anchor="preventing_eavesdropping">
           <t>
             There are two places in this protocol that are vulnerable
-            to eavesdropping attacks. An eavesdropper could intercept
-            an unencrypted association session and recover the shared
-            secret, allowing an attacker to masquerade as the OP to
-            that relying party. An eavesdropper could also intercept a
-            successful authentication assertion and re-use it, if the
-            nonce is not checked.
+            to eavesdropping attacks.
+            <list style="symbols">
+              <t>
+                An eavesdropper could intercept an unencrypted association
+                session and recover the shared secret, allowing an attacker
+                to masquerade as the OP to that relying party.
+              </t>
+              <t>
+                If the nonce were not checked, an eavesdropper could also
+                intercept a successful authentication assertion and re-use it.
+              </t>
+            </list>
           </t>
 
           <t>
