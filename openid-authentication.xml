@@ -321,8 +321,7 @@
           </t>
         </section>
 
-        <section title="HTTP Encoding" anchor="queries">
-
+        <section title="HTTP Encoding" anchor="http_encoding">
           <t>
             When a message is sent to an HTTP server, it MUST be encoded
             using a form encoding specified in Section 17.13.4 of
@@ -338,6 +337,53 @@
             OpenID parameters MUST only be sent in and extracted from
             the POST body.
           </t>
+          <t>
+            All messages that are sent as HTTP requests (GET or POST)
+            MUST contain the following fields:
+
+            <list style='symbols'>
+              <t>
+                openid.ns
+                <list style='empty'>
+                  <t>
+                    Value: "http://openid.net/signon/2.0"
+                  </t>
+                  <t>
+                    This particular value MUST be present for the
+                    request to be a valid OpenID 2.0 request. Future
+                    versions of the specification may define different
+                    values in order to allow message recipients to
+                    properly interpret the request.
+                  </t>
+                  <t>
+                    If this value is absent or set to one of
+                    "http://openid.net/signon/1.1" or
+                    "http://openid.net/signon/1.0", then this message
+                    SHOULD be interpreted using <xref
+                    target="compat_mode">OpenID Authentication 1.1
+                    Compatibility</xref>.
+                  </t>
+                </list>
+              </t>
+              <t>
+                openid.mode
+                <list style='empty'>
+                  <t>
+                    Value: Specified individually for each message
+                    type.
+                  </t>
+                  <t>
+                    The "openid.mode" parameter allows the recipient
+                    of the message to know what kind of message it is
+                    processing. If "openid.mode" is absent, the party
+                    processing the message SHOULD assume that the
+                    request is not an OpenID message.
+                  </t>
+                </list>
+              </t>
+            </list>
+          </t>
+
           <t>
             This model applies to messages from the User-Agent to both
             the Relying Party and the OP, as well as messages from the
@@ -423,26 +469,12 @@ Base 10 number | btwoc string representation
         <section title="Direct Request" anchor="direct_request">
           <t>
             The message MUST be encoded as a POST body, as specified
-            by <xref target="queries" />.
+            by <xref target="http_encoding" />.
           </t>
           <t>
-            All direct requests must contain the following field:
-          </t>
-          <t>
-            <list style='symbols'>
-              <t>
-                openid.ns
-                <list style='empty'>
-                  <t>
-                    Value: "http://openid.net/signon/2.0"
-                  </t>
-                  <t>
-                    This value MUST be present for the request to
-                    be a valid OpenID 2.0 direct request.
-                  </t>
-                </list>
-              </t>
-            </list>
+            All direct requests are HTTP POSTs, and so
+            contain the required fields listed in <xref
+                target="http_encoding" />.
           </t>
         </section>
         <section title="Direct Response" anchor="direct_response">
@@ -454,9 +486,11 @@ Base 10 number | btwoc string representation
             "text/plain".
           </t>
           <t>
-            All direct responses must contain the following field:
-          </t>
-          <t>
+            Direct responses do not need to specify a mode, since they
+            are always sent in response to a <xref
+            target="direct_request">direct request</xref>. All
+            Key-Value form message MUST contain the following field:
+
             <list style='symbols'>
               <t>
                 ns
@@ -465,8 +499,19 @@ Base 10 number | btwoc string representation
                     Value: "http://openid.net/signon/2.0"
                   </t>
                   <t>
-                    This value MUST be present for the response to
-                    be a valid OpenID 2.0 direct response.
+                    This particular value MUST be present for the
+                    response to be a valid OpenID 2.0 response. Future
+                    versions of the specification may define different
+                    values in order to allow message recipients to
+                    properly interpret the request.
+                  </t>
+                  <t>
+                    If this value is absent or set to one of
+                    "http://openid.net/signon/1.1" or
+                    "http://openid.net/signon/1.0", then this message
+                    SHOULD be interpreted using <xref
+                    target="compat_mode">OpenID Authentication 1.1
+                    Compatibility</xref>.
                   </t>
                 </list>
               </t>
@@ -493,11 +538,7 @@ Base 10 number | btwoc string representation
                   ns
                   <list style='empty'>
                     <t>
-                        Value: "http://openid.net/signon/2.0"
-                    </t>
-                    <t>
-                        This value MUST be present for the response to
-                        be a valid OpenID 2.0 direct error response.
+                      As specified in <xref target="direct_response" />.
                     </t>
                   </list>
                 </t>
@@ -556,38 +597,15 @@ Base 10 number | btwoc string representation
           redirects and HTML form submission.
           Both form submission and redirection require that the sender
           know a recipient URL and that the recipient URL expect
-          indirect messages, as specified in <xref target="queries"
+          indirect messages, as specified in <xref target="http_encoding"
           />. The initiator of the communication chooses which method
           of indirect communication is appropriate depending on
           capabilities, message size, or other external factors.
         </t>
         <t>
-          All indirect messages must contain the following fields:
-        </t>
-        <t>
-          <list style='symbols'>
-            <t>
-              openid.ns
-              <list style='empty'>
-                <t>
-                  Value: "http://openid.net/signon/2.0"
-                </t>
-                <t>
-                  This value MUST be present for the message to
-                  be a valid OpenID 2.0 indirect message.
-                </t>
-              </list>
-            </t>
-            <t>
-              openid.mode
-              <list style='empty'>
-                <t>
-                  Indirect messages can be identified by the presence and
-                  value of the this parameter.
-                </t>
-              </list>
-            </t>
-          </list>
+          All indirect messages arrive as HTTP requests, and so
+          contain the required fields listed in <xref
+          target="http_encoding" />.
         </t>
 
         <section title="HTTP Redirect">
@@ -596,7 +614,7 @@ Base 10 number | btwoc string representation
             Redirect to the end user's User-Agent. The redirect URL is
             the URL of the receiver with the OpenID Authentication
             message appended to the query string, as specified in
-            <xref target="queries" />.
+            <xref target="http_encoding" />.
           </t>
         </section>
 
@@ -614,7 +632,7 @@ Base 10 number | btwoc string representation
             element. The key MUST be encoded as the "name" attribute
             and the value as the "value" attribute, such that the
             User-Agent will generate a message as specified in <xref
-            target="queries" /> when the form is submitted. The form
+            target="http_encoding"/> when the form is submitted. The form
             MUST include a submit button.
           </t>
         </section>
@@ -631,11 +649,7 @@ Base 10 number | btwoc string representation
                 openid.ns
                 <list style='empty'>
                   <t>
-                    Value: "http://openid.net/signon/2.0"
-                  </t>
-                  <t>
-                    This value MUST be present for the response to
-                    be a valid OpenID 2.0 indirect error response.
+                    As specified in <xref target="http_encoding" />.
                   </t>
                 </list>
               </t>
@@ -1143,11 +1157,7 @@ Base 10 number | btwoc string representation
               <t>openid.ns
                 <list style='empty'>
                   <t>
-                    Value: "http://openid.net/signon/2.0"
-                  </t>
-                  <t>
-                    This value MUST be present for the request to
-                    be a valid OpenID 2.0 association request.
+                    As specified in <xref target="http_encoding" />.
                   </t>
                 </list>
               </t>
@@ -1246,11 +1256,7 @@ Base 10 number | btwoc string representation
                 ns
                 <list style="empty">
                   <t>
-                    Value: "http://openid.net/signon/2.0"
-                  </t>
-                  <t>
-                    This value MUST be present for the response to
-                    be a valid OpenID 2.0 association response.
+                    As specified in <xref target="direct_response" />.
                   </t>
                 </list>
               </t>
@@ -1377,11 +1383,7 @@ Base 10 number | btwoc string representation
                 ns
                 <list style="empty">
                   <t>
-                    Value: "http://openid.net/signon/2.0"
-                  </t>
-                  <t>
-                    This value MUST be present for the response to
-                    be a valid OpenID 2.0 association failure response.
+                    As specified in <xref target="direct_response" />.
                   </t>
                 </list>
               </t>
@@ -1523,20 +1525,7 @@ Base 10 number | btwoc string representation
               openid.ns
               <list style='empty'>
                 <t>
-                  Value: "http://openid.net/signon/2.0"
-                </t>
-                <t>
-                  This value MUST be present for the request to be a
-                  valid OpenID Authentication 2.0 request.
-                </t>
-                <t>
-                  Note: If an OP receives an authentication request
-                  with this parameter missing or with a lower version
-                  number, it SHOULD still respond to the request.  If
-                  it does respond it MUST use <xref
-                  target="compat_mode">OpenID Authentication 1.1
-                  Compatibility</xref> when communicating with that
-                  Relying Party.
+                  As specified in <xref target="http_encoding" />.
                 </t>
               </list>
             </t>
@@ -1793,13 +1782,7 @@ Base 10 number | btwoc string representation
               openid.ns
               <list style='empty'>
                 <t>
-                  Value: "http://openid.net/signon/2.0"
-                </t>
-                <t>
-                  Note: This defines the interpretation of the OpenID
-                  Authentication arguments without a namespace.  To be
-                  an OpenID Authentication 2.0 response, the given
-                  value MUST be present.
+                  As specified in <xref target="http_encoding" />.
                 </t>
               </list>
             </t>
@@ -1985,11 +1968,7 @@ Base 10 number | btwoc string representation
                 openid.ns
                 <list style='empty'>
                   <t>
-                    Value: "http://openid.net/signon/2.0"
-                  </t>
-                  <t>
-                    This value MUST be present for the response to
-                    be a valid OpenID 2.0 immediate negative assertion.
+                    As specified in <xref target="http_encoding" />.
                   </t>
                 </list>
               </t>
@@ -2015,11 +1994,7 @@ Base 10 number | btwoc string representation
                 openid.ns
                 <list style='empty'>
                   <t>
-                    Value: "http://openid.net/signon/2.0"
-                  </t>
-                  <t>
-                    This value MUST be present for the response to
-                    be a valid OpenID 2.0 non-immediate negative assertion.
+                    As specified in <xref target="http_encoding" />.
                   </t>
                 </list>
               </t>
@@ -2195,13 +2170,9 @@ Base 10 number | btwoc string representation
               <list style='symbols'>
                 <t>
                   ns
-                  <list style="empty">
+                  <list style='empty'>
                     <t>
-                      Value: "http://openid.net/signon/2.0"
-                    </t>
-                    <t>
-                      This value MUST be present for the response to
-                      be a valid OpenID 2.0 verification response.
+                      As specified in <xref target="direct_response" />.
                     </t>
                   </list>
                 </t>
