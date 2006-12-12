@@ -1562,8 +1562,9 @@ Base 10 number | btwoc string representation
               openid.claimed_id
               <list style='empty'>
                 <t>
-                  Value: (optional) The Claimed Identifier. MUST be present
-                  if, and only if, openid.identity is present.
+                  Value: (optional) The Claimed Identifier.
+                  "openid.claimed_id" and "openid.identity" SHALL
+                  be either both present or both absent.
                 </t>
                 <t>
                   Note: The Claimed Identifier is the same as the
