@@ -627,13 +627,13 @@ Base 10 number | btwoc string representation
           </t>
           <t>
             The &lt;form&gt; element's "action" attribute value MUST
-            be the URL of the receiving Web site. Each Key-Value pair
-            MUST be included in the form as an &lt;input&gt;
-            element. The key MUST be encoded as the "name" attribute
-            and the value as the "value" attribute, such that the
-            User-Agent will generate a message as specified in <xref
-            target="http_encoding"/> when the form is submitted. The form
-            MUST include a submit button.
+            be the URL of the receivier. Each Key-Value pair MUST be
+            included in the form as an &lt;input&gt; element. The key
+            MUST be encoded as the "name" attribute and the value as
+            the "value" attribute, such that the User-Agent will
+            generate a message as specified in <xref
+            target="http_encoding"/> when the form is submitted. The
+            form MUST include a submit button.
           </t>
         </section>
         <section title="Indirect Error Responses">
