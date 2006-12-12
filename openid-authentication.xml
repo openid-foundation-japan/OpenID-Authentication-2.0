@@ -729,8 +729,7 @@ Base 10 number | btwoc string representation
             </t>
             <t>
               Generate the list of key/value pairs to be signed using
-              the correct <xref
-                  target="signed_list">list algorithm</xref>.
+              the <xref target="signed_list">Signed List Algorithm</xref>.
             </t>
             <t>
               Convert the list of key/value pairs to be signed to an octet
