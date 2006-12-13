@@ -1059,11 +1059,10 @@ Base 10 number | btwoc string representation
 
         <section anchor="html_disco" title="HTML-Based Discovery">
           <t>
-            OpenID Authentication 1.1 HTML-based discovery MUST be
-            supported by Relying Parties.  If a Relying Party locates
-            an OP using HTML-based discovery, it MUST use <xref
-                target="compat_mode">OpenID Authentication 1.1
-            Compatibility</xref> when communicating with that OP.
+            HTML-based discovery MUST be supported by Relying
+            Parties. HTML-based discovery is only usable for discovery
+            of Claimed Identifiers. OP Identifiers must be XRIs or
+            URLs that support XRDS discovery.
           </t>
 
           <t>
@@ -1085,7 +1084,13 @@ Base 10 number | btwoc string representation
             </list>
           </t>
 
-          <t> The host of the HTML document MAY be different from the
+          <t>
+            The protocol version when HTML discovery is performed is
+            "http://openid.net/signon/2.0".
+          </t>
+
+          <t>
+            The host of the HTML document MAY be different from the
             end user's OP's host.
           </t>
 
