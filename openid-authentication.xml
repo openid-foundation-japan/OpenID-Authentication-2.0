@@ -867,9 +867,10 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              If the Yadis protocol fails or no
-              <xref target="service_elements">Service Elements</xref>
-              are found in the XRDS document, the URL is retrieved and
+              If the Yadis protocol fails and no valid XRDS document
+              is retrieved, or no <xref
+              target="service_elements">Service Elements</xref> are
+              found in the XRDS document, the URL is retrieved and
               <xref target="html_disco">HTML-based discovery</xref>
               SHALL be attempted.
             </t>
