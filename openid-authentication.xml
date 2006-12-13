@@ -1913,7 +1913,9 @@ Base 10 number | btwoc string representation
                   "return_to" "response_nonce" and "assoc_handle", and
                   if present in the response, "claimed_id" and
                   "identity". Additional keys MAY be signed as part of
-                  the message.
+                  the message. See <xref
+                  target="generating_signatures">Generating
+                  Signatures</xref>.
                 </t>
                 <t>
                   For example,
