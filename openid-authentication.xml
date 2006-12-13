@@ -1755,10 +1755,10 @@ Base 10 number | btwoc string representation
         target="verifying_signatures">stateless mode</xref>.
       </t>
       <t>
-        If the "openid.return_to" value is omitted in the request, it
-        signifies that the initiating server does not wish to for the
-        end user to be returned to it as something else useful will
-        have been performed via an extension.
+        If the "openid.return_to" value is omitted in the request, the
+        Relying Party does not wish to receive an authentication
+        assertion from the OP. This can be useful when using
+        extensions to transfer data from the Relying Party to the OP.
       </t>
 
       <section title="Positive Assertions" anchor="positive_assertions">
