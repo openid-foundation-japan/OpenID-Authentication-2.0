@@ -633,7 +633,7 @@ Base 10 number | btwoc string representation
             form MUST include a submit button.
           </t>
         </section>
-        <section title="Indirect Error Responses">
+        <section title="Indirect Error Responses" anchor="indirect_error">
           <t>
             In the case of a malformed request or one that contains
             invalid arguments, the OpenID Provider MUST redirect the
@@ -1687,7 +1687,8 @@ Base 10 number | btwoc string representation
           </list>
 
           When present, the "openid.return_to" URL MUST match the
-          "openid.realm", or the OP MUST return an error.
+          "openid.realm", or the OP MUST return an <xref
+          target="indirect_error">indirect error response</xref>.
         </t>
 
         <t>
