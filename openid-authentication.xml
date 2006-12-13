@@ -1538,6 +1538,11 @@ Base 10 number | btwoc string representation
                   and will contain other information in its payload,
                   using <xref target="extensions">extensions</xref>.
                 </t>
+                <t>
+                  It is RECOMMENDED that OPs accept (and consider
+                  equivalent) XRI identifiers with or without the
+                  "xri://" prefix.
+                </t>
               </list>
             </t>
 
