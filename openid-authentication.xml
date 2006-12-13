@@ -1931,11 +1931,6 @@ Base 10 number | btwoc string representation
                   Value: Base 64 encoded signature calculated as
                   specified in <xref target="generating_signatures"/>.
                 </t>
-
-                <t>
-                  Note: Successful authentication messages from the
-                  OP to the Relying Party MUST be signed.
-                </t>
               </list>
             </t>
 
