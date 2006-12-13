@@ -486,10 +486,7 @@ Base 10 number | btwoc string representation
             "text/plain".
           </t>
           <t>
-            Direct responses do not need to specify a mode, since they
-            are always sent in response to a <xref
-            target="direct_request">direct request</xref>. All
-            Key-Value form message MUST contain the following field:
+            All Key-Value form message MUST contain the following field:
 
             <list style='symbols'>
               <t>
@@ -2174,13 +2171,6 @@ Base 10 number | btwoc string representation
                       As specified in <xref target="direct_response" />.
                     </t>
                   </list>
-                </t>
-
-                <t>
-                  mode
-                  <list style='empty'>
-                    <t>Value: "id_res"</t>
-                   </list>
                 </t>
 
                 <t>
