@@ -1692,10 +1692,12 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          It is RECOMMENDED that OP's protect their end users from
-          requests with overly-general realms, like http://*.com/ or
-          http://*.co.uk/. Determining if a realm is overly-general is
-          at the discretion of the OP.
+          It is RECOMMENDED that OPs protect their users from making
+          assertions with overly-general realms, like http://*.com/ or
+          http://*.co.uk/. Overly general realms can be dangerous when
+          the realm is used for identifying a particular Relying
+          Party. Whether a realm is overly-general is at the
+          discretion of the OP.
         </t>
       </section>
 
