@@ -1809,12 +1809,14 @@ Base 10 number | btwoc string representation
                   be either both present or both absent.
                 </t>
                 <t>
-                  Note: The Claimed Identifier is the same as the
-                  OP-Specific Identifier if a different OP-Specific
-                  Identifier is not supplied. If neither value is
-                  present, the assertion is not about an identifier,
-                  and will contain other information in its payload,
-                  using <xref target="extensions">extensions</xref>.
+                  Note: The end user MAY choose to use an OP-Specific
+                  Identifier as a Claimed Identifier.
+                </t>
+                <t>
+                  Note: If neither Identifier is present in the assertion,
+                  it is not about an identifier, and will contain
+                  other information in its payload, using <xref
+                  target="extensions">extensions</xref>.
                 </t>
               </list>
             </t>
