@@ -2440,14 +2440,15 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                Relying Parties SHOULD extract and use OpenID 1.x service
-                elements from XRDS documents, if Yadis succeeds on an URL
-                identifier. Such service elements are identified by
-                &lt;xrd:Type&gt; tags whose text contents are
-                "http://openid.net/server/1.0" or "http://openid.net/server/1.1".
-                Although this is not specified in the previous version
-                of the protocol, it is a generally accepted practice of
-                advertising OpenID 1.x services through Yadis.
+                Relying Parties SHOULD extract and use OpenID 1.x
+                service elements from XRDS documents, if Yadis
+                succeeds on an URL identifier. Such service elements
+                are identified by &lt;xrd:Type&gt; tags whose text
+                contents are "http://openid.net/server/1.0" or
+                "http://openid.net/server/1.1".  Although this is not
+                specified in the previous version of the protocol, it
+                is a generally accepted practice of advertising OpenID
+                1.x services through Yadis.
               </t>
 
               <t>
@@ -2468,12 +2469,13 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                In <xref target="requesting_authentication">authentication
-                requests</xref>, the "openid.identity" parameter MUST NOT
-                be the special value
-                "http://openid.net/identifier_select/2.0", because OpenID
-                Authentication 1.1 does not support the use of OP
-                Identifiers.
+                In <xref
+                target="requesting_authentication">authentication
+                requests</xref>, the "openid.identity" parameter MUST
+                NOT be the special value
+                "http://openid.net/identifier_select/2.0", because
+                OpenID Authentication 1.1 does not support the use of
+                OP Identifiers.
               </t>
 
               <t>
