@@ -718,63 +718,40 @@ Base 10 number | btwoc string representation
       <section title="Procedure">
         <t>
           To generate a message signature:
+
           <list style="numbers">
             <t>
-              Determine the appropriate list of keys to be signed
-              and signature algorithm from the <xref
-                  target="associations">association type</xref>.
+              Determine the list of keys to be signed, according to
+              the message to be signed (See <xref
+              target="positive_assertions" />). The list of keys to be
+              signed MUST be part of the message. The list is stored
+              with the key "openid.signed". The value is a
+              comma-separated list of keys, with the "openid." prefix
+              stripped. This algorithm is only capable of signing keys
+              that start with "openid."
             </t>
+
             <t>
-              Generate the list of key/value pairs to be signed using
-              the <xref target="signed_list">Signed List Algorithm</xref>.
+              Iterate through the list of keys to be signed in the
+              order they appear in "openid.signed" list.  For each
+              key, find the value in the message whose key is equal to
+              the signed list key prefixed with "openid."
             </t>
+
             <t>
-              Convert the list of key/value pairs to be signed to an octet
-              string by encoding with <xref target="kvform">Key-Value Form
-              Encoding</xref>.
+              Convert the list of key/value pairs to be signed to an
+              octet string by encoding with <xref
+              target="kvform">Key-Value Form Encoding</xref>.
             </t>
+
             <t>
-              Apply the correct <xref target="sign_algos">signature
-              algorithm</xref> to the octet string.
+              Determine the signature algorithm from the <xref
+              target="associations">association type</xref>.  Apply
+              the <xref target="sign_algos">signature algorithm</xref>
+              to the octet string.
             </t>
           </list>
         </t>
-      </section>
-
-      <section title="Signed List Algorithm" anchor="signed_list">
-    <t>
-      The input to the Signed List Algorithm are the message
-      to be signed, and the list of message keys that are to be
-      signed with the "openid." prefix removed.
-    </t>
-    <t>
-      To compute the list of key/value pairs to be signed:
-      <list style="numbers">
-        <t>
-          Iterate through the list of keys to be signed in
-          the order they appear in the input to the algorithm.
-          For each key, find the value in the message whose key is
-          equal to the signed list key prefixed with "openid."
-        </t>
-        <t>
-          Append the signed list key and the associated value to
-          the list of key/value pairs to be signed.
-        </t>
-      </list>
-    </t>
-    <t>
-      The output of this algorithm is the list of key/value pairs
-      to be signed, and the list of keys to be signed. A message
-      signed using this algorithm MUST append the list of signed
-      fields to the message.
-    </t>
-    <t>
-      As the algorithm strips the "openid." prefix from message
-      keys while looking for a match, it MUST only sign elements
-      that have keys beginning with "openid." This is to prevent
-      attacks where the Relying Party is malicious and tries to
-      have the OP sign arbitrary data.
-    </t>
       </section>
 
       <section title="Signature Algorithms" anchor="sign_algos">
@@ -1434,9 +1411,7 @@ Base 10 number | btwoc string representation
         <section title="HMAC-SHA1" anchor="hmacsha1">
           <t>
             An association of type "HMAC-SHA1" uses the <xref
-            target="sign_algos">HMAC-SHA1</xref> signature algorithm
-            in combination with the <xref target="signed_list">Signed
-            List</xref> algorithm.
+            target="sign_algos">HMAC-SHA1</xref> signature algorithm.
           </t>
         </section>
 
@@ -1444,8 +1419,7 @@ Base 10 number | btwoc string representation
           <t>
             An association of type "HMAC-256" uses the <xref
             target="sign_algos">HMAC-SHA256</xref> signature
-            algorithm in combination with the <xref
-            target="signed_list">Signed List</xref> algorithm.
+            algorithm.
           </t>
         </section>
       </section>
@@ -1906,9 +1880,14 @@ Base 10 number | btwoc string representation
                 <t>
                   Note: This entry consists of the fields without the
                   "openid." prefix that the signature covers. This
-                  list MUST contain at least "op_endpoint", "return_to"
-                  "response_nonce" and "assoc_handle", and if present in
-                  the response, "claimed_id" and "identity". For example,
+                  list MUST contain at least "op_endpoint",
+                  "return_to" "response_nonce" and "assoc_handle", and
+                  if present in the response, "claimed_id" and
+                  "identity". Additional keys MAY be signed as part of
+                  the message.
+                </t>
+                <t>
+                  For example,
                   "op_endpoint,identity,claimed_id,return_to,assoc_handle,response_nonce".
                 </t>
               </list>
