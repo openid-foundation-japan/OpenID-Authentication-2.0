@@ -1250,7 +1250,9 @@ Base 10 number | btwoc string representation
                   <t>
                     The session type for this association. If the OP
                     is unwilling or unable to support this session
-                    type, it MUST return an unsuccessful response.
+                    type, it MUST return an <xref
+                    target="refuse_assoc">unsuccessful
+                    response</xref>.
                   </t>
                 </list>
               </t>
@@ -1276,7 +1278,8 @@ Base 10 number | btwoc string representation
                     The value of the "openid.assoc_type" parameter
                     from the request.  If the OP is unwilling or
                     unable to support this association type, it MUST
-                    return an unsuccessful response.
+                    return an <xref target="refuse_assoc">unsuccessful
+                    response</xref>.
                   </t>
                 </list>
               </t>
