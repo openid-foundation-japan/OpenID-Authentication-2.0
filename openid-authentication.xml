@@ -836,6 +836,11 @@ Base 10 number | btwoc string representation
           URL MUST be noted by the Relying Party as the Claimed
           Identifier and be used during future requests.
         </t>
+
+        <t>
+          If the scheme "xri://" is present on an XRI identifier, it
+          SHOULD be stripped off.
+        </t>
       </section>
 
       <section title="Discovery" anchor="discovery">
