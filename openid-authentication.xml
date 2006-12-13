@@ -820,7 +820,7 @@ Base 10 number | btwoc string representation
         <t>
           To do so, the Relying Party SHOULD examine the first
           character of the input. If it is an XRI Global Context
-          Symbol ("=", "@", "+", "$", or "!" see
+          Symbol ("=", "@", "+", "$", "(", or "!" see
           <xref target="XRI Syntax 2.0">Section 2.2.1.2 of</xref>),
           then the input SHOULD be treated as an XRI. If it is not,
           then the input SHOULD be treated as an http URL, and
