@@ -2521,6 +2521,12 @@ Base 10 number | btwoc string representation
                 implement an out-of-band method for preventing replay
                 attacks.
               </t>
+
+              <t>
+                Relying Parties MUST accept
+                <xref target="positive_assertions">authentication responses
+                </xref> that are missing the "openid.op_endpoint" parameter.
+              </t>
             </list>
           </t>
         </section>
@@ -2575,6 +2581,13 @@ Base 10 number | btwoc string representation
                 Relying Party may redirect the end user to this URL, or
                 provide the end user with a link that points to this
                 URL.
+              </t>
+
+              <t>
+                OPs MUST NOT send the "openid.op_endpoint" parameter in
+                <xref target="positive_assertions">authentication responses
+                </xref>, since it is not part of the OpenID Authentication
+                1.1 protocol.
               </t>
             </list>
           </t>
