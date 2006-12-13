@@ -1459,7 +1459,8 @@ Base 10 number | btwoc string representation
 
           <t>
             The MAC key sent by the OP MUST be the length specified
-            for this association in <xref target="sign_algos" />.
+            for the requested association type, as specified in <xref
+            target="sign_algos" />.
           </t>
 
         </section>
