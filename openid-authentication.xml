@@ -1599,13 +1599,17 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   Note: If this value is not sent in the request it
-                  signifies that the Relying Party does not wish to
-                  for the end user to be returned to it as something
-                  else useful will have been performed via an
-                  extension. This document does not define a mechanism
+                  signifies that the Relying Party does not wish
+                  for the end user to be returned.
+                </t>
+                <t>
+                  Note: The return_to URL MAY be used as a mechanism
+                  for the Relying Party to attach context about the
+                  authentication request to the authentication
+                  response. This document does not define a mechanism
                   by which the RP can ensure that query parameters are
-                  not modified by outside parties; such a mechanism can
-                  be defined by the RP itself.
+                  not modified by outside parties; such a mechanism
+                  can be defined by the RP itself.
                 </t>
               </list>
             </t>
