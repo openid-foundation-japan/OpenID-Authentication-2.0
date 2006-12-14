@@ -1857,7 +1857,7 @@ Base 10 number | btwoc string representation
                   Value: A string that MUST be unique to this
                   particular successful authentication response. The
                   nonce MUST start with the current time on the server,
-                  and MAY contain up to 16 additional ASCII characters
+                  and MAY contain up to 255 additional ASCII characters
                   in the range 33-126 inclusive (printable non-whitespace
                   characters), as necessary to make each response unique.
                   The date and time MUST be formatted as specified in
