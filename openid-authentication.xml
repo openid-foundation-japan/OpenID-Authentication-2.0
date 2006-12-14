@@ -813,7 +813,7 @@ Base 10 number | btwoc string representation
           The end user's input MUST be normalized into an
           Identifier.  If the end user supplies input that does not
           include a scheme (http, https, or xri), then the application
-          needs to determine if the input is an XRI or a URL missing
+          MUST determine if the input is an XRI or a URL missing
           the scheme.
         </t>
 
