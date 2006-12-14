@@ -2452,7 +2452,8 @@ Base 10 number | btwoc string representation
                 allows multiple link relationships to be specified for
                 a single link, so if an OP provides both OpenID 1.1 and
                 OpenID 2.0, "openid2.provider" and "openid.server" may
-                appear in the same "rel" attribute.
+                appear in the same "rel" attribute. The protocol version
+                is in this case "http://openid.net/signon/1.1".
               </t>
 
               <t>
