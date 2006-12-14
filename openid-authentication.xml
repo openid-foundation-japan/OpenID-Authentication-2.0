@@ -1949,12 +1949,12 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          When receiving a negative assertion in response to an
-          immediate mode request, Relying Parties SHOULD
-          construct a new authentication request using the
-          "checkid_setup" mode to complete the transaction.  This is a
-          change from OpenID Authentication 1.1 and more details can
-          be found in <xref target="compat_mode" />.
+          When receiving a negative assertion in response to a
+          "checkid_immediate" mode request, Relying Parties SHOULD
+          construct a new authentication request using "checkid_setup"
+          mode. Details about how this differs from OpenID
+          Authentication 1.1 can be found in <xref
+          target="compat_mode" />.
         </t>
 
         <section title="In Response to Immediate Requests">
