@@ -892,34 +892,48 @@ Base 10 number | btwoc string representation
                 authentication requests.
               </t>
 
-              <t hangText="Claimed Identifier:">
-                (optional) The identifier that is the subject of this
-                authentication request. This is:
-              </t>
-                  <t>
-                    The Identifier obtained by <xref target="normalization">
-                    normalizing </xref> the User-supplied Identifier,
-                    if it was an URL.
-                  </t>
-                  <t>
-                    The <xref target="canonicalid"> CanonicalID </xref>,
-                    if the User-supplied Identifier was an XRI.
-                  </t>
-
-              <t hangText="OP-Specific Identifier:">
-                (optional) An identifier that allows an OP to
-                identify the end user of a Claimed Identifier. If no
-                OP-specific identifier is present in the discovered
-                information, the Claimed Identifier is also the
-                OP-Specific Identifier.
-              </t>
-
               <t hangText="Protocol Version:">
                 The OpenID protocol version of the discovered
-                OpenID Provider(s). This is determined by the
-                &lt;xrd:Type&gt; tag of the OP Identifier Element.
+                OpenID Provider(s).
               </t>
             </list>
+
+            If the user entered a personal Identifier rather than an
+            OP Identifier, the following information will also be
+            present:
+
+            <list style="hanging">
+              <t hangText="Claimed Identifier:">
+                The identifier that is the subject of this
+                authentication request. This is:
+                <list style="symbols">
+                  <t>
+                    The Identifier obtained by <xref
+                    target="normalization"> normalizing</xref> the
+                    User-supplied Identifier, if it was an URL.
+                  </t>
+                  <t>
+                    The <xref target="canonicalid"> CanonicalID
+                    </xref>, if the User-supplied Identifier was an
+                    XRI.
+                  </t>
+              </list>
+              </t>
+              <t hangText="OP-Specific Identifier:">
+                An identifier that allows an OP to identify the end
+                user for this Claimed Identifier. If no OP-specific
+                identifier is present in the discovered information,
+                the Claimed Identifier MUST be used as the OP-specific
+                identifier.
+              </t>
+            </list>
+
+            If the user entered an OP Identifier, there is no Claimed
+            Identifier. For the purposes of making OpenID
+            authentication requests, the value
+            "http://openid.net/identifier_select/2.0" SHOULD be used
+            as both the Claimed Identifier and the OP-specific
+            Identifier when an OP Identifier is entered.
           </t>
         </section>
 
