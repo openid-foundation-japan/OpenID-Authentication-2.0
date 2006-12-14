@@ -1854,15 +1854,15 @@ Base 10 number | btwoc string representation
               openid.response_nonce
               <list style='empty'>
                 <t>
-                  Value: A string that MUST be unique to this
-                  particular successful authentication response. The
-                  nonce MUST start with the current time on the server,
-                  and MAY contain up to 255 additional ASCII characters
-                  in the range 33-126 inclusive (printable non-whitespace
-                  characters), as necessary to make each response unique.
-                  The date and time MUST be formatted as specified in
-                  section 5.6 of <xref target="RFC3339" />,
-                  with the following restrictions:
+                  Value: A string 255 characters or less in length,
+                  that MUST be unique to this particular successful
+                  authentication response. The nonce MUST start with the
+                  current time on the server, and MAY contain additional 
+                  ASCII characters in the range 33-126 inclusive
+                  (printable non-whitespace characters), as necessary to
+                  make each response unique. The date and time MUST be
+                  formatted as specified in section 5.6 of
+                  <xref target="RFC3339" />, with the following restrictions:
 
                   <list style="symbols">
                     <t>
@@ -2448,12 +2448,13 @@ Base 10 number | btwoc string representation
                 is marked by the link relationship "openid.server"
                 rather than "openid2.provider". The user's OP-specific
                 identifier is marked by the link relationship
-                "openid.delegate" rather than "openid2.local_id". HTML
-                allows multiple link relationships to be specified for
-                a single link, so if an OP provides both OpenID 1.1 and
-                OpenID 2.0, "openid2.provider" and "openid.server" may
-                appear in the same "rel" attribute. The protocol version
-                is in this case "http://openid.net/signon/1.1".
+                "openid.delegate" rather than "openid2.local_id".
+                The protocol version is in this case
+                "http://openid.net/signon/1.1". HTML allows multiple link
+                relationships to be specified for a single link, so if
+                an OP provides both OpenID 1.1 and OpenID 2.0,
+                "openid2.provider" and "openid.server" may appear
+                in the same "rel" attribute.
               </t>
 
               <t>
