@@ -765,7 +765,6 @@ Base 10 number | btwoc string representation
                 target="FIPS180-2" /></t>
           </list>
 
-          HMAC-SHA1 is the default for authentication requests.
           If supported, the use of HMAC-SHA256 is RECOMMENDED.
         </t>
         <texttable>
@@ -1176,7 +1175,6 @@ Base 10 number | btwoc string representation
                     subsequent messages.</t>
                   <t> Value: A valid association type from <xref
                   target="assoc_types"/></t>
-                  <t> Default: "HMAC-SHA1".</t>
                 </list>
               </t>
 
