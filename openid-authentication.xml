@@ -2407,88 +2407,132 @@ Base 10 number | btwoc string representation
       </t>
     </section>
     
-    <section title="OpenID Authentication 1.1 Compatibility"
-             anchor="compat_mode">
+    <section title="Discovering OpenID Relying Parties">
       <t>
-        This specification is based on the original specification for
-        OpenID Authentication as written by Brad Fitzpatrick. That
-        specification did not have a version number, but was called
-        OpenID 1.0, and then OpenID 1.1 when it was revised.  The
-        protocol outlined in this specification is intended to be
-        backwards-compatible with the revised OpenID protocol.  The
-        changes to the specification are outlined in this section.
+        Relying Parties are RECOMMENDED to use the Yadis protocol to
+        publish their return_to URL. This allows for automated
+        discovery of OpenID Relying Parties.
       </t>
 
-      <section title="Updated Initiation and Discovery">
+      <t>
+        A Relying Party discovery XRDS document MUST contain an
+        &lt;xrd:Service&gt; element:
+
+        <list style="symbols">
+          <t>
+            containing at least one &lt;xrd:URI&gt; element
+          </t>
+          <t>
+            where all &lt;xrd:URI&gt; tags contain a URL that accepts
+            OpenID 2.0 Authentication responses
+          </t>
+          <t>
+            containing a &lt;xrd:Type&gt; tag whose content is
+            "http://openid.net/return_to/2.0"
+          </t>
+        </list>
+      </t>
+
+      <figure>
+        <preamble>Non-normative example:</preamble>
+        <artwork><![CDATA[
+<Service xmlns="xri://$xrd*($v*2.0)">
+  <Type>http://openid.net/return_to/2.0</Type>
+  <URI>http://consumer.example.com/return</URI>
+</Service>
+]]></artwork>
+      </figure>
+    </section>
+
+    <section title="OpenID 1.1 Authentication Compatibility"
+             anchor="compat_mode">
+
+      <t>
+        This section describes how to interact with OpenID
+        Authentication 1.1 Relying Parties and OPs. OpenID
+        Authentication 2.0 implementations SHOULD support OpenID
+        Authentication 1.1 compatibility, unless security
+        considerations make it undesirable.
+      </t>
+
+      <section title="Changes from OpenID Authentication 1.1" >
         <t>
-          <list style="symbols">
-            <t>
-              Supports OP Identifiers. This new variation of the
-              protocol flow is initiated by an end user entering an OP
-              Identifier instead of their own Identifier.  This allows
-              the OP to assist the end user in selecting an
-              Identifier.
-            </t>
-            <t>
-              Supports the use of XRIs as Identifiers. XRIs may be
-              used as Identifiers for both end users and OPs, and
-              provide automatic mapping from one or more reassignable
-              i-names to a synonymous persistent Canonical ID that
-              will never be reassigned.
-            </t>
-            <t>
-              When URLs are used as Identifiers, they are normalized
-              according to the guidelines in <xref target='RFC3986' />,
-              for better compatibility with the existing Web infrastructure.
-            </t>
-            <t>
-              Uses the Yadis protocol for discovery. This allows for
-              using multiple OPs for a single Identifier, for
-              load-balancing and fallback in the case of OP
-              failure. Additionally, it allows for discovery of
-              supported extensions and other associated services.
-            </t>
-          </list>
+          (non-normative)
         </t>
+        <t>
+          This specification is based on the original specification for
+          OpenID Authentication as written by Brad Fitzpatrick. That
+          specification did not have a version number, but was called
+          OpenID 1.0, and then OpenID 1.1 when it was revised.  The
+          protocol outlined in this specification is intended to be
+          backwards-compatible with the revised OpenID protocol.  The
+          changes to the specification are outlined in this section.
+        </t>
+
+        <section title="Updated Initiation and Discovery">
+          <t>
+            <list style="symbols">
+              <t>
+                Supports OP Identifiers. This new variation of the
+                protocol flow is initiated by an end user entering an OP
+                Identifier instead of their own Identifier.  This allows
+                the OP to assist the end user in selecting an
+                Identifier.
+              </t>
+              <t>
+                Supports the use of XRIs as Identifiers. XRIs may be
+                used as Identifiers for both end users and OPs, and
+                provide automatic mapping from one or more reassignable
+                i-names to a synonymous persistent Canonical ID that
+                will never be reassigned.
+              </t>
+              <t>
+                When URLs are used as Identifiers, they are normalized
+                according to the guidelines in <xref target='RFC3986' />,
+                for better compatibility with the existing Web infrastructure.
+              </t>
+              <t>
+                Uses the Yadis protocol for discovery. This allows for
+                using multiple OPs for a single Identifier, for
+                load-balancing and fallback in the case of OP
+                failure. Additionally, it allows for discovery of
+                supported extensions and other associated services.
+              </t>
+            </list>
+          </t>
+        </section>
+
+        <section title="Security improvements">
+          <t>
+            A nonce is now part of the protocol for built-in protection
+            against replay attacks, which was previously implemented
+            out-of-band by each library or application.
+          </t>
+          <t>
+            A new association type, HMAC-SHA256, and a new association
+            session type, DH-SHA256, allow for stronger signatures on
+            authentication assertions.
+          </t>
+        </section>
+
+        <section title="Extensions">
+          <t>
+            Extensions are now an officially supported mechanism to
+            support data exchange and other Relying Party-OP
+            communication along with the authentication
+            exchange. Extensions allow for the exchange of arbitrary
+            attributes, as well as for protocol extensions,
+            such as the inclusion of additional information about the
+            Relying Party in the authentication request.
+          </t>
+          <t>
+            Because extensions can transfer arbitrary data, the
+            Identifier is now optional in authentication messages.
+          </t>
+        </section>
       </section>
 
-      <section title="Security improvements">
-        <t>
-          A nonce is now part of the protocol for built-in protection
-          against replay attacks, which was previously implemented
-          out-of-band by each library or application.
-        </t>
-        <t>
-          A new association type, HMAC-SHA256, and a new association
-          session type, DH-SHA256, allow for stronger signatures on
-          authentication assertions.
-        </t>
-      </section>
-
-      <section title="Extensions">
-        <t>
-          Extensions are now an officially supported mechanism to
-          support data exchange and other Relying Party-OP
-          communication along with the authentication
-          exchange. Extensions allow for the exchange of arbitrary
-          attributes, as well as for protocol extensions,
-          such as the inclusion of additional information about the
-          Relying Party in the authentication request.
-        </t>
-        <t>
-          Because extensions can transfer arbitrary data, the
-          Identifier is now optional in authentication messages.
-        </t>
-      </section>
-
-      <section title="Implementing OpenID 1.1 Authentication Compatibility">
-
-        <t>
-          OpenID Authentication 2.0 implementations SHOULD support
-          OpenID Authentication 1.1 compatibility, unless security
-          considerations make it undesirable.
-        </t>
-
+      <section title="Implementing OpenID Authentication 1.1 Compatibility">
         <t>
           All messages in OpenID Authentication 1.1 omit the
           "openid.ns" parameter, which is an easy way for an RP to
@@ -2513,7 +2557,7 @@ Base 10 number | btwoc string representation
                 "openid2.provider" and "openid.server" may appear
                 in the same "rel" attribute.
               </t>
-
+              
               <t>
                 When XRDS-based discovery is performed, the user's
                 OP-specific identifier appears in the
@@ -2555,7 +2599,7 @@ Base 10 number | btwoc string representation
 
               <t>
                 In <xref
-                target="requesting_authentication">authentication
+                    target="requesting_authentication">authentication
                 requests</xref>, the "openid.identity" parameter MUST
                 NOT be the special value
                 "http://openid.net/identifier_select/2.0", because
@@ -2659,43 +2703,6 @@ Base 10 number | btwoc string representation
           </t>
         </section>
       </section>
-    </section>
-
-    <section title="Discovering OpenID Relying Parties">
-      <t>
-        Relying Parties are RECOMMENDED to use the Yadis protocol to
-        publish their return_to URL. This allows for automated
-        discovery of OpenID Relying Parties.
-      </t>
-
-      <t>
-        A Relying Party discovery XRDS document MUST contain an
-        &lt;xrd:Service&gt; element:
-
-        <list style="symbols">
-          <t>
-            containing at least one &lt;xrd:URI&gt; element
-          </t>
-          <t>
-            where all &lt;xrd:URI&gt; tags contain a URL that accepts
-            OpenID 2.0 Authentication responses
-          </t>
-          <t>
-            containing a &lt;xrd:Type&gt; tag whose content is
-            "http://openid.net/return_to/2.0"
-          </t>
-        </list>
-      </t>
-
-      <figure>
-        <preamble>Non-normative example:</preamble>
-        <artwork><![CDATA[
-<Service xmlns="xri://$xrd*($v*2.0)">
-  <Type>http://openid.net/return_to/2.0</Type>
-  <URI>http://consumer.example.com/return</URI>
-</Service>
-]]></artwork>
-      </figure>
     </section>
 
     <section title="Security Considerations">
