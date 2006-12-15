@@ -2620,15 +2620,26 @@ Base 10 number | btwoc string representation
       </t>
 
       <t>
-        In this case, the XRDS document published by the Relying
-        Party, SHOULD have an &lt;xrd:Service&gt; element where the
-        content of the &lt;xrd:URI&gt; tag is the return_to URL and
-        the content of the &lt;xrd:Type&gt; tag is
-        "http://openid.net/return_to/2.0".
+        A Relying Party discovery XRDS document MUST contain an
+        &lt;xrd:Service&gt; element:
+
+        <list style="symbols">
+          <t>
+            containing at least one &lt;xrd:URI&gt; element
+          </t>
+          <t>
+            where all &lt;xrd:URI&gt; tags contain a URL that accepts
+            OpenID 2.0 Authentication responses
+          </t>
+          <t>
+            containing a &lt;xrd:Type&gt; tag whose content is
+            "http://openid.net/return_to/2.0"
+          </t>
+        </list>
       </t>
 
       <figure>
-        <preamble>For example:</preamble>
+        <preamble>Non-normative example:</preamble>
         <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
   <Type>http://openid.net/return_to/2.0</Type>
