@@ -3098,7 +3098,7 @@ Base 10 number | btwoc string representation
           the persistent Canonical ID xri://(example)!1234 should be
           used the the primary key for the account.  Although the
           i-names =example and =exmpl may also be stored for reference
-          as display names, they are reassignable identifier and
+          as display names, they are reassignable identifiers and
           should not be used as persistent keys.
         </t>
       </appendix>
