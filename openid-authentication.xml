@@ -2581,6 +2581,21 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
+                "openid.claimed_id" is not defined by OpenID
+                Authentication 1.1. Relying Parties MAY send the value
+                when making requests, but MUST NOT depend on the value
+                being present in authentication responses. When the
+                OP-Specific Identifier ("openid.identity") is
+                different from the Claimed Identifier, the Relying
+                Party MUST keep track of what Claimed Identifier was
+                used to discover the OP-Specific Identifier, for
+                example by keeping it in session state. Although the
+                Claimed Identifier will not be present in the
+                response, it MUST be used as the identifier for the
+                user.
+              </t>
+
+              <t>
                 "openid.identity" MUST be sent in a <xref
                     target="responding_to_authentication">authentication
                 request</xref>.
