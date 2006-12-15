@@ -515,7 +515,7 @@ Base 10 number | btwoc string representation
             </list>
           </t>
 
-           <section title="Successful Responses">
+          <section title="Successful Responses">
             <t>
               A server receiving a valid request MUST send a
               response with an HTTP status code of 200.
@@ -527,7 +527,7 @@ Base 10 number | btwoc string representation
               If a request is malformed or contains invalid arguments,
               the server MUST send a response with a status code of
               400. The response body MUST be a Key-Value Form <xref
-          target="kvform"/> message with the following fields:
+              target="kvform"/> message with the following fields:
             </t>
             <t>
               <list style='symbols'>
