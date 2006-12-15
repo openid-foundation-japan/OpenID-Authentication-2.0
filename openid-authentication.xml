@@ -2326,14 +2326,6 @@ Base 10 number | btwoc string representation
           information about the end user.
         </t>
 
-        <t>
-          If an assertion is made for a Claimed Identifier which
-          has not been discovered, the Relying Party MUST
-          perform discovery on that Identifier and verify that the
-          discovered information matches that in the assertion,
-          including that the OP is authoritative for the Identifier.
-        </t>
-
         <section title="HTTP and HTTPS URL Identifiers" anchor="http_s_identifiers">
           <t>
             Relying Parties MUST differentiate between URL Identifiers
