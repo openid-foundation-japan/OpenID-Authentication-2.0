@@ -2642,11 +2642,10 @@ Base 10 number | btwoc string representation
 
               <t>
                 The Relying Party MUST accept an <xref
-                    target="positive_assertions">authentication
+                target="positive_assertions">authentication
                 response</xref> that is missing the
-                "openid.response_nonce" parameter.  It SHOULD however
-                implement an out-of-band method for preventing replay
-                attacks.
+                "openid.response_nonce" parameter.  It SHOULD
+                implement a method for preventing replay attacks.
               </t>
 
               <t>
