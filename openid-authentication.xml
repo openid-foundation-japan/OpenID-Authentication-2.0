@@ -2038,8 +2038,8 @@ Base 10 number | btwoc string representation
 
         <list style="symbols">
           <t>
-            The value of "openid.return_to" matches the URL that
-            is processing this assertion
+            The value of "openid.return_to" matches the URL of the
+            current request
           </t>
           <t>
             Discovered information from the Identifier matches the
