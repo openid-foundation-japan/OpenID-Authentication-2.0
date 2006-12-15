@@ -790,20 +790,12 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          It is RECOMMENDED that a Relying Party place the <eref
-          target='http://openid.net/login-bg.gif'>OpenID logo</eref>
-          at the beginning of the form field where the end user enters
-          their Identifier. This aides in end user recognition that
-          they can use an OpenID enabled Identifier at the Relying Party.
-        </t>
-
-        <t>
           The form field's "name" attribute SHOULD have the value
-          "openid_identifier" as to allow User-Agents to automatically
-          pre-fill the end user's preferred Identifier when visiting a
-          Relying Party. Browser extensions or other software that
-          support OpenID Authentication may not detect a Relying
-          Party's support if the value is not this value.
+          "openid_identifier", so that User-Agents can automatically
+          determine that this is an OpenID form. Browser extensions or
+          other software that support OpenID Authentication may not
+          detect a Relying Party's support if this attribute is not
+          set appropriately.
         </t>
       </section>
 
@@ -3012,26 +3004,6 @@ Base 10 number | btwoc string representation
       href="http://exampleuser.livejournal.com/"/>
 ]]></artwork>
         </figure> 
-      </appendix>
-
-      <appendix title="Login Form">
-        <t>
-          The end user visits a Relying Party site which supports
-          OpenID Authentication.  The Relying Party presents the end
-          user with a form field for them to enter their Claimed
-          Identifier or their OP Identifier.
-        </t>
-
-        <t>
-          <figure>
-            <preamble>For example:</preamble>
-            <artwork>
-              ----------------------------------
-              |[logo]example.com               | [Login Button]
-              ----------------------------------
-            </artwork>
-          </figure>
-        </t>
       </appendix>
 
       <appendix title="XRI CanonicalID">
