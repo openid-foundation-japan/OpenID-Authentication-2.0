@@ -522,7 +522,7 @@ Base 10 number | btwoc string representation
             </t>
           </section>
 
-          <section title="Error Responses">
+          <section title="Error Responses" anchor="error_responses">
             <t>
               If a request is malformed or contains invalid arguments,
               the server MUST send a response with a status code of
@@ -2681,8 +2681,9 @@ Base 10 number | btwoc string representation
 
               <t>
                 <xref target="refuse_assoc">Unsuccessful association
-                responses</xref> MUST NOT be sent, since they are not
-                part of the OpenID Authentication 1.1 protocol.
+                responses</xref> MUST be sent as <xref
+                target="error_responses">error responses</xref> (HTTP
+                status code 400).
               </t>
 
               <t>
