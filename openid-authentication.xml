@@ -868,7 +868,7 @@ Base 10 number | btwoc string representation
           </list>
         </t>
 
-        <section title="Discovered Information">
+        <section title="Discovered Information" anchor="discovered_info">
           <t>
             Upon successful completion of discovery, the Relying
             Party will have one or more sets of the following
@@ -928,7 +928,7 @@ Base 10 number | btwoc string representation
           </t>
         </section>
 
-        <section title="XRDS-Based Discovery">
+        <section title="XRDS-Based Discovery" anchor="xrds_disco">
           <t>
             If XRI or Yadis discovery was used, the result will be an
             XRDS Document.  This is a XML document with entries for
@@ -2084,9 +2084,11 @@ Base 10 number | btwoc string representation
         <t>
           The Claimed Identifier MUST have been <xref
           target="discovery">discovered</xref> by the Relying Party
-          and the information in the assertion MUST exactly match the
-          discovered information.
+          and the information in the assertion MUST be present in the
+          discovered information. The Claimed Identifier MUST NOT be
+          an OP Identifier.
         </t>
+
         <t>
           If the Claimed Identifier was not present in the request
           ("openid.identity" was
@@ -2095,6 +2097,58 @@ Base 10 number | btwoc string representation
           response to make sure that the OP is authorized to make
           assertions about the Claimed Identifier.
         </t>
+
+        <texttable anchor="table_discovery_mapping"
+                   title="Discovered Information to Authentication Response Mapping">
+          <ttcol align='left'>Discovered Value</ttcol>
+          <ttcol align='left'>Response Field</ttcol>
+
+          <c>Claimed Identifier</c>
+          <c>openid.claimed_id</c>
+
+          <c>OP-Specific Identifier</c>
+          <c>openid.identiy</c>
+
+          <c>OP Endpoint URL</c>
+          <c>openid.op_endpoint</c>
+
+          <c>Protocol Version</c>
+          <c>openid.ns</c>
+          <postamble>
+            This table shows the mapping of <xref
+            target="discovered_info">discovered information</xref>
+            into fields in the <xref
+            target="positive_assertions">OpenID Authentication 2.0
+            "id_res" response</xref>
+          </postamble>
+        </texttable>
+
+        <t>
+          If using a discovery mechanism that yields an XRDS document,
+          the discovered information MUST be present in one
+          &lt;xrd:Service&gt; element. There MAY be unused fields in
+          that &lt;xrd:Service&gt; document.
+        </t>
+
+        <figure>
+          <preamble>Non-normative example:</preamble>
+          <artwork><![CDATA[
+<Service xmlns="xri://$xrd*($v*2.0)">
+  <Type>http://openid.net/signon/2.0</Type>
+  <URI>http://provider.example.com/openid</URI>
+  <URI>https://provider.example.com/openid</URI>
+</Service>
+]]></artwork>
+          <postamble>
+            In this example XRDS snippet, the &lt;xrd:Service&gt;
+            element has two &lt;xrd:URI&gt; elements, which map to OP
+            Endpoint URLs as per <xref target="discovered_info" />. If
+            an assertion has either value for "openid.op_endpoint",
+            then that field matches this &lt;xrd:Service&gt;
+            element. The other &lt;xrd:URI&gt; element is unused.
+          </postamble>
+        </figure>
+
       </section>
 
       <section title="Checking the Nonce" anchor="verify_nonce">
