@@ -2039,18 +2039,21 @@ Base 10 number | btwoc string representation
         <list style="symbols">
           <t>
             The value of "openid.return_to" matches the URL of the
-            current request
+            current request (<xref target="verify_return_to" />)
           </t>
           <t>
             Discovered information from the Identifier matches the
-            information in the assertion
+            information in the assertion (<xref target="verify_disco" />)
           </t>
           <t>
-            An assertion has not yet been accepted from this
-            OP with the same value for "openid.response_nonce"
+            An assertion has not yet been accepted from this OP with
+            the same value for "openid.response_nonce" (<xref
+            target="verify_nonce" />)
           </t>
           <t>
-            The signature on the assertion is valid
+            The signature on the assertion is valid and all fields
+            that are required to be signed are signed (<xref
+            target="verifying_signatures" />)
           </t>
         </list>
 
@@ -2058,7 +2061,7 @@ Base 10 number | btwoc string representation
         Identifier in the response is now verified.
       </t>
 
-      <section title="Verifying the Return URL">
+      <section title="Verifying the Return URL" anchor="verify_return_to">
         <t>
           To verify that the "openid.return_to" URL matches the URL
           that is processing this assertion:
@@ -2077,8 +2080,24 @@ Base 10 number | btwoc string representation
         </t>
       </section>
 
+      <section title="Verifying Discovered Information" anchor="verify_disco">
+        <t>
+          The Claimed Identifier MUST have been <xref
+          target="discovery">discovered</xref> by the Relying Party
+          and the information in the assertion MUST exactly match the
+          discovered information.
+        </t>
+        <t>
+          If the Claimed Identifier was not present in the request
+          ("openid.identity" was
+          "http://openid.net/identifier_select/2.0"), the Relying
+          Party MUST perform discovery on the Identifier in the
+          response to make sure that the OP is authorized to make
+          assertions about the Claimed Identifier.
+        </t>
+      </section>
 
-      <section title="Checking the Nonce">
+      <section title="Checking the Nonce" anchor="verify_nonce">
         <t>
           To prevent replay attacks, the agent checking the signature
           keeps track of the nonce values included in positive
@@ -2088,8 +2107,8 @@ Base 10 number | btwoc string representation
         <t>
           <list style="symbols">
             <t>
-              When using "check_authentication", the OP MUST ensure
-              that an assertion has not yet been accepted with the
+              When using "check_authentication", the OP MUST NOT issue
+              more than one success response to a request with the
               same value for "openid.response_nonce".
             </t>
             <t>
@@ -2242,23 +2261,6 @@ Base 10 number | btwoc string representation
 
           </section>
         </section>
-      </section>
-
-      <section title="Verifying Discovered Information">
-        <t>
-          The Claimed Identifier MUST have been <xref
-          target="discovery">discovered</xref> by the Relying Party
-          and the information in the assertion MUST exactly match the
-          discovered information.
-        </t>
-        <t>
-          If the Claimed Identifier was not present in the request
-          ("openid.identity" was
-          "http://openid.net/identifier_select/2.0"), the Relying
-          Party MUST perform discovery on the Identifier in the
-          response to make sure that the OP is authorized to make
-          assertions about the Claimed Identifier.
-        </t>
       </section>
 
       <section title="Identifying the end user" anchor="identifying">
