@@ -2879,10 +2879,10 @@ Base 10 number | btwoc string representation
         <t>
           Within the protocol there are places where a rogue RP could
           launch a denial of service attack against an OP since there
-          is nothing in this message that allows the OP to quickly
-          check that it is a genuine request.  This can be done by the
-          RP repeatedly requesting associations, authentication, or
-          verification of a signature.
+          is nothing in OpenID protocol messages that allows the OP to
+          quickly check that it is a genuine request.  This can be
+          done by the RP repeatedly requesting associations,
+          authentication, or verification of a signature.
         </t>
 
         <t>
