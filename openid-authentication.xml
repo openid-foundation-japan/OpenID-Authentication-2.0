@@ -2616,9 +2616,9 @@ Base 10 number | btwoc string representation
 
               <t>
                 In <xref
-                    target="requesting_authentication">authentication
-                requests</xref>, the "openid.identity" parameter MUST
-                NOT be the special value
+                target="requesting_authentication">authentication
+                requests</xref>, the "openid.identity" parameter
+                SHOULD NOT be the special value
                 "http://openid.net/identifier_select/2.0", because
                 OpenID Authentication 1.1 does not support the use of
                 OP Identifiers.
