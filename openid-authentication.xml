@@ -2675,6 +2675,13 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
+                OPs MAY choose to return a successful "no-encryption"
+                response to any association request. As above, the
+                "openid.session_type" parameter MUST be blank or
+                omitted from the response.
+              </t>
+
+              <t>
                 OPs MUST accept association requests with no assoc_type
                 parameter, and assume them to be of type HMAC-SHA1.
               </t>
@@ -2684,16 +2691,6 @@ Base 10 number | btwoc string representation
                 responses</xref> MUST be sent as <xref
                 target="error_responses">error responses</xref> (HTTP
                 status code 400).
-              </t>
-
-              <t>
-                OPs MAY choose to return a successful "no-encryption"
-                response to any association request.
-              </t>
-
-              <t>
-                Omit or set to blank the "session_type" parameter when
-                making "no-encryption" responses to association requests.
               </t>
 
               <t>
