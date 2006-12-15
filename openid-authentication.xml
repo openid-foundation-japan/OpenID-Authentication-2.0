@@ -2541,6 +2541,15 @@ Base 10 number | btwoc string representation
           HMAC-SHA1 associations.
         </t>
 
+        <t>
+          Error responses in OpenID Authentication 1.1 did not define
+          "contact" or "reference". OpenID 1.1 did allow for the
+          addition of extra fields in error responses. It is
+          RECOMMENDED for contact and reference to be sent even when
+          using OpenID Authentication 1.1, since they may be useful
+          for debugging and do not affect compatibility.
+        </t>
+
         <section title="Relying Parties">
           <t>
             <list style="symbols">
