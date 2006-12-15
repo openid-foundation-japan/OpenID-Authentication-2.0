@@ -2054,7 +2054,7 @@ Base 10 number | btwoc string representation
           </t>
         </list>
 
-        If all three of these conditions are met, the Claimed
+        If all four of these conditions are met, the Claimed
         Identifier in the response is now verified.
       </t>
 
