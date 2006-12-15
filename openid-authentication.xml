@@ -2668,9 +2668,11 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                OPs MUST accept a "no-encryption" association request
-                with a blank session_type parameter, if they choose to
-                accept "no-encryption" sessions.
+                In OpenID Authentication 1.1, the "no-encryption"
+                association session type is represented by a blank or
+                missing "openid.session_type" parameter.  OPs MUST NOT
+                send responses with "openid.session_type" set to
+                "no-encryption".
               </t>
 
               <t>
