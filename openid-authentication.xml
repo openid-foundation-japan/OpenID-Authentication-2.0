@@ -2175,7 +2175,7 @@ Base 10 number | btwoc string representation
           </list>
         </t>
         <t>
-          The time-stamp may be used to reject responses that are too
+          The time-stamp MAY be used to reject responses that are too
           far away from the current time, limiting the amount of time
           that nonces must be stored to prevent attacks. The
           acceptable range is implementation dependent. A larger range
