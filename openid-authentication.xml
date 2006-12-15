@@ -2178,10 +2178,11 @@ Base 10 number | btwoc string representation
           The time-stamp MAY be used to reject responses that are too
           far away from the current time, limiting the amount of time
           that nonces must be stored to prevent attacks. The
-          acceptable range is implementation dependent. A larger range
-          requires storing more nonces for a longer time. A shorter
-          range increases the chance that clock-skew and transaction
-          time will cause a spurious rejection.
+          acceptable range is out of the scope of this
+          specification. A larger range requires storing more nonces
+          for a longer time. A shorter range increases the chance that
+          clock-skew and transaction time will cause a spurious
+          rejection.
         </t>
       </section>
 
