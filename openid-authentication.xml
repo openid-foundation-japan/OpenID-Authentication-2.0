@@ -1119,18 +1119,16 @@ Base 10 number | btwoc string representation
 
     <section title="Establishing Associations" anchor="associations">
       <t>
-        An "association" is a shared secret between the OP and
-        Relying Party.  Once established, it is used to verify
-        subsequent protocol messages and reduces round trips.
+        An association between the Relying Parry and the OpenID Provider
+        establishes a shared secret between them, which is used to verify
+        subsequent protocol messages and reduce round trips.
       </t>
       <t>
         It is RECOMMENDED that a Relying Party form associations if it
         is possible for it to do so.  If a Relying Party is incapable
-        of creating or storing associations, <xref
-        target="verifying_signatures"/> provides an alternate
-        verification mechanism referred to as Stateless Mode (note
-        that this was referred to as "dumb mode" in previous versions
-        of this specification).
+        of creating or storing associations, <xref target="check_auth" />
+        provides an alternate verification mechanism referred to as
+        Stateless Mode.
       </t>
 
       <section title="Association Session Request">
@@ -1424,7 +1422,8 @@ Base 10 number | btwoc string representation
             Relying Party MAY make another request with the specified
             association session type and association type. If no
             association is established, the Relying Party MAY continue
-            the authentication process in stateless mode.
+            the authentication process in <xref target="check_auth">
+            Stateless Mode</xref>.
           </t>
         </section>
       </section>
@@ -1592,7 +1591,8 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   Note: If no association handle is sent, the
-                  transaction will take place in stateless mode.
+                  transaction will take place in <xref target="check_auth">
+                  Stateless Mode</xref>.
                 </t>
               </list>
             </t>
@@ -1766,7 +1766,7 @@ Base 10 number | btwoc string representation
         private association for signing the response.  The OP MUST
         store this association and MUST respond to later requests to
         check the signature of the response in <xref
-        target="verifying_signatures">stateless mode</xref>.
+        target="check_auth">Stateless Mode</xref>.
       </t>
       <t>
         If the "openid.return_to" value is omitted in the request, the
@@ -1864,7 +1864,7 @@ Base 10 number | btwoc string representation
                   Value: A string 255 characters or less in length,
                   that MUST be unique to this particular successful
                   authentication response. The nonce MUST start with the
-                  current time on the server, and MAY contain additional 
+                  current time on the server, and MAY contain additional
                   ASCII characters in the range 33-126 inclusive
                   (printable non-whitespace characters), as necessary to
                   make each response unique. The date and time MUST be
@@ -2191,9 +2191,8 @@ Base 10 number | btwoc string representation
           If the Relying Party has stored an association with the
           association handle specified in the assertion, it MUST check
           the signature on the assertion itself. If it does not have
-          an association stored, it MUST <xref
-          target="check_auth">request that the OP verify the
-          signature</xref> via Stateless mode.
+          an association stored, it MUST request that the OP verify the
+          signature via <xref target="check_auth">Stateless Mode</xref>.
         </t>
 
         <section title="Verifying with an Association" toc="exclude">
@@ -2223,10 +2222,17 @@ Base 10 number | btwoc string representation
         <section title="Verifying Directly with the OpenID Provider"
                  toc="exclude" anchor="check_auth">
           <t>
-            To verify a signature directly with the OP, the Relying
-            Party sends a <xref target="direct_request">direct
-            request</xref> to the OP. This is known as Stateless
-            mode.
+            To have the signature verification performed by the OP,
+            the Relying Party sends a <xref target="direct_request">
+            direct request</xref> to the OP. To verify the signature,
+            the OP uses a private association that was generated when 
+            it issued the <xref target="positive_assertions">
+            positive assertion</xref>.
+          </t>
+
+          <t>
+            This is known as Stateless Mode and was referred to as
+            "dumb mode" in previous versions of this specification.
           </t>
 
           <section title='Request Parameters' toc="exclude">
@@ -2245,6 +2251,25 @@ Base 10 number | btwoc string representation
                 </t>
               </list>
             </t>
+
+            <t>
+              For verifying signatures an OP MUST only use private
+              associations and MUST NOT use associations that have
+              shared keys. If the verification request contains a
+              handle for a shared association, it means the Relying
+              Party no longer knows the shared secret, or an entity
+              other than the RP (e.g. an attacker) has established
+              this association with the OP.
+            </t>
+
+            <t>
+              To prevent replay attacks, the OP MUST NOT issue more
+              than one verification response for each authentication
+              response it had previously issued. An authentication
+              response and its matching verification request may
+              be identified by their "openid.response_nonce" values.
+            </t>
+
           </section>
 
           <section title='Response Parameters' toc="exclude">
@@ -2262,9 +2287,10 @@ Base 10 number | btwoc string representation
                 <t>
                   is_valid
                   <list style='empty'>
-                    <t>Value: "true" or "false"</t>
-                    <t>Description: Boolean; whether the signature is
-                    valid.</t>
+                    <t>
+                      Value: "true" or "false"; asserts whether the
+                      signature of the verification request is valid.
+                    </t>
                   </list>
                 </t>
 
@@ -2272,47 +2298,28 @@ Base 10 number | btwoc string representation
                   invalidate_handle
                   <list style='empty'>
                     <t>
-                      Value: (optional) An association handle
+                      Value: (optional) The "invalidate_handle" value 
+                      sent in the verification request, if the OP confirms 
+                      it is invalid.
                     </t>
                     <t>
-                      Description: The association handle sent in
-                      the request, if the server confirms that it is
-                      invalid.
+                      Description: If present in a verification response
+                      with "is_valid" set to "true", the Relying Party
+                      SHOULD remove the corresponding association from its
+                      store and SHOULD NOT send further authentication
+                      requests with this handle.
+                    </t>
+                    <t>
+                      Note: This two-step process for invalidating
+                      associations is necessary to prevent an attacker
+                      from invalidating an association at will by adding
+                      "invalidate_handle" parameters to an authentication
+                      response.
                     </t>
                   </list>
                 </t>
               </list>
             </t>
-            <t>
-              An OP MUST NOT verify signatures for associations that
-              have shared MAC keys. If an OP did verify signatures
-              for associations with shared MAC keys, it would be
-              possible for parties other than the OP to create valid
-              assertions that seemed to come from the OP.
-            </t>
-
-            <t>
-              The OP SHOULD only return "is_valid" once for each
-              authentication response. An authentication response may
-              be identified by its "openid.response_nonce" value.
-            </t>
-
-            <t>
-              If the OP responds with "is_valid" set to
-              "true", and "invalidate_handle" is present, the Relying
-              Party SHOULD NOT send further authentication requests
-              with that handle.  "invalidate_handle" will only be
-              present when the original authentication request to the
-              OP included an association that the OP deemed
-              invalid. This implies that it will only be present in
-              this response if it was also present in the <xref
-              target="positive_assertions">"id_res"
-              response</xref>. Including "invalidate_handle" in the
-              direct verification is necessary to prevent an attacker
-              from invalidating an association at will by adding it to
-              an authentication response.
-            </t>
-
           </section>
         </section>
       </section>
@@ -2405,7 +2412,7 @@ Base 10 number | btwoc string representation
         name must define their own conventions for doing so.
       </t>
     </section>
-    
+
     <section title="Discovering OpenID Relying Parties">
       <t>
         Relying Parties are RECOMMENDED to use the Yadis protocol to
@@ -2763,7 +2770,7 @@ Base 10 number | btwoc string representation
           <t>
             Associations prevent tampering of signed fields by a man
             in the middle except during discovery, association
-            sessions and stateless mode. Altering signed fields
+            sessions and Stateless Mode. Altering signed fields
             without the shared secret requires breaking the
             MAC. Currently no tractable attack is known on the MACs
             used in this protocol. The quality of the protection
@@ -2776,7 +2783,7 @@ Base 10 number | btwoc string representation
             If DNS resolution or the transport layer is compromised
             signatures on messages are not adequate, since the
             attacker can impersonate the OP and issue its own
-            associations, or its own decisions in stateless mode. If
+            associations, or its own decisions in Stateless Mode. If
             an attacker can tamper with the discovery process he can
             specify any OP, and so does not have to impersonate the
             OP.  Additionally, if an attacker can compromise the
@@ -3094,7 +3101,7 @@ Base 10 number | btwoc string representation
 <link rel="openid2.local_id openid.delegate"
       href="http://exampleuser.livejournal.com/"/>
 ]]></artwork>
-        </figure> 
+        </figure>
       </appendix>
 
       <appendix title="XRI CanonicalID">
