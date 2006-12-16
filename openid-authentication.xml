@@ -266,13 +266,13 @@
             target="negative_assertions">authentication failed</xref>.
           </t>
           <t>
-            The Relying Party <xref
-            target="verification">verifies</xref> the information
-            received from the OP including checking the nonce,
-            verifying the signature by using either the shared key
-            established during the association or by sending a direct
-            request to the OP, and verifying the discovered
-            information.
+            The Relying Party <xref target="verification">verifies
+            </xref> the information received from the OP including
+            checking the Return URL, verifying the discovered 
+            information, checking the nonce, and verifying the
+            signature by using either the shared key established
+            during the association or by sending a direct request
+            to the OP.
            </t>
          </list>
       </t>
@@ -1741,7 +1741,7 @@ Base 10 number | btwoc string representation
       <t>
         Methods of identifying authorized end users and obtaining
         approval to return an OpenID Authentication assertion are
-        beyond the scope of this specification. 
+        beyond the scope of this specification.
       </t>
       <t>
         If the relying party requested OP-driven identifier selection
@@ -2225,7 +2225,7 @@ Base 10 number | btwoc string representation
             To have the signature verification performed by the OP,
             the Relying Party sends a <xref target="direct_request">
             direct request</xref> to the OP. To verify the signature,
-            the OP uses a private association that was generated when 
+            the OP uses a private association that was generated when
             it issued the <xref target="positive_assertions">
             positive assertion</xref>.
           </t>
@@ -2298,8 +2298,8 @@ Base 10 number | btwoc string representation
                   invalidate_handle
                   <list style='empty'>
                     <t>
-                      Value: (optional) The "invalidate_handle" value 
-                      sent in the verification request, if the OP confirms 
+                      Value: (optional) The "invalidate_handle" value
+                      sent in the verification request, if the OP confirms
                       it is invalid.
                     </t>
                     <t>
@@ -2572,7 +2572,7 @@ Base 10 number | btwoc string representation
                 "openid2.provider" and "openid.server" may appear
                 in the same "rel" attribute.
               </t>
-              
+
               <t>
                 When XRDS-based discovery is performed, the user's
                 OP-specific identifier appears in the
