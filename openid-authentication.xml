@@ -268,7 +268,7 @@
           <t>
             The Relying Party <xref target="verification">verifies
             </xref> the information received from the OP including
-            checking the Return URL, verifying the discovered 
+            checking the Return URL, verifying the discovered
             information, checking the nonce, and verifying the
             signature by using either the shared key established
             during the association or by sending a direct request
@@ -986,7 +986,8 @@ Base 10 number | btwoc string representation
             </section>
           </section>
 
-          <section title="Extracting Authentication Data">
+          <section title="Extracting Authentication Data"
+                   anchor="extracting_auth">
             <t>
               Once the Relying Party has obtained an XRDS document, it
               MUST first search the document (following the rules
@@ -1050,9 +1051,10 @@ Base 10 number | btwoc string representation
               Relying Party MUST use <xref target="compat_mode">OpenID
               Authentication 1.1 Compatibility</xref>. It is
               RECOMMENDED that Relying Parties supporting OpenID
-              Authentication 2.0 choose to use endpoints with the type
-              "http://openid.net/signon/2.0" if that type is
-              available.
+              Authentication 2.0 choose to use, if available, endpoints
+              with the type "http://openid.net/server/2.0" and
+              "http://openid.net/signon/2.0", in this order, as
+              specified in <xref target="extracting_auth" />
             </t>
 
             <t>
