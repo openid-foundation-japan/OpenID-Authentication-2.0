@@ -1732,17 +1732,16 @@ Base 10 number | btwoc string representation
       <t>
         When an authentication request comes from the User-Agent via
         <xref target="indirect_comm">indirect communication</xref>,
-        the OP SHOULD identify the User-Agent, and determine whether
-        the end user wishes to complete the authentication.  If the
-        end user can be identified and wishes to complete the
-        authentication, the OP SHOULD send a <xref
+        the OP SHOULD determine that an authorized end user wishes to
+        complete the authentication.  If an authorized end user wishes
+        to complete the authentication, the OP SHOULD send a <xref
         target="positive_assertions">positive assertion</xref> to the
         Relying Party.
       </t>
       <t>
-        Methods of identifying and authenticating the end user and
-        obtaining approval to return an OpenID Authentication
-        assertion are beyond the scope of this specification.
+        Methods of identifying authorized end users and obtaining
+        approval to return an OpenID Authentication assertion are
+        beyond the scope of this specification. 
       </t>
       <t>
         If the relying party requested OP-driven identifier selection
