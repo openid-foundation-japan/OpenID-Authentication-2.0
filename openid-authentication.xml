@@ -3060,9 +3060,9 @@ Base 10 number | btwoc string representation
             <preamble>
               For an end user to use "http://www.example.com/" as
               their Identifier, but have Relying Parties actually
-              verify https://exampleuser.exampleprovider.com/ with the OP
+              verify "https://exampleuser.exampleprovider.com/" with the OP
               Endpoint URL
-              https://www.exampleprovider.com/endpoint/, the
+              "https://www.exampleprovider.com/endpoint/", the
               following XML snippet should be present in the final XRD
               element in the XRDS file when discovery is preformed on
               "http://www.example.com/":
@@ -3081,11 +3081,11 @@ Base 10 number | btwoc string representation
       <appendix title="HTML Identifier Markup">
         <figure>
           <preamble>
-            To use www.example.com as their Identifier, but have
+            To use "http://www.example.com/" as their Identifier, but have
             Relying Parties actually verify
-            http://exampleuser.livejournal.com/ with the OpenID
+            "http://exampleuser.livejournal.com/" with the OpenID
             Provider located at
-            http://www.livejournal.com/openid/server.bml, the
+            "http://www.livejournal.com/openid/server.bml", the
             following markup should be present in the &lt;head&gt;
             of the HTML document located by the identifier URL:
           </preamble>
