@@ -141,6 +141,15 @@
       </t>
     </section>
 
+    <section title="Conventions">
+      <t>
+        Throughout this document, values are quoted to indicate that
+        they are to be taken literally. When using these values in
+        protocol messages, the quotes MUST NOT be used as part of the
+        value.
+      </t>
+    </section>
+
     <section title="Terminology">
       <t>
     <list style="hanging">
