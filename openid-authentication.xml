@@ -209,8 +209,8 @@
         </list>
       </t>
 
-      <t hangText="OP-Specific Identifier:">
-        An alternate Identifier for an end user that is specific to a
+      <t hangText="OP-Local Identifier:">
+        An alternate Identifier for an end user that is local to a
         particular OP and thus not necessarily under the end user's
         control.
       </t>
@@ -577,7 +577,7 @@ Base 10 number | btwoc string representation
                   reference
                   <list style='empty'>
                     <t>
-                      Value: (optional) A reference identifier, such
+                      Value: (optional) A reference Identifier, such
                       as a support ticket number or a URL to a news
                       blog, etc.
                     </t>
@@ -695,7 +695,7 @@ Base 10 number | btwoc string representation
                 openid.reference
                 <list style='empty'>
                   <t>
-                    Value: (optional) A reference identifier, such
+                    Value: (optional) A reference Identifier, such
                     as a support ticket number or a URL to a news
                     blog, etc.
                   </t>
@@ -931,12 +931,12 @@ Base 10 number | btwoc string representation
                   </t>
               </list>
               </t>
-              <t hangText="OP-Specific Identifier:">
+              <t hangText="OP-Local Identifier:">
                 An identifier that allows an OP to identify the end
-                user for this Claimed Identifier. If no OP-specific
-                identifier is present in the discovered information,
-                the Claimed Identifier MUST be used as the OP-specific
-                identifier.
+                user for this Claimed Identifier. If no OP-Local
+                Identifier is present in the discovered information,
+                the Claimed Identifier MUST be used as the OP-Local
+                Identifier.
               </t>
             </list>
 
@@ -944,7 +944,7 @@ Base 10 number | btwoc string representation
             Identifier. For the purposes of making OpenID
             authentication requests, the value
             "http://openid.net/identifier_select/2.0" SHOULD be used
-            as both the Claimed Identifier and the OP-specific
+            as both the Claimed Identifier and the OP-Local
             Identifier when an OP Identifier is entered.
           </t>
         </section>
@@ -1000,7 +1000,7 @@ Base 10 number | btwoc string representation
 
                   <t>
                     An &lt;xrd:LocalID&gt; tag (optional) whose text
-                    content is the OP-Specific Identifier.
+                    content is the OP-Local Identifier.
                   </t>
                 </list>
               </t>
@@ -1111,7 +1111,7 @@ Base 10 number | btwoc string representation
               <t>
                 A &lt;LINK&gt; tag MAY be included with attributes
                 "rel" set to "openid2.local_id" and "href" set to the
-                end user's OP-Specific Identifier
+                end user's OP-Local Identifier
               </t>
             </list>
           </t>
@@ -1572,7 +1572,7 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   Note: The Claimed Identifier is the same as the
-                  OP-Specific Identifier if a different OP-Specific
+                  OP-Local Identifier if a different OP-Local
                   Identifier is not supplied. If neither value is
                   present, the assertion is not about an identifier,
                   and will contain other information in its payload,
@@ -1591,7 +1591,7 @@ Base 10 number | btwoc string representation
               openid.identity
               <list style='empty'>
                 <t>
-                  Value: (optional) The OP-Specific Identifier.
+                  Value: (optional) The OP-Local Identifier.
                 </t>
                 <t>
                   Note: If this is set to the special value
@@ -1840,7 +1840,7 @@ Base 10 number | btwoc string representation
                   be either both present or both absent.
                 </t>
                 <t>
-                  Note: The end user MAY choose to use an OP-Specific
+                  Note: The end user MAY choose to use an OP-Local
                   Identifier as a Claimed Identifier.
                 </t>
                 <t>
@@ -1856,14 +1856,14 @@ Base 10 number | btwoc string representation
               openid.identity
               <list style='empty'>
                 <t>
-                  Value: (optional) The OP-Specific Identifier
+                  Value: (optional) The OP-Local Identifier
                 </t>
                 <t>
                   Note: Relying Parties SHOULD accept and verify
                   assertions about Identifiers for which they have not
                   requested authentication. OpenID Providers MAY
                   assist the end users in selecting the Claimed and
-                  OP-Specific Identifiers about which the assertion is
+                  OP-Local Identifiers about which the assertion is
                   made.  The openid.identity field MAY be omitted if
                   an extension is in use that makes the response
                   meaningful without it (see openid.claimed_id above).
@@ -2129,7 +2129,7 @@ Base 10 number | btwoc string representation
           <c>Claimed Identifier</c>
           <c>openid.claimed_id</c>
 
-          <c>OP-Specific Identifier</c>
+          <c>OP-Local Identifier</c>
           <c>openid.identiy</c>
 
           <c>OP Endpoint URL</c>
@@ -2587,8 +2587,8 @@ Base 10 number | btwoc string representation
               <t>
                 When HTML discovery is performed, the OP endpoint URL
                 is marked by the link relationship "openid.server"
-                rather than "openid2.provider". The user's OP-specific
-                identifier is marked by the link relationship
+                rather than "openid2.provider". The user's OP-Local
+                Identifier is marked by the link relationship
                 "openid.delegate" rather than "openid2.local_id".
                 The protocol version is in this case
                 "http://openid.net/signon/1.1". HTML allows multiple link
@@ -2600,7 +2600,7 @@ Base 10 number | btwoc string representation
 
               <t>
                 When XRDS-based discovery is performed, the user's
-                OP-specific identifier appears in the
+                OP-Local Identifier appears in the
                 &lt;openid:Delegate&gt; tag of the OpenID
                 &lt;xrd:Service&gt; element rather than in the
                 &lt;xrd:LocalID&gt; tag. In order to support
@@ -2625,10 +2625,10 @@ Base 10 number | btwoc string representation
                 Authentication 1.1. Relying Parties MAY send the value
                 when making requests, but MUST NOT depend on the value
                 being present in authentication responses. When the
-                OP-Specific Identifier ("openid.identity") is
+                OP-Local Identifier ("openid.identity") is
                 different from the Claimed Identifier, the Relying
                 Party MUST keep track of what Claimed Identifier was
-                used to discover the OP-Specific Identifier, for
+                used to discover the OP-Local Identifier, for
                 example by keeping it in session state. Although the
                 Claimed Identifier will not be present in the
                 response, it MUST be used as the identifier for the
@@ -3086,12 +3086,12 @@ Base 10 number | btwoc string representation
           </texttable>
       </appendix>
 
-      <appendix title="OP-Specific Identifiers">
+      <appendix title="OP-Local Identifiers">
         <t>
           An end user wants to use "http://www.example.com/" as their
           Claimed Identifier. The end user has an account with
           Example Provider, which functions as an OpenID Provider.  The
-          end user's OP-Specific Identifier is
+          end user's OP-Local Identifier is
           "https://exampleuser.exampleprovider.com/".
         </t>
 
@@ -3105,7 +3105,7 @@ Base 10 number | btwoc string representation
             <t hangText="Claimed Identifier">
               http://www.example.com/
             </t>
-            <t hangText="OP-Specific Identifier">
+            <t hangText="OP-Local Identifier">
               https://exampleuser.exampleprovider.com/
             </t>
           </list>
