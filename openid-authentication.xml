@@ -2148,9 +2148,10 @@ Base 10 number | btwoc string representation
 
         <t>
           If using a discovery mechanism that yields an XRDS document,
-          the discovered information MUST be present in one
-          &lt;xrd:Service&gt; element. There MAY be unused fields in
-          that &lt;xrd:Service&gt; document.
+          the protocol version, OP Endpoint URL and the OP-Local
+          Identifier (if different than the Claimed Identifier) MUST
+          be present in one &lt;xrd:Service&gt; element. There MAY be
+          unused fields in that &lt;xrd:Service&gt; element.
         </t>
 
         <figure>
