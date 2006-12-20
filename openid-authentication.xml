@@ -1146,6 +1146,7 @@ Base 10 number | btwoc string representation
         establishes a shared secret between them, which is used to verify
         subsequent protocol messages and reduce round trips.
       </t>
+
       <t>
         It is RECOMMENDED that a Relying Party form associations if it
         is possible for it to do so.  If a Relying Party is incapable
@@ -1446,7 +1447,7 @@ Base 10 number | btwoc string representation
             association session type and association type. If no
             association is established, the Relying Party MAY continue
             the authentication process in <xref target="check_auth">
-            Stateless Mode</xref>.
+            Direct Verification</xref>.
           </t>
         </section>
       </section>
@@ -1790,7 +1791,7 @@ Base 10 number | btwoc string representation
         private association for signing the response.  The OP MUST
         store this association and MUST respond to later requests to
         check the signature of the response in <xref
-        target="check_auth">Stateless Mode</xref>.
+        target="check_auth">Direct Verification</xref>.
       </t>
       <t>
         If the "openid.return_to" value is omitted in the request, the
@@ -2216,8 +2217,9 @@ Base 10 number | btwoc string representation
           If the Relying Party has stored an association with the
           association handle specified in the assertion, it MUST check
           the signature on the assertion itself. If it does not have
-          an association stored, it MUST request that the OP verify the
-          signature via <xref target="check_auth">Stateless Mode</xref>.
+          an association stored, it MUST request that the OP verify
+          the signature via <xref target="check_auth">Direct
+          Verification</xref>.
         </t>
 
         <section title="Verifying with an Association" toc="exclude">
@@ -2253,11 +2255,6 @@ Base 10 number | btwoc string representation
             the OP uses a private association that was generated when
             it issued the <xref target="positive_assertions">
             positive assertion</xref>.
-          </t>
-
-          <t>
-            This is known as Stateless Mode and was referred to as
-            "dumb mode" in previous versions of this specification.
           </t>
 
           <section title='Request Parameters' toc="exclude">
@@ -2823,13 +2820,13 @@ Base 10 number | btwoc string representation
           <t>
             Associations prevent tampering of signed fields by a man
             in the middle except during discovery, association
-            sessions and Stateless Mode. Altering signed fields
-            without the shared secret requires breaking the
-            MAC. Currently no tractable attack is known on the MACs
-            used in this protocol. The quality of the protection
-            provided by the MAC depends on the randomness of the
-            shared MAC key, so it is important that an unguessable
-            value be used.
+            sessions and <xref target="check_auth">Direct
+            Verification</xref>. Altering signed fields without the
+            shared secret requires breaking the MAC. Currently no
+            tractable attack is known on the MACs used in this
+            protocol. The quality of the protection provided by the
+            MAC depends on the randomness of the shared MAC key, so it
+            is important that an unguessable value be used.
           </t>
 
           <t>
