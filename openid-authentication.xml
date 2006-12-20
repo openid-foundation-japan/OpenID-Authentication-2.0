@@ -1481,7 +1481,7 @@ Base 10 number | btwoc string representation
             the association MAC key in plain-text to the Relying Party.
             This makes it possible for an eavesdropper to intercept
             the key, and forge messages to this Relying Party.
-            Therefore, no-encryption association sessions SHOULD NOT
+            Therefore, "no-encryption" association sessions SHOULD NOT
             be used unless the messages are using transport-level
             encryption. See <xref target="preventing_eavesdropping" />
             for more information.
@@ -2726,10 +2726,9 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                <xref target="refuse_assoc">Unsuccessful association
-                responses</xref> MUST be sent as <xref
-                target="error_responses">error responses</xref> (HTTP
-                status code 400).
+                Unsuccessful association attempts MAY be responded with
+                direct error messages or with "no-encryption" positive
+                association responses.
               </t>
 
               <t>
