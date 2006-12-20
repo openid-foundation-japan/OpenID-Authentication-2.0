@@ -2130,7 +2130,7 @@ Base 10 number | btwoc string representation
           <c>openid.claimed_id</c>
 
           <c>OP-Local Identifier</c>
-          <c>openid.identiy</c>
+          <c>openid.identity</c>
 
           <c>OP Endpoint URL</c>
           <c>openid.op_endpoint</c>
