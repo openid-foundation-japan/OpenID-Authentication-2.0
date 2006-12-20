@@ -2407,13 +2407,42 @@ Base 10 number | btwoc string representation
       </t>
 
       <t>
-        A namespace alias MUST NOT contain a period, MUST NOT be the
-        name of a field in a message defined in this specification,
-        and MUST NOT be the same as another namespace alias in the
-        same message. A namespace MUST NOT be assigned more than one
-        alias in the same message. If a message is a response to
-        another message, the response MAY use a different alias to
-        refer to the same namespace.
+        A namespace alias MUST NOT contain a period and MUST NOT be
+        the same as another namespace alias in the same message. A
+        namespace alias also MUST NOT be in the following list of
+        disallowed aliases:
+
+        <list style="symbols">
+          <t>assoc_handle</t>
+          <t>assoc_type</t>
+          <t>claimed_id</t>
+          <t>contact</t>
+          <t>delegate</t>
+          <t>dh_consumer_public</t>
+          <t>dh_gen</t>
+          <t>dh_modulus</t>
+          <t>error</t>
+          <t>identity</t>
+          <t>invalidate_handle</t>
+          <t>mode</t>
+          <t>ns</t>
+          <t>op_endpoint</t>
+          <t>openid</t>
+          <t>realm</t>
+          <t>reference</t>
+          <t>response_nonce</t>
+          <t>return_to</t>
+          <t>server</t>
+          <t>session_type</t>
+          <t>sig</t>
+          <t>signed</t>
+          <t>trust_root</t>
+        </list>
+
+        A namespace MUST NOT be assigned more than one alias in the
+        same message. If a message is a response to another message,
+        the response MAY use a different alias to refer to the same
+        namespace.
       </t>
 
       <t>Non-normative example:</t>
