@@ -813,35 +813,45 @@ Base 10 number | btwoc string representation
       <section title="Normalization" anchor="normalization">
         <t>
           The end user's input MUST be normalized into an
-          Identifier.  If the end user supplies input that does not
-          include a scheme (http, https, or xri), then the application
-          MUST determine if the input is an XRI or a URL missing
-          the scheme.
+          Identifier, as follows:
         </t>
 
         <t>
-          To do so, the Relying Party SHOULD examine the first
-          character of the input. If it is an XRI Global Context
-          Symbol ("=", "@", "+", "$", "(", or "!" see
-          <xref target="XRI Syntax 2.0">Section 2.2.1.2 of</xref>),
-          then the input SHOULD be treated as an XRI. If it is not,
-          then the input SHOULD be treated as an http URL, and
-          prefixed with the string "http://". See <xref
-          target='http_s_identifiers' /> for more information.
-        </t>
+          <list style="numbers">
+            <t>
+              If the user's input starts with the "xri://" prefix,
+              it MUST be stripped off, so that XRIs are used in the
+              canonical form.
+            </t>
 
-        <t>
-          URL identifiers MUST then be further normalized by both
-          following redirects when retrieving their content and
-          finally applying the rules in Section 6 of <xref
-          target='RFC3986' /> to the final destination URL. This final
-          URL MUST be noted by the Relying Party as the Claimed
-          Identifier and be used during future requests.
-        </t>
+            <t>
+              If the first character of the resulting string is a an
+              XRI Global Context Symbol ("=", "@", "+", "$", "(", or "!",
+              as defined in Section 2.2.1.2 of
+              <xref target="XRI Syntax 2.0" />), then the input SHOULD be
+              treated as an XRI.
+            </t>
 
-        <t>
-          If the scheme "xri://" is present on an XRI identifier, it
-          SHOULD be stripped off.
+            <t>
+              Otherwise, the input SHOULD be treated as an http URL; if it
+              does not include a "http" or "https" scheme, the identifier
+              MUST be prefixed with the string "http://". See
+              <xref target='http_s_identifiers' /> for more information.
+            </t>
+
+            <t>
+              URL identifiers MUST then be further normalized by both
+              following redirects when retrieving their content and
+              finally applying the rules in Section 6 of <xref
+              target='RFC3986' /> to the final destination URL. This final
+              URL MUST be noted by the Relying Party as the Claimed
+              Identifier and be used during future requests.
+            </t>
+          </list>
+
+          See <xref target="normalization_example">normalization
+          example</xref>.
+
         </t>
       </section>
 
@@ -1569,9 +1579,10 @@ Base 10 number | btwoc string representation
                   using <xref target="extensions">extensions</xref>.
                 </t>
                 <t>
-                  It is RECOMMENDED that OPs accept (and consider
-                  equivalent) XRI identifiers with or without the
-                  "xri://" prefix.
+                  It is RECOMMENDED that OPs accept XRI identifiers
+                  with or without the "xri://" prefix, as specified
+                  in the <xref target="normalization">Normalization
+                  </xref> section.
                 </t>
               </list>
             </t>
@@ -3046,6 +3057,34 @@ Base 10 number | btwoc string representation
 
     <appendix title="Examples">
       <t>Non-normative</t>
+
+      <appendix title="Normalization" anchor="normalization_example">
+          <texttable title="User's Input to Identifier Normalization">
+            <ttcol align="left">User's Input</ttcol>
+            <ttcol align="left">Identifier</ttcol>
+            <ttcol align="left">Type</ttcol>
+
+            <c>=example1</c>
+            <c>=example1</c>
+            <c>XRI</c>
+
+            <c>xri://=example2</c>
+            <c>=example2</c>
+            <c>XRI</c>
+
+            <c>xri://example3.com</c>
+            <c>http://example3.com</c>
+            <c>URL</c>
+
+            <c>http://example4.com/</c>
+            <c>http://example4.com</c>
+            <c>URL</c>
+
+            <c>example5.com</c>
+            <c>http://example5.com</c>
+            <c>URL</c>
+          </texttable>
+      </appendix>
 
       <appendix title="OP-Specific Identifiers">
         <t>
