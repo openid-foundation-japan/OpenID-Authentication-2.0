@@ -1065,15 +1065,15 @@ Base 10 number | btwoc string representation
 
             <t>
               For compatibility with deployed code, it is RECOMMENDED
-              that a Relying Party also accept
+              that Relying Parties also accept
               "http://openid.net/signon/1.0" or
               "http://openid.net/signon/1.1" for the value of
-              &lt;xrd:Type&gt;. When one of these values is used, the
-              Relying Party MUST use <xref target="compat_mode">OpenID
-              Authentication 1.1 Compatibility</xref>. It is
-              RECOMMENDED that Relying Parties supporting OpenID
-              Authentication 2.0 choose to use, if available, endpoints
-              with the type "http://openid.net/server/2.0" and
+              &lt;xrd:Type&gt;, as described in the
+              <xref target="compat_mode">OpenID Authentication 1.1 
+              Compatibility</xref> section. It is RECOMMENDED that
+              Relying Parties supporting OpenID Authentication 2.0
+              choose to use, if available, endpoints with the type
+              "http://openid.net/server/2.0" and
               "http://openid.net/signon/2.0", in this order, as
               specified in <xref target="extracting_auth" />
             </t>
