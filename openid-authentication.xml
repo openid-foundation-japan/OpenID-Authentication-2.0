@@ -18,71 +18,8 @@
   <front>
     <title>OpenID Authentication 2.0 - Pre-Draft 11</title>
 
-    <author initials="D.R" surname="Recordon" fullname="David Recordon">
-      <organization abbrev="VeriSign">VeriSign, Inc.</organization>
-      <address>
-        <postal>
-          <street>487 E Middlefield Road</street>
-          <city>Mountain View</city> <region>CA</region>
-          <code>94043</code>
-          <country>USA</country>
-        </postal>
-        <email>drecordon@verisign.com</email>
-      </address>
-    </author>
-
-    <author initials="J.H" surname="Hoyt" fullname="Josh Hoyt">
-      <organization abbrev="JanRain">JanRain, Inc.</organization>
-      <address>
-        <postal>
-          <street>5331 SW Macadam Avenue</street>
-          <street>Suite #375</street>
-          <city>Portland</city> <region>OR</region>
-          <code>97239</code>
-          <country>USA</country>
-        </postal>
-        <email>josh@janrain.com</email>
-      </address>
-    </author>
-
-    <author initials="D.H" surname="Hardt" fullname="Dick Hardt">
-      <organization abbrev="Sxip">Sxip Identity Corporation</organization>
-      <address>
-        <postal>
-          <street>798 Beatty Street</street>
-          <city>Vancouver</city> <region>BC</region>
-          <code>V6B 2M1</code>
-          <country>Canada</country>
-        </postal>
-        <email>dick@sxip.com</email>
-      </address>
-    </author>
-
-    <author initials="J.B" surname="Bufu" fullname="Johnny Bufu">
-      <organization abbrev="Sxip">Sxip Identity Corporation</organization>
-      <address>
-        <postal>
-          <street>798 Beatty Street</street>
-          <city>Vancouver</city> <region>BC</region>
-          <code>V6B 2M1</code>
-          <country>Canada</country>
-        </postal>
-        <email>johnny@sxip.com</email>
-      </address>
-    </author>
-
-    <author initials="B.F" surname="Fitzpatrick"
-            fullname="Brad Fitzpatrick">
-      <organization abbrev="Six Apart">Six Apart, Ltd.</organization>
-      <address>
-        <postal>
-          <street>548 4th Street</street>
-          <city>San Francisco</city> <region>CA</region>
-          <code>94107</code>
-          <country>USA</country>
-        </postal>
-        <email>brad@danga.com</email>
-      </address>
+    <author initials="" surname="specs@openid.net" fullname="specs@openid.net">
+      <organization />
     </author>
 
     <date month="December" year="2006"/>
@@ -3214,6 +3151,35 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
 
     <!-- XXX: An example for Generating Signatures might be nice. -->
 
+    <appendix title="Acknowledgements">
+      <t>
+        The OpenID Community would like to thank the following people
+        for the work they've done in the drafting and editing of this
+        specification.  If you want to know the nitty gritty of who
+        actually wrote what, feel free to look at our SVN repository
+        or even use "svn blame". :)
+        http://openid.net/svn/specifications/authentication/2.0/
+      </t>
+
+      <t>
+      <list style='empty'>
+        <t>Barry Ferg (barry@sxip.com)</t>
+        <t>Brad Fitzpatrick (bradfitz@sixapart.com)</t>
+        <t>Carl Howells (chowells@janrain.com)</t>
+        <t>David Recordon (drecordon@verisign.com) &lt;editor&gt;</t>
+        <t>Dick Hardt (dick@sxip.com)</t>
+        <t>Drummond Reed (drummond.reed@cordance.net)</t>
+        <t>Hans Granqvist (hgranqvist@verisign.com)</t>
+        <t>Johannes Ernst (jernst@netmesh.us)</t>
+        <t>Johnny Bufu (johnny@sxip.com) &lt;editor&gt;</t>
+        <t>Josh Hoyt (josh@janrain.com) &lt;editor&gt;</t>
+        <t>Kevin Turner (kevin@janrain.com)</t>
+        <t>Marius Scurtescu (marius@sxip.com)</t>
+        <t>Martin Atkins (mart@degeneration.co.uk)</t>
+        <t>Mike Glover (mpg4@janrain.com)</t>
+      </list>
+      </t>
+    </appendix>
   </middle>
 
   <back>
