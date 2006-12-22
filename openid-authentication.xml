@@ -1998,7 +1998,8 @@ Base 10 number | btwoc string representation
             <t>
               Any query parameters that are present in the
               "openid.return_to" URL MUST also be present with the
-              same values in the accepting URL.
+              same values in the URL of the HTTP request the RP
+              received.
             </t>
           </list>
         </t>
