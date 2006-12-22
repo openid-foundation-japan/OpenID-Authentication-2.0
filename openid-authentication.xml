@@ -787,13 +787,15 @@ Base 10 number | btwoc string representation
         <t>
           <list style="numbers">
             <t>
-              If the identifier is an XRI,
-              <xref target="XRI Resolution 2.0" /> will yield an XRDS
-              document that contains the necessary information.  It
-              should also be noted that a Relying Party can take
-              advantage of the XDI.org XRI Proxy Resolver.  This is
-              located at http://xri.net/ and will remove the need for
-              the RP to do XRI Resolution itself.
+              If the identifier is an XRI, <xref target="XRI
+              Resolution 2.0" /> will yield an XRDS document that
+              contains the necessary information.  It should also be
+              noted that a Relying Party can take advantage of the
+              XDI.org XRI Proxy Resolver.  This is located at
+              http://xri.net/ and will remove the need for the RP to
+              do XRI Resolution itself.  For example, to resolve
+              =david.recordon you would perform an HTTP fetch of
+              http://proxy.xri.net/=david.recordon?_xrd_r=application/xrds%2Bxml.
             </t>
 
             <t>
