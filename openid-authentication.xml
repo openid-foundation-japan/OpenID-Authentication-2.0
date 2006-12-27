@@ -790,12 +790,10 @@ Base 10 number | btwoc string representation
               If the identifier is an XRI, <xref target="XRI
               Resolution 2.0" /> will yield an XRDS document that
               contains the necessary information.  It should also be
-              noted that a Relying Party can take advantage of the
-              XDI.org XRI Proxy Resolver.  This is located at
-              http://xri.net/ and will remove the need for the RP to
-              do XRI Resolution itself.  For example, to resolve
-              =david.recordon you would perform an HTTP fetch of
-              http://proxy.xri.net/=david.recordon?_xrd_r=application/xrds%2Bxml.
+              noted that Relying Parties can take advantage of the
+              XRI Proxy Resolvers, such as the one provided by
+              XDI.org. This will remove the need for the RPs to
+              perform XRI Resolution themselves.
             </t>
 
             <t>
