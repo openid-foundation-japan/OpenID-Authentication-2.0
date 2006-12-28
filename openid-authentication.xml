@@ -189,7 +189,7 @@
             OP uses an association to sign subsequent messages and the
             Relying Party to verify those messages; this removes the
             need for subsequent direct requests to verify the
-            signature after each authentication request.
+            signature after each authentication request/response.
           </t>
           <t>
             The Relying Party redirects the end user's User-Agent to
