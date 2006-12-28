@@ -769,9 +769,9 @@ Base 10 number | btwoc string representation
               URL identifiers MUST then be further normalized by both
               following redirects when retrieving their content and
               finally applying the rules in Section 6 of <xref
-              target='RFC3986' /> to the final destination URL. This final
-              URL MUST be noted by the Relying Party as the Claimed
-              Identifier and be used during future requests.
+              target='RFC3986' /> to the final destination URL. This
+              final URL MUST be noted by the Relying Party for the
+              basis of discovery.
             </t>
           </list>
 
