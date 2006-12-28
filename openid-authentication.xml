@@ -723,7 +723,7 @@ Base 10 number | btwoc string representation
         <t>
           To initiate OpenID Authentication, the Relying Party SHOULD
           present the end user with a form that has a field for
-          entering an Identifier.
+          entering a User-Supplied Identifier.
         </t>
 
         <t>
