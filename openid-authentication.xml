@@ -867,7 +867,7 @@ Base 10 number | btwoc string representation
 
             <section title="OP Identifier Element">
               <t>
-                An OP Identifier Element is a &lt;xrd:Service&gt;
+                An OP Identifier Element is an &lt;xrd:Service&gt;
                 element with the following information:
 
                 <list style="hanging">
