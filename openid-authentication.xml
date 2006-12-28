@@ -855,7 +855,7 @@ Base 10 number | btwoc string representation
         <section title="XRDS-Based Discovery" anchor="xrds_disco">
           <t>
             If XRI or Yadis discovery was used, the result will be an
-            XRDS Document.  This is a XML document with entries for
+            XRDS Document.  This is an XML document with entries for
             services that are related to the Identifier.  It is
             defined in <xref target="XRI Resolution 2.0">Section 3
             of</xref>.  See <xref target="XRDS Sample" /> for an
