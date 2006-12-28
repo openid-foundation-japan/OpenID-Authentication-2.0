@@ -2477,6 +2477,11 @@ Base 10 number | btwoc string representation
             session type, DH-SHA256, allow for stronger signatures on
             authentication assertions.
           </t>
+          <t>
+            An actual <xref target="security_considerations">Security
+            Considerations section</xref> which looks at protecting
+            the protocol from end-to-end.
+          </t>
         </section>
 
         <section title="Extensions">
@@ -2695,7 +2700,7 @@ Base 10 number | btwoc string representation
       </section>
     </section>
 
-    <section title="Security Considerations">
+    <section title="Security Considerations" anchor="security_considerations">
       <section title="Preventing Attacks">
         <section title="Eavesdropping Attacks"
                  anchor="preventing_eavesdropping">
