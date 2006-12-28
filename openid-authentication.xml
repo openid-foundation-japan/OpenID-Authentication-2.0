@@ -787,8 +787,9 @@ Base 10 number | btwoc string representation
         <t>
           <list style="numbers">
             <t>
-              If the identifier is an XRI, <xref target="XRI
-              Resolution 2.0" /> will yield an XRDS document that
+              If the identifier is an XRI, <xref
+              target="XRI Resolution 2.0" />
+              will yield an XRDS document that
               contains the necessary information.  It should also be
               noted that Relying Parties can take advantage of the
               XRI Proxy Resolvers, such as the one provided by
