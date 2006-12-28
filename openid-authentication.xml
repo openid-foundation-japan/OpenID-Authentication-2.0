@@ -814,7 +814,7 @@ Base 10 number | btwoc string representation
               is retrieved, or no <xref
               target="service_elements">Service Elements</xref> are
               found in the XRDS document, the URL is retrieved and
-              <xref target="html_disco">HTML-based discovery</xref>
+              <xref target="html_disco">HTML-Based discovery</xref>
               SHALL be attempted.
             </t>
           </list>
@@ -994,14 +994,14 @@ Base 10 number | btwoc string representation
 
         <section anchor="html_disco" title="HTML-Based Discovery">
           <t>
-            HTML-based discovery MUST be supported by Relying
-            Parties. HTML-based discovery is only usable for discovery
+            HTML-Based discovery MUST be supported by Relying
+            Parties. HTML-Based discovery is only usable for discovery
             of Claimed Identifiers. OP Identifiers must be XRIs or
             URLs that support XRDS discovery.
           </t>
 
           <t>
-            To use HTML-based discovery, an HTML document MUST be
+            To use HTML-Based discovery, an HTML document MUST be
             available at the URL of the Claimed Identifier. In the
             HEAD section of the document:
 
@@ -3037,7 +3037,7 @@ Base 10 number | btwoc string representation
 
         <t>
           In this scenario, with the proper configuration of Yadis or
-          HTML-based Discovery (see <xref target="discovery" /> and
+          HTML-Based Discovery (see <xref target="discovery" /> and
           <xref target="XRDS Sample" /> below), a Relying Party will
           discover the following information about the end user:
 
