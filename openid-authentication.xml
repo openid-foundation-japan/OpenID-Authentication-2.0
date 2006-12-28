@@ -797,10 +797,10 @@ Base 10 number | btwoc string representation
               target="XRI Resolution 2.0" />
               will yield an XRDS document that
               contains the necessary information.  It should also be
-              noted that Relying Parties can take advantage of the
+              noted that Relying Parties can take advantage of
               XRI Proxy Resolvers, such as the one provided by
               XDI.org at http://www.xri.net. This will remove the need for the RPs to
-              perform XRI Resolution themselves.
+              perform XRI Resolution locally.
             </t>
 
             <t>
