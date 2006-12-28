@@ -948,13 +948,13 @@ Base 10 number | btwoc string representation
             <t>
               When using XRI resolution, the Canonical ID MUST be
               used as the Claimed Identifier. For an XRI to be a
-              valid identifier, both the &lt;ProviderID&gt; and
+              valid Identifier, both the &lt;ProviderID&gt; and
               &lt;CanonicalID&gt; MUST be present in the discovered
               XRDS document.
             </t>
 
             <t>
-              When using URL-based identifiers, the CanonicalID
+              When using URL Identifiers, the CanonicalID
               element MUST be ignored if present.
             </t>
           </section>
