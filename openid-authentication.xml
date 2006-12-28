@@ -760,7 +760,7 @@ Base 10 number | btwoc string representation
 
             <t>
               Otherwise, the input SHOULD be treated as an http URL; if it
-              does not include a "http" or "https" scheme, the identifier
+              does not include a "http" or "https" scheme, the Identifier
               MUST be prefixed with the string "http://". See
               <xref target='http_s_identifiers' /> for more information.
             </t>
