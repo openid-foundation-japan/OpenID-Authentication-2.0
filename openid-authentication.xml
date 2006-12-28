@@ -114,7 +114,7 @@
 
           <t hangText="OP Endpoint URL:">
             The URL which accepts OpenID Authentication requests,
-            obtained by performing discovery on the the User-supplied
+            obtained by performing discovery on the the User-Supplied
             Identifier. This value MUST be an absolute URL.
           </t>
 
@@ -122,7 +122,7 @@
             An Identifier for an OpenID Provider.
           </t>
 
-          <t hangText="User-supplied Identifier">
+          <t hangText="User-Supplied Identifier:">
             An Identifier that was presented by the end user to the
             Relying Party.  During the initiation phase of the protocol,
             an end user may enter either their own Identifier or an OP
@@ -138,7 +138,7 @@
             <list style="symbols">
               <t>
                 The Identifier obtained by <xref target="normalization">
-                normalizing</xref> the User-supplied Identifier, if it
+                normalizing</xref> the User-Supplied Identifier, if it
                 was an URL.
               </t>
               <t>
@@ -163,12 +163,12 @@
         <list style="numbers">
           <t>
             The end user <xref target="initiation">initiates
-            authentication</xref> by presenting a User-supplied Identifier
+            authentication</xref> by presenting a User-Supplied Identifier
             to the Relying Party via their User-Agent.
           </t>
           <t>
             After <xref target="normalization">normalizing</xref> the
-            User-supplied Identifier, The Relying Party <xref
+            User-Supplied Identifier, The Relying Party <xref
             target="discovery">performs discovery</xref> on it and
             establishes the OP Endpoint URL that the end user uses for
             authentication.
