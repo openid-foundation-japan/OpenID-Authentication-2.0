@@ -751,8 +751,8 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              If the first character of the resulting string is a an
-              XRI Global Context Symbol ("=", "@", "+", "$", "(", or "!",
+              If the first character of the resulting string is an
+              XRI Global Context Symbol ("=", "@", "+", "$", or "!",
               as defined in Section 2.2.1.2 of
               <xref target="XRI Syntax 2.0" />), then the input SHOULD be
               treated as an XRI.
