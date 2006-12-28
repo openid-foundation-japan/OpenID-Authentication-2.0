@@ -168,10 +168,16 @@
           </t>
           <t>
             After <xref target="normalization">normalizing</xref> the
-            User-Supplied Identifier, The Relying Party <xref
+            User-Supplied Identifier, the Relying Party <xref
             target="discovery">performs discovery</xref> on it and
             establishes the OP Endpoint URL that the end user uses for
-            authentication.
+            authentication.  It should be noted that the User-Supplied
+            Identifier may be an OP Identifier, as discussed in <xref
+            target="discovered_info" />, which allows selection of a
+            Claimed Identifier at the OP or for the protocol to
+            proceed without a Claimed Identifier if something else
+            useful is being done via an <xref
+            target="extensions">extension</xref>.
           </t>
           <t>
             (optional)
