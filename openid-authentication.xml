@@ -2274,7 +2274,8 @@ Base 10 number | btwoc string representation
             reduction in security when using this scheme. If an
             attacker could gain control of the HTTP URL, it would have
             no effect on the HTTPS URL, since the HTTP URL is not ever
-            used as an Identifier.
+            used as an Identifier except to initiate the discovery
+            process.
           </t>
         </section>
       </section>
