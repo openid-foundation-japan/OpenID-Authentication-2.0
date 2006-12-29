@@ -770,8 +770,10 @@ Base 10 number | btwoc string representation
               following redirects when retrieving their content and
               finally applying the rules in Section 6 of <xref
               target='RFC3986' /> to the final destination URL. This
-              final URL MUST be noted by the Relying Party for the
-              basis of discovery.
+              final URL MUST be noted by the Relying Party as the
+              Claimed Identifier and be used when <xref
+              target="requesting_authentication">requesting
+              authentication</xref>.
             </t>
           </list>
 
