@@ -745,17 +745,18 @@ Base 10 number | btwoc string representation
         <t>
           <list style="numbers">
             <t>
-              If the user's input starts with the "xri://" prefix,
-              it MUST be stripped off, so that XRIs are used in the
-              canonical form.
+              If the user's input starts with one of the "xri://",
+              "xri://$ip*", or "xri://$dns*" prefixes, they MUST be
+              stripped off, so that XRIs are used in the canonical
+              form, and URI-authority XRIs are further considered URL
+              identifiers.
             </t>
 
             <t>
               If the first character of the resulting string is an
-              XRI Global Context Symbol ("=", "@", "+", "$", "!") or "(",
-              as defined in Section 2.2.1 of
-              <xref target="XRI Syntax 2.0" />, then the input SHOULD be
-              treated as an XRI.
+              XRI Global Context Symbol ("=", "@", "+", "$", "!") as
+              defined in Section 2.2.1 of<xref target="XRI Syntax 2.0" />,
+              then the input SHOULD be treated as an XRI.
             </t>
 
             <t>
@@ -3016,16 +3017,20 @@ Base 10 number | btwoc string representation
             <c>=example2</c>
             <c>XRI</c>
 
-            <c>xri://example3.com</c>
+            <c>xri://$dns*example3.com</c>
             <c>http://example3.com</c>
             <c>URL</c>
 
+            <c>xri://$ip*1.2.3.4</c>
+            <c>http://1.2.3.4</c>
+            <c>URL</c>
+
             <c>http://example4.com/</c>
-            <c>http://example4.com</c>
+            <c>http://example4.com/</c>
             <c>URL</c>
 
             <c>https://example5.com/</c>
-            <c>https://example5.com</c>
+            <c>https://example5.com/</c>
             <c>URL</c>
 
             <c>example6.com</c>
