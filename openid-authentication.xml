@@ -1915,7 +1915,7 @@ Base 10 number | btwoc string representation
               <t>
                 openid.mode
                 <list style='empty'>
-                  <t>Value: "id_res"</t>
+                  <t>Value: "setup_needed"</t>
                 </list>
               </t>
             </list>
