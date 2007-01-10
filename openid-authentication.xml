@@ -1974,8 +1974,8 @@ Base 10 number | btwoc string representation
             current request (<xref target="verify_return_to" />)
           </t>
           <t>
-            Discovered information from the Identifier matches the
-            information in the assertion (<xref target="verify_disco" />)
+            Discovered information matches the information in the
+            assertion (<xref target="verify_disco" />)
           </t>
           <t>
             An assertion has not yet been accepted from this OP with
@@ -1989,8 +1989,9 @@ Base 10 number | btwoc string representation
           </t>
         </list>
 
-        If all four of these conditions are met, the Claimed
-        Identifier in the response is now verified.
+        If all four of these conditions are met, assertion is now
+        verified. If the assertion contained a Claimed Identifier, the
+        user is now authenticated with that identifier.
       </t>
 
       <section title="Verifying the Return URL" anchor="verify_return_to">
@@ -2015,20 +2016,27 @@ Base 10 number | btwoc string representation
 
       <section title="Verifying Discovered Information" anchor="verify_disco">
         <t>
-          The Claimed Identifier MUST have been <xref
-          target="discovery">discovered</xref> by the Relying Party
-          and the information in the assertion MUST be present in the
-          discovered information. The Claimed Identifier MUST NOT be
-          an OP Identifier.
+          If the Claimed Identifier is included in the assertion, it
+          MUST have been <xref target="discovery">discovered</xref> by
+          the Relying Party and the information in the assertion MUST
+          be present in the discovered information. The Claimed
+          Identifier MUST NOT be an OP Identifier.
         </t>
 
         <t>
           If the Claimed Identifier was not present in the request
           ("openid.identity" was
           "http://openid.net/identifier_select/2.0"), the Relying
-          Party MUST perform discovery on the Identifier in the
-          response to make sure that the OP is authorized to make
+          Party MUST perform discovery on the Claimed Identifier in
+          the response to make sure that the OP is authorized to make
           assertions about the Claimed Identifier.
+        </t>
+
+        <t>
+          If no Claimed Identifier is present in the response, then no
+          discovery verification can be done, and the user MUST NOT be
+          treated as authenticated, athough extension information in
+          the assertion MAY still be used.
         </t>
 
         <texttable anchor="table_discovery_mapping"
