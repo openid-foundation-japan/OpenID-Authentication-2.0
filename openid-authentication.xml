@@ -13,7 +13,7 @@
   <?rfc sortrefs="yes"?>
   <?rfc iprnotified="no" ?>
   <?rfc strict="yes" ?>
-  <?rfc private="Draft" ?>
+  <?rfc private="Implementor's Draft" ?>
 
   <front>
     <title>OpenID Authentication 2.0 - Draft 11</title>
@@ -22,7 +22,7 @@
       <organization />
     </author>
 
-    <date month="December" year="2006"/>
+    <date month="January" year="2007"/>
 
     <abstract>
       <t>
