@@ -2033,10 +2033,11 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          If no Claimed Identifier is present in the response, then no
-          discovery verification can be done, and the user MUST NOT be
-          treated as authenticated, athough extension information in
-          the assertion MAY still be used.
+          If no Claimed Identifier is present in the response, the
+          assertion is not about an identifier and the RP MUST NOT use
+          the User-supplied Identifier associated with the current
+          OpenID authentication transaction to identify the user.
+          Extension information in the assertion MAY still be used.
         </t>
 
         <texttable anchor="table_discovery_mapping"
