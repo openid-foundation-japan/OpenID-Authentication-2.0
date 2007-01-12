@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
-<!ENTITY rfc2119 PUBLIC ''
-'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml'>
-]>
+<?xml-stylesheet type='text/xsl' href='http://xml.resource.org/authoring/rfc2629.xslt' ?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-<rfc category="info" ipr="none" docName="openid-authentication-2_0-11.xml">
+<rfc category="info" ipr="full3978" docName="openid-authentication-2_0-11.xml">
 
   <?rfc toc="yes" ?>
   <?rfc tocdepth="2" ?>
   <?rfc symrefs="yes" ?>
   <?rfc sortrefs="yes"?>
-  <?rfc iprnotified="no" ?>
   <?rfc strict="yes" ?>
+  <?rfc iprnotified="no" ?>
   <?rfc private="Implementor's Draft" ?>
 
   <front>
@@ -91,7 +88,7 @@
           <t hangText="Identifier:">
             An Identifier is either a "http" or "https" URI, (commonly
             referred to as a "URL" within this document), or an <xref
-            target="XRI Syntax 2.0" >XRI</xref>.  This document defines
+            target="XRI_Syntax_2.0" >XRI</xref>.  This document defines
             various kinds of Identifiers, designed for use in different
             contexts.
           </t>
@@ -225,7 +222,7 @@
     </section>
 
 
-    <section title="Data Formats" anchor="formats">
+    <section title="Data Formats">
 
       <section title="Protocol Messages">
 
@@ -340,38 +337,36 @@
           <t>
             Non-normative
           </t>
-          <t>
-            <figure>
-              <preamble>
-                The following examples encode the following information:
-              </preamble>
-              <artwork><![CDATA[
+          <figure>
+            <preamble>
+              The following examples encode the following information:
+            </preamble>
+            <artwork><![CDATA[
 Key     | Value
 --------+---------------------------
 mode    | error
 error   | This is an example message
 ]]>
-              </artwork>
-            </figure>
-          </t>
-          <t>
-            <figure>
-              <preamble>
-                Key-Value Form encoded:
-              </preamble>
-              <artwork><![CDATA[mode:error
+            </artwork>
+          </figure>
+
+          <figure>
+            <preamble>
+              Key-Value Form encoded:
+            </preamble>
+            <artwork><![CDATA[mode:error
 error:This is an example message
 ]]>
-              </artwork>
-            </figure>
-            <figure>
-              <preamble>
-                x-www-urlencoded, as in a HTTP POST body or in a URL's
-                query string (<xref target="RFC3986" /> section 3):
-              </preamble>
-              <artwork>openid.mode=error&amp;openid.error=This%20is%20an%20example%20message</artwork>
-            </figure>
-          </t>
+            </artwork>
+          </figure>
+
+          <figure>
+            <preamble>
+              x-www-urlencoded, as in a HTTP POST body or in a URL's
+              query string (<xref target="RFC3986" /> section 3):
+            </preamble>
+            <artwork>openid.mode=error&amp;openid.error=This%20is%20an%20example%20message</artwork>
+          </figure>
         </section>
       </section>
 
@@ -402,7 +397,7 @@ Base 10 number | btwoc string representation
       </section>
     </section>
 
-    <section title="Communication Types" anchor="communication">
+    <section title="Communication Types">
       <section title="Direct Communication"
                anchor="direct_comm">
         <t>
@@ -468,7 +463,7 @@ Base 10 number | btwoc string representation
             </t>
           </section>
 
-          <section title="Error Responses" anchor="error_responses">
+          <section title="Error Responses">
             <t>
               If a request is malformed or contains invalid arguments,
               the server MUST send a response with a status code of
@@ -755,7 +750,7 @@ Base 10 number | btwoc string representation
             <t>
               If the first character of the resulting string is an
               XRI Global Context Symbol ("=", "@", "+", "$", "!") as
-              defined in Section 2.2.1 of<xref target="XRI Syntax 2.0" />,
+              defined in Section 2.2.1 of<xref target="XRI_Syntax_2.0" />,
               then the input SHOULD be treated as an XRI.
             </t>
 
@@ -797,7 +792,7 @@ Base 10 number | btwoc string representation
           <list style="numbers">
             <t>
               If the identifier is an XRI, <xref
-              target="XRI Resolution 2.0" />
+              target="XRI_Resolution_2.0" />
               will yield an XRDS document that
               contains the necessary information.  It should also be
               noted that Relying Parties can take advantage of
@@ -830,7 +825,7 @@ Base 10 number | btwoc string representation
             (see the <xref target="terminology">Terminology
             section</xref> for definitions).  If more than one set of
             the following information has been discovered, the
-            precedence rules defined in <xref target="XRI Resolution 2.0" />
+            precedence rules defined in <xref target="XRI_Resolution_2.0" />
             are to be applied.
 
             <list style="symbols">
@@ -855,13 +850,13 @@ Base 10 number | btwoc string representation
           </t>
         </section>
 
-        <section title="XRDS-Based Discovery" anchor="xrds_disco">
+        <section title="XRDS-Based Discovery">
           <t>
             If XRI or Yadis discovery was used, the result will be an
             XRDS Document.  This is an XML document with entries for
             services that are related to the Identifier.  It is
-            defined in <xref target="XRI Resolution 2.0">Section 3
-            of</xref>.  See <xref target="XRDS Sample" /> for an
+            defined in <xref target="XRI_Resolution_2.0">Section 3
+            of</xref>.  See <xref target="XRDS_Sample" /> for an
             example XRDS document.
           </t>
 
@@ -918,7 +913,7 @@ Base 10 number | btwoc string representation
             <t>
               Once the Relying Party has obtained an XRDS document, it
               MUST first search the document (following the rules
-              described in <xref target="XRI Resolution 2.0" />) for
+              described in <xref target="XRI_Resolution_2.0" />) for
               an OP Identifier Element. If none is found, the RP will search
               for a Claimed Identifier Element.
             </t>
@@ -1361,14 +1356,14 @@ Base 10 number | btwoc string representation
       </section>
 
       <section title="Association Types" anchor="assoc_types">
-        <section title="HMAC-SHA1" anchor="hmacsha1">
+        <section title="HMAC-SHA1">
           <t>
             An association of type "HMAC-SHA1" uses the <xref
             target="sign_algos">HMAC-SHA1</xref> signature algorithm.
           </t>
         </section>
 
-        <section title="HMAC-SHA256" anchor="hmacsha256">
+        <section title="HMAC-SHA256">
           <t>
             An association of type "HMAC-256" uses the <xref
             target="sign_algos">HMAC-SHA256</xref> signature
@@ -2041,8 +2036,7 @@ Base 10 number | btwoc string representation
           Extension information in the assertion MAY still be used.
         </t>
 
-        <texttable anchor="table_discovery_mapping"
-                   title="Discovered Information to Authentication Response Mapping">
+        <texttable title="Discovered Information to Authentication Response Mapping">
           <ttcol align='left'>Discovered Value</ttcol>
           <ttcol align='left'>Response Field</ttcol>
 
@@ -2907,7 +2901,7 @@ Base 10 number | btwoc string representation
           OpenID Provider.
         </t>
 
-        <texttable anchor="table_variants">
+        <texttable>
           <ttcol align='left'>Number</ttcol>
           <ttcol align='left'>Variant</ttcol>
           <ttcol align='left'>Values</ttcol>
@@ -3061,7 +3055,7 @@ Base 10 number | btwoc string representation
         <t>
           In this scenario, with the proper configuration of Yadis or
           HTML-Based Discovery (see <xref target="discovery" /> and
-          <xref target="XRDS Sample" /> below), a Relying Party will
+          <xref target="XRDS_Sample" /> below), a Relying Party will
           discover the following information about the end user:
 
           <list style="hanging">
@@ -3075,28 +3069,26 @@ Base 10 number | btwoc string representation
         </t>
       </appendix>
 
-      <appendix title="XRDS" anchor="XRDS Sample">
-        <t>
-          <figure>
-            <preamble>
-              For an end user to use "http://www.example.com/" as
-              their Identifier, but have Relying Parties actually
-              verify "https://exampleuser.exampleprovider.com/" with the OP
-              Endpoint URL
-              "https://www.exampleprovider.com/endpoint/", the
-              following XML snippet should be present in the final XRD
-              element in the XRDS file when discovery is preformed on
-              "http://www.example.com/":
-            </preamble>
-            <artwork><![CDATA[
+      <appendix title="XRDS" anchor="XRDS_Sample">
+        <figure>
+          <preamble>
+            For an end user to use "http://www.example.com/" as
+            their Identifier, but have Relying Parties actually
+            verify "https://exampleuser.exampleprovider.com/" with the OP
+            Endpoint URL
+            "https://www.exampleprovider.com/endpoint/", the
+            following XML snippet should be present in the final XRD
+            element in the XRDS file when discovery is preformed on
+            "http://www.example.com/":
+          </preamble>
+          <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
   <Type>http://specs.openid.net/auth/2.0/signon</Type>
   <URI>https://www.exampleprovider.com/endpoint/</URI>
   <LocalID>https://exampleuser.exampleprovider.com/</LocalID>
 </Service>
 ]]></artwork>
-          </figure>
-        </t>
+        </figure>
       </appendix>
 
       <appendix title="HTML Identifier Markup">
@@ -3368,7 +3360,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
         <seriesInfo name="RFC" value="3275" />
       </reference>
 
-      <reference anchor="XRI Syntax 2.0"
+      <reference anchor="XRI_Syntax_2.0"
                  target="http://www.oasis-open.org/committees/download.php/15376" >
 
         <front>
@@ -3386,7 +3378,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
                 "http://www.oasis-open.org/committees/download.php/15377" />
       </reference>
 
-      <reference anchor="XRI Resolution 2.0"
+      <reference anchor="XRI_Resolution_2.0"
                  target="http://www.oasis-open.org/committees/download.php/17293" >
         <front>
           <title>Extensible Resource Identifier (XRI) Resolution V2.0
