@@ -292,7 +292,7 @@
                 openid.ns
                 <list style='empty'>
                   <t>
-                    Value: "http://openid.net/signon/2.0"
+                    Value: "http://specs.openid.net/auth/2.0"
                   </t>
                   <t>
                     This particular value MUST be present for the
@@ -439,7 +439,7 @@ Base 10 number | btwoc string representation
                 ns
                 <list style='empty'>
                   <t>
-                    Value: "http://openid.net/signon/2.0"
+                    Value: "http://specs.openid.net/auth/2.0"
                   </t>
                   <t>
                     This particular value MUST be present for the
@@ -846,12 +846,12 @@ Base 10 number | btwoc string representation
               <t>OP-Local Identifier</t>
             </list>
 
-            If the end user entered an OP Identifier, there is no Claimed
-            Identifier. For the purposes of making OpenID
+            If the end user entered an OP Identifier, there is no
+            Claimed Identifier. For the purposes of making OpenID
             Authentication requests, the value
-            "http://openid.net/identifier_select/2.0" MUST be used
-            as both the Claimed Identifier and the OP-Local
-            Identifier when an OP Identifier is entered.
+            "http://specs.openid.net/auth/2.0/identifier_select"
+            MUST be used as both the Claimed Identifier and the
+            OP-Local Identifier when an OP Identifier is entered.
           </t>
         </section>
 
@@ -876,7 +876,7 @@ Base 10 number | btwoc string representation
                 <list style="hanging">
                   <t>
                     An &lt;xrd:Type&gt; tag whose text content is
-                    "http://openid.net/server/2.0".
+                    "http://specs.openid.net/auth/2.0/server".
                   </t>
 
                   <t>
@@ -896,7 +896,7 @@ Base 10 number | btwoc string representation
                 <list style="hanging">
                   <t>
                     An &lt;xrd:Type&gt; tag whose text content is
-                    "http://openid.net/signon/2.0".
+                    "http://specs.openid.net/auth/2.0/signon".
                   </t>
 
                   <t>
@@ -964,8 +964,8 @@ Base 10 number | btwoc string representation
 
           <section title="Additional Information">
             <t>
-              The "openid" namespace is
-              "http://openid.net/signon/2.0". The "xrd" namespace is
+              The "openid" namespace is no longer used as of OpenID
+              Authentication 2.0.  The "xrd" namespace is
               "xri://$xrd*($v*2.0)".
             </t>
 
@@ -974,14 +974,15 @@ Base 10 number | btwoc string representation
               that Relying Parties also accept
               "http://openid.net/signon/1.0" or
               "http://openid.net/signon/1.1" for the value of
-              &lt;xrd:Type&gt;, as described in the
-              <xref target="compat_mode">OpenID Authentication 1.1 
-              Compatibility mode</xref> section. It is RECOMMENDED that
-              Relying Parties supporting OpenID Authentication 2.0
-              choose to use, if available, endpoints with the type
-              "http://openid.net/server/2.0" and
-              "http://openid.net/signon/2.0", in this order, as
-              specified in <xref target="extracting_auth" />
+              &lt;xrd:Type&gt;, as described in the <xref
+              target="compat_mode">OpenID Authentication 1.1
+              Compatibility mode</xref> section. It is RECOMMENDED
+              that Relying Parties supporting OpenID Authentication
+              2.0 choose to use, if available, endpoints with the type
+              "http://specs.openid.net/auth/2.0/server" and
+              "http://specs.openid.net/auth/2.0/signon", in
+              this order, as specified in <xref
+              target="extracting_auth" />
             </t>
 
             <t>
@@ -1024,7 +1025,7 @@ Base 10 number | btwoc string representation
 
           <t>
             The protocol version when HTML discovery is performed is
-            "http://openid.net/signon/2.0".
+            "http://specs.openid.net/auth/2.0/signon".
           </t>
 
           <t>
@@ -1503,12 +1504,12 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   Note: If this is set to the special value
-                  "http://openid.net/identifier_select/2.0" then the
-                  OP SHOULD choose an Identifier that belongs to the end
-                  user. This parameter MAY be omitted if the request is
-                  not about an identifier (for instance if an extension
-                  is in use that makes the request meaningful without
-                  it; see openid.claimed_id above).
+                  "http://specs.openid.net/auth/2.0/identifier_select"
+                  then the OP SHOULD choose an Identifier that belongs
+                  to the end user. This parameter MAY be omitted if
+                  the request is not about an identifier (for instance
+                  if an extension is in use that makes the request
+                  meaningful without it; see openid.claimed_id above).
                 </t>
               </list>
             </t>
@@ -1678,10 +1679,10 @@ Base 10 number | btwoc string representation
       <t>
         If the relying party requested OP-driven identifier selection
         by setting "openid.identity" to
-        "http://openid.net/identifier_select/2.0" and there are
-        Identifiers for which the end user is authorized to issue
-        authentication responses, the OP SHOULD allow the end user to
-        choose which Identifier to use.
+        "http://specs.openid.net/auth/2.0/identifier_select"
+        and there are Identifiers for which the end user is authorized
+        to issue authentication responses, the OP SHOULD allow the end
+        user to choose which Identifier to use.
       </t>
       <t>
         If the Relying Party supplied an association handle with the
@@ -2026,10 +2027,10 @@ Base 10 number | btwoc string representation
         <t>
           If the Claimed Identifier was not present in the request
           ("openid.identity" was
-          "http://openid.net/identifier_select/2.0"), the Relying
-          Party MUST perform discovery on the Claimed Identifier in
-          the response to make sure that the OP is authorized to make
-          assertions about the Claimed Identifier.
+          "http://specs.openid.net/auth/2.0/identifier_select"), the
+          Relying Party MUST perform discovery on the Claimed
+          Identifier in the response to make sure that the OP is
+          authorized to make assertions about the Claimed Identifier.
         </t>
 
         <t>
@@ -2077,7 +2078,7 @@ Base 10 number | btwoc string representation
           <preamble>Non-normative example:</preamble>
           <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
-  <Type>http://openid.net/signon/2.0</Type>
+  <Type>http://specs.openid.net/auth/2.0/signon</Type>
   <URI>http://provider.example.com/openid</URI>
   <URI>https://provider.example.com/openid</URI>
 </Service>
@@ -2404,7 +2405,7 @@ Base 10 number | btwoc string representation
           </t>
           <t>
             Containing a &lt;xrd:Type&gt; tag whose content is
-            "http://openid.net/return_to/2.0".
+            "http://specs.openid.net/auth/2.0/return_to".
           </t>
         </list>
       </t>
@@ -2413,7 +2414,7 @@ Base 10 number | btwoc string representation
         <preamble>Non-normative example:</preamble>
         <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
-  <Type>http://openid.net/return_to/2.0</Type>
+  <Type>http://specs.openid.net/auth/2.0/return_to</Type>
   <URI>http://consumer.example.com/return</URI>
 </Service>
 ]]></artwork>
@@ -2611,9 +2612,9 @@ Base 10 number | btwoc string representation
                 target="requesting_authentication">authentication
                 requests</xref>, the "openid.identity" parameter
                 SHOULD NOT be the special value
-                "http://openid.net/identifier_select/2.0", because
-                OpenID Authentication 1.1 does not support the use of
-                OP Identifiers.
+                "http://specs.openid.net/auth/2.0/identifier_select",
+                because OpenID Authentication 1.1 does not support the
+                use of OP Identifiers.
               </t>
 
               <t>
@@ -3089,7 +3090,7 @@ Base 10 number | btwoc string representation
             </preamble>
             <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
-  <Type>http://openid.net/signon/2.0</Type>
+  <Type>http://specs.openid.net/auth/2.0/signon</Type>
   <URI>https://www.exampleprovider.com/endpoint/</URI>
   <LocalID>https://exampleuser.exampleprovider.com/</LocalID>
 </Service>
