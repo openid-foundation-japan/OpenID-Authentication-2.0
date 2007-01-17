@@ -121,7 +121,8 @@
 
           <t hangText="User-Supplied Identifier:">
             An Identifier that was presented by the end user to the
-            Relying Party.  During the initiation phase of the protocol,
+            Relying Party, or selected by the user at the OpenID
+            Provider.  During the initiation phase of the protocol,
             an end user may enter either their own Identifier or an OP
             Identifier. If an OP Identifier is used, the OP may then
             assist the end user in selecting an Identifier to share with
@@ -3268,7 +3269,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
             <organization>U.S. Department of Commerce</organization>
           </author>
           <author>
-            <organization>National Institute of Standards 
+            <organization>National Institute of Standards
               and Technology</organization>
           </author>
         </front>
