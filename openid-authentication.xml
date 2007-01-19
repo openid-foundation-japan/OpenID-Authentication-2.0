@@ -1670,7 +1670,9 @@ Base 10 number | btwoc string representation
       <t>
         Methods of identifying authorized end users and obtaining
         approval to return an OpenID Authentication assertion are
-        beyond the scope of this specification.
+        beyond the scope of this specification.  See <xref
+        target="rp_mitm_proxy" /> for OpenID Provider security
+        considerations.
       </t>
       <t>
         If the relying party requested OP-driven identifier selection
@@ -2795,6 +2797,22 @@ Base 10 number | btwoc string representation
             even begin, a transaction if SSL is not being correctly
             used at these various endpoints.
           </t>
+
+          <section title="Rogue Relying Party Proxying" anchor="rp_mitm_proxy">
+            <t>
+              A special type of man-in-the-middle attack is one where
+              the Relying Party is a rogue party acting as a MITM.  The
+              RP would perform discovery on the End User's Claimed
+              Identifier and instead of redirecting the User Agent to
+              the OP, would instead proxy the OP through itself.  This
+              would thus allow the RP to capture credentials the End
+              User provides to the OP.  While there are multiple ways to
+              prevent this sort of attack, the specifics are outside the
+              scope of this document.  Each method of prevention
+              requires that the OP establish a secure channel with the
+              End User.
+            </t>
+          </section>
         </section>
       </section>
 
