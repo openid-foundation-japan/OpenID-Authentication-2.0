@@ -862,7 +862,7 @@ Base 10 number | btwoc string representation
           </t>
 
 
-          <section title="Service Elements" anchor="service_elements">
+          <section title="OpenID Service Elements" anchor="service_elements">
 
             <section title="OP Identifier Element">
               <t>
@@ -939,9 +939,10 @@ Base 10 number | btwoc string representation
             <t>
               The Relying Party MUST confirm that the provider of the
               XRD that contains the &lt;CanonicalID&gt; element is
-              authoritative for that Canonical ID. Relying Parties
-              should either do this manually or ensure that their
-              resolver does this.
+              authoritative for that Canonical ID and that this XRDS
+              document is authoritative for the OpenID Service
+              Element. Relying Parties should either do this manually
+              or ensure that their resolver does this.
            </t>
 
             <t>
