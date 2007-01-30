@@ -1003,17 +1003,17 @@ Base 10 number | btwoc string representation
 
           <t>
             To use HTML-Based discovery, an HTML document MUST be
-            available at the URL of the Claimed Identifier. In the
-            HEAD section of the document:
+            available at the URL of the Claimed Identifier. Within the
+            HEAD element of the document:
 
             <list>
               <t>
-                A &lt;LINK&gt; tag MUST be included with attributes
+                A LINK element MUST be included with attributes
                 "rel" set to "openid2.provider" and "href" set to an OP
                 Endpoint URL
               </t>
               <t>
-                A &lt;LINK&gt; tag MAY be included with attributes
+                A LINK element MAY be included with attributes
                 "rel" set to "openid2.local_id" and "href" set to the
                 end user's OP-Local Identifier
               </t>
