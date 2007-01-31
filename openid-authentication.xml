@@ -1694,7 +1694,7 @@ Base 10 number | btwoc string representation
         specified.
       </t>
       <t>
-        If no association handle is specified, the OP SHOULD create a
+        If no association handle is specified, the OP SHOULD use a
         private association for signing the response.  The OP MUST
         store this association and MUST respond to later requests to
         check the signature of the response via <xref
