@@ -3028,39 +3028,66 @@ Base 10 number | btwoc string representation
       <t>Non-normative</t>
 
       <appendix title="Normalization" anchor="normalization_example">
-          <texttable title="User's Input to Identifier Normalization">
-            <ttcol align="left">User's Input</ttcol>
-            <ttcol align="left">Identifier</ttcol>
-            <ttcol align="left">Type</ttcol>
+        <t>
+          See section 6 of <xref target="RFC3986" /> for
+          textual URL normalization details and more examples.
+        </t>
+        <texttable title="User's Input to Identifier Normalization">
+          <ttcol align="left">User's Input</ttcol>
+          <ttcol align="left">Identifier</ttcol>
+          <ttcol align="left">Type</ttcol>
+          <ttcol align="left">Discussion</ttcol>
 
-            <c>=example1</c>
-            <c>=example1</c>
-            <c>XRI</c>
+          <c>example.com</c>
+          <c>http://example.com/</c>
+          <c>URL</c>
+          <c>A URI with a missing scheme is normalized to a http URI</c>
 
-            <c>xri://=example2</c>
-            <c>=example2</c>
-            <c>XRI</c>
+          <c>http://example.com</c>
+          <c>http://example.com/</c>
+          <c>URL</c>
+          <c>An empty path component is normalized to a slash</c>
 
-            <c>xri://$dns*example3.com</c>
-            <c>http://example3.com</c>
-            <c>URL</c>
+          <c>https://example.com/</c>
+          <c>https://example.com/</c>
+          <c>URL</c>
+          <c>https URIs remain https URIs</c>
 
-            <c>xri://$ip*1.2.3.4</c>
-            <c>http://1.2.3.4</c>
-            <c>URL</c>
+          <c>http://example.com/user</c>
+          <c>http://example.com/user</c>
+          <c>URL</c>
+          <c>No trailing slash is added to non-empty path components</c>
 
-            <c>http://example4.com/</c>
-            <c>http://example4.com/</c>
-            <c>URL</c>
+          <c>http://example.com/user/</c>
+          <c>http://example.com/user/</c>
+          <c>URL</c>
+          <c>Trailing slashes are preserved on non-empty path components</c>
 
-            <c>https://example5.com/</c>
-            <c>https://example5.com/</c>
-            <c>URL</c>
+          <c>http://example.com/</c>
+          <c>http://example.com/</c>
+          <c>URL</c>
+          <c>Trailing slashes are preserved when the path is empty</c>
 
-            <c>example6.com</c>
-            <c>http://example6.com</c>
-            <c>URL</c>
-          </texttable>
+          <c>=example</c>
+          <c>=example</c>
+          <c>XRI</c>
+          <c>Normalized XRIs start with a global context symbol</c>
+
+          <c>xri://=example</c>
+          <c>=example</c>
+          <c>XRI</c>
+          <c>Normalized XRIs start with a global context symbol</c>
+
+          <c>xri://$dns*example.com/</c>
+          <c>http://example.com/</c>
+          <c>URL</c>
+          <c>XRIs that use $dns as the first segement are expressed as the equivalent URI</c>
+
+          <c>xri://$ip*1.2.3.4</c>
+          <c>http://1.2.3.4/</c>
+          <c>URL</c>
+          <c>XRIs that use $ip as the first segment are expressed as the equivalent URI</c>
+        </texttable>
       </appendix>
 
       <appendix title="OP-Local Identifiers">
