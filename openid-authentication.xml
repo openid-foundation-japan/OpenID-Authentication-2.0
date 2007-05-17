@@ -1106,10 +1106,8 @@ Base 10 number | btwoc string representation
                     <xref target="assoc_sess_types"/>.
                   </t>
                   <t>
-                    Note: Unless using transport layer encryption, it
-                    is NOT RECOMMENDED to use "no-encryption" on a
-                    public network, see <xref
-                        target="preventing_eavesdropping" />.
+                    Note: Unless using transport layer encryption, 
+                    "no-encryption" MUST NOT be used.
                   </t>
                 </list>
               </t>
@@ -1384,10 +1382,10 @@ Base 10 number | btwoc string representation
             In a "no-encryption" association session, the OP sends
             the association MAC key in plain-text to the Relying Party.
             This makes it possible for an eavesdropper to intercept
-            the key, and forge messages to this Relying Party.
-            Therefore, "no-encryption" association sessions SHOULD NOT
-            be used unless the messages are using transport layer
-            encryption. See <xref target="preventing_eavesdropping" />
+            the key, and forge messages to this Relying Party when not
+            using transport layer encryption.  Therefore, "no-encryption"
+            association sessions MUST NOT be used unless the messages
+            are using transport layer encryption. See <xref target="preventing_eavesdropping" />
             for more information.
           </t>
 
@@ -2714,14 +2712,9 @@ Base 10 number | btwoc string representation
         <section title="Eavesdropping Attacks"
                  anchor="preventing_eavesdropping">
           <t>
-            There are two places in this protocol that are vulnerable
+            There is one place in this protocol that is vulnerable
             to eavesdropping attacks.
             <list style="symbols">
-              <t>
-                An eavesdropper could intercept an unencrypted association
-                session and recover the shared secret, allowing an attacker
-                to masquerade as the OP to that relying party.
-              </t>
               <t>
                 If the nonce were not checked, an eavesdropper could also
                 intercept a successful authentication assertion and re-use it.
@@ -2730,12 +2723,12 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            Both of these attacks can be prevented by using SSL for
-            these connections. The association session can also use
-            Diffie-Hellman Key Exchange instead of "no-encryption" to
-            protect from eavesdropping. If the nonce is checked in
-            message verification, the positive authentication
-            assertion cannot be re-used.
+            This attack can be prevented by using transport layer encryption
+            for these connections to prevent eavesdropping. In addition,
+            if not using TLS this attack can still be prevented by
+            checking the nonce while performing message verification.
+            When doing so, the positive authentication assertion cannot
+            be re-used.
           </t>
         </section>
 
