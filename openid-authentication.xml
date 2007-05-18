@@ -1037,6 +1037,18 @@ Base 10 number | btwoc string representation
             escaped using the percent-encoding (%xx) mechanism
             described in <xref target='RFC3986' />.
           </t>
+
+          <t>
+	        As discussed in the <xref
+            target="compat_mode">OpenID Authentication 1.1
+            Compatibility mode</xref> section, these discovery tags
+            are not the same as in previous versions of the protocol.
+            While the same data is conveyed, the names have changed which
+            allows a Relying Party to determine the protocol version
+            being used.  A Relying Party MAY encounter a Claimed Identifier
+            which uses HTML-Based Discovery to advertise both version 1.1
+            and 2.0 Providers.
+          </t>
         </section>
       </section>
     </section>
