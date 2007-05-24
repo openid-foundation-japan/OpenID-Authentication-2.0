@@ -392,3 +392,53 @@ user and the relying party does not have to keep that state.
 It is always necessary for the relying party to have performed
 discovery on the claimed identifier before honoring an assertion for
 that claimed identifier.
+
+
+Proposed for Draft 12
+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+These changes are proposed for draft 12.
+
+
+Explicitly allow fragments on OpenID identifiers
+--------------------------------------------------
+
+Make the specification allow fragments to be part of a valid OpenID
+URL identifier.
+
+Motivating Use Cases
+..................................................
+
+The fragments can be used by an OpenID provider to manage its
+namespace while retaining human-understandable identifiers.
+
+Proposed Implementation
+..................................................
+
+The OpenID provider can send a URL with a fragment as the claimed
+identifier. The full URL (with the fragment) is the user's identifier,
+so relying parties store the URL with the fragment. The URL without
+the fragment should be used when the URL has to be displayed.
+
+
+Realm verification
+--------------------------------------------------
+
+Add a mechanism for verifying that a return_to URL is intended to be
+an OpenID endpoint.
+
+Motivating Use Cases
+..................................................
+
+There exist several ways for an attacker to use a URL on a trusted
+site to send information to an untrusted site. When one of these
+attacks is made, the user sees a trusted realm, but their data will be
+forwarded to an untrusted site. These attacks are collectively
+referred to as "realm spoofing," and include (at least) open proxies,
+open redirectors, and cross-site-scripting attacks.
+
+Proposed implementation
+..................................................
+
+Yadis discovery on the realm, using any specified return_to URLs will
+show that the realm is tied to that particular return_to URL.

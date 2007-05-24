@@ -567,7 +567,7 @@ Base 10 number | btwoc string representation
           </t>
           <t>
             The &lt;form&gt; element's "action" attribute value MUST
-            be the URL of the receivier. Each Key-Value pair MUST be
+            be the URL of the receiver. Each Key-Value pair MUST be
             included in the form as an &lt;input&gt; element. The key
             MUST be encoded as the "name" attribute and the value as
             the "value" attribute, such that the User-Agent will
@@ -1649,6 +1649,39 @@ Base 10 number | btwoc string representation
           Party. Whether a realm is overly-general is at the
           discretion of the OP.
         </t>
+
+        <section title="Using the Realm for Return URL Verification">
+          <t>
+            OpenID providers SHOULD verify that the return_to URL
+            specified in the request is an OpenID relying party
+            endpoint. To verify a return_to URL, first obtain the
+            relying party endpoints for the realm by performing <xref
+            target="rp_discovery">discovery on the relying
+            party</xref>. Then, check to make sure that the return_to
+            URL matches one of the relying party endpoints.
+          </t>
+          <t>
+            A realm may contain a wildcard, and so may not be a valid
+            URL. In that case, perform discovery on the URL obtained
+            by substituting the return_to URL's domain into the realm.
+          </t>
+          <t>
+            To match a return_to URL against a relying party endpoint,
+            use the same rules as for matching the return_to URL
+            against the realm, treating the relying party's endpoint
+            URL as the realm. Relying party endpoint URLs MUST NOT
+            contain a domain wildcard, and SHOULD be as specific as
+            possible.
+          </t>
+          <t>
+            If verification is attempted and fails, the provider
+            SHOULD NOT send a positive assertion to that return_to
+            URL.
+          </t>
+          <t>
+            Providers MAY cache verified return_to URLs.
+          </t>
+        </section>
       </section>
 
       <section title="Immediate Requests">
@@ -2289,7 +2322,7 @@ Base 10 number | btwoc string representation
             URL, it is RECOMMENDED that a redirect be issued from the
             HTTP URL to the HTTPS URL. Because the HTTP and HTTPS URLs
             are not equivalent and the Identifier that is used is the
-            URL after following redirects, there is no forseen
+            URL after following redirects, there is no foreseen
             reduction in security when using this scheme. If an
             attacker could gain control of the HTTP URL, it would have
             no effect on the HTTPS URL, since the HTTP URL is not ever
@@ -2390,16 +2423,24 @@ Base 10 number | btwoc string representation
       </t>
     </section>
 
-    <section title="Discovering OpenID Relying Parties">
+    <section title="Discovering OpenID Relying Parties" anchor="rp_discovery">
       <t>
-        Relying Parties are RECOMMENDED to use the Yadis protocol to
-        publish their return_to URL. This allows for automated
-        discovery of OpenID Relying Parties.
+        Relying Party discovery allows for software agents to discover
+        sites that support OpenID. It also allows OpenID providers to
+        automatically verify that a return_to URL in an OpenID request
+        is an OpenID relying party endpoint for the specified realm.
       </t>
 
       <t>
-        A Relying Party discovery XRDS document MUST contain an
-        &lt;xrd:Service&gt; element:
+        Relying Parties SHOULD use the Yadis protocol to publish their
+        valid return_to URLs. The relying party MAY publish this
+        information at any URL, and SHOULD publish it under the realm
+        so that providers can verify return_to URLs.
+      </t>
+
+      <t>
+        A Relying Party discovery XRDS document MUST contain one or more
+        &lt;xrd:Service&gt; elements:
 
         <list style="symbols">
           <t>
