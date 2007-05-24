@@ -1650,7 +1650,8 @@ Base 10 number | btwoc string representation
           discretion of the OP.
         </t>
 
-        <section title="Using the Realm for Return URL Verification">
+        <section title="Using the Realm for Return URL Verification"
+                 anchor="return_to_verification">
           <t>
             OpenID providers SHOULD verify that the return_to URL
             specified in the request is an OpenID relying party
