@@ -1412,7 +1412,7 @@ Base 10 number | btwoc string representation
         <section title="Diffie-Hellman Association Sessions"
                      anchor="dh_sessions" toc="exclude">
           <t>
-            The "DH-SHA1" and DH-SHA256" association types use
+            The "DH-SHA1" and "DH-SHA256" association types use
             Diffie-Hellman Key Exchange to securely transmit the
             shared secret.
           </t>
