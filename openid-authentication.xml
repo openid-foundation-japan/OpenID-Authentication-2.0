@@ -756,7 +756,8 @@ Base 10 number | btwoc string representation
             <t>
               Otherwise, the input SHOULD be treated as an http URL; if it
               does not include a "http" or "https" scheme, the Identifier
-              MUST be prefixed with the string "http://". See
+              MUST be prefixed with the string "http://". If the URL
+              contains a fragment part, it MUST be stripped off. See
               <xref target='http_s_identifiers' /> for more information.
             </t>
 
@@ -1481,16 +1482,14 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   Value: (optional) The Claimed Identifier.
-                  "openid.claimed_id" and "openid.identity" SHALL
-                  be either both present or both absent.
                 </t>
                 <t>
-                  Note: The Claimed Identifier is the same as the
-                  OP-Local Identifier if a different OP-Local
-                  Identifier is not supplied. If neither value is
-                  present, the assertion is not about an identifier,
-                  and will contain other information in its payload,
-                  using <xref target="extensions">extensions</xref>.
+                  "openid.claimed_id" and "openid.identity" SHALL
+                  be either both present or both absent. If neither
+                  value is present, the assertion is not about an
+                  identifier, and will contain other information in
+                  its payload, using
+                  <xref target="extensions">extensions</xref>.
                 </t>
                 <t>
                   It is RECOMMENDED that OPs accept XRI identifiers
@@ -1506,6 +1505,11 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   Value: (optional) The OP-Local Identifier.
+                </t>
+                <t>
+                  If a different OP-Local Identifier is not specified,
+                  the claimed identifier, without the fragment part if it
+                  is a URL, MUST be used as the value for openid.identity. 
                 </t>
                 <t>
                   Note: If this is set to the special value
@@ -2058,6 +2062,12 @@ Base 10 number | btwoc string representation
 
       <section title="Verifying Discovered Information" anchor="verify_disco">
         <t>
+          If the Claimed Identifier in the assertion is a URL and
+          contains a fragment, the fragment part MUST NOT be used
+          for the purposes of verifying the discovered information.
+        </t>
+
+        <t>
           If the Claimed Identifier is included in the assertion, it
           MUST have been <xref target="discovery">discovered</xref> by
           the Relying Party and the information in the assertion MUST
@@ -2308,9 +2318,10 @@ Base 10 number | btwoc string representation
       <section title="Identifying the end user" anchor="identifying">
         <t>
           The Claimed Identifier in a successful authentication
-          response MAY be used as a user-visible Identifier. The
-          Relying Party SHOULD use it as a key for local storage of
-          information about the end user.
+          response SHOULD be used by the Relying Party as a key for
+          local storage of information about the user. The Claimed
+          Identifier, without the fragment in the case of URLs, MAY
+          be used as a user-visible Identifier. 
         </t>
 
         <section title="HTTP and HTTPS URL Identifiers" anchor="http_s_identifiers">
