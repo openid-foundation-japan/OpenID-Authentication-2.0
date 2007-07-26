@@ -1508,8 +1508,8 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   If a different OP-Local Identifier is not specified,
-                  the claimed identifier, without the fragment part if it
-                  is a URL, MUST be used as the value for openid.identity. 
+                  the claimed identifier MUST be used as the value for
+                  openid.identity. 
                 </t>
                 <t>
                   Note: If this is set to the special value
@@ -1747,6 +1747,12 @@ Base 10 number | btwoc string representation
         target="check_auth">Direct Verification</xref>.
       </t>
       <t>
+        Relying Parties SHOULD accept and verify assertions about
+        Identifiers for which they have not requested authentication.
+        OPs SHOULD use private associations for signing unsolicited
+        positive assertions. 
+      </t>
+      <t>
         If the "openid.return_to" value is omitted in the request, the
         Relying Party does not wish to receive an authentication
         assertion from the OP. This can be useful when using
@@ -1813,14 +1819,12 @@ Base 10 number | btwoc string representation
                   Value: (optional) The OP-Local Identifier
                 </t>
                 <t>
-                  Note: Relying Parties SHOULD accept and verify
-                  assertions about Identifiers for which they have not
-                  requested authentication. OpenID Providers MAY
-                  assist the end user in selecting the Claimed and
-                  OP-Local Identifiers about which the assertion is
-                  made.  The openid.identity field MAY be omitted if
-                  an extension is in use that makes the response
-                  meaningful without it (see openid.claimed_id above).
+                  Note: OpenID Providers MAY assist the end user in
+                  selecting the Claimed and OP-Local Identifiers about
+                  which the assertion is made. The openid.identity
+                  field MAY be omitted if an extension is in use that
+                  makes the response meaningful without it
+                  (see openid.claimed_id above).
                 </t>
               </list>
             </t>
