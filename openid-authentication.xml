@@ -2324,8 +2324,8 @@ Base 10 number | btwoc string representation
           The Claimed Identifier in a successful authentication
           response SHOULD be used by the Relying Party as a key for
           local storage of information about the user. The Claimed
-          Identifier, without the fragment in the case of URLs, MAY
-          be used as a user-visible Identifier. 
+          Identifier MAY be used as a user-visible Identifier. When 
+          displaying URL identifiers, the fragment MAY be omitted.
         </t>
 
         <section title="HTTP and HTTPS URL Identifiers" anchor="http_s_identifiers">
