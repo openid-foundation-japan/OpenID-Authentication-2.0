@@ -1659,11 +1659,16 @@ Base 10 number | btwoc string representation
           <t>
             OpenID providers SHOULD verify that the return_to URL
             specified in the request is an OpenID relying party
-            endpoint. To verify a return_to URL, first obtain the
-            relying party endpoints for the realm by performing <xref
+            endpoint. To verify a return_to URL, obtain the relying
+            party endpoints for the realm by performing <xref
             target="rp_discovery">discovery on the relying
-            party</xref>. Then, check to make sure that the return_to
-            URL matches one of the relying party endpoints.
+            party</xref>. As always when performing discovery, the
+            discovered URL is the URL of the last HTTP response,
+            following redirects. If any redirects are followed when
+            performing discovery on the realm, verification has
+            failed. If discovery has successfuly completed, check to
+            make sure that the return_to URL matches one of the
+            relying party endpoints.
           </t>
           <t>
             A realm may contain a wildcard, and so may not be a valid
