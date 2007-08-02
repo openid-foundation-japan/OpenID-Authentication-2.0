@@ -1673,7 +1673,7 @@ Base 10 number | btwoc string representation
           <t>
             A realm may contain a wildcard, and so may not be a valid
             URL. In that case, perform discovery on the URL obtained
-            by substituting the return_to URL's domain into the realm.
+            by substituting "www" for the wildcard in the realm.
           </t>
           <t>
             To match a return_to URL against a relying party endpoint,
