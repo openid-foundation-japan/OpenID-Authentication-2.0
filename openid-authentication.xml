@@ -2402,6 +2402,7 @@ Base 10 number | btwoc string representation
         established, all pairs in the message whose keys start with
         "openid." followed by the alias text, followed by a period or
         the end of the key are associated with that extension.
+        This mechanism is similar to the XML namespaces.
       </t>
 
       <t>
