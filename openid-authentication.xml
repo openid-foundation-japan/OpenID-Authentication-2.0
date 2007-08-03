@@ -2333,6 +2333,27 @@ Base 10 number | btwoc string representation
           displaying URL identifiers, the fragment MAY be omitted.
         </t>
 
+        <section title="Identifier Recycling" anchor="identifier_recycling">
+          <t>
+            OpenID Providers with large user bases can use fragments
+            to recycle URL Identifiers if it is so desired. When
+            reassigning a URL identifier to a new end user OPs should
+            generate a new, unique fragment part.
+          </t>
+          <t>
+            The full URL with the fragment part constitutes the Claimed
+            Identifier in positive assertions, therefore Relying Parties
+            will distinguish between the current and previous owners of
+            the fragment-less URL.
+          </t>
+          <t>
+            This mechanism allows the (presumably short, memorable)
+            recycled URL Identifiers without the fragment to be used by
+            end users at login time and by Relying Parties for display
+            purposes.
+          </t>
+        </section>
+
         <section title="HTTP and HTTPS URL Identifiers" anchor="http_s_identifiers">
           <t>
             Relying Parties MUST differentiate between URL Identifiers
