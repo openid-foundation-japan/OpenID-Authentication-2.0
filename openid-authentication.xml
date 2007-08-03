@@ -762,7 +762,7 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              URL identifiers MUST then be further normalized by both
+              URL Identifiers MUST then be further normalized by both
               following redirects when retrieving their content and
               finally applying the rules in Section 6 of <xref
               target='RFC3986' /> to the final destination URL. This
@@ -2330,14 +2330,14 @@ Base 10 number | btwoc string representation
           response SHOULD be used by the Relying Party as a key for
           local storage of information about the user. The Claimed
           Identifier MAY be used as a user-visible Identifier. When 
-          displaying URL identifiers, the fragment MAY be omitted.
+          displaying URL Identifiers, the fragment MAY be omitted.
         </t>
 
         <section title="Identifier Recycling" anchor="identifier_recycling">
           <t>
             OpenID Providers with large user bases can use fragments
             to recycle URL Identifiers if it is so desired. When
-            reassigning a URL identifier to a new end user OPs should
+            reassigning a URL Identifier to a new end user OPs should
             generate a new, unique fragment part.
           </t>
           <t>
@@ -2653,7 +2653,7 @@ Base 10 number | btwoc string representation
                 Relying Parties SHOULD extract and use OpenID
                 Authentication 1.x service elements from XRDS
                 documents, if Yadis succeeds on an URL
-                identifier. Such service elements are identified by
+                Identifier. Such service elements are identified by
                 &lt;xrd:Type&gt; tags whose text contents are
                 "http://openid.net/server/1.0" or
                 "http://openid.net/server/1.1".  Although this is not
