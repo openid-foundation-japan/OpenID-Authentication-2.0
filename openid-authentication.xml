@@ -3453,15 +3453,15 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
       <reference anchor='RFC3339'>
         <front>
           <title>Date and Time on the Internet: Timestamps</title>
+          <author initials='G.K' surname='Klyne' fullname='Graham Klyne'>
+            <organization>Clearswift Corporation</organization>
+          </author>
           <author initials='C.N' surname='Newman'
                   fullname='Chris Newman'>
             <organization>Sun Microsystems</organization>
           </author>
-          <author initials='G.K' surname='Klyne' fullname='Graham Klyne'>
-            <organization>Clearswift Corporation</organization>
-          </author>
         </front>
-        <seriesInfo name="RFC" value="3174" />
+        <seriesInfo name="RFC" value="3339" />
       </reference>
 
       <reference anchor="RFC3275">
