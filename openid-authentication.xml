@@ -757,7 +757,8 @@ Base 10 number | btwoc string representation
               Otherwise, the input SHOULD be treated as an http URL; if it
               does not include a "http" or "https" scheme, the Identifier
               MUST be prefixed with the string "http://". If the URL
-              contains a fragment part, it MUST be stripped off. See
+              contains a fragment part, it MUST be stripped off
+              together with the fragment delimiter character "#". See
               <xref target='http_s_identifiers' /> for more information.
             </t>
 
@@ -1057,7 +1058,7 @@ Base 10 number | btwoc string representation
 
     <section title="Establishing Associations" anchor="associations">
       <t>
-        An association between the Relying Parry and the OpenID Provider
+        An association between the Relying Party and the OpenID Provider
         establishes a shared secret between them, which is used to verify
         subsequent protocol messages and reduce round trips.
       </t>
@@ -2072,8 +2073,9 @@ Base 10 number | btwoc string representation
       <section title="Verifying Discovered Information" anchor="verify_disco">
         <t>
           If the Claimed Identifier in the assertion is a URL and
-          contains a fragment, the fragment part MUST NOT be used
-          for the purposes of verifying the discovered information.
+          contains a fragment, the fragment part and the fragment
+          delimiter character "#" MUST NOT be used for the purposes
+          of verifying the discovered information.
         </t>
 
         <t>
