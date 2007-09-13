@@ -111,7 +111,7 @@
 
           <t hangText="OP Endpoint URL:">
             The URL which accepts OpenID Authentication requests,
-            obtained by performing discovery on the the User-Supplied
+            obtained by performing discovery on the User-Supplied
             Identifier. This value MUST be an absolute URL.
           </t>
 
@@ -3244,7 +3244,7 @@ Base 10 number | btwoc string representation
           xri://(example)!1234 then those Identifiers should be
           treated as equivalent. For applications with user accounts,
           the persistent Canonical ID xri://(example)!1234 should be
-          used the the primary key for the account.  Although the
+          used the primary key for the account.  Although the
           i-names =example and =exmpl may also be stored for reference
           as display names, they are reassignable identifiers and
           should not be used as persistent keys.
