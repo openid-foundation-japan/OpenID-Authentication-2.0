@@ -110,9 +110,9 @@
           </t>
 
           <t hangText="OP Endpoint URL:">
-            The URL which accepts OpenID Authentication requests,
+            The URL which accepts OpenID Authentication protocol messages,
             obtained by performing discovery on the User-Supplied
-            Identifier. This value MUST be an absolute URL.
+            Identifier. This value MUST be an absolute HTTP or HTTPS URL.
           </t>
 
           <t hangText="OP Identifier:">
