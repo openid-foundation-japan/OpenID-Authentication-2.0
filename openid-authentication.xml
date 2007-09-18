@@ -2087,12 +2087,14 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          If the Claimed Identifier was not present in the request
-          ("openid.identity" was
-          "http://specs.openid.net/auth/2.0/identifier_select"), the
-          Relying Party MUST perform discovery on the Claimed
-          Identifier in the response to make sure that the OP is
-          authorized to make assertions about the Claimed Identifier.
+          If the Claimed Identifier was not previously discovered
+          by the Relying Party (the "openid.identity" in the request
+          was "http://specs.openid.net/auth/2.0/identifier_select" or
+          a different Identifier, or if the OP is sending an unsolicited
+          positive assertion), the Relying Party MUST perform discovery
+          on the Claimed Identifier in the response to make sure that
+          the OP is authorized to make assertions about the Claimed
+          Identifier.
         </t>
 
         <t>
