@@ -1377,7 +1377,7 @@ Base 10 number | btwoc string representation
 
         <section title="HMAC-SHA256">
           <t>
-            An association of type "HMAC-256" uses the <xref
+            An association of type "HMAC-SHA256" uses the <xref
             target="sign_algos">HMAC-SHA256</xref> signature
             algorithm.
           </t>
