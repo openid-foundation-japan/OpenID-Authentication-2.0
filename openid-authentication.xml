@@ -2,7 +2,7 @@
 <?xml-stylesheet type='text/xsl' href='http://xml.resource.org/authoring/rfc2629.xslt' ?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-<rfc category="info" ipr="full3978" docName="openid-authentication-2_0-12.xml">
+<rfc category="info" ipr="full3978" docName="openid-authentication-2_0.xml">
 
   <?rfc toc="yes" ?>
   <?rfc tocdepth="2" ?>
@@ -10,16 +10,16 @@
   <?rfc sortrefs="yes"?>
   <?rfc strict="yes" ?>
   <?rfc iprnotified="no" ?>
-  <?rfc private="Implementor's Draft" ?>
+  <?rfc private="Final" ?>
 
   <front>
-    <title>OpenID Authentication 2.0 - Draft 12</title>
+    <title>OpenID Authentication 2.0 - Final</title>
 
     <author initials="" surname="specs@openid.net" fullname="specs@openid.net">
       <organization />
     </author>
 
-    <date month="August" year="2007"/>
+    <date month="December" year="2007"/>
 
     <abstract>
       <t>
@@ -3284,9 +3284,9 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
       <t>
       <list style='empty'>
         <t>Barry Ferg (barry@sxip.com)</t>
-        <t>Brad Fitzpatrick (bradfitz@sixapart.com) &lt;author&gt;</t>
+        <t>Brad Fitzpatrick (brad@danga.com) &lt;author&gt;</t>
         <t>Carl Howells (chowells@janrain.com)</t>
-        <t>David Recordon (drecordon@verisign.com) &lt;author/editor&gt;</t>
+        <t>David Recordon (david@sixapart.com) &lt;author/editor&gt;</t>
         <t>Dick Hardt (dick@sxip.com) &lt;author&gt;</t>
         <t>Drummond Reed (drummond.reed@cordance.net)</t>
         <t>Hans Granqvist (hgranqvist@verisign.com)</t>
@@ -3510,7 +3510,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
                  target="http://www.oasis-open.org/committees/download.php/17293" >
         <front>
           <title>Extensible Resource Identifier (XRI) Resolution V2.0
-          - Working Draft 10</title>
+          - Committee Draft 02</title>
           <author initials='G.W' surname='Wachob' fullname="Gabe Wachob">
             <organization>Visa International</organization>
           </author>
@@ -3527,8 +3527,10 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
             <organization>XDI.ORG</organization>
           </author>
         </front>
+        <format type="HTML" target=
+                "http://docs.oasis-open.org/xri/2.0/specs/cd02/xri-resolution-V2.0-cd-02.html" />
         <format type="PDF" target=
-                "http://www.oasis-open.org/committees/download.php/17293" />
+                "http://docs.oasis-open.org/xri/2.0/specs/cd02/xri-resolution-V2.0-cd-02.pdf" />
       </reference>
 
       <reference anchor="Yadis">
