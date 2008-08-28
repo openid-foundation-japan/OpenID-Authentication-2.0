@@ -2722,7 +2722,7 @@ Base 10 number | btwoc string representation
                 "checkid_immediate" mode authentication request, the
                 "user_setup_url" parameter MUST be returned. This is a
                 URL that the end user may visit to complete the
-                request. The OP MAY redirect the end user to
+                request. The RP MAY redirect the end user to
                 this URL, or provide the end user with a link that
                 points to this URL.
               </t>
