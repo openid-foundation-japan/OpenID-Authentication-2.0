@@ -498,7 +498,7 @@ Base 10 number | btwoc string representation
                   <list style='empty'>
                     <t>
                       Value: (optional) Contact address for the
-                      administrator of the sever. The contact address
+                      administrator of the server. The contact address
                       may take any form, as it is intended to be
                       displayed to a person.
                     </t>
