@@ -845,9 +845,16 @@ Base 10 number | btwoc string representation
           </section>
         </section>
       </section>
-      <section title="Indirect Communication"
+      <!-- section title="Indirect Communication"
+               anchor="indirect_comm" -->
+      <section title="間接通信"
                anchor="indirect_comm">
         <t>
+            間接通信 (indirect communication) は、ユーザエージェントを経由して
+            メッセージの受け渡しを行う。間接通信は、 RP 、 OP のいずれからでも開始することができる。
+            間接通信は、<xref target="requesting_authentication">認証要求</xref>および
+            <xref target="responding_to_authentication">認証応答</xref>のために用いられる。
+        <!--
           In indirect communication, messages are passed through the
           User-Agent.  This can be initiated by either the Relying
           Party or the OP.  Indirect communication is used for <xref
@@ -855,8 +862,17 @@ Base 10 number | btwoc string representation
           requests</xref> and <xref
           target="responding_to_authentication">authentication
           responses</xref>.
+          -->
         </t>
         <t>
+            間接通信には、 HTTP リダイレクトと HTML フォーム送信の二つの方法がある。
+            フォーム送信もリダイレクトも、送信側が受信側の URL を知っていること、
+            そして受信側の URL が
+            <xref target="http_encoding"/> 
+            で指定されているような、間接メッセージの受信を想定していることが求められる。
+            通信を開始する側が、機能、メッセージサイズ、その他の外部要因に応じて適切な
+            間接通信の方法を選択する。
+        <!--
           There are two methods for indirect communication: HTTP
           redirects and HTML form submission.
           Both form submission and redirection require that the sender
@@ -865,31 +881,56 @@ Base 10 number | btwoc string representation
           />. The initiator of the communication chooses which method
           of indirect communication is appropriate depending on
           capabilities, message size, or other external factors.
+          -->
         </t>
         <t>
+            全ての間接メッセージは HTTP 要求として受信され、そのため、
+            <xref target="http_encoding"/> 
+            で示した必須フィールドを含む。
+            <!--
           All indirect messages arrive as HTTP requests, and so
           contain the required fields listed in <xref
           target="http_encoding" />.
+          -->
         </t>
 
-        <section title="HTTP Redirect">
+        <!-- section title="HTTP Redirect" -->
+        <section title="リダイレクト">
           <t>
+          データは、 302 、 303 または 307 HTTP リダイレクトを発行することによって、
+          エンドユーザのユーザエージェントに転送できる。リダイレクト URL は受信側の URL で、
+          <xref target="http_encoding" /> 
+          で指定されている通り、クエリ文字列に OpenID 認証メッセージが付加されている。
+          <!--
             Data can be transferred by issuing a 302, 303, or 307 HTTP
             Redirect to the end user's User-Agent. The redirect URL is
             the URL of the receiver with the OpenID Authentication
             message appended to the query string, as specified in
             <xref target="http_encoding" />.
+            -->
           </t>
         </section>
 
-        <section title="HTML FORM Redirection">
+        <!-- section title="HTML FORM Redirection" -->
+        <section title="HTMLフォームリダイレクト">
           <t>
+          キーと値とのマッピングを転送するには、 HTML フォームエレメントを含む HTML ページを
+          ユーザエージェントに戻す。フォーム送信は、 JavaScript を用いるなどして自動化してもよい (MAY) 。
+          <!--
             A mapping of keys to values can be transferred by
             returning an HTML page to the User-Agent that contains an
             HTML form element. Form submission MAY be automated,
             for example by using JavaScript.
+            -->
           </t>
           <t>
+            &lt;form&gt; エレメントの "action" 属性値は、受信側の URL でなければならない (MUST) 。
+            それぞれのキー・値のペアは、 &lt;input&gt; エレメントとしてフォームに含まれて
+            いなければならない (MUST) 。フォーム送信を行なうとき、<xref target="http_encoding"/>
+            で指定されている通りにユーザエージェントがメッセージを生成するように、
+            キーは "name" 属性として、値は "value" 属性としてエンコードしなければならない (MUST) 。
+            フォームは送信ボタンを含まなければならない (MUST) 。
+          <!--
             The &lt;form&gt; element's "action" attribute value MUST
             be the URL of the receiver. Each Key-Value pair MUST be
             included in the form as an &lt;input&gt; element. The key
@@ -898,14 +939,22 @@ Base 10 number | btwoc string representation
             generate a message as specified in <xref
             target="http_encoding"/> when the form is submitted. The
             form MUST include a submit button.
+            -->
           </t>
         </section>
-        <section title="Indirect Error Responses" anchor="indirect_error">
+        <!-- section title="Indirect Error Responses" anchor="indirect_error" -->
+        <section title="エラー時の間接応答" anchor="indirect_error">
           <t>
+            要求の形式に間違いがあった場合や無効な引数が含まれていた場合、 
+            OP は、ユーザエージェントを "openid.return_to" URL 値に
+            リダイレクトしなければならない (MUST) 。
+            ただし、値が存在し、その値が有効な URL である場合に限る。
+          <!--
             In the case of a malformed request, or one that contains
             invalid arguments, the OpenID Provider MUST redirect the
             User-Agent to the "openid.return_to" URL value if the
             value is present and it is a valid URL.
+            -->
           </t>
           <t>
             <list style='symbols'>
@@ -913,7 +962,8 @@ Base 10 number | btwoc string representation
                 openid.ns
                 <list style='empty'>
                   <t>
-                    As specified in <xref target="http_encoding" />.
+                    <!-- As specified in <xref target="http_encoding" />. -->
+                    <xref target="http_encoding" />で指定した通り。
                   </t>
                 </list>
               </t>
@@ -922,7 +972,7 @@ Base 10 number | btwoc string representation
                 openid.mode
                 <list style='empty'>
                   <t>
-                    Value: "error"
+                    <!-- Value -->値: "error"
                   </t>
                 </list>
               </t>
@@ -930,8 +980,11 @@ Base 10 number | btwoc string representation
                 openid.error
                 <list style='empty'>
                   <t>
+                  値: 人間が解読可能なメッセージ。エラーの原因を示す。
+                  <!--
                     Value: A human-readable message indicating the cause
                     of the error.
+                    -->
                   </t>
                 </list>
               </t>
@@ -939,10 +992,14 @@ Base 10 number | btwoc string representation
                 openid.contact
                 <list style='empty'>
                   <t>
+                  値:（オプション）サーバ管理者の連絡先。連絡先は、人間に対して表示するためのものなので、
+                  どのような形で記述してもよい。
+                  <!--
                     Value: (optional) Contact address for the
                     administrator of the sever. The contact address
                     may take any form, as it is intended to be
                     displayed to a person.
+                    -->
                   </t>
                 </list>
               </t>
@@ -951,21 +1008,30 @@ Base 10 number | btwoc string representation
                 openid.reference
                 <list style='empty'>
                   <t>
+                  値:（オプション）サポートチケット番号やニュースブログへの URL などの参照トークン。
+                  <!--
                     Value: (optional) A reference token, such as a
                     support ticket number or a URL to a news blog,
                     etc.
+                    -->
                   </t>
                 </list>
               </t>
             </list>
 
-            The server MAY add additional keys to this response.
+            サーバは、この応答に追加の鍵を追加してもよい (MAY) 。
+            <!-- The server MAY add additional keys to this response. -->
           </t>
           <t>
+            RPが形式に間違いがあるメッセージや無効なメッセージを受け取った場合、もしくは、 
+            "openid.return_to" が存在しなかったり、その値が有効な URL ではなかったりした場合、
+            サーバはエンドユーザに応答を戻し、エラーが生じ、処理が継続できないことを示すべきである (SHOULD) 。
+          <!--
             If the malformed or invalid message is received by the Relying
             Party, or "openid.return_to" is not present or its value is not
             a valid URL, the server SHOULD return a response to the
             end user indicating the error and that it is unable to continue.
+            -->
           </t>
         </section>
       </section>
