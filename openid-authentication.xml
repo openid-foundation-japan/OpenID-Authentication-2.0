@@ -13,7 +13,7 @@
   <?rfc private="Final" ?>
 
   <front>
-    <title>OpenID Authentication 2.0 - Final</title>
+    <title>OpenID Authentication 2.0 - 最終版</title>
 
     <author initials="" surname="specs@openid.net" fullname="specs@openid.net">
       <organization />
@@ -23,28 +23,50 @@
 
     <abstract> 
       <t>
+        OpenID 認証は、エンドユーザが識別子 （Identifier） を管理していることを証明する
+        方法を提供するものである。 OpenID 認証を利用すれば、リライングパーティー 
+        （Relying Party 、以下 RP ）はエンドユーザのパスワードなどのクレデンシャルや
+        Eメールアドレスなどの機密情報にアクセスする必要がなくなる。
+        <!--
         OpenID Authentication provides a way to prove that an end user
         controls an Identifier. It does this without the Relying Party
         needing access to end user credentials such as a password or
         to other sensitive information such as an email address.
+        -->
       </t>
 
       <t>
+        OpenID は、分散方式であり、 RP や OpenID プロバイダ (OpenID Provider 、以下 OP)
+        の承認・登録を行なう中央集権的な機関は不要である。エンドユーザは利用する OP を
+        自由に選択することができ、 OPを変更しても自身の識別子をそのまま継続して利用することができる。
+        <!--
         OpenID is decentralized. No central authority must approve or
         register Relying Parties or OpenID Providers. An end user
         can freely choose which OpenID Provider to use, and can
         preserve their Identifier if they switch OpenID Providers.
+        -->
       </t>
 
       <t>
+        プロトコルの動作には JavaScript や最新ブラウザは全く必要がなく、
+        また AJAX を利用しても、認証 (authentication) の仕組みは上手く機能する。
+        つまり、エンドユーザは、現在のウェブページから離れずに、 RP に自らの身元を証明できるのである。
+        <!--
         While nothing in the protocol requires JavaScript or modern
         browsers, the authentication scheme plays nicely with
         "AJAX"-style setups. This means an end user can prove their
         Identity to a Relying Party without having to leave their
         current Web page.
+        -->
       </t>
 
       <t>
+      OpenID 認証は、 HTTP(S) の標準的な要求／応答だけを用いているため、ユーザエージェント
+       （User-Agent） などのクライアントソフトウェアが特別な機能を備えている必要はない。 
+       OpenID は、 cookie をはじめ、 RP や OP 特有のセッション管理方法には全く依存していない。 
+       ユーザエージェントの機能拡張により、エンドユーザの操作を簡素化できるが、プロトコル利用上は
+       必ずしも必要ではない。
+        <!--
         OpenID Authentication uses only standard HTTP(S) requests and
         responses, so it does not require any special capabilities of
         the User-Agent or other client software. OpenID is not tied to
@@ -52,74 +74,135 @@
         Party or OpenID Provider session management.  Extensions to
         User-Agents can simplify the end user interaction, though are
         not required to utilize the protocol.
+        -->
       </t>
 
       <t>
+      プロファイル情報の交換や、本仕様に記されていないその他の情報の交換については、
+      本プロトコル上にサービスタイプを追加し、仕組みを構築することで実現可能である。 
+      OpenID 認証は、ポータブル（環境に依存せずに使用可能）でユーザセントリックなデジタルアイデンティティを、
+      自由かつ分散的な方式で実現するための基盤サービスを提供するために設計された。
+      <!--
         The exchange of profile information, or the exchange of other
         information not covered in this specification, can be addressed
         through additional service types built on top of this
         protocol to create a framework. OpenID Authentication is
         designed to provide a base service to enable portable,
         user-centric digital identity in a free and decentralized manner.
+        -->
       </t>
     </abstract>
   </front>
 
   <middle>
+    <section title="要求記法および規則">
+  
+    <!--
     <section title="Requirements Notation and Conventions">
+    -->
       <t>
+      本文書で用いられる各キーワード「しなければならない（ MUST ）」、「してはならない（ MUST NOT ）」、
+      「必須である（ REQUIRED ）」、「するものとする（ SHALL ）」、「しないものとする（ SHALL NOT ）」、
+      「すべきである（ SHOULD ）」、「すべきではない（ SHOULD NOT ）」、「推奨される（ RECOMMENDED ）」、
+      「してもよい（ MAY ）」、「任意である（ OPTIONAL ）」は、 <xref target="RFC2119"/> で述べられている通りに
+      解釈されるべきものである。
+      <!--
         The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
         "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
         and "OPTIONAL" in this document are to be interpreted as
         described in <xref target="RFC2119"/>.
+    -->
       </t>
 
       <t>
+      本文書では、書いてあるままに解釈されるべき値は引用符（""）で囲んで示している。
+      プロトコルメッセージの中でこれらの値を使用する場合は、値の一部として
+      引用符を用いてはならない (MUST NOT) 。
+      <!--
         Throughout this document, values are quoted to indicate that
         they are to be taken literally. When using these values in
         protocol messages, the quotes MUST NOT be used as part of the
         value.
+        -->
       </t>
     </section>
 
+    <section title="用語" anchor="terminology">
+    <!--
     <section title="Terminology" anchor="terminology">
+    -->
       <t>
         <list style="hanging">
-          <t hangText="Identifier:">
+          <!-- t hangText="Identifier:" -->
+          <t hangText="識別子(Identifier):">
+            識別子は、 "http" または "https" URI (本文書では、通例に従い "URL" と表記)、
+            もしくは <xref target="XRI_Syntax_2.0" >XRI</xref> のいずれかである。
+            本文書では、様々な種類の識別子を定義するが、それぞれ異なるコンテキストでの使用を目的としている。
+            <!--
             An Identifier is either a "http" or "https" URI, (commonly
             referred to as a "URL" within this document), or an <xref
             target="XRI_Syntax_2.0" >XRI</xref>.  This document defines
             various kinds of Identifiers, designed for use in different
             contexts.
+            -->
           </t>
 
-          <t hangText="User-Agent:">
+          <!-- t hangText="User-Agent:" -->
+          <t hangText="ユーザエージェント(User-Agent):">
+            HTTP/1.1 <xref target="RFC2616"/> を実装したエンドユーザのウェブブラウザ。
+            <!--
             The end user's Web browser which implements HTTP/1.1 <xref
             target="RFC2616"/>.
+            -->
           </t>
 
-          <t hangText="Relying Party:">
+          <!-- t hangText="Relying Party:" -->
+          <t hangText="リライングパーティー(Relying Party):">
+            略語は RP 。エンドユーザが識別子を管理しているという証明を要求するウェブアプリケーション。
+          <!--
             RP. A Web application that wants proof that the end user
             controls an Identifier.
+            -->
           </t>
 
-          <t hangText="OpenID Provider:">
+          <!-- t hangText="OpenID Provider:" -->
+          <t hangText="OpenIDプロバイダ(OpenID Provider):">
+            略語はOP。エンドユーザが識別子を管理しているというアサーション (assertion) 
+            を得るためにRPが依存する OpenID 認証サーバ。
+            <!--
             OP. An OpenID Authentication server on which a Relying
             Party relies for an assertion that the end user controls
             an Identifier.
+            -->
           </t>
 
-          <t hangText="OP Endpoint URL:">
+          <!-- t hangText="OP Endpoint URL:" -->
+          <t hangText="OPエンドポイントURL(OP Endpoint URL):">
+            OpenID 認証プロトコルメッセージを受け入れる URL で、 
+            ユーザ入力識別子(User-Supplied Identifier) のディスカバリ (discovery) を
+            実行することにより得られる。この値は、絶対 HTTP または HTTPS URL でなければならない (MUST) 。
+            <!--
             The URL which accepts OpenID Authentication protocol messages,
             obtained by performing discovery on the User-Supplied
             Identifier. This value MUST be an absolute HTTP or HTTPS URL.
+            -->
           </t>
 
-          <t hangText="OP Identifier:">
+          <!-- t hangText="OP Identifier:" -->
+          <t hangText="OP識別子(OP Identifier):">
+            OpenIDプロバイダの識別子。
+            <!--
             An Identifier for an OpenID Provider.
+            -->
           </t>
 
-          <t hangText="User-Supplied Identifier:">
+          <!-- t hangText="User-Supplied Identifier:" -->
+          <t hangText="ユーザ入力識別子(User-Supplied Identifier):">
+            エンドユーザが RP に提示する識別子、または OP においてユーザが選択した識別子。
+            プロトコルの開始 (initiation) フェーズでは、エンドユーザは、自らの識別子、
+            OP 識別子 （OP Identifier） のどちらを入力してもよい。 
+            OP 識別子を用いる場合、 OP は、エンドユーザが RP に提示する識別子の選択を支援してもよい。
+            <!--
             An Identifier that was presented by the end user to the
             Relying Party, or selected by the user at the OpenID
             Provider.  During the initiation phase of the protocol,
@@ -127,44 +210,75 @@
             Identifier. If an OP Identifier is used, the OP may then
             assist the end user in selecting an Identifier to share with
             the Relying Party.
+            -->
           </t>
 
-          <t hangText="Claimed Identifier:">
+          <!-- t hangText="Claimed Identifier:" -->
+          <t hangText="主張識別子(Claimed Identifier):">
+            エンドユーザが自らのものであると主張する識別子。プロトコル全体の狙いは、
+            この主張を検証することにある。主張識別子は、以下のいずれかである。
+            <!--
             An Identifier that the end user claims to own; the overall
             aim of the protocol is verifying this claim. The Claimed
             Identifier is either:
+            -->
             <list style="symbols">
               <t>
+                URL の場合、ユーザ入力識別子を<xref target="normalization">
+                正規化</xref>することで得られる識別子。
+                <!--
                 The Identifier obtained by <xref target="normalization">
                 normalizing</xref> the User-Supplied Identifier, if it
                 was an URL.
+                -->
               </t>
               <t>
+                XRI の場合、<xref target="canonicalid">正準化ID(CanonicalID)</xref> 。
+                <!--
                 The <xref target="canonicalid">CanonicalID</xref>, if it
                 was an XRI.
+                -->
               </t>
             </list>
           </t>
 
-          <t hangText="OP-Local Identifier:">
+          <!-- t hangText="OP-Local Identifier:" -->
+          <t hangText="OPローカル識別子(OP-Local Identifier):">
+            特定の OP でエンドユーザを識別するためにローカルに用いられる代替の識別子。
+            そのため、必ずしもエンドユーザが管理しているものではない。
+            <!--
             An alternate Identifier for an end user that is local to a
             particular OP and thus not necessarily under the end user's
             control.
+            -->
           </t>
         </list>
       </t>
     </section>
 
-    <section title="Protocol Overview">
+    <!-- section title="Protocol Overview" -->
+    <section title="プロトコルの概要">
 
       <t>
         <list style="numbers">
           <t>
+            エンドユーザは、ユーザエージェントを通じて RP にユーザ入力識別子を提示することによって、
+            <xref target="initiation">認証を開始</xref>する。
+          <!--
             The end user <xref target="initiation">initiates
             authentication</xref> by presenting a User-Supplied Identifier
             to the Relying Party via their User-Agent.
+            -->
           </t>
           <t>
+            ユーザ入力識別子を<xref target="normalization">正規化</xref>した後、 
+            RP はその<xref target="discovery">ディスカバリを実行</xref>し、エンドユーザが認証に用いる 
+            OP エンドポイントURLを確定する。ユーザ入力識別子は、 OP 識別子である可能性があることに
+            留意する必要があるが、この点については<xref target="discovered_info" /> で述べる。  
+            OP 識別子のときは、 OP で主張識別子を選択することができる。また、<xref
+            target="extensions">拡張仕様</xref>を利用して
+            実用的な代替手段が取られている場合は、主張識別子を用いずにプロトコルを続行することもできる。
+          <!--
             After <xref target="normalization">normalizing</xref> the
             User-Supplied Identifier, the Relying Party <xref
             target="discovery">performs discovery</xref> on it and
@@ -176,8 +290,18 @@
             proceed without a Claimed Identifier if something else
             useful is being done via an <xref
             target="extensions">extension</xref>.
+            -->
           </t>
           <t>
+            (オプション) 
+            RP と OP の間に<xref
+            target="associations">アソシエーション(association)</xref>を確立する。 
+            共有秘密鍵の確立には、 <xref
+            target="RFC2631">Diffie-Hellman 鍵交換</xref>を用いる。
+            OPはその後のメッセージに署名するためにアソシエーションを用い、 
+            RP はこれらのメッセージを検証するためにアソシエーションを用いる。
+            その結果、それぞれの認証要求／応答に続く署名検証のための直接要求を行なう必要がなくなる。
+            <!--
             (optional)
 
             The Relying Party and the OP establish an <xref
@@ -188,28 +312,54 @@
             Relying Party to verify those messages; this removes the
             need for subsequent direct requests to verify the
             signature after each authentication request/response.
+            -->
           </t>
           <t>
+            RP は、エンドユーザのユーザエージェントを、 OpenID 
+            <xref
+            target="requesting_authentication">認証要求</xref>とともに OP にリダイレクトする。
+            <!--
             The Relying Party redirects the end user's User-Agent to
             the OP with an OpenID <xref
             target="requesting_authentication">Authentication
             request</xref>.
+            -->
           </t>
           <t>
+            OP は、エンドユーザが OpenID 認証の実行を許可されているかどうか、
+            さらにエンドユーザが認証の実行を求めているかどうかを確定する。 
+            OP におけるエンドユーザの認証方法およびそのような認証に関わるポリシーは全て、
+            本文書の対象範囲外である。
+            <!--
             The OP establishes whether the end user is authorized to
             perform OpenID Authentication and wishes to do so. The
             manner in which the end user authenticates to their OP and
             any policies surrounding such authentication is out of
             scope for this document.
+            -->
           </t>
           <t>
+            OP は、エンドユーザのユーザエージェントを、 
+            <xref
+            target="positive_assertions">認証が承認された</xref>ことを示すアサーション、
+            <xref
+            target="negative_assertions">認証が失敗した</xref>ことを示すメッセージの
+            どちらかとともに RP へリダイレクトする。
+            <!--
             The OP redirects the end user's User-Agent back to the
             Relying Party with either an assertion that <xref
             target="positive_assertions">authentication is
             approved</xref> or a message that <xref
             target="negative_assertions">authentication failed</xref>.
+            -->
           </t>
           <t>
+            RP は、 OP から受け取った情報を<xref target="verification">検証</xref>し、
+            戻り URL （Return URL） のチェック、
+            ディスカバリによって得られた情報の検証、 ノンス (nonce) のチェックなどを行なう。
+            また、アソシエーション時に確立した共有鍵を用いる、あるいは OP に直接要求を送る、
+            のいずれかの方法で、署名を検証する。
+            <!--
             The Relying Party <xref target="verification">verifies
             </xref> the information received from the OP including
             checking the Return URL, verifying the discovered
@@ -217,51 +367,83 @@
             signature by using either the shared key established
             during the association or by sending a direct request
             to the OP.
+            -->
            </t>
          </list>
       </t>
     </section>
 
 
-    <section title="Data Formats">
+    <!-- section title="Data Formats" -->
+    <section title="データフォーマット">
 
-      <section title="Protocol Messages">
+      <!-- section title="Protocol Messages" -->
+      <section title="プロトコルメッセージ">
 
         <t>
+        OpenID 認証プロトコルメッセージは、プレーンテキストのキーとプレーンテキストの値とを
+        マッピングしたものである。キーおよび値には、 Unicode 文字セット (UCS) を全て
+        使用することができる。キーおよび値とバイト形式との間の変換が必要な場合は、 
+        <xref target="RFC3629">UTF-8</xref> を用いてエンコードしなければならない (MUST) 。
+        <!--
           The OpenID Authentication protocol messages are
           mappings of plain-text keys to plain-text values. The keys and
           values permit the full Unicode character set (UCS). When the
           keys and values need to be converted to/from bytes, they
           MUST be encoded using <xref target="RFC3629">UTF-8</xref>.
+          -->
         </t>
 
         <t>
+            メッセージは、同じ名前のパラメータを複数含んではならない (MUST NOT) 。
+          <!--
           Messages MUST NOT contain multiple parameters with the same name.
+          -->
         </t>
 
         <t>
+            本文書に記されている OpenID メッセージのパラメータは、
+            全て必須である (REQUIRED) 。ただし、任意である (OPTIONAL) と
+            明示されている場合は、その限りではない。
+        <!--
           Throughout this document, all OpenID message parameters are
           REQUIRED, unless specifically marked as OPTIONAL.
+          -->
         </t>
 
-        <section title="Key-Value Form Encoding" anchor="kvform">
+        <!-- section title="Key-Value Form Encoding" anchor="kvform" -->
+        <section title="キー・値フォームエンコーディング" anchor="kvform">
           <t>
+            キー・値形式のメッセージは、一連の行からなる。各行の最初はキーで、その後ろにコロンを付加し、
+            キーと関連する値が続く。各行は、一個の改行文字 ( UCS 文字コード番号 10, "\n") で終わる。
+            キーまたは値は、改行文字を含んではならない （MUST NOT） 。
+            また、キーは、コロンを含んではならない (MUST NOT) 。
+          <!--
             A message in Key-Value form is a sequence of lines.  Each
             line begins with a key, followed by a colon, and the value
             associated with the key.  The line is terminated by a
             single newline (UCS codepoint 10, "\n"). A key or value
             MUST NOT contain a newline and a key also MUST NOT contain
             a colon.
+            -->
           </t>
           <t>
+            空白を含む追加文字は、コロンまたは改行文字の前後に追加してはならない (MUST NOT)。
+            メッセージからバイト文字列を生成するときは、 UTF-8 でエンコードしなければならない (MUST) 。
+          <!--
             Additional characters, including whitespace, MUST NOT be
             added before or after the colon or newline. The message
             MUST be encoded in UTF-8 to produce a byte string.
+            -->
           </t>
           <t>
+          キー・値フォームエンコーディングは、署名計算および RP への
+          <xref target="direct_response">直接応答</xref>に利用される。
+          <!--
             Key-Value Form encoding is used for signature calculation
             and for <xref target="direct_response">direct
             responses</xref> to Relying Parties.
+            -->
           </t>
         </section>
 
