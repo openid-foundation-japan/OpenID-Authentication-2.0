@@ -447,47 +447,79 @@
           </t>
         </section>
 
-        <section title="HTTP Encoding" anchor="http_encoding">
+        <!-- section title="HTTP Encoding" anchor="http_encoding" -->
+        <section title="HTTPエンコーディング" anchor="http_encoding">
           <t>
+          HTTP サーバにメッセージを送るときは、 <xref target="HTML401" /> 
+          のセクション 17.13.4 に定められるフォームエンコーディングを用いてエンコード
+          しなければならない (MUST) 。
+          同様に、要求のヘッダに"Content-Type" ヘッダが含まれている場合は、
+          その値も <xref target="HTML401" /> のセクション 17.13.4 に定められたエンコーディングで
+          なければならない (MUST) 。
+          <!--
             When a message is sent to an HTTP server, it MUST be encoded
             using a form encoding specified in Section 17.13.4 of
             <xref target="HTML401" />. Likewise, if the "Content-Type"
             header is included in the request headers, its value MUST
             also be such an encoding.
+            -->
           </t>
           <t>
+            要求メッセージの全てのキーは、その前に "openid." プレフィックスを
+            付加しなければならない (MUST)。このプレフィックスを付加することにより、 
+            OpenID 認証メッセージとともに受け渡される他のパラメータとの干渉を回避できる。
+            メッセージを POST で送るとき、 OpenID パラメータは常に POST ボディに格納して送り、 
+            POST ボディから抽出しなければならない (MUST) 。
+            <!--
             All of the keys in the request message MUST be prefixed
             with "openid.". This prefix prevents interference with
             other parameters that are passed along with the OpenID
             Authentication message. When a message is sent as a POST,
             OpenID parameters MUST only be sent in, and extracted
             from, the POST body.
+            -->
           </t>
           <t>
+            HTTP 要求 (GET または POST) として送られるメッセージは全て、
+            以下のフィールドを含んでいなければならない (MUST) 。
+            <!--
             All messages that are sent as HTTP requests (GET or POST)
             MUST contain the following fields:
-
+            -->
             <list style='symbols'>
               <t>
                 openid.ns
                 <list style='empty'>
                   <t>
-                    Value: "http://specs.openid.net/auth/2.0"
+                    <!-- Value -->値: "http://specs.openid.net/auth/2.0"
                   </t>
                   <t>
+                    要求が OpenID Authentication 2.0 として有効な要求であるためには、
+                    上記の値が存在していなければならない (MUST) 。仕様の将来版においては、
+                    メッセージ受信者が要求を適切に解釈できるように、異なる値が定義される場合もある。
+                    <!--
                     This particular value MUST be present for the
                     request to be a valid OpenID Authentication 2.0
                     request. Future versions of the specification may
                     define different values in order to allow message
                     recipients to properly interpret the request.
+                    -->
                   </t>
                   <t>
+                    この値が存在しない、あるいは "http://openid.net/signon/1.1" 、 
+                    "http://openid.net/signon/1.0" のどちらかの値が設定されている場合、
+                    そのメッセージの解釈には、 
+                    <xref
+                    target="compat_mode">OpenID Authentication 1.1
+                    互換モード</xref>を用いるべきである (SHOULD) 。
+                  <!--
                     If this value is absent or set to one of
                     "http://openid.net/signon/1.1" or
                     "http://openid.net/signon/1.0", then this message
                     SHOULD be interpreted using <xref
                     target="compat_mode">OpenID Authentication 1.1
                     Compatibility mode</xref>.
+                    -->
                   </t>
                 </list>
               </t>
@@ -495,15 +527,20 @@
                 openid.mode
                 <list style='empty'>
                   <t>
-                    Value: Specified individually for each message
+                    <!-- Value -->値: Specified individually for each message
                     type.
                   </t>
                   <t>
+                    "openid.mode" パラメータを用いることによって、メッセージ受信者は、
+                    処理中のメッセージの種類を知ることができる。 "openid.mode" がない場合、
+                    メッセージ処理側は、その要求が OpenID メッセージではないと見なすべきである (SHOULD) 。
+                  <!--                  
                     The "openid.mode" parameter allows the recipient
                     of the message to know what kind of message it is
                     processing. If "openid.mode" is absent, the party
                     processing the message SHOULD assume that the
                     request is not an OpenID message.
+                    -->
                   </t>
                 </list>
               </t>
@@ -511,21 +548,38 @@
           </t>
 
           <t>
+            このモデルは、ユーザエージェントから RP に送られるメッセージ、
+            ユーザエージェントから OPに送られるメッセージ、そして RP から OP に
+            送られるメッセージにも適用される。
+           <!--
             This model applies to messages from the User-Agent to both
             the Relying Party and the OP, as well as messages from the
             Relying Party to the OP.
+            -->
           </t>
         </section>
-        <section title="Example">
+        <!-- section title="Example" -->
+        <section title="用例">
           <t>
-            Non-normative
+            <!-- Non-normative -->
+            参考
           </t>
           <figure>
             <preamble>
+            下記は、次の情報のエンコード例である。
+            <!--
               The following examples encode the following information:
+              -->
             </preamble>
-            <artwork><![CDATA[
+            <!-- artwork><![CDATA[
 Key     | Value
+--------+---------------------------
+mode    | error
+error   | This is an example message
+]]>
+            </artwork -->
+            <artwork><![CDATA[
+キー     | 値
 --------+---------------------------
 mode    | error
 error   | This is an example message
@@ -535,7 +589,10 @@ error   | This is an example message
 
           <figure>
             <preamble>
+            エンコードされたキー・値フォーム：
+            <!--
               Key-Value Form encoded:
+              -->
             </preamble>
             <artwork><![CDATA[mode:error
 error:This is an example message
@@ -545,16 +602,28 @@ error:This is an example message
 
           <figure>
             <preamble>
+                HTTP POST ボディまたは URL のクエリ文字列に含まれるときなど
+                 x-www-urlencoded の場合 (<xref target="RFC3986" /> セクション 3) ：
+            <!--
               x-www-urlencoded, as in a HTTP POST body or in a URL's
               query string (<xref target="RFC3986" /> section 3):
+              -->
             </preamble>
             <artwork>openid.mode=error&amp;openid.error=This%20is%20an%20example%20message</artwork>
           </figure>
         </section>
       </section>
 
-      <section title="Integer Representations" anchor="btwoc">
+      <!-- section title="Integer Representations" anchor="btwoc" -->
+      <section title="整数表現" anchor="btwoc">
         <t>
+            任意精度整数は、ビッグエンディアン符号付き 2 の補数表現バイナリ文字列に
+            エンコードしなければならない (MUST) 。以後 "btwoc" は、任意精度整数を引数とし、
+            最も短いビッグエンディアン 2 の補数表現を返す関数とする。 Diffie-Hellman 鍵交換で
+            用いる整数は全て、正の数とする。
+            つまり、 2 の補数表現の最上位ビットはゼロでなければならない (MUST) 。
+            そうでない場合、文字列の先頭にゼロバイトを付加する実装をしなければならない (MUST) 。
+        <!--
           Arbitrary precision integers MUST be encoded as big-endian
           signed two's complement binary strings. Henceforth, "btwoc"
           is a function that takes an arbitrary precision integer and
@@ -564,11 +633,15 @@ error:This is an example message
           the left-most bit of the two's complement representation
           MUST be zero. If it is not, implementations MUST add a zero
           byte at the front of the string.
+          -->
         </t>
         <figure>
-          <preamble>Non-normative example:</preamble>
+          <preamble><!-- Non-normative example --> 参考例:</preamble>
           <artwork>
+<!--
 Base 10 number | btwoc string representation
+-->
+10 進数表現      | btwoc文字列表現
 ---------------+----------------------------
 0              | "\x00"
 127            | "\x7F"
@@ -580,79 +653,132 @@ Base 10 number | btwoc string representation
       </section>
     </section>
 
-    <section title="Communication Types">
+    <!-- section title="Communication Types" -->
+    <section title="通信形式">
+      <!-- section title="Direct Communication"
       <section title="Direct Communication"
+               anchor="direct_comm" -->
+      <section title="直接通信"
                anchor="direct_comm">
         <t>
+            直接通信 (direct communication) は、 OP エンドポイント URL に対し、 
+            RP 側から開始する。アソシエーションの確立および認証アサーションの検証のために
+            用いられる。直接通信 (direct communication) は、 OP エンドポイント URL に対し、 
+            RP 側から開始する。<xref target="associations">アソシエーションの確立</xref>
+            および<xref target="check_auth">認証アサーションの検証</xref>のために用いられる。
+        <!--
           Direct communication is initiated by a Relying Party to an
           OP endpoint URL.  It is used for <xref
           target="associations">establishing associations</xref> and
           <xref target="check_auth">verifying authentication
           assertions</xref>.
+          -->
         </t>
-        <section title="Direct Request" anchor="direct_request">
+        <!-- section title="Direct Request" anchor="direct_request" -->
+        <section title="直接要求" anchor="direct_request">
           <t>
+            メッセージは、<xref target="http_encoding" />で指定した通り、 
+            POST ボディとしてエンコードしなければならない (MUST) 。
+          <!--
             The message MUST be encoded as a POST body, as specified
             by <xref target="http_encoding" />.
+            -->
           </t>
           <t>
+            直接要求は全て HTTP POST であり、そのため、
+            <xref target="http_encoding" /> で示した必須フィールドを含む。
+          <!--
             All direct requests are HTTP POSTs, and so
             contain the required fields listed in <xref
                 target="http_encoding" />.
+          -->
           </t>
         </section>
-        <section title="Direct Response" anchor="direct_response">
+        <!-- section title="Direct Response" anchor="direct_response" -->
+        <section title="直接応答" anchor="direct_response">
           <t>
+            <xref target="direct_request">直接要求</xref>への応答のボディは、
+            <xref target="kvform">キー・値フォーム</xref>の中の HTTP 応答ボディで構成される。
+            応答の content-type は、 "text/plain" とすべきである (SHOULD) 。
+          <!--
             The body of a response to a <xref
             target="direct_request">Direct Request</xref> consists of
             an HTTP Response body in <xref target="kvform">Key-Value
             Form</xref>. The content-type of the response SHOULD be
             "text/plain".
+            -->
           </t>
           <t>
+            キー・値フォームのメッセージは全て、以下のフィールドを含まなければならない (MUST) 。
+            <!--
             All Key-Value form message MUST contain the following field:
-
+            -->
             <list style='symbols'>
               <t>
                 ns
                 <list style='empty'>
                   <t>
-                    Value: "http://specs.openid.net/auth/2.0"
+                    <!-- Value -->値: "http://specs.openid.net/auth/2.0"
                   </t>
                   <t>
+                    応答が OpenID 2.0 として有効な応答であるためには、
+                    上記の値が存在していなければならない (MUST) 。
+                    仕様の将来版においては、メッセージ受信者が応答を適切に解釈できるように、
+                    異なる値が定義される場合もある。
+                    <!--
                     This particular value MUST be present for the
                     response to be a valid OpenID 2.0 response. Future
                     versions of the specification may define different
                     values in order to allow message recipients to
                     properly interpret the request.
+                    -->
                   </t>
                   <t>
+                    この値が存在しない、あるいは "http://openid.net/signon/1.1" 、 
+                    "http://openid.net/signon/1.0" のどちらかの値が設定されている場合、
+                    そのメッセージの解釈には、 <xref target="compat_mode">
+                    OpenID Authentication 1.1 互換モード</xref>を
+                    用いるべきである (SHOULD) 。
+                    <!--
                     If this value is absent or set to one of
                     "http://openid.net/signon/1.1" or
                     "http://openid.net/signon/1.0", then this message
                     SHOULD be interpreted using <xref
                     target="compat_mode">OpenID Authentication 1.1
                     Compatibility mode</xref>.
+                    -->
                   </t>
                 </list>
               </t>
             </list>
           </t>
 
-          <section title="Successful Responses">
+          <!-- section title="Successful Responses" -->
+          <section title="成功時の応答">
             <t>
+                サーバが有効な要求を受け取ったときは、 
+                HTTP ステータスコード 200 の応答を送らなければならない (MUST) 。
+                <!--
               A server receiving a valid request MUST send a
               response with an HTTP status code of 200.
+                -->
             </t>
           </section>
 
-          <section title="Error Responses">
+          <!-- section title="Error Responses" -->
+          <section title="エラー時の応答">
             <t>
+                要求の形式に間違いがあった場合や無効な引数が含まれていた場合、サーバは、 
+                HTTP ステータスコード 400 を含む応答を送らなければならない (MUST) 。
+                応答のボディは、以下のフィールドを含む<xref
+              target="kvform">キー・値形式</xref>メッセージでなければならない (MUST):
+            <!--
               If a request is malformed or contains invalid arguments,
               the server MUST send a response with a status code of
               400. The response body MUST be a <xref
               target="kvform">Key-Value Form</xref> message with the
               following fields:
+              -->
             </t>
             <t>
               <list style='symbols'>
@@ -660,7 +786,10 @@ Base 10 number | btwoc string representation
                   ns
                   <list style='empty'>
                     <t>
+                        <xref target="direct_response" />で指定した通り。
+                    <!--
                       As specified in <xref target="direct_response" />.
+                      -->
                     </t>
                   </list>
                 </t>
@@ -669,8 +798,11 @@ Base 10 number | btwoc string representation
                   error
                   <list style='empty'>
                     <t>
+                    <!--
                       Value: A human-readable message indicating the cause
                       of the error.
+                      -->
+                      値: 人間が解読可能なメッセージ。エラーの原因を示す。
                     </t>
                   </list>
                 </t>
@@ -679,10 +811,14 @@ Base 10 number | btwoc string representation
                   contact
                   <list style='empty'>
                     <t>
+                    値:（オプション）サーバ管理者の連絡先。連絡先は、
+                    人間に対して表示するためのものなので、どのような形で記述してもよい。
+                    <!--
                       Value: (optional) Contact address for the
                       administrator of the server. The contact address
                       may take any form, as it is intended to be
                       displayed to a person.
+                      -->
                     </t>
                   </list>
                 </t>
@@ -691,14 +827,20 @@ Base 10 number | btwoc string representation
                   reference
                   <list style='empty'>
                     <t>
+                    値:（オプション）サポートチケット番号やニュースブログへの URL などの参照トークン。
+                    <!--
                       Value: (optional) A reference token, such
                       as a support ticket number or a URL to a news
                       blog, etc.
+                      -->
                     </t>
                   </list>
                 </t>
               </list>
+              OP は、この応答に追加フィールドを追加してもよい (MAY) 。
+              <!--
                The OP MAY add additional fields to this response.
+               -->
             </t>
           </section>
         </section>
