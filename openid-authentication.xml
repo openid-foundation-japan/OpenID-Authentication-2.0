@@ -637,7 +637,7 @@ error:This is an example message
         </t>
         <figure>
           <preamble><!-- Non-normative example --> 参考例:</preamble>
-          <artwork>
+          <artwork><![CDATA[
 <!--
 Base 10 number | btwoc string representation
 -->
@@ -648,6 +648,7 @@ Base 10 number | btwoc string representation
 128            | "\x00\x80"
 255            | "\x00\xFF"
 32768          | "\x00\x80\x00"
+]]>
           </artwork>
         </figure>
       </section>
@@ -1263,7 +1264,7 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              識別子が URL の場合は、 Yadis プロトコル <xref target="Yadis"> を最初に試みるものとする (SHALL) 。成功すれば、同様に XRDS 文書が結果として生成される。
+              識別子が URL の場合は、 <xref target="Yadis">Yadis プロトコル</xref> を最初に試みるものとする (SHALL) 。成功すれば、同様に XRDS 文書が結果として生成される。
               <!--
               If it is a URL, the <xref target="Yadis">Yadis
               protocol</xref> SHALL be first attempted. If it
