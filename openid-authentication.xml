@@ -1911,18 +1911,24 @@ Base 10 number | btwoc string representation
           </t>
         </section>
 
-
-        <section title='Diffie-Hellman Response Parameters' toc="exclude">
+        <section title='Diffie-Hellman 応答パラメータ' toc="exclude">
+        <!-- section title='Diffie-Hellman Response Parameters' toc="exclude" -->
           <t>
             <list style="symbols">
               <t>
                 dh_server_public
                 <list style='empty'>
                   <t>
+                    値： base64(btwoc(g ^ xb mod p))
+                    <!--
                     Value: base64(btwoc(g ^ xb mod p))
+                    -->
                   </t>
                   <t>
+                    説明： OP の Diffie-Hellman 公開鍵。
+                    <!--
                     Description: The OP's Diffie-Hellman public key.
+                    -->
                   </t>
                 </list>
               </t>
@@ -1930,33 +1936,45 @@ Base 10 number | btwoc string representation
                 enc_mac_key
                 <list style='empty'>
                   <t>
+                    値： base64(H(btwoc(g ^ (xa * xb) mod p)) XOR MAC 鍵)
+                    <!--
                     Value: base64(H(btwoc(g ^ (xa * xb) mod p)) XOR MAC key)
+                    -->
                   </t>
                   <t>
+                    説明： MAC 鍵（共有秘密鍵）で、秘密の Diffie-Hellman 値を用いて暗号化したもの。セッション形式に応じて、ハッシュ関数 H は "SHA1" 、 "SHA256" のいずれかとなる。
+                    <!--
                     Description: The MAC key (shared secret),
                     encrypted with the secret Diffie-Hellman value. H
                     is either "SHA1" or "SHA256" depending on the
                     session type.
+                    -->
                   </t>
                 </list>
               </t>
             </list>
           </t>
           <t>
+            注： 'btwoc' 関数については、<xref target="btwoc"/> で定義した通りである。
+            <!--
             NOTE: The 'btwoc' function is defined in <xref
             target="btwoc"/>
+            -->
           </t>
         </section>
 
-        <section anchor="refuse_assoc"
-                 title="Unsuccessful Response Parameters">
+        <section anchor="refuse_assoc" title="失敗時の応答パラメータ">
+        <!-- section anchor="refuse_assoc" title="Unsuccessful Response Parameters" -->
           <t>
+            OP がセッション形式やアソシエーション形式をサポートしていない場合、アソシエーション要求が失敗したことを示す直接のエラーメッセージを含む応答を返さなければならない (MUST) 。他のアソシエーションセッション形式またはアソシエーション形式をサポートしている場合、 OP は、応答にその情報を含めるべきである。
+            <!--
             If the OP does not support a session type or association
             type, it MUST respond with a direct error message
             indicating that the association request failed. If there
             is another association session type or association type
             that is supported, the OP SHOULD include that information
             in the response.
+            -->
           </t>
           <t>
             <list style='symbols'>
@@ -1964,7 +1982,10 @@ Base 10 number | btwoc string representation
                 ns
                 <list style="empty">
                   <t>
+                    <xref target="direct_response" /> で指定した通り。
+                    <!--
                     As specified in <xref target="direct_response" />.
+                    -->
                   </t>
                 </list>
               </t>
@@ -1972,8 +1993,11 @@ Base 10 number | btwoc string representation
                 error
                 <list style='empty'>
                   <t>
+                    値： 人間が解読可能なメッセージ。アソシエーション要求が失敗した理由を示す。
+                    <!--
                     Value: A human-readable message indicating why the
                     association request failed.
+                    -->
                   </t>
                 </list>
               </t>
@@ -1981,7 +2005,10 @@ Base 10 number | btwoc string representation
                 error_code
                 <list style='empty'>
                   <t>
+                    値： "unsupported-type"
+                    <!--
                     Value: "unsupported-type"
+                    -->
                   </t>
                 </list>
               </t>
@@ -1989,9 +2016,12 @@ Base 10 number | btwoc string representation
                 session_type
                 <list style='empty'>
                   <t>
+                    値：（オプション）<xref target="assoc_sess_types" /> に示される有効なアソシエーションセッション形式のうち、 OP がサポートしているもの。
+                    <!--
                     Value: (optional) A valid association session type
                     from <xref target="assoc_sess_types" /> that the
                     OP supports.
+                    -->
                   </t>
                 </list>
               </t>
@@ -1999,50 +2029,69 @@ Base 10 number | btwoc string representation
                 assoc_type
                 <list style='empty'>
                   <t>
+                    値：（オプション）<xref target="assoc_types" /> に示されるアソシエーション形式のうち、 OP がサポートしているもの。
+                    <!--
                     Value: (optional) An association type supported by
                     the OP from <xref target="assoc_types" />.
+                    -->
                   </t>
                 </list>
               </t>
             </list>
           </t>
           <t>
+            "unsupported-type" の応答を受け取ったとき、 RP は、アソシエーションセッション形式およびアソシエーション形式を指定して、再度、要求を行なってもよい (MAY) 。アソシエーションが確立できない場合、 RP は、<xref target="check_auth">直接検証</xref>の形で認証プロセスを継続してもよい (MAY) 。
+            <!--
             Upon receipt of an "unsupported-type" response, the
             Relying Party MAY make another request with the specified
             association session type and association type. If no
             association is established, the Relying Party MAY continue
             the authentication process in <xref target="check_auth">
             Direct Verification</xref>.
+            -->
           </t>
         </section>
       </section>
 
-      <section title="Association Types" anchor="assoc_types">
+      <section title="アソシエーション形式" anchor="assoc_types">
+      <!-- section title="Association Types" anchor="assoc_types" -->
         <section title="HMAC-SHA1">
           <t>
+            "HMAC-SHA1" 形式のアソシエーションでは、<xref target="sign_algos">HMAC-SHA1</xref> 署名アルゴリズムを用いる。
+            <!--
             An association of type "HMAC-SHA1" uses the <xref
             target="sign_algos">HMAC-SHA1</xref> signature algorithm.
+            -->
           </t>
         </section>
 
         <section title="HMAC-SHA256">
           <t>
+            "HMAC-SHA256" 形式のアソシエーションでは、<xref target="sign_algos">HMAC-SHA256</xref> 署名アルゴリズムを用いる。
+            <!--
             An association of type "HMAC-SHA256" uses the <xref
             target="sign_algos">HMAC-SHA256</xref> signature
             algorithm.
+            -->
           </t>
         </section>
       </section>
 
-      <section title="Association Session Types" anchor="assoc_sess_types">
+      <section title="アソシエーションセッション形式" anchor="assoc_sess_types">
+      <!-- section title="Association Session Types" anchor="assoc_sess_types" -->
         <t>
+          OpenID 認証では、 "no-encryption" 、 "DH-SHA1" 、 "DHSHA256" の3 種類の有効なアソシエーションセッション形式が定義されている。
+          <!--
           OpenID Authentication defines three valid association
           session types: "no-encryption", "DH-SHA1", and "DH-SHA256".
+          -->
         </t>
 
-        <section title="No-Encryption Association Sessions"
-                 toc="exclude">
+        <section title="暗号化されないアソシエーションセッション" toc="exclude">
+        <!-- section title="No-Encryption Association Sessions" toc="exclude" -->
           <t>
+            "no-encryption" 形式のアソシエーションセッションでは、そのアソシエーションの MAC 鍵が OP から RP にプレーンテキストで送られる。そのため、トランスポート層の暗号化が使用されていないと、盗聴者がその鍵を転送途中で入手して、受信する RP に対して偽のメッセージを送ることが可能となってしまう。従って、メッセージがトランスポート層の暗号化を使用していない場合は、 "no-encryption" 形式のアソシエーションセッションを用いてはならない (MUST NOT)。詳しくは、<xref target="preventing_eavesdropping" /> を参照。
+            <!--
             In a "no-encryption" association session, the OP sends
             the association MAC key in plain-text to the Relying Party.
             This makes it possible for an eavesdropper to intercept
@@ -2051,31 +2100,43 @@ Base 10 number | btwoc string representation
             association sessions MUST NOT be used unless the messages
             are using transport layer encryption. See <xref target="preventing_eavesdropping" />
             for more information.
+            -->
           </t>
 
           <t>
+            OP から送られる MAC 鍵 は、<xref target="sign_algos" /> で指定した通り、要求されたアソシエーション形式で指定されている長さでなければならない。
+            <!--
             The MAC key sent by the OP MUST be the length specified
             for the requested association type, as specified in <xref
             target="sign_algos" />.
+            -->
           </t>
 
         </section>
 
-        <section title="Diffie-Hellman Association Sessions"
-                     anchor="dh_sessions" toc="exclude">
+        <section title="Diffie-Hellman アソシエーションセッション" anchor="dh_sessions" toc="exclude">
+        <!-- section title="Diffie-Hellman Association Sessions" anchor="dh_sessions" toc="exclude" -->
           <t>
+            "DH-SHA1" および "DH-SHA256" アソシエーション形式では、秘密共有鍵を安全に転送するために、 Diffie-Hellman 鍵交換を用いる。
+            <!--
             The "DH-SHA1" and "DH-SHA256" association types use
             Diffie-Hellman Key Exchange to securely transmit the
             shared secret.
+            -->
           </t>
           <t>
+            MAC 鍵 の長さは、ハッシュ関数 H の出力と同じ長さであると同時に、当該アソシエーションの署名アルゴリズムの出力と同じ長さでなければならない (MUST) 。つまり、DH-SHA1 については 160 ビット（ 20 バイト）、 DH-SHA256 については 256 ビット（ 32 バイト）である。
+            <!--
             The MAC key MUST be the same length as the output of H,
             the hash function - 160 bits (20 bytes) for DH-SHA1 or 256
             bits (32 bytes) for DH-SHA256, as well as the output of
             the signature algorithm of this association.
+            -->
           </t>
 
           <t>
+            RP は、モジュラス（法） p とジェネレータ（原始元） g を指定する。また、 RP は任意の秘密鍵 xaをランダムに選び、 OpenID プロバイダは任意の秘密鍵 xb を選ぶ。これらの秘密鍵はともに、 [1 .. p-1] の範囲に含まれていなければならない。このとき MAC 鍵の暗号化に用いる秘密共有鍵は、 g ^ (xa * xb) mod p = (g ^ xa) ^ xb mod p = (g ^ xb) ^ xa mod p となる。詳しくは、<xref target='RFC2631' /> を参照のこと。また、ランダム値の選択に関する詳細は、<xref target="RFC1750" /> を参照。
+            <!--
             The Relying Party specifies a modulus, p, and a generator,
             g. The Relying Party chooses a random private key xa and
             OpenID Provider chooses a random private key xb, both in
@@ -2084,6 +2145,7 @@ Base 10 number | btwoc string representation
             mod p = (g ^ xb) ^ xa mod p. For more information, see
             <xref target='RFC2631' />. For information on the
             selection of random values, see <xref target="RFC1750" />.
+            -->
           </t>
         </section>
       </section>
