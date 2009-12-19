@@ -104,7 +104,7 @@
       本文書で用いられる各キーワード「しなければならない（ MUST ）」、「してはならない（ MUST NOT ）」、
       「必須である（ REQUIRED ）」、「するものとする（ SHALL ）」、「しないものとする（ SHALL NOT ）」、
       「すべきである（ SHOULD ）」、「すべきではない（ SHOULD NOT ）」、「推奨される（ RECOMMENDED ）」、
-      「してもよい（ MAY ）」、「任意である（ OPTIONAL ）」は、 <xref target="RFC2119"/> で述べられている通りに
+      「してもよい（ MAY ）」、「任意である（ OPTIONAL ）」は <xref target="RFC2119"/> で述べられている通りに
       解釈されるべきものである。
       <!--
         The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
@@ -1487,14 +1487,20 @@ Base 10 number | btwoc string representation
             </t>
           </section>
 
-          <section title="Additional Information">
+          <section title="追加情報">
+          <!-- section title="Additional Information" -->
             <t>
+              OpenID Authentication 2.0 以降、 "openid"名前空間は使用されない。 "xrd"名前空間は、 "xri://$xrd*($v*2.0)" である。
+              <!--
               The "openid" namespace is no longer used as of OpenID
               Authentication 2.0.  The "xrd" namespace is
               "xri://$xrd*($v*2.0)".
+              -->
             </t>
 
             <t>
+              使用されている既存のコードに対する互換性を確保するため、 RP は、<xref target="compat_mode">OpenID Authentication 1.1 互換モード</xref>のセクションで記した通り、 &lt;xrd:Type&gt; の値として "http://openid.net/signon/1.0" または "http://openid.net/signon/1.1" を受け入れることが推奨される (RECOMMENDED) 。 OpenID Authentication 2.0 をサポートする RP は、"http://specs.openid.net/auth/2.0/server" および "http://specs.openid.net/auth/2.0/signon" タイプのエンドポイントが利用可能な場合、<xref target="extracting_auth" /> で指定した順序で、これらのエンドポイントの利用を選択することが推奨される (RECOMMENDED)。
+              <!--
               For compatibility with deployed code, it is RECOMMENDED
               that Relying Parties also accept
               "http://openid.net/signon/1.0" or
@@ -1508,57 +1514,82 @@ Base 10 number | btwoc string representation
               "http://specs.openid.net/auth/2.0/signon", in
               this order, as specified in <xref
               target="extracting_auth" />
+              -->
             </t>
 
             <t>
+              OP が拡張仕様（<xref target="extensions" /> 参照）をサポートする場合は、その拡張仕様を &lt;xrd:Service&gt; エレメントの追加の &lt;xrd:Type&gt; 子エレメントとして列記すべきである (SHOULD) 。
+              <!--
               If an OP supports extensions (<xref target="extensions"
               />), the extensions SHOULD be listed as additional
               &lt;xrd:Type&gt; child elements of the
               &lt;xrd:Service&gt; element.
+              -->
             </t>
 
           </section>
 
         </section>
 
-        <section anchor="html_disco" title="HTML-Based Discovery">
+        <section anchor="html_disco" title="HTML ベースのディスカバリ">
+        <!-- section anchor="html_disco" title="HTML-Based Discovery" -->
           <t>
+            RP は、HTML ベースのディスカバリをサポートしなければならない (MUST)。HTML ベースのディスカバリは、主張識別子のディスカバリにのみ用いることができる。OP 識別子は、XRDS ディスカバリをサポートする XRI または URL でなければならない。
+            <!--
             HTML-Based discovery MUST be supported by Relying
             Parties. HTML-Based discovery is only usable for discovery
             of Claimed Identifiers. OP Identifiers must be XRIs or
             URLs that support XRDS discovery.
+            -->
           </t>
 
           <t>
+            HTML ベースのディスカバリを利用するためには、主張識別子の URL に HTML 文書が用意されていなければならない (MUST) 。文書の HEAD エレメントは、
+            <!--
             To use HTML-Based discovery, an HTML document MUST be
             available at the URL of the Claimed Identifier. Within the
             HEAD element of the document:
+            -->
 
             <list>
               <t>
+                "rel" 属性が "openid2.provider" 、 "href" 属性が OP エンドポイント URL に設定された LINK エレメントを含まなければならない (MUST) 。
+                <!--
                 A LINK element MUST be included with attributes
                 "rel" set to "openid2.provider" and "href" set to an OP
                 Endpoint URL
+                -->
               </t>
               <t>
+                "rel" 属性が "openid2.local_id" 、 "href" 属性がエンドユーザの OP ローカル識別子 に設定された LINK エレメントを含んでいてもよい (MAY) 。
+                <!--
                 A LINK element MAY be included with attributes
                 "rel" set to "openid2.local_id" and "href" set to the
                 end user's OP-Local Identifier
+                -->
               </t>
             </list>
           </t>
 
           <t>
+            HTMLディスカバリの際のプロトコルバージョンは "http://specs.openid.net/auth/2.0/signon" である。
+            <!--
             The protocol version when HTML discovery is performed is
             "http://specs.openid.net/auth/2.0/signon".
+            -->
           </t>
 
           <t>
+            HTML 文書の提供ホストは、エンドユーザの OP のホストと異なっていてもよい (MAY)。
+            <!--
             The host of the HTML document MAY be different from the
             end user's OP's host.
+            -->
           </t>
 
           <t>
+            "openid2.provider" および "openid2.local_id" URL は、 "&amp;amp;" 、 "&amp;lt;" 、 "&amp;gt;" 、 "&amp;quot;" 以外のエンティティを含んでいてはならない (MUST NOT) 。 HTML 文書において有効でない、あるいは、文書の文字エンコーディングにおいて表現できない、その他の文字の使用は、<xref target='RFC3986' /> に示されるパーセントエンコーディング (%xx) の仕組みを用いて、エスケープしなければならない (MUST) 。
+            <!--
             The "openid2.provider" and "openid2.local_id" URLs MUST NOT
             include entities other than "&amp;amp;", "&amp;lt;",
             "&amp;gt;", and "&amp;quot;". Other characters that would
@@ -1566,10 +1597,13 @@ Base 10 number | btwoc string representation
             represented in the document's character encoding MUST be
             escaped using the percent-encoding (%xx) mechanism
             described in <xref target='RFC3986' />.
+            -->
           </t>
 
           <t>
-	        As discussed in the <xref
+            <xref target="compat_mode">OpenID Authentication 1.1 互換モード</xref>のセクションで述べたように、これらのディスカバリタグは前バージョンのプロトコルとは同じではない。送られるデータに変更はないが、 RP が使用するプロトコルのバージョンを決定できるように名称が変更された。 RP は、バージョン 1.1 および 2.0 の両方のプロバイダを通知するために HTML ベースのディスカバリを利用する主張識別子に遭遇してもよい (MAY) 。
+            <!--
+            As discussed in the <xref
             target="compat_mode">OpenID Authentication 1.1
             Compatibility mode</xref> section, these discovery tags
             are not the same as in previous versions of the protocol.
@@ -1578,78 +1612,112 @@ Base 10 number | btwoc string representation
             being used.  A Relying Party MAY encounter a Claimed Identifier
             which uses HTML-Based Discovery to advertise both version 1.1
             and 2.0 Providers.
+            -->
           </t>
         </section>
       </section>
     </section>
 
-
-    <section title="Establishing Associations" anchor="associations">
+    <section title="アソシエーションの確立" anchor="associations">
+    <!-- section title="Establishing Associations" anchor="associations" -->
       <t>
+        アソシエーションは、 RP と OpenID プロバイダとの間で共有秘密鍵を確立するためのものである。その後交換されるプロトコルメッセージを検証し、メッセージのやりとりを減らすために用いられる。
+        <!--
         An association between the Relying Party and the OpenID Provider
         establishes a shared secret between them, which is used to verify
         subsequent protocol messages and reduce round trips.
+        -->
       </t>
 
       <t>
+        RP がアソシエーションを形成できる場合は、アソシエーションを形成することが推奨される (RECOMMENDED) 。 RP がアソシエーションを構築・保持できない場合は、<xref target="check_auth" /> に示される代わりの検証の仕組みを用いる。この仕組みは、ステートレスモード (Stateless Mode) と呼ばれる。
+        <!--
         It is RECOMMENDED that a Relying Party form associations if it
         is possible for it to do so.  If a Relying Party is incapable
         of creating or storing associations, <xref target="check_auth" />
         provides an alternate verification mechanism referred to as
         Stateless Mode.
+        -->
       </t>
 
-      <section title="Association Session Request">
+      <section title="アソシエーションセッション要求">
+      <!-- section title="Association Session Request" -->
         <t>
+          アソシエーションセッション (Association Session) は、 RP から OPエンドポイントURL に対して、値が "associate" である "openid.mode" 鍵を有する<xref target="direct_comm">直接要求</xref>を行なうことよって開始される。
+          <!--
           An association session is initiated by a <xref
           target="direct_comm">direct request</xref> from a Relying
           Party to an OP Endpoint URL with the "openid.mode" key
           having the value of "associate".
+          -->
         </t>
 
-        <section title="Common Request Parameters" toc="exclude">
+        <section title="共通の要求パラメータ" toc="exclude">
+        <!-- section title="Common Request Parameters" toc="exclude" -->
           <t>
+            以下のパラメータは、全てのアソシエーション要求において共通して用いられる。
+            <!--
             These parameters are common to all association requests:
+            -->
           </t>
           <t>
             <list style="symbols">
               <t>openid.ns
                 <list style='empty'>
                   <t>
+                    <xref target="http_encoding" /> で指定した通り。
+                    <!--
                     As specified in <xref target="http_encoding" />.
+                    -->
                   </t>
                 </list>
               </t>
               <t>openid.mode
                 <list style="empty">
-                  <t> Value: "associate"</t>
+                  <t>値： "associate"</t>
+                  <!-- t> Value: "associate"</t -->
                 </list>
               </t>
 
               <t>openid.assoc_type
                 <list style="empty">
-                  <t> The preferred association type.  The association
+                  <t>
+                    推奨されるアソシエーション形式。アソシエーション形式は、以後のメッセージの署名を行なう際に用いられるアルゴリズムを定義するためのものである。
+                  </t>
+                  <t>
+                    値：<xref target="assoc_types"/> で指定される有効なアソシエーション形式から選択。
+                  </t>
+                  <!-- t> The preferred association type.  The association
                     type defines the algorithm to be used to sign
                     subsequent messages.</t>
                   <t> Value: A valid association type from <xref
-                  target="assoc_types"/></t>
+                  target="assoc_types"/></t -->
                 </list>
               </t>
 
               <t>openid.session_type
                 <list style='empty'>
                   <t>
+                    推奨されるアソシエーションセッション形式。転送中のアソシエーションの MAC 鍵の暗号化に用いる方法を定義するためのものである。
+                    <!--
                     The preferred association session type.  This
                     defines the method used to encrypt the association's
                     MAC key in transit.
+                    -->
                   </t>
                   <t>
+                    値：<xref target="assoc_sess_types"/> で指定される有効なアソシエーションセッション形式から選択。
+                    <!--
                     Value: A valid association session type from
                     <xref target="assoc_sess_types"/>.
+                    -->
                   </t>
                   <t>
+                    注：トランスポート層の暗号化を使用していない場合は、 "no-encryption" を用いてはならない (MUST NOT) 。
+                    <!--
                     Note: Unless using transport layer encryption, 
                     "no-encryption" MUST NOT be used.
+                    -->
                   </t>
                 </list>
               </t>
@@ -1657,52 +1725,81 @@ Base 10 number | btwoc string representation
           </t>
         </section>
 
-        <section title="Diffie-Hellman Request Parameters" toc="exclude">
+        <section title="Diffie-Hellman 要求パラメータ" toc="exclude">
+        <!-- section title="Diffie-Hellman Request Parameters" toc="exclude" -->
           <t>
+            以下のパラメータは、要求するアソシエーションセッション形式が "DH-SHA1" の要求および "DH-SHA256" の要求の両方の場合に共通して用いられる:
+            <!--
             The following parameters are common to requests whose
             requested association session type is "DH-SHA1" or
             "DH-SHA256":
+            -->
           </t>
           <t>
             <list style="symbols">
               <t>
                 openid.dh_modulus
                 <list style='empty'>
-                  <t>Value: base64(btwoc(p))</t>
-                  <t>Default: See <xref target='pvalue' /></t>
+                  <t>
+                    値： base64(btwoc(p))
+                  </t>
+                  <t>
+                    デフォルト値：<xref target='pvalue' /> 参照
+                  </t>
+                  <!-- t>Value: base64(btwoc(p))</t>
+                  <t>Default: See <xref target='pvalue' /></t -->
                 </list>
               </t>
               <t>
                 openid.dh_gen
                 <list style='empty'>
-                  <t>Value: base64(btwoc(g))</t>
-                  <t>Default: g = 2</t>
+                  <t>
+                    値： base64(btwoc(g))
+                  </t>
+                  <t>
+                    デフォルト値：g = 2
+                  </t>
+                  <!-- t>Value: base64(btwoc(g))</t>
+                  <t>Default: g = 2</t -->
                 </list>
               </t>
               <t>
                 openid.dh_consumer_public
                 <list style='empty'>
-                  <t>Value: base64(btwoc(g ^ xa mod p))</t>
+                  <t>
+                    値： base64(btwoc(g ^ xa mod p))
+                  </t>
+                  <!-- t>Value: base64(btwoc(g ^ xa mod p))</t -->
                 </list>
               </t>
             </list>
           </t>
           <t>
+            これらのパラメータに関する詳細は、<xref target="dh_sessions"/> 参照。
+            <!--
             See <xref target="dh_sessions"/> for more information on
             these parameters.
+            -->
           </t>
           <t>
+            注： 'btwoc' 関数については、<xref target="btwoc"/> で定義した通りである。
+            <!--
             NOTE: The 'btwoc' function is defined in <xref
             target="btwoc"/>.
+            -->
           </t>
         </section>
       </section>
 
-      <section title="Association Session Response">
+      <section title="アソシエーションセッション応答">
+      <!-- section title="Association Session Response" -->
         <t>
+          アソシエーションセッション応答は、 OP から RP に対して行なう<xref target="kvform">キー・バリュー形式</xref>での直接応答である。
+          <!--
           An association session response is a direct response from the
           OP to the Relying Party in <xref target="kvform">Key-Value
           Form</xref>.
+          -->
         </t>
 
         <section title="Common Response Parameters">
@@ -1712,7 +1809,10 @@ Base 10 number | btwoc string representation
                 ns
                 <list style="empty">
                   <t>
+                    <xref target="direct_response" /> で指定した通り。
+                    <!--
                     As specified in <xref target="direct_response" />.
+                    -->
                   </t>
                 </list>
               </t>
@@ -1720,14 +1820,20 @@ Base 10 number | btwoc string representation
                 assoc_handle
                 <list style="empty">
                   <t>
+                    アソシエーションハンドル (association handle) は、以後のメッセージにおいて、このアソシエーションを参照するキーとして用いられる。
+                    <!--
                     The association handle is used as a key to refer
                     to this association in subsequent messages.
+                    -->
                   </t>
                   <t>
+                    値： 長さが 255 文字以下の文字列。 33-126 の範囲に含まれる ASCII 文字（空白を除く印刷可能な文字）のみで構成しなければならない (MUST) 。
+                    <!--
                     Value: A string 255 characters or less in length.
                     It MUST consist only of ASCII characters in the
                     range 33-126 inclusive (printable non-whitespace
                     characters).
+                    -->
                   </t>
                 </list>
               </t>
@@ -1735,11 +1841,14 @@ Base 10 number | btwoc string representation
                 session_type
                 <list style="empty">
                   <t>
+                    要求の中の "openid.session_type" パラメータの値。 OP がこのアソシエーション形式をサポートしたくない、あるいはサポートできない場合は、<xref target="refuse_assoc">失敗時の応答</xref>を戻さなければならない (MUST)。
+                    <!--
                     The value of the "openid.session_type" parameter
                     from the request.  If the OP is unwilling or
                     unable to support this association type, it MUST
                     return an <xref target="refuse_assoc">unsuccessful
                     response</xref>.
+                    -->
                   </t>
                 </list>
               </t>
@@ -1747,11 +1856,14 @@ Base 10 number | btwoc string representation
                 assoc_type
                 <list style="empty">
                   <t>
+                    要求の中の "openid.assoc_type" パラメータの値。 OP がこのアソシエーション形式をサポートしたくない、あるいはサポートできない場合は、<xref target="refuse_assoc">失敗時の応答</xref>を戻さなければならない (MUST) 。
+                    <!--
                     The value of the "openid.assoc_type" parameter
                     from the request.  If the OP is unwilling or
                     unable to support this association type, it MUST
                     return an <xref target="refuse_assoc">unsuccessful
                     response</xref>.
+                    -->
                   </t>
                 </list>
               </t>
@@ -1759,12 +1871,18 @@ Base 10 number | btwoc string representation
                 expires_in
                 <list style="empty">
                   <t>
+                    このアソシエーションの有効期限（単位：秒）。 RP は、当該期限を経過した後に、そのアソシエーションを使用してはならない (MUST NOT) 。
+                    <!--
                     The lifetime, in seconds, of this association.
                     The Relying Party MUST NOT use the association
                     after this time has passed.
+                    -->
                   </t>
                   <t>
+                    値： 整数値、 ASCII 文字 10 進数表現。
+                    <!--
                     Value: An integer, represented in base 10 ASCII.
+                    -->
                   </t>
                 </list>
               </t>
@@ -1772,16 +1890,20 @@ Base 10 number | btwoc string representation
           </t>
         </section>
 
-        <section title="Unencrypted Response Parameters">
+        <section title="暗号化されない応答パラメータ">
+        <!-- section title="Unencrypted Response Parameters" -->
           <t>
             <list style="symbols">
               <t>
                 mac_key
                 <list style='empty'>
                   <t>
+                    このアソシエーションの MAC 鍵（共有秘密鍵）で、<xref target="RFC3548">Base 64</xref>Base 64</xref> でエンコードしたもの。
+                    <!--
                     The MAC key (shared secret) for this
                     association, <xref target="RFC3548">Base 64</xref>
                     encoded.
+                    -->
                   </t>
                 </list>
               </t>
