@@ -2151,24 +2151,23 @@ Base 10 number | btwoc string representation
       </section>
     </section>
 
-    <section title="Requesting Authentication"
+    <section title="認証の要求"
              anchor="requesting_authentication">
       <t>
-        Once the Relying Party has successfully performed discovery
-        and (optionally) created an association with the discovered
-        OP Endpoint URL, it can send an authentication request to the
-        OP to obtain an assertion. An authentication request is an
-        <xref target="indirect_comm">indirect request</xref>.
+            RP がディスカバリの実行に成功し、ディスカバリによって得られた OP エンドポイント URL
+            とアソシエーションを構築（オプション）すれば、 RP は、アサーションを得るために OP に
+            認証要求を送ることができる。認証要求は、<xref target="indirect_comm">間接要求で
+            ある。</xref>.
       </t>
 
-      <section title="Request Parameters">
+      <section title="要求パラメータ">
         <t>
           <list style='symbols'>
             <t>
               openid.ns
               <list style='empty'>
                 <t>
-                  As specified in <xref target="http_encoding" />.
+                  <xref target="http_encoding" />で指定した通り。
                 </t>
               </list>
             </t>
@@ -2177,15 +2176,12 @@ Base 10 number | btwoc string representation
               openid.mode
               <list style='empty'>
                 <t>
-                  Value: "checkid_immediate" or "checkid_setup"
+                  値： "checkid_immediate" または "checkid_setup"
                 </t>
                 <t>
-                  Note: If the Relying Party wishes the end user to be
-                  able to interact with the OP, "checkid_setup"
-                  should be used. An example of a situation where
-                  interaction between the end user and the OP is not
-                  desired is when the authentication request is
-                  happening asynchronously in JavaScript.
+                  注： RP がエンドユーザと OP との対話を望む場合は、"checkid_setup" を用いる
+                  べきである。エンドユーザと OP との対話を望まない状況の例として、 JavaScript 
+                  の中で非同期の認証要求が生じた場合があげられる。
                 </t>
               </list>
             </t>
@@ -2194,21 +2190,20 @@ Base 10 number | btwoc string representation
               openid.claimed_id
               <list style='empty'>
                 <t>
-                  Value: (optional) The Claimed Identifier.
+                  値：（オプション） 主張識別子。
                 </t>
                 <t>
-                  "openid.claimed_id" and "openid.identity" SHALL
-                  be either both present or both absent. If neither
-                  value is present, the assertion is not about an
-                  identifier, and will contain other information in
-                  its payload, using
-                  <xref target="extensions">extensions</xref>.
+                  "openid.claimed_id" と "openid.identity" については、両方がともに存在するか、
+                  ともに存在しないかのいずれかとするものとする (SHALL) 。どちらの値も存在しない場合、
+                  そのアサーションは識別子に関するものではなく、
+                  <xref target="extensions">拡張仕様</xref>を用いて、ペイロードにその他の
+                  情報が含まれることになる。
                 </t>
                 <t>
-                  It is RECOMMENDED that OPs accept XRI identifiers
-                  with or without the "xri://" prefix, as specified
-                  in the <xref target="normalization">Normalization
-                  </xref> section.
+                  OP は、<xref target="normalization">正規化</xref>のセクションで示した通り、
+                  "xri://" プリフィックスを伴った XRI 識別子または "xri://" プリフィックスを伴わ
+                  ない XRI 識別子を受け入れることが推奨される
+                  (RECOMMENDED) 。
                 </t>
               </list>
             </t>
@@ -2217,21 +2212,18 @@ Base 10 number | btwoc string representation
               openid.identity
               <list style='empty'>
                 <t>
-                  Value: (optional) The OP-Local Identifier.
+                  値：（オプション） OP ローカル識別子。
                 </t>
                 <t>
-                  If a different OP-Local Identifier is not specified,
-                  the claimed identifier MUST be used as the value for
-                  openid.identity. 
+                  openid.identity の値に異なる OP ローカル識別子 が指定されていない場合は、その値
+                  として主張識別子を用いなければならない (MUST) 。
                 </t>
                 <t>
-                  Note: If this is set to the special value
-                  "http://specs.openid.net/auth/2.0/identifier_select"
-                  then the OP SHOULD choose an Identifier that belongs
-                  to the end user. This parameter MAY be omitted if
-                  the request is not about an identifier (for instance
-                  if an extension is in use that makes the request
-                  meaningful without it; see openid.claimed_id above).
+                  注： openid.identity に "http://specs.openid.net/auth/2.0/identifier_select"
+                  という特殊値が設定されている場合、 OP は、エンドユーザに属する識別子を選択すべきである
+                  (SHOULD) 。このパラメータは、要求が識別子に関するものでない場合（例えば、拡張仕様が使用
+                  され、当該パラメータがなくても要求が意味をなす場合。上記 openid.claimed_id 参照）、
+                  省略してもよい (MAY) 。
                 </t>
               </list>
             </t>
@@ -2240,14 +2232,12 @@ Base 10 number | btwoc string representation
               openid.assoc_handle
               <list style='empty'>
                 <t>
-                  Value: (optional) A handle for an association
-                  between the Relying Party and the OP that SHOULD be
-                  used to sign the response.
+                  値：（オプション） RP と OP の間のアソシエーションハンドル。応答に署名するために用いる
+                  べきである (SHOULD) 。
                 </t>
                 <t>
-                  Note: If no association handle is sent, the
-                  transaction will take place in <xref target="check_auth">
-                  Stateless Mode</xref>.
+                  注：アソシエーションハンドルが送られない場合、トランザクションは、
+                  <xref target="check_auth">ステートレスモードで</xref>行われる。
                 </t>
               </list>
             </t>
@@ -2256,23 +2246,17 @@ Base 10 number | btwoc string representation
               openid.return_to
               <list style='empty'>
                 <t>
-                  Value: (optional) URL to which the OP SHOULD return
-                  the User-Agent with the response indicating the
-                  status of the request.
+                  値：（オプション） OP が要求のステータスを示す応答とともにユーザエージェントを戻すべき
+                  (SHOULD) URL。
                 </t>
                 <t>
-                  Note: If this value is not sent in the request it
-                  signifies that the Relying Party does not wish
-                  for the end user to be returned.
+                  注：送られた要求の中にこの値が記されていない場合、エンドユーザが戻されることを RP は
+                  望んでいないということを意味している。
                 </t>
                 <t>
-                  Note: The return_to URL MAY be used as a mechanism
-                  for the Relying Party to attach context about the
-                  authentication request to the authentication
-                  response. This document does not define a mechanism
-                  by which the RP can ensure that query parameters are
-                  not modified by outside parties; such a mechanism
-                  can be defined by the RP itself.
+                  注：認証要求に関するコンテキストを RP が認証応答に添付する仕組みとして、return_to URL を
+                  利用してもよい (MAY) 。本文書では、照会パラメータが外部の第三者によって変更されないことを
+                  RP が保証できる仕組みは定義していない。このような仕組みは、 RP 自身で定義することができる。
                 </t>
               </list>
             </t>
@@ -2281,13 +2265,13 @@ Base 10 number | btwoc string representation
               openid.realm
               <list style='empty'>
                 <t>
-                  Value: (optional) URL pattern the OP SHOULD ask the
-                  end user to trust. See <xref target="realms" />.
-                  This value MUST be sent if openid.return_to is
-                  omitted.
+                  値：（オプション） OP が信頼することをエンドユーザに求めるべき (SHOULD) URL のパターン。
+                  <xref target="realms" />参照。 openid.return_to を省略した場合は、この値を送らなけ
+                  ればならない
+                  (MUST) 。
                 </t>
                 <t>
-                  Default: return_to URL
+                  デフォルト値： return_to URL
                 </t>
               </list>
             </t>
@@ -2295,192 +2279,163 @@ Base 10 number | btwoc string representation
         </t>
       </section>
 
-      <section title="Realms" anchor="realms">
+      <section title="レルム" anchor="realms">
         <t>
-          A "realm" is a pattern that represents the part of URL-space
-          for which an OpenID Authentication request is valid. A realm
-          is designed to give the end user an indication of the scope
-          of the authentication request. OPs SHOULD present the realm
-          when requesting the end user's approval for an authentication
-          request. The realm SHOULD be used by OPs to uniquely identify
-          Relying Parties. For example, OPs MAY use the realm to allow
-          the end user to automate approval of authentication requests.
+          レルム (realm) とは、 OpenID 認証要求が有効な URL 空間を表すパターンである。
+          レルムは、認証要求の対象範囲をエンドユーザに知らせるために考案された。エンドユーザに
+          よる認証要求の承諾を依頼する際、 OP はレルムを提示すべきである (SHOULD) 。レルムは、
+          OP が RP を一意的に特定するために用いるべきである (SHOULD) 。例えば、 OP は、エンド
+          ユーザが認証要求の承認を自動化できるようにするために、レルムを用いてもよい (MAY) 。
         </t>
 
         <t>
-          A realm pattern is a URL, with the following changes:
+          レルムパターンは URL であるが、以下の点が異なっている。
           <list style="symbols">
             <t>
-              A realm MUST NOT contain a URI fragment
+              レルムは、 URI フラグメントを含んでいてはならない (MUST NOT)
             </t>
             <t>
-              A realm MAY contain a wild-card at the beginning of the
-              URL authority section.  A wild-card consists of the
-              characters "*." prepended to the DNS name in the
-              authority section of the URL.
+              レルムは、 URL のオーソリティセクションの先頭にワイルドカードを含んでいてもよい
+               (MAY) 。ワイルドカードは、 "*." の文字からなり、 URL のオーソリティセクション
+              の DNS 名の前に付加される。
             </t>
           </list>
         </t>
 
         <t>
-          A URL matches a realm if:
+          以下の場合、 URL はレルムと一致する。
 
           <list style="symbols">
             <t>
-              The URL scheme and port of the URL are identical to those
-              in the realm.  See <xref target="RFC3986">RFC
-              3986</xref>, section 3.1 for rules about URI matching.
+              URL スキームおよび URL のポートがレルムの中のスキームおよびポートと同一の場合。
+              URI マッチングに関する規則については、 RFC 3986 [RFC3986] 、セクション 3.1 参照。
             </t>
 
             <t>
-              The URL's path is equal to or a sub-directory of the
-              realm's path.
+              URL のパスが、レルムのパスまたはサブディレクトリに等しい場合。
             </t>
 
             <t>
-              Either:
+              以下のいずれか。
               <list style="numbers">
                 <t>
-                  The realm's domain contains the wild-card characters
-                  "*.", and the trailing part of the URL's domain is
-                  identical to the part of the realm following the
-                  "*." wildcard, or
+                  レルムのドメインがワイルドカード文字 "*." を含み、 URL のドメインの末尾部分が
+                  ワイルドカード "*." に続くレルム部分と同一である場合。
                 </t>
                 <t>
-                  The URL's domain is identical to the realm's domain
+                  URL のドメインがレルムのドメインと同一である場合。
                 </t>
               </list>
              </t>
           </list>
 
-          When present, the "openid.return_to" URL MUST match the
-          "openid.realm", or the OP MUST return an <xref
-          target="indirect_error">indirect error response</xref>.
+          "openid.return_to" URL が存在するとき、 "openid.return_to" URL は 
+          "openid.realm" と合致しなければならない (MUST) 。もしくは、 OP は、
+          <xref target="indirect_error">エラー時の間接応答</xref>を返さなければ
+          ならない (MUST) 。
         </t>
 
         <t>
-          It is RECOMMENDED that OPs protect their users from making
-          assertions with overly-general realms, like http://*.com/ or
-          http://*.co.uk/. Overly general realms can be dangerous when
-          the realm is used for identifying a particular Relying
-          Party. Whether a realm is overly-general is at the
-          discretion of the OP.
+          OP は、 http://*.com/ や http://*.co.uk/ などあまりにも汎用的なレルムを
+          用いてエンドユーザがアサーションを行なわないようにすることが推奨される
+          (RECOMMENDED) 。あまりにも汎用的なレルムは、特定の RP の識別に用いるときには、
+          危険である場合がある。レルムが汎用的に過ぎるかどうかの判断は、 OP に委ねられている。
         </t>
 
-        <section title="Using the Realm for Return URL Verification"
+        <section title="レルムを用いた戻りURLの検証"
                  anchor="return_to_verification">
           <t>
-            OpenID providers SHOULD verify that the return_to URL
-            specified in the request is an OpenID relying party
-            endpoint. To verify a return_to URL, obtain the relying
-            party endpoints for the realm by performing <xref
-            target="rp_discovery">discovery on the relying
-            party</xref>. As always when performing discovery, the
-            discovered URL is the URL of the last HTTP response,
-            following redirects. If any redirects are followed when
-            performing discovery on the realm, verification has
-            failed. If discovery has successfuly completed, check to
-            make sure that the return_to URL matches one of the
-            relying party endpoints.
+            OpenID プロバイダは、要求において指定された return_to URL が OpenID RP の
+            エンドポイントであることを検証すべきである (SHOULD)。 return_to URL の検証を
+            行なうには、 <xref target="rp_discovery">RP に対するディスカバリ</xref>を
+            実行することによって、レルムのための RP のエンドポイントを取得する。ディスカバリ
+            を実行すると、その結果得られる URL は常に、リダイレクトを辿った先の最後の HTTP 
+            応答の URL となる。レルムに関するディスカバリを実行したとき、その後何らかのリダイ
+            レクトが生じれば、検証に失敗したことになる。ディスカバリが正常に完了したときは、
+            チェックを行ない、 return_to URL が RP のエンドポイントのひとつと一致することを
+            確認する。
           </t>
           <t>
-            A realm may contain a wildcard, and so may not be a valid
-            URL. In that case, perform discovery on the URL obtained
-            by substituting "www" for the wildcard in the realm.
+            レルムは、ワイルドカードを含んでもよく、そのため有効な URL でないことがある。
+            この場合は、レルムの中のワイルドカードを "www" に置き換え、その結果得られる
+            URL に関してディスカバリを実行する。
           </t>
           <t>
-            To match a return_to URL against a relying party endpoint,
-            use the same rules as for matching the return_to URL
-            against the realm, treating the relying party's endpoint
-            URL as the realm. Relying party endpoint URLs MUST NOT
-            contain a domain wildcard, and SHOULD be as specific as
-            possible.
+            return_to URL を RP のエンドポイントと照合するためには、 RP のエンドポイントURL
+            をレルムとして扱い、 return_to URL をレルムと照合するために用いたのと同じ規則を
+            適用する。 RP の エンドポイント URL は、ドメインのワイルドカードを含んではならず 
+            (MUST NOT) 、可能な限り、固有のものであるべきである (SHOULD) 。
           </t>
           <t>
-            If verification is attempted and fails, the provider
-            SHOULD NOT send a positive assertion to that return_to
-            URL.
+            検証を試みても失敗した場合、プロバイダは、その return_to URL に肯定アサーション 
+            (positive assertion) を送るべきではない (SHOULD NOT) 。
           </t>
           <t>
-            Providers MAY cache verified return_to URLs.
+            プロバイダは、検証済みの return_to URL をキャッシュしてもよい (MAY) 。
           </t>
         </section>
       </section>
 
-      <section title="Immediate Requests">
+      <section title="即時要求">
         <t>
-          When requesting authentication, the Relying Party MAY
-          request that the OP not interact with the end user.  In
-          this case the OP MUST respond immediately with either an
-          assertion that authentication is successful, or a response
-          indicating that the request cannot be completed without
-          further user interaction.  This is accomplished by an
-          authentication request with "openid.mode" set to
-          "checkid_immediate".
+          RP は、認証要求に当り、 OP がエンドユーザとの対話を行なわないことを要求してもよい
+          (MAY) 。この場合、 OP は即時に、認証成功のアサーション、または、ユーザとさらに
+          対話を行なわないと要求が完了できないことを知らせる応答のいずれかを返さなければなら
+          ない (MUST) 。即時要求は、認証要求の "openid.mode" に "checkid_immediate"
+          という値を設定することによって実現できる。
         </t>
       </section>
     </section>
 
-    <section title="Responding to Authentication Requests"
+    <section title="認証要求に対する応答"
              anchor="responding_to_authentication">
       <t>
-        When an authentication request comes from the User-Agent via
-        <xref target="indirect_comm">indirect communication</xref>,
-        the OP SHOULD determine that an authorized end user wishes to
-        complete the authentication.  If an authorized end user wishes
-        to complete the authentication, the OP SHOULD send a <xref
-        target="positive_assertions">positive assertion</xref> to the
-        Relying Party.
+        <xref target="indirect_comm">間接通信</xref>を通じてユーザエージェントから認証
+        要求を受け取ったときには、 OP は、認可済みの正規のエンドユーザが認証完了を望んでいる
+        と判断すべきである (SHOULD) 。認可済みの正規のエンドユーザが認証完了を望んでいる場合、
+        OP は、 RP に<xref target="positive_assertions">肯定アサーション</xref>を送る
+        べきである (SHOULD) 。
       </t>
       <t>
-        Methods of identifying authorized end users and obtaining
-        approval to return an OpenID Authentication assertion are
-        beyond the scope of this specification.  See <xref
-        target="rp_mitm_proxy" /> for OpenID Provider security
-        considerations.
+        認可済み正規のエンドユーザの識別方法および OpenID 認証アサーションを戻す上で必要な
+        承諾の取得方法については、本仕様の対象範囲外である。 OpenID プロバイダのセキュリティ
+        に関する考慮事項については、<xref target="rp_mitm_proxy" />参照のこと。
       </t>
       <t>
-        If the relying party requested OP-driven identifier selection
-        by setting "openid.identity" to
-        "http://specs.openid.net/auth/2.0/identifier_select"
-        and there are Identifiers for which the end user is authorized
-        to issue authentication responses, the OP SHOULD allow the end
-        user to choose which Identifier to use.
+        "openid.identity" に "http://specs.openid.net/auth/2.0/identifier_select"
+        という値を設定することによって OP 主導での識別子選択を RP が要求し、エンドユーザが
+        認証応答の発行を認可される複数の識別子がある場合、 OP は、エンドユーザがどの識別子を
+        使用するのかを選択できるようにすべきである (SHOULD) 。
       </t>
       <t>
-        If the Relying Party supplied an association handle with the
-        authentication request, the OP SHOULD attempt to look up an
-        association based on that handle.  If the association is
-        missing or expired, the OP SHOULD send the
-        "openid.invalidate_handle" parameter as part of the response
-        with the value of the request's "openid.assoc_handle"
-        parameter, and SHOULD proceed as if no association handle was
-        specified.
+        RP が認証要求にアソシエーションハンドルを付与した場合、 OP は、そのハンドルをもとに
+        してアソシエーションを探してみるべきである (SHOULD) 。アソシエーションが見つからない
+        か期限切れで失効している場合、 OP は、応答の一部として、要求の "openid.assoc_handle"
+        パラメータと同じ値で"openid.invalidate_handle" パラメータを送り返すべきである 
+        (SHOULD) 。さらに OP は、アソシエーションハンドルが指定されなかった場合と同様に、
+        処理を継続すべきである (SHOULD) 。
       </t>
       <t>
-        If no association handle is specified, the OP SHOULD use a
-        private association for signing the response.  The OP MUST
-        store this association and MUST respond to later requests to
-        check the signature of the response via <xref
-        target="check_auth">Direct Verification</xref>.
+        アソシエーションハンドルの指定がない場合、 OP は、応答への署名に専用のアソシエーションを
+        用いるべきである (SHOULD) 。 OP は、このアソシエーションを記憶しなければならない (MUST) 。
+        また、その後の要求に応答し、<xref target="check_auth">直接検証</xref>を通じて応答の
+        署名をチェックしなければならない (MUST) 。
       </t>
       <t>
-        Relying Parties SHOULD accept and verify assertions about
-        Identifiers for which they have not requested authentication.
-        OPs SHOULD use private associations for signing unsolicited
-        positive assertions. 
+        RP は、認証要求を済ませていない識別子に関するアサーションを受け入れ、検証すべきである
+        (SHOULD)。 OP は、一方的な (unsolicited) 肯定アサーションの署名用に専用のアソシ
+        エーションを用いるべきである (SHOULD)
       </t>
       <t>
-        If the "openid.return_to" value is omitted in the request, the
-        Relying Party does not wish to receive an authentication
-        assertion from the OP. This can be useful when using
-        extensions to transfer data from the Relying Party to the OP.
+        要求時に "openid.return_to" の値が省略されている場合、 RP は認証アサーションを OP 
+        から受け取ることを望んでいない。これは、 RP から OP へのデータ転送に拡張機能を用いて
+        いる場合に役立つ。
       </t>
 
-      <section title="Positive Assertions" anchor="positive_assertions">
+      <section title="肯定アサーション" anchor="positive_assertions">
         <t>
-          Positive assertions are <xref target="indirect_comm">
-          indirect responses</xref> with the following fields:
+          肯定アサーションのフィールドは、以下の通り。
+          <xref target="indirect_comm">間接通信</xref>で行う。
         </t>
         <t>
           <list style='symbols'>
@@ -2488,7 +2443,7 @@ Base 10 number | btwoc string representation
               openid.ns
               <list style='empty'>
                 <t>
-                  As specified in <xref target="http_encoding" />.
+                  <xref target="http_encoding" /> 指定した通り。
                 </t>
               </list>
             </t>
@@ -2496,7 +2451,7 @@ Base 10 number | btwoc string representation
             <t>
               openid.mode
               <list style='empty'>
-                <t>Value: "id_res"</t>
+                <t>値： "id_res"</t>
               </list>
             </t>
 
@@ -2504,7 +2459,7 @@ Base 10 number | btwoc string representation
               openid.op_endpoint
               <list style='empty'>
                 <t>
-                  The OP Endpoint URL.
+                  OP エンドポイント (Endpoint) URL。
                 </t>
               </list>
             </t>
@@ -2513,19 +2468,16 @@ Base 10 number | btwoc string representation
               openid.claimed_id
               <list style='empty'>
                 <t>
-                  Value: (optional) The Claimed Identifier.
-                  "openid.claimed_id" and "openid.identity" SHALL
-                  be either both present or both absent.
+                  値：（オプション）主張識別子。"openid.claimed_id" と "openid.identity"について
+                  は、両方がともに存在するか、ともに存在しないかのいずれかとするものとする (SHALL) 。
                 </t>
                 <t>
-                  Note: The end user MAY choose to use an OP-Local
-                  Identifier as a Claimed Identifier.
+                  注：エンドユーザは、OP ローカル識別子 を主張識別子として 使用することを選択してもよい
+                  (MAY) 。
                 </t>
                 <t>
-                  Note: If neither Identifier is present in the assertion,
-                  it is not about an identifier, and will contain
-                  other information in its payload, using <xref
-                  target="extensions">extensions</xref>.
+                  注：アサーションにどちらの識別子も存在しない場合、そのアサーションは identifier に
+                  関するものではなく、拡張仕様を用いて、ペイロードにその他の情報が含まれることになる。
                 </t>
               </list>
             </t>
@@ -2534,15 +2486,13 @@ Base 10 number | btwoc string representation
               openid.identity
               <list style='empty'>
                 <t>
-                  Value: (optional) The OP-Local Identifier
+                  値：（オプション） OP ローカル識別子
                 </t>
                 <t>
-                  Note: OpenID Providers MAY assist the end user in
-                  selecting the Claimed and OP-Local Identifiers about
-                  which the assertion is made. The openid.identity
-                  field MAY be omitted if an extension is in use that
-                  makes the response meaningful without it
-                  (see openid.claimed_id above).
+                  注：OpenIDプロバイダは、アサーションを作成する対象である主張識別子および OP ローカル
+                  識別子の選択において、エンドユーザを支援してもよい (MAY) 。拡張仕様が使用され、当該
+                  フィールドがなくても応答が意味をなす場合、openid.identity フィールドを省略しても
+                  よい (MAY) （上記 openid.claimed_id 参照）。
                 </t>
               </list>
             </t>
@@ -2551,8 +2501,7 @@ Base 10 number | btwoc string representation
               openid.return_to
               <list style='empty'>
                 <t>
-                  Value: Verbatim copy of the return_to URL parameter
-                  sent in the request.
+                  値： 要求時に送られた return_to URL パラメータそのままのコピー。
                 </t>
               </list>
             </t>
@@ -2561,27 +2510,22 @@ Base 10 number | btwoc string representation
               openid.response_nonce
               <list style='empty'>
                 <t>
-                  Value: A string 255 characters or less in length,
-                  that MUST be unique to this particular successful
-                  authentication response. The nonce MUST start with the
-                  current time on the server, and MAY contain additional
-                  ASCII characters in the range 33-126 inclusive
-                  (printable non-whitespace characters), as necessary to
-                  make each response unique. The date and time MUST be
-                  formatted as specified in section 5.6 of
-                  <xref target="RFC3339" />, with the following restrictions:
-
+                  値：長さが 255 文字以下の文字列で、この成功した特定の認証応答に固有のものでなければ
+                  ならない (MUST) 。 ノンスは、サーバの現在時刻で始まらなければならない (MUST) 。
+                  またノンスには、それぞれの応答を固有のものとする上での必要に応じて、 33-126 の範囲
+                  に含まれる ASCII 文字（空白を除く印刷可能な文字）を追加してもよい (MAY) 。
+                  日付および時刻は [RFC3339] セクション 5.6<xref target="RFC3339" />に指定され
+                  る形式で記述しなければならない (MUST) が、以下の制限がある。
                   <list style="symbols">
                     <t>
-                      All times must be in the UTC
-                      timezone, indicated with a "Z".
+                      時刻は全て世界協定時（ UTC ）時間帯とし、 "Z" で示す。
                     </t>
                     <t>
-                      No fractional seconds are allowed
+                      小数点以下の秒の記述は認められていない。
                     </t>
                   </list>
 
-                  For example: 2005-05-15T17:11:51ZUNIQUE
+                  例： 2005-05-15T17:11:51ZUNIQUE
                 </t>
               </list>
             </t>
@@ -2590,9 +2534,8 @@ Base 10 number | btwoc string representation
               openid.invalidate_handle
               <list style='empty'>
                 <t>
-                  Value: (optional) If the Relying Party sent an
-                  invalid association handle with the request, it
-                  SHOULD be included here.
+                  値：（オプション）要求とともに RP が無効なアソシエーションハンドルを送った場合、
+                  その値をここに含めるべきである (SHOULD) 。
                 </t>
               </list>
             </t>
@@ -2601,8 +2544,7 @@ Base 10 number | btwoc string representation
               openid.assoc_handle
               <list style='empty'>
                 <t>
-                  Value: The handle for the association that was used
-                  to sign this assertion.
+                  値： このアサーションに署名するために用いられたアソシエーションのハンドル。
                 </t>
               </list>
             </t>
@@ -2611,22 +2553,18 @@ Base 10 number | btwoc string representation
               openid.signed
               <list style='empty'>
                 <t>
-                  Value: Comma-separated list of signed fields.
+                  値：署名済みフィールドのコンマ区切りのリスト。
                 </t>
                 <t>
-                  Note: This entry consists of the fields without the
-                  "openid." prefix that the signature covers. This
-                  list MUST contain at least "op_endpoint",
-                  "return_to" "response_nonce" and "assoc_handle", and
-                  if present in the response, "claimed_id" and
-                  "identity". Additional keys MAY be signed as part of
-                  the message. See <xref
-                  target="generating_signatures">Generating
-                  Signatures</xref>.
+                  注：このエントリは、署名がカバーしているフィールドからなるが、 "openid." プリ
+                  フィックスは省略する。このリストは、少なくとも "op_endpoint" 、 "return_to" 、
+                  "response_nonce" 、 "assoc_handle" を含まなければならない (MUST)。
+                  また、応答に存在する場合は、 "claimed_id" と "identity" を含まなければならない
+                  (MUST)。追加のキーをメッセージの一部として署名してもよい (MAY) 。
+                  <xref target="generating_signatures">署名の生成</xref>を参照のこと。
                 </t>
                 <t>
-                  For example,
-                  "op_endpoint,identity,claimed_id,return_to,assoc_handle,response_nonce".
+                  例："op_endpoint,identity,claimed_id,return_to,assoc_handle,response_nonce"
                 </t>
               </list>
             </t>
@@ -2635,8 +2573,7 @@ Base 10 number | btwoc string representation
               openid.sig
               <list style='empty'>
                 <t>
-                  Value: Base 64 encoded signature calculated as
-                  specified in <xref target="generating_signatures"/>.
+                  値：セクション 6 で指定した方法で計算され、 Base 64 エンコードされた署名
                 </t>
               </list>
             </t>
@@ -2646,63 +2583,56 @@ Base 10 number | btwoc string representation
         </t>
       </section>
 
-      <section title="Negative Assertions" anchor="negative_assertions">
+      <section title="否定アサーション" anchor="negative_assertions">
         <t>
-          If the OP is unable to identify the end user or the end
-          user does not or cannot approve the authentication request,
-          the OP SHOULD send a negative assertion to the Relying
-          Party as an <xref target="indirect_comm">indirect
-          response</xref>.
+          OP がエンドユーザを識別できない場合、あるいは、エンドユーザが認証要求を承諾しない、
+　　　　　　もしくは承諾できない場合、 OP は、 RP に対し<xref target="indirect_comm">
+          間接応答</xref>の形で否定アサーション (negative asserton) を送るべきである
+          (SHOULD) 。
         </t>
 
         <t>
-          When receiving a negative assertion in response to a
-          "checkid_immediate" mode request, Relying Parties SHOULD
-          construct a new authentication request using "checkid_setup"
-          mode. Details about how this differs from OpenID
-          Authentication 1.1 can be found in <xref
-          target="compat_mode" />.
+          "checkid_immediate" モードでの要求に対する応答として否定アサーションを受け取った
+          とき、 RP は、 "checkid_setup" モードを用いて、新たな認証要求を構築すべきである
+          (SHOULD) 。 OpenID Authentication 1.1 との相違点に関する詳細は、
+          <xref target="compat_mode" />で述べる。
         </t>
 
-        <section title="In Response to Immediate Requests">
+        <section title="即時要求への応答の場合">
           <t>
-            If the request was an immediate request, there is no chance
-            for the end user to interact with pages on the OP to provide
-            identifying credentials or approval of a request.
-            A negative assertion of an immediate request takes the
-            following form:
+            要求が即時要求であった場合、エンドユーザが OP のページを介して対話し、識別のため
+            のクレデンシャルや要求の承諾を提供する機会はない。即時要求への否定アサーションは、
+            以下のフォームとする。
             <list style='symbols'>
               <t>
                 openid.ns
                 <list style='empty'>
                   <t>
-                    As specified in <xref target="http_encoding" />.
+                    <xref target="http_encoding" />で指定した通り。
                   </t>
                 </list>
               </t>
               <t>
                 openid.mode
                 <list style='empty'>
-                  <t>Value: "setup_needed"</t>
+                  <t>値： "setup_needed"</t>
                 </list>
               </t>
             </list>
           </t>
         </section>
 
-        <section title="In Response to Non-Immediate Requests">
+        <section title="即時要求ではない要求への応答の場合">
           <t>
-            Since the OP may display pages to the end user and
-            request credentials from the end user, a negative response
-            to a request that is not immediate is definitive.  It
-            takes the following form:
-
+            OP がエンドユーザに対してページを表示し、エンドユーザのクレデンシャルを要求しても
+            よいことから、即時要求ではない要求への否定応答は最終的なものとなる。この場合の否定
+            応答は、以下のフォームとする。
             <list style='symbols'>
               <t>
                 openid.ns
                 <list style='empty'>
                   <t>
-                    As specified in <xref target="http_encoding" />.
+                    <xref target="http_encoding" />で指定した通り。
                   </t>
                 </list>
               </t>
@@ -2710,7 +2640,7 @@ Base 10 number | btwoc string representation
                 openid.mode
                 <list style='empty'>
                   <t>
-                    Value: "cancel"
+                    値： "cancel"
                   </t>
                 </list>
               </t>
@@ -2718,139 +2648,124 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            Often, if the user does not wish to or cannot complete the
-            authentication request, the OpenID authentication process
-            will be aborted and the Relying Party will not get a
-            cancel mode response (the end user may quit or press the
-            back button in their User-Agent instead of continuing).
-            If a RP receives the "cancel" response, authentication was
-            unsuccessful and the RP MUST treat the end user as
-            non-authenticated.
+            ユーザが認証要求の完了を望まない場合、あるいは認証要求を完了できない場合、 
+            OpenID の認証プロセスが異常終了し、キャンセルモードの応答を RP が取得できない
+            ことが多い（継続する代わりに、エンドユーザは終了したり、ユーザエージェントの「戻る」
+            ボタンを押したりするかもしれない）。 RP が "cancel" 応答を受け取った場合、認証は
+            失敗したことを意味し、 RP はそのエンドユーザを認証されなかったものとして扱わなけれ
+            ばならない (MUST) 。
           </t>
         </section>
       </section>
     </section>
 
-    <section title="Verifying Assertions" anchor="verification">
+    <section title="アサーションの検証" anchor="verification">
       <t>
-        When the Relying Party receives a positive assertion, it MUST
-        verify the following before accepting the assertion:
+        RP が肯定アサーションを受け取ったときには、そのアサーションを受け入れる前に、
+        以下の点について検証しなければならない (MUST) 。
 
         <list style="symbols">
           <t>
-            The value of "openid.return_to" matches the URL of the
-            current request (<xref target="verify_return_to" />)
+            "openid.return_to" が現在の要求の URL と一致する
+            (<xref target="verify_return_to" />)
           </t>
           <t>
-            Discovered information matches the information in the
-            assertion (<xref target="verify_disco" />)
+            ディスカバリによって得られた情報がアサーションの情報と一致する
+            (<xref target="verify_disco" />)
           </t>
           <t>
-            An assertion has not yet been accepted from this OP with
-            the same value for "openid.response_nonce" (<xref
-            target="verify_nonce" />)
+            "openid.response_nonce" について、当該 OP から、これまでに同じ値の
+            アサーションを受け入れたことがない
+            (<xref target="verify_nonce" />)
           </t>
           <t>
-            The signature on the assertion is valid and all fields
-            that are required to be signed are signed (<xref
-            target="verifying_signatures" />)
+            アサーションの署名が有効で、署名が必要な全てのフィールドに署名がされている
+            (<xref target="verifying_signatures" />)
           </t>
         </list>
 
-        If all four of these conditions are met, assertion is now
-        verified. If the assertion contained a Claimed Identifier, the
-        user is now authenticated with that identifier.
+        上記４つの条件が全て満たされていれば、アサーションが検証されたことになる。アサーション
+        に主張識別子が含まれている場合は、その識別子について、ユーザの認証が済んだことになる。
       </t>
 
-      <section title="Verifying the Return URL" anchor="verify_return_to">
+      <section title="戻り URL の検証" anchor="verify_return_to">
         <t>
-          To verify that the "openid.return_to" URL matches the URL
-          that is processing this assertion:
+          "openid.return_to" URL がこのアサーションを処理している URL と一致している
+          ことを検証するためには、
 
           <list style="symbols">
             <t>
-              The URL scheme, authority, and path MUST be the same
-              between the two URLs.
+              URL のスキーム、オーソリティ、パスが、ふたつの URL の間で同じでなければならない
+              (MUST) 。
             </t>
             <t>
-              Any query parameters that are present in the
-              "openid.return_to" URL MUST also be present with the
-              same values in the URL of the HTTP request the RP
-              received.
+              "openid.return_to" URL の照会パラメータは、どのパラメータも、 RP が受け取った
+              HTTP 要求の URL に同じ値がなければならない。
             </t>
           </list>
         </t>
       </section>
 
-      <section title="Verifying Discovered Information" anchor="verify_disco">
+      <section title="ディスカバリによって得られた情報の検証" anchor="verify_disco">
         <t>
-          If the Claimed Identifier in the assertion is a URL and
-          contains a fragment, the fragment part and the fragment
-          delimiter character "#" MUST NOT be used for the purposes
-          of verifying the discovered information.
+          アサーションの中の主張識別子が URL で、フラグメントを含む場合、ディスカバリによって
+          得られた情報を検証するために、そのフラグメント部分およびフラグメントの区切り文字 "#"
+          を用いてはならない (MUST NOT) 。
         </t>
 
         <t>
-          If the Claimed Identifier is included in the assertion, it
-          MUST have been <xref target="discovery">discovered</xref> by
-          the Relying Party and the information in the assertion MUST
-          be present in the discovered information. The Claimed
-          Identifier MUST NOT be an OP Identifier.
+          主張識別子がアサーションに含まれている場合、その主張識別子は RP が事前にディスカバリ
+          によって取得したものでなければならない (MUST) 。また、アサーションの中の情報はディス
+          カバリによって得られた情報の中に存在していなければならない (MUST) 。主張識別子は OP
+          識別子であってはならない (MUST NOT) 。
         </t>
 
         <t>
-          If the Claimed Identifier was not previously discovered
-          by the Relying Party (the "openid.identity" in the request
-          was "http://specs.openid.net/auth/2.0/identifier_select" or
-          a different Identifier, or if the OP is sending an unsolicited
-          positive assertion), the Relying Party MUST perform discovery
-          on the Claimed Identifier in the response to make sure that
-          the OP is authorized to make assertions about the Claimed
-          Identifier.
+          RP がその時点までに主張識別子をディスカバリによって取得していない場合（要求中の 
+          "openid.identity" が "http://specs.openid.net/auth/2.0/identifier_select"
+          または異なる識別子であった場合、もしくは、 OP が一方的な肯定アサーションを送ろうとして
+          いる場合）、 RP は応答の中の主張識別子に関するディスカバリを実行し、その主張識別子に関
+          するアサーションを行なう権限を OP が有しているかどうかを確認しなければならない (MUST) 。
         </t>
 
         <t>
-          If no Claimed Identifier is present in the response, the
-          assertion is not about an identifier and the RP MUST NOT use
-          the User-supplied Identifier associated with the current
-          OpenID authentication transaction to identify the user.
-          Extension information in the assertion MAY still be used.
+          応答の中に主張識別子がない場合、アサーションは識別子に関するものではない。 RP は、ユーザ
+          を識別するために、現在の OpenID 認証トランザクションに関連するユーザ入力識別子を用いて
+          はならない (MUST NOT) 。しかし、アサーションの中の拡張仕様情報は用いてもよい (MAY) 。
         </t>
 
         <texttable title="Discovered Information to Authentication Response Mapping">
-          <ttcol align='left'>Discovered Value</ttcol>
-          <ttcol align='left'>Response Field</ttcol>
+          <ttcol align='left'>ディスカバリによって得られた値</ttcol>
+          <ttcol align='left'> 応答フィールド</ttcol>
 
-          <c>Claimed Identifier</c>
+          <c>主張識別子</c>
           <c>openid.claimed_id</c>
 
-          <c>OP-Local Identifier</c>
+          <c>OPローカル識別子</c>
           <c>openid.identity</c>
 
-          <c>OP Endpoint URL</c>
+          <c>OPエンドポイントURL</c>
           <c>openid.op_endpoint</c>
 
-          <c>Protocol Version</c>
+          <c>プロトコルバージョン</c>
           <c>openid.ns</c>
           <postamble>
-            This table shows the mapping of <xref
-            target="discovered_info">discovered information</xref>
-            into fields in the <xref
-            target="positive_assertions">OpenID Authentication 2.0
-            "id_res" response</xref>
+            この表は、ディスカバリによって得られた情報の <xref target="positive_assertions">
+            OpenID Authentication 2.0 "id_res"応答</xref>へのマッピング（対応づけ）を示している。
+
+            ディスカバリによって得られた値の認証応答へのマッピング
           </postamble>
         </texttable>
 
         <t>
-          If using a discovery mechanism that yields an XRDS document,
-          the protocol version, OP Endpoint URL and the OP-Local
-          Identifier (if different than the Claimed Identifier) MUST
-          be present in one &lt;xrd:Service&gt; element. There MAY be
-          unused fields in that &lt;xrd:Service&gt; element.
+          XRDS 文書を生成するディスカバリの仕組みを使用する場合、いずれかの <xrd:Service> 
+          エレメントの中に、プロトコルバージョン、 OPエンドポイントURL および OP ローカル識別子 
+         （主張識別子と異なる場合）が記されていなければならない (MUST) 。その <xrd:Service> 
+          エレメントの中に使用されないフィールドがあってもよい (MAY) 。
         </t>
 
         <figure>
-          <preamble>Non-normative example:</preamble>
+          <preamble>参考例</preamble>
           <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
   <Type>http://specs.openid.net/auth/2.0/signon</Type>
@@ -2859,143 +2774,118 @@ Base 10 number | btwoc string representation
 </Service>
 ]]></artwork>
           <postamble>
-            In this example XRDS snippet, the &lt;xrd:Service&gt;
-            element has two &lt;xrd:URI&gt; elements, which map to OP
-            Endpoint URLs as per <xref target="discovered_info" />. If
-            an assertion has either value for "openid.op_endpoint",
-            then that field matches this &lt;xrd:Service&gt;
-            element. The other &lt;xrd:URI&gt; element is unused.
+            この XRDS 断片の例では、 <xrd:Service> エレメントにふたつの <xrd:URI> エレメントが
+            あり、<xref target="discovered_info" /> の通り OP エンドポイント URL へと対応づけ
+            られている。アサーションの中の "openid.op_endpoint" の値がふたつのうちのいずれかであ
+            れば、そのフィールドとこの <xrd:Service> エレメントとが一致する。もう一方の <xrd:URI>
+            エレメントは使われない。 
           </postamble>
         </figure>
 
       </section>
 
-      <section title="Checking the Nonce" anchor="verify_nonce">
+      <section title="11.3. ノンスのチェック" anchor="verify_nonce">
         <t>
-          To prevent replay attacks, the agent checking the signature
-          keeps track of the nonce values included in positive
-          assertions and never accepts the same value more than once
-          for the same OP Endpoint URL.
+          リプレイアタックを阻止するため、署名のチェックを行なうエージェントは、肯定アサーションの
+          中に含まれるノンス値の履歴を辿り、同一の OP エンドポイント URL について、同じ値を二度
+          以上決して受け入れてはならない。
+
         </t>
         <t>
           <list style="symbols">
             <t>
-              When using "check_authentication", the OP MUST NOT issue
-              more than one successful response to a request with the
-              same value for "openid.response_nonce".
+              "check_authentication" を用いるに当たり、 OP は、要求への成功時の応答の
+              "openid.response_nonce" に、同一の値を二度以上用いてはならない (MUST NOT) 。
             </t>
             <t>
-              When the Relying Party checks the signature on an
-              assertion, the Relying Party SHOULD ensure that an
-              assertion has not yet been accepted with the same value
-              for "openid.response_nonce" from the same OP Endpoint
-              URL.
+              RP がアサーションの署名をチェックするに当たり、 RP は、同じ OP エンドポイント URL
+              から "openid.response_nonce" の値が同一のアサーションを過去に受け入れていないこと
+              を保証すべきである (SHOULD) 。
             </t>
           </list>
         </t>
         <t>
-          The time-stamp MAY be used to reject responses that are too
-          far away from the current time, limiting the amount of time
-          that nonces must be stored to prevent attacks. The
-          acceptable range is out of the scope of this
-          specification. A larger range requires storing more nonces
-          for a longer time. A shorter range increases the chance that
-          clock-skew and transaction time will cause a spurious
-          rejection.
+          タイムスタンプを利用して、現在時刻との時間差が大きすぎる応答を拒否してもよい (MAY) 。
+          そのとき、攻撃を避ける上でノンスの保存が必要な時間は制限する。許容範囲については、
+          本仕様の対象範囲外である。許容範囲が大きいほど、より多くのノンスを、より長時間保存する
+          必要がある。許容範囲を短くすると、クロック・スキューやトランザクション時間が原因で誤って
+          拒否してしまう可能性が高まる。
         </t>
       </section>
 
-      <section title="Verifying Signatures"
+      <section title="11.4. 署名の検証"
                anchor="verifying_signatures">
         <t>
-          If the Relying Party has stored an association with the
-          association handle specified in the assertion, it MUST check
-          the signature on the assertion itself. If it does not have
-          an association stored, it MUST request that the OP verify
-          the signature via <xref target="check_auth">Direct
-          Verification</xref>.
+          アサーションで指定されるアソシエーションハンドルに紐尽くアソシエーションを RP が保存し
+          続けている場合、 RP は、アサーション自体の署名をチェックしなければならない (MUST)。
+          アソシエーションを保存していない場合、 RP は、 OP が<xref target="check_auth">直接検証
+          </xref>を通じて署名を検証するように要求しなければならない (MUST)。
         </t>
 
-        <section title="Verifying with an Association" toc="exclude">
+        <section title="アソシエーションによる検証" toc="exclude">
           <t>
-            The Relying Party follows the same procedure that the
-            OP followed in <xref target= "generating_signatures">
-            generating the signature</xref>, and then compares the
-            signature in the response to the signature it
-            generated. If the signatures do not match, the assertion
-            is invalid.
+            RP は署名を生成する際に OP が従うのと同じ手順に従い、その後、応答の中の署名を生成
+            された署名と比較する。署名が一致しなければ、アサーションは無効である。
           </t>
 
           <t>
-            If an authentication request included an association
-            handle for an association between the OP and the Relying
-            party, and the OP no longer wishes to use that handle
-            (because it has expired or the secret has been
-            compromised, for instance), the OP will send a response
-            that must be verified directly with the OP, as specified
-            in <xref target="check_auth" />. In that instance, the OP
-            will include the field "openid.invalidate_handle" set to
-            the association handle that the Relying Party included
-            with the original request.
+            認証要求に OP 、 RP 間のアソシエーションのアソシエーションハンドルが含まれているが、 
+            OP がそのアソシエーションハンドルをもはや使用したくない場合（例えば、有効期限が既に切れ
+            ている、秘密鍵が漏えいしてしまったなどの理由による場合）、<xref target="check_auth" />
+            で指定する通り、 OP は、 OP との直接検証が必要な応答を送ることになる。この場合、 OP は、 
+            RP から受け取った元の要求に含まれていたアソシエーションハンドルを 
+            "openid.invalidate_handle" の値に設定して、そのフィールドを含める。
           </t>
         </section>
 
-        <section title="Verifying Directly with the OpenID Provider"
+        <section title="OpenID プロバイダを通じた直接検証"
                  toc="exclude" anchor="check_auth">
           <t>
-            To have the signature verification performed by the OP,
-            the Relying Party sends a <xref target="direct_request">
-            direct request</xref> to the OP. To verify the signature,
-            the OP uses a private association that was generated when
-            it issued the <xref target="positive_assertions">
-            positive assertion</xref>.
+            RP が OP に署名検証を行なわせたいときは、 OP に直接要求を送る。 OP は、署名検証のために、
+            <xref target="positive_assertions">肯定アサーション</xref>発行時に生成された専用の
+            アソシエーションを用いる。
           </t>
 
-          <section title='Request Parameters' toc="exclude">
+          <section title='要求パラメータ' toc="exclude">
             <t>
               <list style='symbols'>
                 <t>
                   openid.mode
                   <list style='empty'>
-                    <t>Value: "check_authentication"</t>
+                    <t>値： "check_authentication"</t>
                    </list>
                 </t>
 
                 <t>
-                  Exact copies of all fields from the authentication
-                  response, except for "openid.mode".
+                  認証応答の全てのフィールドをそのままコピー、ただし "openid.mode" を除く。
                 </t>
               </list>
             </t>
 
             <t>
-              For verifying signatures an OP MUST only use private
-              associations and MUST NOT use associations that have
-              shared keys. If the verification request contains a
-              handle for a shared association, it means the Relying
-              Party no longer knows the shared secret, or an entity
-              other than the RP (e.g. an attacker) has established
-              this association with the OP.
+              署名検証のために OP は、専用のアソシエーションを用いなければならない (MUST) 。また、
+              共有鍵を有するアソシエーションを用いてはならない (MUST NOT) 。共有されているアソシ
+              エーションのハンドルが検証要求に含まれている場合は、 RP がもはや秘密共有鍵を知らない、
+              あるいは、このアソシエーションが RP 以外のエンティティ（例えば、攻撃者）と OP との間
+              で確立してしまっていることを意味している。
             </t>
 
             <t>
-              To prevent replay attacks, the OP MUST NOT issue more
-              than one verification response for each authentication
-              response it had previously issued. An authentication
-              response and its matching verification request may
-              be identified by their "openid.response_nonce" values.
+              リプレイアタックを阻止するため、 OP は、過去に発行した認証応答のそれぞれについて、
+              検証応答を二度以上発行してはならない (MUST NOT) 。 "openid.response_nonce" 
+              の値で、認証応答およびそれに対応する検証要求を識別してもよい。
             </t>
 
           </section>
 
-          <section title='Response Parameters' toc="exclude">
+          <section title='応答パラメータ' toc="exclude">
             <t>
               <list style='symbols'>
                 <t>
                   ns
                   <list style='empty'>
                     <t>
-                      As specified in <xref target="direct_response" />.
+                      <xref target="direct_response" />セクション 5.1.2 で指定した通り。
                     </t>
                   </list>
                 </t>
@@ -3004,8 +2894,7 @@ Base 10 number | btwoc string representation
                   is_valid
                   <list style='empty'>
                     <t>
-                      Value: "true" or "false"; asserts whether the
-                      signature of the verification request is valid.
+                      値： "true" または "false"。検証要求の署名が有効かどうかをアサート。
                     </t>
                   </list>
                 </t>
@@ -3014,23 +2903,19 @@ Base 10 number | btwoc string representation
                   invalidate_handle
                   <list style='empty'>
                     <t>
-                      Value: (optional) The "invalidate_handle" value
-                      sent in the verification request, if the OP confirms
-                      it is invalid.
+                      値：（オプション） OP が無効であることを確認した場合に、検証要求の中で送る
+                      "invalidate_handle" の値。
                     </t>
                     <t>
-                      Description: If present in a verification response
-                      with "is_valid" set to "true", the Relying Party
-                      SHOULD remove the corresponding association from its
-                      store and SHOULD NOT send further authentication
-                      requests with this handle.
+                      説明： "true" に設定された "is_valid" を含む検証応答の中に、このパラメータ
+                      が存在する場合、 RP は、保存しているアソシエーションの中から対応するものを削除
+                      すべきである (SHOULD) 。また、これ以後、このハンドルを含む認証要求を送るべき
+                      ではない (SHOULD NOT) 。
                     </t>
                     <t>
-                      Note: This two-step process for invalidating
-                      associations is necessary to prevent an attacker
-                      from invalidating an association at will by adding
-                      "invalidate_handle" parameters to an authentication
-                      response.
+                      注：認証応答に "invalidate_handle" パラメータを追加することによって、攻撃者
+                      がアソシエーションを自由自在に無効化してしまうのを防止するためには、こうした二段階
+                      のアソシエーション無効化プロセスが必要である。
                     </t>
                   </list>
                 </t>
@@ -3040,52 +2925,44 @@ Base 10 number | btwoc string representation
         </section>
       </section>
 
-      <section title="Identifying the end user" anchor="identifying">
+      <section title="エンドユーザの識別" anchor="identifying">
         <t>
-          The Claimed Identifier in a successful authentication
-          response SHOULD be used by the Relying Party as a key for
-          local storage of information about the user. The Claimed
-          Identifier MAY be used as a user-visible Identifier. When 
-          displaying URL Identifiers, the fragment MAY be omitted.
+          RP は、成功時の認証応答での主張識別子を、ローカルストレージ内のユーザ情報へ
+          のキーとして用いるべきである (SHOULD) 。また、主張識別子をユーザが管理して
+          いる識別子として用いてもよい (MAY) 。 URL 識別子を表示するときは、フラグ
+          メントを省略してもよい (MAY) 。
         </t>
 
-        <section title="Identifier Recycling" anchor="identifier_recycling">
+        <section title="識別子のリサイクル" anchor="identifier_recycling">
           <t>
-            OpenID Providers with large user bases can use fragments
-            to recycle URL Identifiers if it is so desired. When
-            reassigning a URL Identifier to a new end user OPs should
-            generate a new, unique fragment part.
+            多数のユーザを抱える OpenID プロバイダは、必要に応じ、フラグメントを用いて
+            URL 識別子をリサイクルすることができる。新たなエンドユーザに対して URL 
+            識別子の再割り当てを行なうに当り、 OP は、新規かつ固有のフラグメント部分を
+            生成すべきである。
           </t>
           <t>
-            The full URL with the fragment part constitutes the Claimed
-            Identifier in positive assertions, therefore Relying Parties
-            will distinguish between the current and previous owners of
-            the fragment-less URL.
+            フラグメント部分を含む URL 全体は、肯定アサーションにおいて主張識別子を構成
+            する要素であるため、 RP は、フラグメントを除く URL の現在の所有者と以前の
+            所有者を区別することになる。
           </t>
           <t>
-            This mechanism allows the (presumably short, memorable)
-            recycled URL Identifiers without the fragment to be used by
-            end users at login time and by Relying Parties for display
-            purposes.
+            この仕組みを用いると、（恐らく短く、記憶しやすい）リサイクルされたフラグメント
+            のない URL 識別子を、エンドユーザがログイン時に使用したり、 RP が表示するため
+            に用いたりすることができるようになる。
           </t>
         </section>
 
-        <section title="HTTP and HTTPS URL Identifiers" anchor="http_s_identifiers">
+        <section title="11.5.2. HTTP および HTTPS URL 識別子" anchor="http_s_identifiers">
           <t>
-            Relying Parties MUST differentiate between URL Identifiers
-            that have different schemes. When end user input is
-            processed into a URL, it is processed into a HTTP URL. If
-            the same end user controls the same URL, differing only by
-            scheme, and it is desired that the Identifier be the HTTPS
-            URL, it is RECOMMENDED that a redirect be issued from the
-            HTTP URL to the HTTPS URL. Because the HTTP and HTTPS URLs
-            are not equivalent and the Identifier that is used is the
-            URL after following redirects, there is no foreseen
-            reduction in security when using this scheme. If an
-            attacker could gain control of the HTTP URL, it would have
-            no effect on the HTTPS URL, since the HTTP URL is not ever
-            used as an Identifier except to initiate the discovery
-            process.
+            RP は、異なるスキームを持つ URL 識別子同士を区別しなければならない (MUST) 。
+            エンドユーザの入力を URL に変換するときは、その URL は HTTP URL となる。
+            同一のエンドユーザがスキーム以外は同一の URL を管理しており、識別子が HTTPS URL 
+            であることが望ましい場合、 HTTP URL から HTTPS URL へのリダイレクトを発行する
+            ことが推奨される (RECOMMENDED) 。 HTTP URL と HTTPS URL とは等価ではなく、
+            使用される識別子は、リダイレクト後のURLであるため、このスキームを用いる場合には、
+            セキュリティの低下は懸念されない。たとえ攻撃者が HTTP URL をコントロールできる
+            ようになったとしても、 HTTPS URL には何の影響も与えないだろう。 HTTP URL は、
+            ディスカバリプロセスを開始させる以外には識別子として用いられないからである。
           </t>
         </section>
       </section>
