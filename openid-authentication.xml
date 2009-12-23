@@ -2576,7 +2576,7 @@ Base 10 number | btwoc string representation
                 <t>
                   <xref target="http_encoding" /> 指定した通り。
                 <!--
-                
+                As specified in Section 4.1.2.
                 -->
                 </t>
               </list>
@@ -2585,7 +2585,7 @@ Base 10 number | btwoc string representation
             <t>
               openid.mode
               <list style='empty'>
-                <t>値： "id_res"<!-- --></t>
+                <t>値： "id_res"<!-- Value: "id_res" --></t>
               </list>
             </t>
 
@@ -2595,7 +2595,7 @@ Base 10 number | btwoc string representation
                 <t>
                   OP エンドポイント (Endpoint) URL。
                 <!--
-                
+                The OP Endpoint URL.
                 -->
                 </t>
               </list>
@@ -2608,21 +2608,25 @@ Base 10 number | btwoc string representation
                   値： (オプション) 主張識別子。"openid.claimed_id" と "openid.identity"について
                   は、両方がともに存在するか、ともに存在しないかのいずれかとするものとする (SHALL)。
                 <!--
-                
+                Value: (optional) The Claimed Identifier. "openid.claimed_id" and 
+                "openid.identity" SHALL be either both present or both absent.
                 -->
                 </t>
                 <t>
                   注：エンドユーザは、OP ローカル識別子 を主張識別子として 使用することを選択してもよい
                   (MAY)。
                 <!--
-                
+                Note: The end user MAY choose to use an OP-Local Identifier as a 
+                Claimed Identifier.
                 -->
                 </t>
                 <t>
                   注：アサーションにどちらの識別子も存在しない場合、そのアサーションは identifier に
                   関するものではなく、拡張仕様を用いて、ペイロードにその他の情報が含まれることになる。
                 <!--
-                
+                Note: If neither Identifier is present in the assertion, it is not about 
+                an identifier, and will contain other information in its payload, using 
+                extensions.
                 -->
                 </t>
               </list>
@@ -2633,6 +2637,9 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   値： (オプション)  OP ローカル識別子
+                 <!-- 
+                 Value: (optional) The OP-Local Identifier
+                 -->
                 </t>
                 <t>
                   注：OpenIDプロバイダは、アサーションを作成する対象である主張識別子および OP ローカル
@@ -2640,7 +2647,10 @@ Base 10 number | btwoc string representation
                   フィールドがなくても応答が意味をなす場合、openid.identity フィールドを省略しても
                   よい (MAY)  (上記 openid.claimed_id 参照)。
                 <!--
-                
+                Note: OpenID Providers MAY assist the end user in selecting the Claimed 
+                and OP-Local Identifiers about which the assertion is made. 
+                The openid.identity field MAY be omitted if an extension is in use that 
+                makes the response meaningful without it (see openid.claimed_id above).
                 -->
                 </t>
               </list>
@@ -2652,7 +2662,7 @@ Base 10 number | btwoc string representation
                 <t>
                   値： 要求時に送られた return_to URL パラメータそのままのコピー。
                 <!--
-                
+                Value: Verbatim copy of the return_to URL parameter sent in the request.
                 -->
                 </t>
               </list>
@@ -2669,25 +2679,33 @@ Base 10 number | btwoc string representation
                   日付および時刻は [RFC3339] セクション 5.6<xref target="RFC3339" />に指定され
                   る形式で記述しなければならない (MUST) が、以下の制限がある。
                 <!--
-                
+                Value: A string 255 characters or less in length, that MUST be unique to 
+                this particular successful authentication response. The nonce MUST start 
+                with the current time on the server, and MAY contain additional ASCII 
+                characters in the range 33-126 inclusive (printable non-whitespace 
+                characters), as necessary to make each response unique. The date and 
+                time MUST be formatted as specified in section 5.6 of [RFC3339], with 
+                the following restrictions:
                 -->
                   <list style="symbols">
                     <t>
                       時刻は全て世界協定時 ( UTC ) 時間帯とし、"Z" で示す。
                     <!--
-                    
+                    All times must be in the UTC timezone, indicated with a "Z".
                     -->
                     </t>
                     <t>
                       小数点以下の秒の記述は認められていない。
                     <!--
-                    
+                    No fractional seconds are allowed
                     -->
                     </t>
                   </list>
 
                   例： 2005-05-15T17:11:51ZUNIQUE
-
+                  <!--
+                  For example: 2005-05-15T17:11:51ZUNIQUE
+                  -->
                 </t>
               </list>
             </t>
@@ -2699,7 +2717,8 @@ Base 10 number | btwoc string representation
                   値： (オプション) 要求とともに RP が無効なアソシエーションハンドルを送った場合、
                   その値をここに含めるべきである (SHOULD)。
                 <!--
-                
+                Value: (optional) If the Relying Party sent an invalid association handle 
+                with the request, it SHOULD be included here.
                 -->
                 </t>
               </list>
@@ -2711,7 +2730,7 @@ Base 10 number | btwoc string representation
                 <t>
                   値： このアサーションに署名するために用いられたアソシエーションのハンドル。
                 <!--
-                
+                Value: The handle for the association that was used to sign this assertion.
                 -->
                 </t>
               </list>
@@ -2723,7 +2742,7 @@ Base 10 number | btwoc string representation
                 <t>
                   値：署名済みフィールドのコンマ区切りのリスト。
                 <!--
-                
+                Value: Comma-separated list of signed fields.
                 -->
                 </t>
                 <t>
@@ -2734,13 +2753,18 @@ Base 10 number | btwoc string representation
                   (MUST)。追加のキーをメッセージの一部として署名してもよい (MAY)。
                   <xref target="generating_signatures">署名の生成</xref>を参照のこと。
                 <!--
-                
+                Note: This entry consists of the fields without the "openid." prefix 
+                that the signature covers. This list MUST contain at least "op_endpoint", 
+                "return_to" "response_nonce" and "assoc_handle", and if present in the 
+                response, "claimed_id" and "identity". Additional keys MAY be signed 
+                as part of the message. See Generating Signatures.
                 -->
                 </t>
                 <t>
                   例："op_endpoint,identity,claimed_id,return_to,assoc_handle,response_nonce"
                 <!--
-                
+                For example, "op_endpoint,identity,claimed_id,return_to,assoc_handle,
+                response_nonce".
                 -->
                 </t>
               </list>
@@ -2752,7 +2776,7 @@ Base 10 number | btwoc string representation
                 <t>
                   値：セクション 6 で指定した方法で計算され、Base 64 エンコードされた署名
                 <!--
-                
+                Value: Base 64 encoded signature calculated as specified in Section 6.
                 -->
                 </t>
               </list>
@@ -2770,7 +2794,9 @@ Base 10 number | btwoc string representation
           間接応答</xref>の形で否定アサーション (negative asserton) を送るべきである
           (SHOULD)。
         <!--
-        
+        If the OP is unable to identify the end user or the end user does not or 
+        cannot approve the authentication request, the OP SHOULD send a negative 
+        assertion to the Relying Party as an indirect response.
         -->
         </t>
 
@@ -2780,7 +2806,10 @@ Base 10 number | btwoc string representation
           (SHOULD)。OpenID Authentication 1.1 との相違点に関する詳細は、
           <xref target="compat_mode" />で述べる。
         <!--
-        
+        When receiving a negative assertion in response to a "checkid_immediate" 
+        mode request, Relying Parties SHOULD construct a new authentication 
+        request using "checkid_setup" mode. Details about how this differs from 
+        OpenID Authentication 1.1 can be found in Section 14.
         -->
         </t>
 
@@ -2790,7 +2819,10 @@ Base 10 number | btwoc string representation
             のクレデンシャルや要求の承諾を提供する機会はない。即時要求への否定アサーションは、
             以下のフォームとする。
           <!--
-          
+          If the request was an immediate request, there is no chance for the end 
+          user to interact with pages on the OP to provide identifying credentials 
+          or approval of a request. A negative assertion of an immediate request 
+          takes the following form:
           -->
             <list style='symbols'>
               <t>
@@ -2799,7 +2831,7 @@ Base 10 number | btwoc string representation
                   <t>
                     <xref target="http_encoding" />で指定した通り。
                   <!--
-                  
+                  As specified in Section 4.1.2.
                   -->
                   </t>
                 </list>
@@ -2807,7 +2839,11 @@ Base 10 number | btwoc string representation
               <t>
                 openid.mode
                 <list style='empty'>
-                  <t>値： "setup_needed"</t>
+                  <t>値： "setup_needed"
+                  <!--
+                  Value: "setup_needed"
+                  -->
+                  </t>
                 </list>
               </t>
             </list>
@@ -2820,7 +2856,9 @@ Base 10 number | btwoc string representation
             よいことから、即時要求ではない要求への否定応答は最終的なものとなる。この場合の否定
             応答は、以下のフォームとする。
           <!--
-          
+          Since the OP may display pages to the end user and request credentials 
+          from the end user, a negative response to a request that is not 
+          immediate is definitive. It takes the following form:
           -->
             <list style='symbols'>
               <t>
@@ -2829,7 +2867,7 @@ Base 10 number | btwoc string representation
                   <t>
                     <xref target="http_encoding" />で指定した通り。
                   <!--
-                  
+                  As specified in Section 4.1.2.
                   -->
                   </t>
                 </list>
@@ -2840,7 +2878,7 @@ Base 10 number | btwoc string representation
                   <t>
                     値： "cancel"
                   <!--
-                  
+                  Value: "cancel"
                   -->
                   </t>
                 </list>
@@ -2856,7 +2894,12 @@ Base 10 number | btwoc string representation
             失敗したことを意味し、RP はそのエンドユーザを認証されなかったものとして扱わなけれ
             ばならない (MUST)。
           <!--
-          
+          Often, if the user does not wish to or cannot complete the authentication 
+          request, the OpenID authentication process will be aborted and the Relying 
+          Party will not get a cancel mode response (the end user may quit or press 
+          the back button in their User-Agent instead of continuing). If a RP receives 
+          the "cancel" response, authentication was unsuccessful and the RP MUST treat 
+          the end user as non-authenticated.
           -->
           </t>
         </section>
@@ -2868,7 +2911,8 @@ Base 10 number | btwoc string representation
         RP が肯定アサーションを受け取ったときには、そのアサーションを受け入れる前に、
         以下の点について検証しなければならない (MUST)。
           <!--
-          
+          When the Relying Party receives a positive assertion, it MUST verify 
+          the following before accepting the assertion:
           -->
 
         <list style="symbols">
@@ -2876,14 +2920,14 @@ Base 10 number | btwoc string representation
             "openid.return_to" が現在の要求の URL と一致する
             (<xref target="verify_return_to" />)
           <!--
-          
+          The value of "openid.return_to" matches the URL of the current request (Section 11.1)
           -->
           </t>
           <t>
             ディスカバリによって得られた情報がアサーションの情報と一致する
             (<xref target="verify_disco" />)
           <!--
-          
+          Discovered information matches the information in the assertion (Section 11.2)
           -->
           </t>
           <t>
@@ -2891,14 +2935,16 @@ Base 10 number | btwoc string representation
             アサーションを受け入れたことがない
             (<xref target="verify_nonce" />)
           <!--
-          
+          An assertion has not yet been accepted from this OP with the same value for 
+          "openid.response_nonce" (Section 11.3)
           -->
           </t>
           <t>
             アサーションの署名が有効で、署名が必要な全てのフィールドに署名がされている
             (<xref target="verifying_signatures" />)
           <!--
-          
+          The signature on the assertion is valid and all fields that are required to 
+          be signed are signed (Section 11.4)
           -->
           </t>
         </list>
@@ -2906,7 +2952,9 @@ Base 10 number | btwoc string representation
         上記４つの条件が全て満たされていれば、アサーションが検証されたことになる。アサーション
         に主張識別子が含まれている場合は、その識別子について、ユーザの認証が済んだことになる。
         <!--
-        
+        If all four of these conditions are met, assertion is now verified. 
+        If the assertion contained a Claimed Identifier, the user is now 
+        authenticated with that identifier.
         -->
       </t>
 
@@ -2915,21 +2963,24 @@ Base 10 number | btwoc string representation
           "openid.return_to" URL がこのアサーションを処理している URL と一致している
           ことを検証するためには、
         <!--
-        
+        To verify that the "openid.return_to" URL matches the URL that is 
+        processing this assertion:
         -->
           <list style="symbols">
             <t>
               URL のスキーム、オーソリティ、パスが、ふたつの URL の間で同じでなければならない
               (MUST)。
             <!--
-            
+            The URL scheme, authority, and path MUST be the same between the two URLs.
             -->
             </t>
             <t>
               "openid.return_to" URL の照会パラメータは、どのパラメータも、RP が受け取った
               HTTP 要求の URL に同じ値がなければならない。
             <!--
-            
+            Any query parameters that are present in the "openid.return_to" URL MUST 
+            also be present with the same values in the URL of the HTTP request the 
+            RP received.
             -->
             </t>
           </list>
@@ -2942,7 +2993,9 @@ Base 10 number | btwoc string representation
           得られた情報を検証するために、そのフラグメント部分およびフラグメントの区切り文字 "#"
           を用いてはならない (MUST NOT)。
         <!--
-        
+        If the Claimed Identifier in the assertion is a URL and contains a fragment, 
+        the fragment part and the fragment delimiter character "#" MUST NOT be used 
+        for the purposes of verifying the discovered information.
         -->
         </t>
 
@@ -2952,7 +3005,10 @@ Base 10 number | btwoc string representation
           カバリによって得られた情報の中に存在していなければならない (MUST)。主張識別子は OP
           識別子であってはならない (MUST NOT)。
         <!--
-        
+        If the Claimed Identifier is included in the assertion, it MUST have been 
+        discovered by the Relying Party and the information in the assertion MUST 
+        be present in the discovered information. The Claimed Identifier MUST NOT 
+        be an OP Identifier.
         -->
         </t>
 
@@ -2963,7 +3019,12 @@ Base 10 number | btwoc string representation
           いる場合)、RP は応答の中の主張識別子に関するディスカバリを実行し、その主張識別子に関
           するアサーションを行なう権限を OP が有しているかどうかを確認しなければならない (MUST)。
         <!--
-        
+        If the Claimed Identifier was not previously discovered by the Relying Party
+        (the "openid.identity" in the request was 
+        "http://specs.openid.net/auth/2.0/identifier_select" or a different Identifier, 
+        or if the OP is sending an unsolicited positive assertion), the Relying Party 
+        MUST perform discovery on the Claimed Identifier in the response to make sure 
+        that the OP is authorized to make assertions about the Claimed Identifier.
         -->
         </t>
 
@@ -2972,7 +3033,10 @@ Base 10 number | btwoc string representation
           を識別するために、現在の OpenID 認証トランザクションに関連するユーザ入力識別子を用いて
           はならない (MUST NOT)。しかし、アサーションの中の拡張仕様情報は用いてもよい (MAY)。
         <!--
-        
+        If no Claimed Identifier is present in the response, the assertion is not about 
+        an identifier and the RP MUST NOT use the User-supplied Identifier associated 
+        with the current OpenID authentication transaction to identify the user. 
+        Extension information in the assertion MAY still be used.
         -->
         </t>
 
@@ -2997,7 +3061,11 @@ Base 10 number | btwoc string representation
 
             ディスカバリによって得られた値の認証応答へのマッピング
           <!--
-          
+          This table shows the mapping of discovered information into fields in the 
+          OpenID Authentication 2.0 "id_res" response
+
+          Discovered Information to Authentication Response Mapping 
+
           -->
           </postamble>
         </texttable>
@@ -3008,12 +3076,16 @@ Base 10 number | btwoc string representation
           (主張識別子と異なる場合) が記されていなければならない (MUST)。その <xrd:Service> 
           エレメントの中に使用されないフィールドがあってもよい (MAY)。
         <!--
-        
+        If using a discovery mechanism that yields an XRDS document, the protocol 
+        version, OP Endpoint URL and the OP-Local Identifier (if different than the 
+        Claimed Identifier) MUST be present in one <xrd:Service> element. There MAY 
+        be unused fields in that <xrd:Service> element.
         -->
         </t>
 
         <figure>
           <preamble>参考例</preamble>
+          <!-- Non-normative example: -->
           <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
   <Type>http://specs.openid.net/auth/2.0/signon</Type>
@@ -3028,7 +3100,10 @@ Base 10 number | btwoc string representation
             れば、そのフィールドとこの <xrd:Service> エレメントとが一致する。もう一方の <xrd:URI>
             エレメントは使われない。
           <!--
-          
+          In this example XRDS snippet, the <xrd:Service> element has two <xrd:URI> 
+          elements, which map to OP Endpoint URLs as per Section 7.3.1. If an assertion 
+          has either value for "openid.op_endpoint", then that field matches this 
+          <xrd:Service> element. The other <xrd:URI> element is unused.
           -->
           </postamble>
         </figure>
@@ -3041,7 +3116,9 @@ Base 10 number | btwoc string representation
           中に含まれるノンス値の履歴を辿り、同一の OP エンドポイント URL について、同じ値を二度
           以上決して受け入れてはならない。
         <!--
-        
+        To prevent replay attacks, the agent checking the signature keeps track of 
+        the nonce values included in positive assertions and never accepts the same 
+        value more than once for the same OP Endpoint URL.
         -->
         </t>
         <t>
@@ -3050,7 +3127,8 @@ Base 10 number | btwoc string representation
               "check_authentication" を用いるに当たり、OP は、要求への成功時の応答の
               "openid.response_nonce" に、同一の値を二度以上用いてはならない (MUST NOT)。
             <!--
-            
+            When using "check_authentication", the OP MUST NOT issue more than one 
+            successful response to a request with the same value for "openid.response_nonce".
             -->
             </t>
             <t>
@@ -3058,7 +3136,9 @@ Base 10 number | btwoc string representation
               から "openid.response_nonce" の値が同一のアサーションを過去に受け入れていないこと
               を保証すべきである (SHOULD)。
             <!--
-            
+            When the Relying Party checks the signature on an assertion, the Relying Party 
+            SHOULD ensure that an assertion has not yet been accepted with the same value 
+            for "openid.response_nonce" from the same OP Endpoint URL.
             -->
             </t>
           </list>
@@ -3070,7 +3150,12 @@ Base 10 number | btwoc string representation
           必要がある。許容範囲を短くすると、クロック・スキューやトランザクション時間が原因で誤って
           拒否してしまう可能性が高まる。
         <!--
-        
+        The time-stamp MAY be used to reject responses that are too far away from the 
+        current time, limiting the amount of time that nonces must be stored to prevent 
+        attacks. The acceptable range is out of the scope of this specification. 
+        A larger range requires storing more nonces for a longer time. A shorter range 
+        increases the chance that clock-skew and transaction time will cause a spurious 
+        rejection.
         -->
         </t>
       </section>
@@ -3083,7 +3168,10 @@ Base 10 number | btwoc string representation
           アソシエーションを保存していない場合、RP は、OP が<xref target="check_auth">直接検証
           </xref>を通じて署名を検証するように要求しなければならない (MUST)。
         <!--
-        
+        If the Relying Party has stored an association with the association handle 
+        specified in the assertion, it MUST check the signature on the assertion 
+        itself. If it does not have an association stored, it MUST request that the 
+        OP verify the signature via Direct Verification.
         -->
         </t>
 
@@ -3092,7 +3180,10 @@ Base 10 number | btwoc string representation
             RP は署名を生成する際に OP が従うのと同じ手順に従い、その後、応答の中の署名を生成
             された署名と比較する。署名が一致しなければ、アサーションは無効である。
           <!--
-          
+          The Relying Party follows the same procedure that the OP followed in 
+          generating the signature, and then compares the signature in the response 
+          to the signature it generated. If the signatures do not match, the assertion 
+          is invalid.
           -->
           </t>
 
@@ -3104,7 +3195,13 @@ Base 10 number | btwoc string representation
             RP から受け取った元の要求に含まれていたアソシエーションハンドルを 
             "openid.invalidate_handle" の値に設定して、そのフィールドを含める。
           <!--
-          
+          If an authentication request included an association handle for an association 
+          between the OP and the Relying party, and the OP no longer wishes to use that 
+          handle (because it has expired or the secret has been compromised, for instance), 
+          the OP will send a response that must be verified directly with the OP, as specified 
+          in Section 11.4.2. In that instance, the OP will include the field 
+          "openid.invalidate_handle" set to the association handle that the Relying Party 
+          included with the original request.
           -->
           </t>
         </section>
@@ -3116,7 +3213,9 @@ Base 10 number | btwoc string representation
             <xref target="positive_assertions">肯定アサーション</xref>発行時に生成された専用の
             アソシエーションを用いる。
           <!--
-          
+          To have the signature verification performed by the OP, the Relying Party sends 
+          a direct request to the OP. To verify the signature, the OP uses a private 
+          association that was generated when it issued the positive assertion.
           -->
           </t>
 
@@ -3127,13 +3226,15 @@ Base 10 number | btwoc string representation
                   openid.mode
                   <list style='empty'>
                     <t>値： "check_authentication"</t>
+                    <!-- Value: "check_authentication" -->
                    </list>
                 </t>
 
                 <t>
                   認証応答の全てのフィールドをそのままコピー、ただし "openid.mode" を除く。
                 <!--
-                
+                Exact copies of all fields from the authentication response, except 
+                for "openid.mode".
                 -->
                 </t>
               </list>
@@ -3146,7 +3247,11 @@ Base 10 number | btwoc string representation
               あるいは、このアソシエーションが RP 以外のエンティティ (例えば、攻撃者) と OP との間
               で確立してしまっていることを意味している。
               <!--
-              
+              For verifying signatures an OP MUST only use private associations and MUST 
+              NOT use associations that have shared keys. If the verification request 
+              contains a handle for a shared association, it means the Relying Party no 
+              longer knows the shared secret, or an entity other than 
+              the RP (e.g. an attacker) has established this association with the OP.
               -->
             </t>
 
@@ -3155,7 +3260,10 @@ Base 10 number | btwoc string representation
               検証応答を二度以上発行してはならない (MUST NOT)。"openid.response_nonce" 
               の値で、認証応答およびそれに対応する検証要求を識別してもよい。
             <!--
-            
+            To prevent replay attacks, the OP MUST NOT issue more than one verification 
+            response for each authentication response it had previously issued. 
+            An authentication response and its matching verification request may be 
+            identified by their "openid.response_nonce" values.
             -->
             </t>
 
@@ -3170,7 +3278,7 @@ Base 10 number | btwoc string representation
                     <t>
                       <xref target="direct_response" />セクション 5.1.2 で指定した通り。
                     <!--
-                    
+                    As specified in Section 5.1.2.
                     -->
                     </t>
                   </list>
@@ -3182,7 +3290,8 @@ Base 10 number | btwoc string representation
                     <t>
                       値： "true" または "false"。検証要求の署名が有効かどうかをアサート。
                     <!--
-                    
+                    Value: "true" or "false"; asserts whether the signature of the 
+                    verification request is valid.
                     -->
                     </t>
                   </list>
@@ -3195,7 +3304,8 @@ Base 10 number | btwoc string representation
                       値： (オプション)  OP が無効であることを確認した場合に、検証要求の中で送る
                       "invalidate_handle" の値。
                     <!--
-                    
+                    Value: (optional) The "invalidate_handle" value sent in the verification request, 
+                    if the OP confirms it is invalid.
                     -->
                     </t>
                     <t>
@@ -3204,7 +3314,9 @@ Base 10 number | btwoc string representation
                       すべきである (SHOULD)。また、これ以後、このハンドルを含む認証要求を送るべき
                       ではない (SHOULD NOT)。
                     <!--
-                    
+                    Description: If present in a verification response with "is_valid" set to "true", 
+                    the Relying Party SHOULD remove the corresponding association from its store and 
+                    SHOULD NOT send further authentication requests with this handle.
                     -->
                     </t>
                     <t>
@@ -3212,7 +3324,9 @@ Base 10 number | btwoc string representation
                       がアソシエーションを自由自在に無効化してしまうのを防止するためには、こうした二段階
                       のアソシエーション無効化プロセスが必要である。
                     <!--
-                    
+                    Note: This two-step process for invalidating associations is necessary to prevent 
+                    an attacker from invalidating an association at will by adding "invalidate_handle" 
+                    parameters to an authentication response.
                     -->
                     </t>
                   </list>
@@ -3230,7 +3344,10 @@ Base 10 number | btwoc string representation
           いる識別子として用いてもよい (MAY)。URL 識別子を表示するときは、フラグ
           メントを省略してもよい (MAY)。
         <!--
-        
+        The Claimed Identifier in a successful authentication response SHOULD be used 
+        by the Relying Party as a key for local storage of information about the user. 
+        The Claimed Identifier MAY be used as a user-visible Identifier. When displaying 
+        URL Identifiers, the fragment MAY be omitted.
         -->
         </t>
 
@@ -3241,7 +3358,9 @@ Base 10 number | btwoc string representation
             識別子の再割り当てを行なうに当り、OP は、新規かつ固有のフラグメント部分を
             生成すべきである。
           <!--
-          
+          OpenID Providers with large user bases can use fragments to recycle URL 
+          Identifiers if it is so desired. When reassigning a URL Identifier to 
+          a new end user OPs should generate a new, unique fragment part.
           -->
           </t>
           <t>
@@ -3249,7 +3368,9 @@ Base 10 number | btwoc string representation
             する要素であるため、RP は、フラグメントを除く URL の現在の所有者と以前の
             所有者を区別することになる。
           <!--
-          
+          The full URL with the fragment part constitutes the Claimed Identifier 
+          in positive assertions, therefore Relying Parties will distinguish between 
+          the current and previous owners of the fragment-less URL.
           -->
           </t>
           <t>
@@ -3257,7 +3378,9 @@ Base 10 number | btwoc string representation
             のない URL 識別子を、エンドユーザがログイン時に使用したり、RP が表示するため
             に用いたりすることができるようになる。
           <!--
-          
+          This mechanism allows the (presumably short, memorable) recycled URL Identifiers 
+          without the fragment to be used by end users at login time and by Relying Parties 
+          for display purposes.
           -->
           </t>
         </section>
@@ -3274,7 +3397,16 @@ Base 10 number | btwoc string representation
             ようになったとしても、HTTPS URL には何の影響も与えないだろう。HTTP URL は、
             ディスカバリプロセスを開始させる以外には識別子として用いられないからである。
           <!--
-          
+          Relying Parties MUST differentiate between URL Identifiers that have different 
+          schemes. When end user input is processed into a URL, it is processed into 
+          a HTTP URL. If the same end user controls the same URL, differing only by scheme, 
+          and it is desired that the Identifier be the HTTPS URL, it is RECOMMENDED that 
+          a redirect be issued from the HTTP URL to the HTTPS URL. Because the HTTP and 
+          HTTPS URLs are not equivalent and the Identifier that is used is the URL after 
+          following redirects, there is no foreseen reduction in security when using this 
+          scheme. If an attacker could gain control of the HTTP URL, it would have no 
+          effect on the HTTPS URL, since the HTTP URL is not ever used as an Identifier 
+          except to initiate the discovery process.
           -->
           </t>
         </section>
