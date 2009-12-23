@@ -2087,9 +2087,13 @@ Base 10 number | btwoc string representation
         とアソシエーションを構築 (オプション) すれば、RP は、アサーションを得るために OP に
         認証要求を送ることができる。認証要求は、<xref target="indirect_comm">間接要求で
         ある</xref>。
-            <!--
-            
-            -->
+      <!--
+      Once the Relying Party has successfully performed discovery and 
+      (optionally) created an association with the discovered OP 
+      Endpoint URL, it can send an authentication request to the OP 
+      to obtain an assertion. An authentication request is 
+      an indirect request.
+      -->
       </t>
 
       <section title="要求パラメータ">
@@ -2100,9 +2104,9 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   <xref target="http_encoding" />で指定した通り。
-                  <!--
-                       
-                  -->
+                <!--
+                As specified in Section 4.1.2.
+                -->
                 </t>
               </list>
             </t>
@@ -2112,14 +2116,21 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   値： "checkid_immediate" または "checkid_setup"
+                <!--
+                Value: "checkid_immediate" or "checkid_setup"
+                -->
                 </t>
                 <t>
                   注： RP がエンドユーザと OP との対話を望む場合は、"checkid_setup" を用いる
                   べきである。エンドユーザと OP との対話を望まない状況の例として、JavaScript 
                   の中で非同期の認証要求が生じた場合があげられる。
-                  <!--
-                   
-                  -->
+                <!--
+                Note: If the Relying Party wishes the end user to be able to 
+                interact with the OP, "checkid_setup" should be used. 
+                An example of a situation where interaction between the end user 
+                and the OP is not desired is when the authentication request is 
+                happening asynchronously in JavaScript.
+                -->
                 </t>
               </list>
             </t>
@@ -2129,9 +2140,9 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   値： (オプション)  主張識別子。
-                  <!--
-                      
-                  -->
+                <!--
+                Value: (optional) The Claimed Identifier.
+                -->
                 </t>
                 <t>
                   "openid.claimed_id" と "openid.identity" については、両方がともに存在するか、
@@ -2139,18 +2150,22 @@ Base 10 number | btwoc string representation
                   そのアサーションは識別子に関するものではなく、
                   <xref target="extensions">拡張仕様</xref>を用いて、ペイロードにその他の
                   情報が含まれることになる。
-                  <!--
-                  
-                  -->
+                <!--
+                "openid.claimed_id" and "openid.identity" SHALL be either both 
+                present or both absent. If neither value is present, the assertion 
+                is not about an identifier, and will contain other information in 
+                its payload, using extensions.
+                -->
                 </t>
                 <t>
                   OP は、<xref target="normalization">正規化</xref>のセクションで示した通り、
                   "xri://" プリフィックスを伴った XRI 識別子または "xri://" プリフィックスを伴わ
                   ない XRI 識別子を受け入れることが推奨される
                   (RECOMMENDED)。
-                  <!--
-                      
-                  -->
+                <!--
+                It is RECOMMENDED that OPs accept XRI identifiers with or without 
+                the "xri://" prefix, as specified in the Normalization section.
+                -->
                 </t>
               </list>
             </t>
@@ -2161,14 +2176,15 @@ Base 10 number | btwoc string representation
                 <t>
                   値： (オプション)  OP ローカル識別子。
                 <!--
-                 
+                Value: (optional) The OP-Local Identifier.
                 -->
                 </t>
                 <t>
                   openid.identity の値に異なる OP ローカル識別子 が指定されていない場合は、その値
                   として主張識別子を用いなければならない (MUST)。
                 <!--
-                
+                If a different OP-Local Identifier is not specified, the claimed 
+                identifier MUST be used as the value for openid.identity.
                 -->
                 </t>
                 <t>
@@ -2178,7 +2194,12 @@ Base 10 number | btwoc string representation
                   され、当該パラメータがなくても要求が意味をなす場合。上記 openid.claimed_id 参照)、
                   省略してもよい (MAY)。
                 <!--
-                
+                Note: If this is set to the special value 
+                "http://specs.openid.net/auth/2.0/identifier_select" 
+                then the OP SHOULD choose an Identifier that belongs to the end user. 
+                This parameter MAY be omitted if the request is not about an identifier 
+                (for instance if an extension is in use that makes the request meaningful 
+                without it; see openid.claimed_id above).
                 -->
                 </t>
               </list>
@@ -2191,14 +2212,16 @@ Base 10 number | btwoc string representation
                   値： (オプション)  RP と OP の間のアソシエーションハンドル。応答に署名するために用いる
                   べきである (SHOULD)。
                 <!--
-                
+                Value: (optional) A handle for an association between the Relying Party and 
+                the OP that SHOULD be used to sign the response.
                 -->
                 </t>
                 <t>
                   注：アソシエーションハンドルが送られない場合、トランザクションは、
                   <xref target="check_auth">ステートレスモードで</xref>行われる。
                 <!--
-                
+                Note: If no association handle is sent, the transaction will take place in 
+                Stateless Mode.
                 -->
                 </t>
               </list>
@@ -2211,14 +2234,16 @@ Base 10 number | btwoc string representation
                   値： (オプション)  OP が要求のステータスを示す応答とともにユーザエージェントを戻すべき
                   (SHOULD) URL。
                 <!--
-                
+                Value: (optional) URL to which the OP SHOULD return the User-Agent with 
+                the response indicating the status of the request.
                 -->
                 </t>
                 <t>
                   注：送られた要求の中にこの値が記されていない場合、エンドユーザが戻されることを RP は
                   望んでいないということを意味している。
                 <!--
-                
+                Note: If this value is not sent in the request it signifies that the Relying 
+                Party does not wish for the end user to be returned.
                 -->
                 </t>
                 <t>
@@ -2226,7 +2251,11 @@ Base 10 number | btwoc string representation
                   利用してもよい (MAY)。本文書では、照会パラメータが外部の第三者によって変更されないことを
                   RP が保証できる仕組みは定義していない。このような仕組みは、RP 自身で定義することができる。
                 <!--
-                
+                Note: The return_to URL MAY be used as a mechanism for the Relying Party to 
+                attach context about the authentication request to the authentication response. 
+                This document does not define a mechanism by which the RP can ensure that query 
+                parameters are not modified by outside parties; such a mechanism can be defined 
+                by the RP itself.
                 -->
                 </t>
               </list>
@@ -2240,11 +2269,15 @@ Base 10 number | btwoc string representation
                   <xref target="realms" />参照。openid.return_to を省略した場合は、この値を送らなけ
                   ればならない(MUST)。
                 <!--
-                
+                Value: (optional) URL pattern the OP SHOULD ask the end user to trust. 
+                See Section 9.2. This value MUST be sent if openid.return_to is omitted.
                 -->
                 </t>
                 <t>
                   デフォルト値： return_to URL
+                <!--
+                Default: return_to URL
+                -->
                 </t>
               </list>
             </t>
@@ -2260,17 +2293,26 @@ Base 10 number | btwoc string representation
           OP が RP を一意的に特定するために用いるべきである (SHOULD)。例えば、OP は、エンド
           ユーザが認証要求の承認を自動化できるようにするために、レルムを用いてもよい (MAY)。
           <!--
-          
+          A "realm" is a pattern that represents the part of URL-space for which 
+          an OpenID Authentication request is valid. A realm is designed to give 
+          the end user an indication of the scope of the authentication request. 
+          OPs SHOULD present the realm when requesting the end user's approval 
+          for an authentication request. The realm SHOULD be used by OPs to 
+          uniquely identify Relying Parties. For example, OPs MAY use the realm 
+          to allow the end user to automate approval of authentication requests.
           -->
         </t>
 
         <t>
           レルムパターンは URL であるが、以下の点が異なっている。
+        <!--
+        A realm pattern is a URL, with the following changes:
+        -->
           <list style="symbols">
             <t>
               レルムは、URI フラグメントを含んでいてはならない (MUST NOT)
             <!--
-            
+            A realm MUST NOT contain a URI fragment
             -->
             </t>
             <t>
@@ -2278,7 +2320,7 @@ Base 10 number | btwoc string representation
                (MAY)。ワイルドカードは、"*." の文字からなり、URL のオーソリティセクション
               の DNS 名の前に付加される。
             <!--
-            
+            A realm MAY contain a wild-card at the beginning of the URL authority section. A wild-card consists of the characters "*." prepended to the DNS name in the authority section of the URL.
             -->
             </t>
           </list>
@@ -2286,37 +2328,42 @@ Base 10 number | btwoc string representation
 
         <t>
           以下の場合、URL はレルムと一致する。
-
+        <!--
+        A URL matches a realm if:
+        -->
           <list style="symbols">
             <t>
               URL スキームおよび URL のポートがレルムの中のスキームおよびポートと同一の場合。
               URI マッチングに関する規則については、RFC 3986 [RFC3986] 、セクション 3.1 参照。
             <!--
-            
+            The URL scheme and port of the URL are identical to those in the realm. 
+            See RFC 3986 [RFC3986], section 3.1 for rules about URI matching.
             -->
             </t>
 
             <t>
               URL のパスが、レルムのパスまたはサブディレクトリに等しい場合。
             <!--
-            
+            The URL's path is equal to or a sub-directory of the realm's path.
             -->
             </t>
 
             <t>
-              以下のいずれか。
+              以下のいずれか。<!-- Either: -->
               <list style="numbers">
                 <t>
                   レルムのドメインがワイルドカード文字 "*." を含み、URL のドメインの末尾部分が
                   ワイルドカード "*." に続くレルム部分と同一である場合。
                 <!--
-                
+                The realm's domain contains the wild-card characters "*.", and 
+                the trailing part of the URL's domain is identical to the part 
+                of the realm following the "*." wildcard, or
                 -->
                 </t>
                 <t>
                   URL のドメインがレルムのドメインと同一である場合。
                 <!--
-                
+                The URL's domain is identical to the realm's domain
                 -->
                 </t>
               </list>
@@ -2327,7 +2374,8 @@ Base 10 number | btwoc string representation
           <xref target="indirect_error">エラー時の間接応答</xref>を返さなければ
           ならない (MUST)。
           <!--
-          
+          When present, the "openid.return_to" URL MUST match the "openid.realm", 
+          or the OP MUST return an indirect error response.
           -->
         </t>
 
@@ -2337,7 +2385,11 @@ Base 10 number | btwoc string representation
           (RECOMMENDED)。あまりにも汎用的なレルムは、特定の RP の識別に用いるときには、
           危険である場合がある。レルムが汎用的に過ぎるかどうかの判断は、OP に委ねられている。
         <!--
-        
+        It is RECOMMENDED that OPs protect their users from making assertions 
+        with overly-general realms, like http://*.com/ or http://*.co.uk/. 
+        Overly general realms can be dangerous when the realm is used for 
+        identifying a particular Relying Party. Whether a realm is overly-general 
+        is at the discretion of the OP.
         -->
         </t>
 
@@ -2354,7 +2406,14 @@ Base 10 number | btwoc string representation
             チェックを行ない、return_to URL が RP のエンドポイントのひとつと一致することを
             確認する。
           <!--
-          
+          OpenID providers SHOULD verify that the return_to URL specified in the 
+          request is an OpenID relying party endpoint. To verify a return_to URL, 
+          obtain the relying party endpoints for the realm by performing discovery 
+          on the relying party. As always when performing discovery, the discovered 
+          URL is the URL of the last HTTP response, following redirects. If any 
+          redirects are followed when performing discovery on the realm, verification 
+          has failed. If discovery has successfuly completed, check to make sure that 
+          the return_to URL matches one of the relying party endpoints.
           -->
           </t>
           <t>
@@ -2362,7 +2421,9 @@ Base 10 number | btwoc string representation
             この場合は、レルムの中のワイルドカードを "www" に置き換え、その結果得られる
             URL に関してディスカバリを実行する。
           <!--
-          
+          A realm may contain a wildcard, and so may not be a valid URL. In that case, 
+          perform discovery on the URL obtained by substituting "www" for the wildcard 
+          in the realm.
           -->
           </t>
           <t>
@@ -2371,20 +2432,24 @@ Base 10 number | btwoc string representation
             適用する。RP の エンドポイント URL は、ドメインのワイルドカードを含んではならず 
             (MUST NOT)、可能な限り、固有のものであるべきである (SHOULD)。
           <!--
-          
+          To match a return_to URL against a relying party endpoint, use the same 
+          rules as for matching the return_to URL against the realm, treating the 
+          relying party's endpoint URL as the realm. Relying party endpoint URLs 
+          MUST NOT contain a domain wildcard, and SHOULD be as specific as possible.
           -->
           </t>
           <t>
             検証を試みても失敗した場合、プロバイダは、その return_to URL に肯定アサーション 
             (positive assertion) を送るべきではない (SHOULD NOT)。
           <!--
-          
+          If verification is attempted and fails, the provider SHOULD NOT send 
+          a positive assertion to that return_to URL.
           -->
           </t>
           <t>
             プロバイダは、検証済みの return_to URL をキャッシュしてもよい (MAY)。
           <!--
-          
+          Providers MAY cache verified return_to URLs.
           -->
           </t>
         </section>
@@ -2398,7 +2463,12 @@ Base 10 number | btwoc string representation
           ない (MUST)。即時要求は、認証要求の "openid.mode" に "checkid_immediate"
           という値を設定することによって実現できる。
         <!--
-        
+        When requesting authentication, the Relying Party MAY request that the 
+        OP not interact with the end user. In this case the OP MUST respond 
+        immediately with either an assertion that authentication is successful, 
+        or a response indicating that the request cannot be completed without 
+        further user interaction. This is accomplished by an authentication 
+        request with "openid.mode" set to "checkid_immediate".
         -->
         </t>
       </section>
@@ -2413,7 +2483,10 @@ Base 10 number | btwoc string representation
         OP は、RP に<xref target="positive_assertions">肯定アサーション</xref>を送る
         べきである (SHOULD)。
       <!--
-      
+      When an authentication request comes from the User-Agent via indirect 
+      communication, the OP SHOULD determine that an authorized end user wishes 
+      to complete the authentication. If an authorized end user wishes to complete 
+      the authentication, the OP SHOULD send a positive assertion to the Relying Party.
       -->
       </t>
       <t>
@@ -2421,7 +2494,9 @@ Base 10 number | btwoc string representation
         承諾の取得方法については、本仕様の対象範囲外である。OP のセキュリティ
         に関する考慮事項については、<xref target="rp_mitm_proxy" />参照のこと。
       <!--
-      
+      Methods of identifying authorized end users and obtaining approval to return an 
+      OpenID Authentication assertion are beyond the scope of this specification. 
+      See Section 15.1.2.1 for OpenID Provider security considerations.
       -->
       </t>
       <t>
@@ -2430,7 +2505,11 @@ Base 10 number | btwoc string representation
         認証応答の発行を認可される複数の識別子がある場合、OP は、エンドユーザがどの識別子を
         使用するのかを選択できるようにすべきである (SHOULD)。
       <!--
-      
+      If the relying party requested OP-driven identifier selection by setting 
+      "openid.identity" to "http://specs.openid.net/auth/2.0/identifier_select" 
+      and there are Identifiers for which the end user is authorized to issue 
+      authentication responses, the OP SHOULD allow the end user to choose which 
+      Identifier to use.
       -->
       </t>
       <t>
@@ -2441,7 +2520,12 @@ Base 10 number | btwoc string representation
         (SHOULD)。さらに OP は、アソシエーションハンドルが指定されなかった場合と同様に、
         処理を継続すべきである (SHOULD)。
       <!--
-      
+      If the Relying Party supplied an association handle with the authentication 
+      request, the OP SHOULD attempt to look up an association based on that handle. 
+      If the association is missing or expired, the OP SHOULD send the 
+      "openid.invalidate_handle" parameter as part of the response with the value 
+      of the request's "openid.assoc_handle" parameter, and SHOULD proceed as if 
+      no association handle was specified.
       -->
       </t>
       <t>
@@ -2450,7 +2534,9 @@ Base 10 number | btwoc string representation
         また、その後の要求に応答し、<xref target="check_auth">直接検証</xref>を通じて応答の
         署名をチェックしなければならない (MUST)。
       <!--
-      
+      If no association handle is specified, the OP SHOULD use a private association
+      for signing the response. The OP MUST store this association and MUST respond 
+      to later requests to check the signature of the response via Direct Verification.
       -->
       </t>
       <t>
@@ -2458,7 +2544,9 @@ Base 10 number | btwoc string representation
         (SHOULD)。OP は、一方的な (unsolicited) 肯定アサーションの署名用に専用のアソシ
         エーションを用いるべきである (SHOULD)
       <!--
-      
+      Relying Parties SHOULD accept and verify assertions about Identifiers for which 
+      they have not requested authentication. OPs SHOULD use private associations for 
+      signing unsolicited positive assertions.
       -->
       </t>
       <t>
@@ -2466,7 +2554,9 @@ Base 10 number | btwoc string representation
         から受け取ることを望んでいない。これは、RP から OP へのデータ転送に拡張機能を用いて
         いる場合に役立つ。
       <!--
-      
+      If the "openid.return_to" value is omitted in the request, the Relying Party does 
+      not wish to receive an authentication assertion from the OP. This can be useful 
+      when using extensions to transfer data from the Relying Party to the OP.
       -->
       </t>
 
@@ -2475,7 +2565,7 @@ Base 10 number | btwoc string representation
           肯定アサーションのフィールドは、以下の通り。
           <xref target="indirect_comm">間接通信</xref>で行う。
         <!--
-        
+        Positive assertions are indirect responses with the following fields:
         -->
         </t>
         <t>
