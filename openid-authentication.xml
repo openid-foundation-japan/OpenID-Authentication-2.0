@@ -2146,7 +2146,7 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   "openid.claimed_id" と "openid.identity" については、両方がともに存在するか、
-                  ともに存在しないかのいずれかとするものとする (SHALL)。どちらの値も存在しない場合、
+                  ともに存在しないかのいずれかとする (SHALL)。どちらの値も存在しない場合、
                   そのアサーションは識別子に関するものではなく、
                   <xref target="extensions">拡張仕様</xref>を用いて、ペイロードにその他の
                   情報が含まれることになる。
@@ -2248,7 +2248,7 @@ Base 10 number | btwoc string representation
                 </t>
                 <t>
                   注：認証要求に関するコンテキストを RP が認証応答に添付する仕組みとして、return_to URL を
-                  利用してもよい (MAY)。本文書では、照会パラメータが外部の第三者によって変更されないことを
+                  利用してもよい (MAY)。本文書では、クエリパラメータが外部の第三者によって変更されないことを
                   RP が保証できる仕組みは定義していない。このような仕組みは、RP 自身で定義することができる。
                 <!--
                 Note: The return_to URL MAY be used as a mechanism for the Relying Party to 
@@ -2290,7 +2290,7 @@ Base 10 number | btwoc string representation
           レルム (realm) とは、OpenID 認証要求が有効な URL 空間を表すパターンである。
           レルムは、認証要求の対象範囲をエンドユーザに知らせるために考案された。エンドユーザに
           よる認証要求の承諾を依頼する際、OP はレルムを提示すべきである (SHOULD)。レルムは、
-          OP が RP を一意的に特定するために用いるべきである (SHOULD)。例えば、OP は、エンド
+          OP が RP を一意に特定するために用いるべきである (SHOULD)。例えば、OP は、エンド
           ユーザが認証要求の承認を自動化できるようにするために、レルムを用いてもよい (MAY)。
           <!--
           A "realm" is a pattern that represents the part of URL-space for which 
@@ -2317,7 +2317,7 @@ Base 10 number | btwoc string representation
             </t>
             <t>
               レルムは、URL のオーソリティセクションの先頭にワイルドカードを含んでいてもよい
-               (MAY)。ワイルドカードは、"*." の文字からなり、URL のオーソリティセクション
+               (MAY)。ワイルドカードは、"*." の文字列からなり、URL のオーソリティセクション
               の DNS 名の前に付加される。
             <!--
             A realm MAY contain a wild-card at the beginning of the URL authority section. A wild-card consists of the characters "*." prepended to the DNS name in the authority section of the URL.
@@ -2402,9 +2402,8 @@ Base 10 number | btwoc string representation
             実行することによって、レルムのための RP のエンドポイントを取得する。ディスカバリ
             を実行すると、その結果得られる URL は常に、リダイレクトを辿った先の最後の HTTP 
             応答の URL となる。レルムに関するディスカバリを実行したとき、その後何らかのリダイ
-            レクトが生じれば、検証に失敗したことになる。ディスカバリが正常に完了したときは、
-            チェックを行ない、return_to URL が RP のエンドポイントのひとつと一致することを
-            確認する。
+            レクトが生じた場合、検証に失敗したことになる。ディスカバリが正常に完了したときは、
+            return_to URL が RP のエンドポイントのひとつと一致することを確認する。
           <!--
           OpenID providers SHOULD verify that the return_to URL specified in the 
           request is an OpenID relying party endpoint. To verify a return_to URL, 
@@ -2417,7 +2416,7 @@ Base 10 number | btwoc string representation
           -->
           </t>
           <t>
-            レルムは、ワイルドカードを含んでもよく、そのため有効な URL でないことがある。
+            レルムはワイルドカードを含む場合があり、そのため有効なURLでないことがある。 
             この場合は、レルムの中のワイルドカードを "www" に置き換え、その結果得られる
             URL に関してディスカバリを実行する。
           <!--
@@ -2459,7 +2458,7 @@ Base 10 number | btwoc string representation
         <t>
           RP は、認証要求に当り、OP がエンドユーザとの対話を行なわないことを要求してもよい
           (MAY)。この場合、OP は即時に、認証成功のアサーション、または、ユーザとさらに
-          対話を行なわないと要求が完了できないことを知らせる応答のいずれかを返さなければなら
+          対話を行なわないと要求が完了できないことを示す応答のいずれかを返さなければなら
           ない (MUST)。即時要求は、認証要求の "openid.mode" に "checkid_immediate"
           という値を設定することによって実現できる。
         <!--
@@ -2514,8 +2513,8 @@ Base 10 number | btwoc string representation
       </t>
       <t>
         RP が認証要求にアソシエーションハンドルを付与した場合、OP は、そのハンドルをもとに
-        してアソシエーションを探してみるべきである (SHOULD)。アソシエーションが見つからない
-        か期限切れで失効している場合、OP は、応答の一部として、要求の "openid.assoc_handle"
+        してアソシエーションを探すべきである (SHOULD)。アソシエーションが見つからない
+        か有効期限切れで失効している場合、OP は、応答の一部として、要求の "openid.assoc_handle"
         パラメータと同じ値で"openid.invalidate_handle" パラメータを送り返すべきである 
         (SHOULD)。さらに OP は、アソシエーションハンドルが指定されなかった場合と同様に、
         処理を継続すべきである (SHOULD)。
@@ -2541,7 +2540,7 @@ Base 10 number | btwoc string representation
       </t>
       <t>
         RP は、認証要求を済ませていない識別子に関するアサーションを受け入れ、検証すべきである
-        (SHOULD)。OP は、一方的な (unsolicited) 肯定アサーションの署名用に専用のアソシ
+        (SHOULD)。OP は、一方的な (unsolicited) 肯定アサーションの署名に専用のアソシ
         エーションを用いるべきである (SHOULD)
       <!--
       Relying Parties SHOULD accept and verify assertions about Identifiers for which 
@@ -2815,9 +2814,9 @@ Base 10 number | btwoc string representation
 
         <section title="即時要求への応答の場合">
           <t>
-            要求が即時要求であった場合、エンドユーザが OP のページを介して対話し、識別のため
-            のクレデンシャルや要求の承諾を提供する機会はない。即時要求への否定アサーションは、
-            以下のフォームとする。
+            要求が即時要求であった場合、エンドユーザが OP のページを介して対話し、識別用の
+            クレデンシャルと要求に対するの承諾を送信する機会はない。即時要求への否定アサー
+            ションは、以下のフォームとする。
           <!--
           If the request was an immediate request, there is no chance for the end 
           user to interact with pages on the OP to provide identifying credentials 
@@ -2909,7 +2908,7 @@ Base 10 number | btwoc string representation
     <section title="アサーションの検証" anchor="verification">
       <t>
         RP が肯定アサーションを受け取ったときには、そのアサーションを受け入れる前に、
-        以下の点について検証しなければならない (MUST)。
+        以下の値について検証しなければならない (MUST)。
           <!--
           When the Relying Party receives a positive assertion, it MUST verify 
           the following before accepting the assertion:
@@ -3145,9 +3144,9 @@ Base 10 number | btwoc string representation
         </t>
         <t>
           タイムスタンプを利用して、現在時刻との時間差が大きすぎる応答を拒否してもよい (MAY)。
-          そのとき、攻撃を避ける上でノンスの保存が必要な時間は制限する。許容範囲については、
-          本仕様の対象範囲外である。許容範囲が大きいほど、より多くのノンスを、より長時間保存する
-          必要がある。許容範囲を短くすると、クロック・スキューやトランザクション時間が原因で誤って
+          そのとき、攻撃を避ける上でノンスの保存が必要な時間は制限する。有効期限については、
+          本仕様の対象範囲外である。有効期限が長いほど、より多くのノンスを、より長時間保存する
+          必要がある。有効期限を短くすると、クロック・スキューやトランザクション時間が原因で誤って
           拒否してしまう可能性が高まる。
         <!--
         The time-stamp MAY be used to reject responses that are too far away from the 
@@ -3163,8 +3162,8 @@ Base 10 number | btwoc string representation
       <section title="11.4. 署名の検証"
                anchor="verifying_signatures">
         <t>
-          アサーションで指定されるアソシエーションハンドルに紐尽くアソシエーションを RP が保存し
-          続けている場合、RP は、アサーション自体の署名をチェックしなければならない (MUST)。
+          アサーションで指定されるアソシエーションハンドルに紐付くアソシエーションを RP が保存し
+          た場合、RP は、アサーション自体の署名をチェックしなければならない (MUST)。
           アソシエーションを保存していない場合、RP は、OP が<xref target="check_auth">直接検証
           </xref>を通じて署名を検証するように要求しなければならない (MUST)。
         <!--
@@ -3288,7 +3287,7 @@ Base 10 number | btwoc string representation
                   is_valid
                   <list style='empty'>
                     <t>
-                      値： "true" または "false"。検証要求の署名が有効かどうかをアサート。
+                      値： "true" または "false"。検証要求の署名が有効かどうかを示す。
                     <!--
                     Value: "true" or "false"; asserts whether the signature of the 
                     verification request is valid.
@@ -3311,7 +3310,7 @@ Base 10 number | btwoc string representation
                     <t>
                       説明： "true" に設定された "is_valid" を含む検証応答の中に、このパラメータ
                       が存在する場合、RP は、保存しているアソシエーションの中から対応するものを削除
-                      すべきである (SHOULD)。また、これ以後、このハンドルを含む認証要求を送るべき
+                      すべきである (SHOULD)。また、これ以降、このハンドルを含む認証要求を送るべき
                       ではない (SHOULD NOT)。
                     <!--
                     Description: If present in a verification response with "is_valid" set to "true", 
@@ -3339,7 +3338,7 @@ Base 10 number | btwoc string representation
 
       <section title="エンドユーザの識別" anchor="identifying">
         <t>
-          RP は、成功時の認証応答での主張識別子を、ローカルストレージ内のユーザ情報へ
+          RP は、成功時の認証応答における主張識別子を、ローカルストレージ内のユーザ情報へ
           のキーとして用いるべきである (SHOULD)。また、主張識別子をユーザが管理して
           いる識別子として用いてもよい (MAY)。URL 識別子を表示するときは、フラグ
           メントを省略してもよい (MAY)。
@@ -3417,7 +3416,8 @@ Base 10 number | btwoc string representation
     <!-- section title="Extensions" anchor="extensions" -->
       <t>
         OpenID 認証の拡張仕様は、認証要求および応答の“上に乗る”プロトコルである。
-        拡張仕様は、認証要求や応答に関するその他の情報を提供したり、認証応答の対象に関するその他の情報を提供したりする際に役立つ。
+        拡張仕様は、認証要求や応答に関するその他の情報を提供したり、認証応答の対象に関する
+        その他の情報を提供したりする際に役立つ。
         <!--
         An Extension to OpenID Authentication is a protocol that
         "piggybacks" on the authentication request and response. Extensions
@@ -4257,7 +4257,7 @@ Base 10 number | btwoc string representation
       <!-- section title="HTTP and HTTPS URL Identifiers" -->
         <t>
           これらのタイプ識別子については、既に述べた通りであるが、再度触れておく価値がある。
-          前述の通り、エンドユーザがスキーム以外は同一の URL を管理していることを表明するための方法としては、HTTP URL から HTTPS URL へのリダイレクトをセットアップすることが推奨される (RECOMMENDED) 。
+          前述の通り、エンドユーザがスキーム以外は同一の URL を管理していることを表明するための方法としては、HTTP URL から HTTPS URL へのリダイレクトを発行することが推奨される (RECOMMENDED) 。
           RP は、 ディスカバリと開始フェーズでHTTP URLを決して保存するようなことはなく、リダイレクトを辿って、 HTTPS URL を主張識別子として用いる。
           <!--
           While these types of Identifiers have been <xref
