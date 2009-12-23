@@ -2087,6 +2087,9 @@ Base 10 number | btwoc string representation
         とアソシエーションを構築 (オプション) すれば、RP は、アサーションを得るために OP に
         認証要求を送ることができる。認証要求は、<xref target="indirect_comm">間接要求で
         ある</xref>。
+            <!--
+            
+            -->
       </t>
 
       <section title="要求パラメータ">
@@ -2097,6 +2100,9 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   <xref target="http_encoding" />で指定した通り。
+                  <!--
+                       
+                  -->
                 </t>
               </list>
             </t>
@@ -2111,6 +2117,9 @@ Base 10 number | btwoc string representation
                   注： RP がエンドユーザと OP との対話を望む場合は、"checkid_setup" を用いる
                   べきである。エンドユーザと OP との対話を望まない状況の例として、JavaScript 
                   の中で非同期の認証要求が生じた場合があげられる。
+                  <!--
+                   
+                  -->
                 </t>
               </list>
             </t>
@@ -2120,6 +2129,9 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   値： (オプション)  主張識別子。
+                  <!--
+                      
+                  -->
                 </t>
                 <t>
                   "openid.claimed_id" と "openid.identity" については、両方がともに存在するか、
@@ -2127,12 +2139,18 @@ Base 10 number | btwoc string representation
                   そのアサーションは識別子に関するものではなく、
                   <xref target="extensions">拡張仕様</xref>を用いて、ペイロードにその他の
                   情報が含まれることになる。
+                  <!--
+                  
+                  -->
                 </t>
                 <t>
                   OP は、<xref target="normalization">正規化</xref>のセクションで示した通り、
                   "xri://" プリフィックスを伴った XRI 識別子または "xri://" プリフィックスを伴わ
                   ない XRI 識別子を受け入れることが推奨される
                   (RECOMMENDED)。
+                  <!--
+                      
+                  -->
                 </t>
               </list>
             </t>
@@ -2142,10 +2160,16 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   値： (オプション)  OP ローカル識別子。
+                <!--
+                 
+                -->
                 </t>
                 <t>
                   openid.identity の値に異なる OP ローカル識別子 が指定されていない場合は、その値
                   として主張識別子を用いなければならない (MUST)。
+                <!--
+                
+                -->
                 </t>
                 <t>
                   注： openid.identity に "http://specs.openid.net/auth/2.0/identifier_select"
@@ -2153,6 +2177,9 @@ Base 10 number | btwoc string representation
                   (SHOULD)。このパラメータは、要求が識別子に関するものでない場合 (例えば、拡張仕様が使用
                   され、当該パラメータがなくても要求が意味をなす場合。上記 openid.claimed_id 参照)、
                   省略してもよい (MAY)。
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2163,10 +2190,16 @@ Base 10 number | btwoc string representation
                 <t>
                   値： (オプション)  RP と OP の間のアソシエーションハンドル。応答に署名するために用いる
                   べきである (SHOULD)。
+                <!--
+                
+                -->
                 </t>
                 <t>
                   注：アソシエーションハンドルが送られない場合、トランザクションは、
                   <xref target="check_auth">ステートレスモードで</xref>行われる。
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2177,15 +2210,24 @@ Base 10 number | btwoc string representation
                 <t>
                   値： (オプション)  OP が要求のステータスを示す応答とともにユーザエージェントを戻すべき
                   (SHOULD) URL。
+                <!--
+                
+                -->
                 </t>
                 <t>
                   注：送られた要求の中にこの値が記されていない場合、エンドユーザが戻されることを RP は
                   望んでいないということを意味している。
+                <!--
+                
+                -->
                 </t>
                 <t>
                   注：認証要求に関するコンテキストを RP が認証応答に添付する仕組みとして、return_to URL を
                   利用してもよい (MAY)。本文書では、照会パラメータが外部の第三者によって変更されないことを
                   RP が保証できる仕組みは定義していない。このような仕組みは、RP 自身で定義することができる。
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2196,8 +2238,10 @@ Base 10 number | btwoc string representation
                 <t>
                   値： (オプション)  OP が信頼することをエンドユーザに求めるべき (SHOULD) URL のパターン。
                   <xref target="realms" />参照。openid.return_to を省略した場合は、この値を送らなけ
-                  ればならない
-                  (MUST)。
+                  ればならない(MUST)。
+                <!--
+                
+                -->
                 </t>
                 <t>
                   デフォルト値： return_to URL
@@ -2215,6 +2259,9 @@ Base 10 number | btwoc string representation
           よる認証要求の承諾を依頼する際、OP はレルムを提示すべきである (SHOULD)。レルムは、
           OP が RP を一意的に特定するために用いるべきである (SHOULD)。例えば、OP は、エンド
           ユーザが認証要求の承認を自動化できるようにするために、レルムを用いてもよい (MAY)。
+          <!--
+          
+          -->
         </t>
 
         <t>
@@ -2222,11 +2269,17 @@ Base 10 number | btwoc string representation
           <list style="symbols">
             <t>
               レルムは、URI フラグメントを含んでいてはならない (MUST NOT)
+            <!--
+            
+            -->
             </t>
             <t>
               レルムは、URL のオーソリティセクションの先頭にワイルドカードを含んでいてもよい
                (MAY)。ワイルドカードは、"*." の文字からなり、URL のオーソリティセクション
               の DNS 名の前に付加される。
+            <!--
+            
+            -->
             </t>
           </list>
         </t>
@@ -2238,10 +2291,16 @@ Base 10 number | btwoc string representation
             <t>
               URL スキームおよび URL のポートがレルムの中のスキームおよびポートと同一の場合。
               URI マッチングに関する規則については、RFC 3986 [RFC3986] 、セクション 3.1 参照。
+            <!--
+            
+            -->
             </t>
 
             <t>
               URL のパスが、レルムのパスまたはサブディレクトリに等しい場合。
+            <!--
+            
+            -->
             </t>
 
             <t>
@@ -2250,18 +2309,26 @@ Base 10 number | btwoc string representation
                 <t>
                   レルムのドメインがワイルドカード文字 "*." を含み、URL のドメインの末尾部分が
                   ワイルドカード "*." に続くレルム部分と同一である場合。
+                <!--
+                
+                -->
                 </t>
                 <t>
                   URL のドメインがレルムのドメインと同一である場合。
+                <!--
+                
+                -->
                 </t>
               </list>
              </t>
           </list>
-
           "openid.return_to" URL が存在するとき、"openid.return_to" URL は 
           "openid.realm" と合致しなければならない (MUST)。もしくは、OP は、
           <xref target="indirect_error">エラー時の間接応答</xref>を返さなければ
           ならない (MUST)。
+          <!--
+          
+          -->
         </t>
 
         <t>
@@ -2269,6 +2336,9 @@ Base 10 number | btwoc string representation
           用いてエンドユーザがアサーションを行なわないようにすることが推奨される
           (RECOMMENDED)。あまりにも汎用的なレルムは、特定の RP の識別に用いるときには、
           危険である場合がある。レルムが汎用的に過ぎるかどうかの判断は、OP に委ねられている。
+        <!--
+        
+        -->
         </t>
 
         <section title="レルムを用いた戻りURLの検証"
@@ -2283,24 +2353,39 @@ Base 10 number | btwoc string representation
             レクトが生じれば、検証に失敗したことになる。ディスカバリが正常に完了したときは、
             チェックを行ない、return_to URL が RP のエンドポイントのひとつと一致することを
             確認する。
+          <!--
+          
+          -->
           </t>
           <t>
             レルムは、ワイルドカードを含んでもよく、そのため有効な URL でないことがある。
             この場合は、レルムの中のワイルドカードを "www" に置き換え、その結果得られる
             URL に関してディスカバリを実行する。
+          <!--
+          
+          -->
           </t>
           <t>
             return_to URL を RP のエンドポイントと照合するためには、RP のエンドポイントURL
             をレルムとして扱い、return_to URL をレルムと照合するために用いたのと同じ規則を
             適用する。RP の エンドポイント URL は、ドメインのワイルドカードを含んではならず 
             (MUST NOT)、可能な限り、固有のものであるべきである (SHOULD)。
+          <!--
+          
+          -->
           </t>
           <t>
             検証を試みても失敗した場合、プロバイダは、その return_to URL に肯定アサーション 
             (positive assertion) を送るべきではない (SHOULD NOT)。
+          <!--
+          
+          -->
           </t>
           <t>
             プロバイダは、検証済みの return_to URL をキャッシュしてもよい (MAY)。
+          <!--
+          
+          -->
           </t>
         </section>
       </section>
@@ -2312,6 +2397,9 @@ Base 10 number | btwoc string representation
           対話を行なわないと要求が完了できないことを知らせる応答のいずれかを返さなければなら
           ない (MUST)。即時要求は、認証要求の "openid.mode" に "checkid_immediate"
           という値を設定することによって実現できる。
+        <!--
+        
+        -->
         </t>
       </section>
     </section>
@@ -2324,17 +2412,26 @@ Base 10 number | btwoc string representation
         と判断すべきである (SHOULD)。認可済みの正規のエンドユーザが認証完了を望んでいる場合、
         OP は、RP に<xref target="positive_assertions">肯定アサーション</xref>を送る
         べきである (SHOULD)。
+      <!--
+      
+      -->
       </t>
       <t>
         認可済み正規のエンドユーザの識別方法および OpenID 認証アサーションを戻す上で必要な
         承諾の取得方法については、本仕様の対象範囲外である。OP のセキュリティ
         に関する考慮事項については、<xref target="rp_mitm_proxy" />参照のこと。
+      <!--
+      
+      -->
       </t>
       <t>
         "openid.identity" に "http://specs.openid.net/auth/2.0/identifier_select"
         という値を設定することによって OP 主導での識別子選択を RP が要求し、エンドユーザが
         認証応答の発行を認可される複数の識別子がある場合、OP は、エンドユーザがどの識別子を
         使用するのかを選択できるようにすべきである (SHOULD)。
+      <!--
+      
+      -->
       </t>
       <t>
         RP が認証要求にアソシエーションハンドルを付与した場合、OP は、そのハンドルをもとに
@@ -2343,28 +2440,43 @@ Base 10 number | btwoc string representation
         パラメータと同じ値で"openid.invalidate_handle" パラメータを送り返すべきである 
         (SHOULD)。さらに OP は、アソシエーションハンドルが指定されなかった場合と同様に、
         処理を継続すべきである (SHOULD)。
+      <!--
+      
+      -->
       </t>
       <t>
         アソシエーションハンドルの指定がない場合、OP は、応答への署名に専用のアソシエーションを
         用いるべきである (SHOULD)。OP は、このアソシエーションを記憶しなければならない (MUST)。
         また、その後の要求に応答し、<xref target="check_auth">直接検証</xref>を通じて応答の
         署名をチェックしなければならない (MUST)。
+      <!--
+      
+      -->
       </t>
       <t>
         RP は、認証要求を済ませていない識別子に関するアサーションを受け入れ、検証すべきである
         (SHOULD)。OP は、一方的な (unsolicited) 肯定アサーションの署名用に専用のアソシ
         エーションを用いるべきである (SHOULD)
+      <!--
+      
+      -->
       </t>
       <t>
         要求時に "openid.return_to" の値が省略されている場合、RP は認証アサーションを OP 
         から受け取ることを望んでいない。これは、RP から OP へのデータ転送に拡張機能を用いて
         いる場合に役立つ。
+      <!--
+      
+      -->
       </t>
 
       <section title="肯定アサーション" anchor="positive_assertions">
         <t>
           肯定アサーションのフィールドは、以下の通り。
           <xref target="indirect_comm">間接通信</xref>で行う。
+        <!--
+        
+        -->
         </t>
         <t>
           <list style='symbols'>
@@ -2373,6 +2485,9 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   <xref target="http_encoding" /> 指定した通り。
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2380,7 +2495,7 @@ Base 10 number | btwoc string representation
             <t>
               openid.mode
               <list style='empty'>
-                <t>値： "id_res"</t>
+                <t>値： "id_res"<!-- --></t>
               </list>
             </t>
 
@@ -2389,6 +2504,9 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   OP エンドポイント (Endpoint) URL。
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2399,14 +2517,23 @@ Base 10 number | btwoc string representation
                 <t>
                   値： (オプション) 主張識別子。"openid.claimed_id" と "openid.identity"について
                   は、両方がともに存在するか、ともに存在しないかのいずれかとするものとする (SHALL)。
+                <!--
+                
+                -->
                 </t>
                 <t>
                   注：エンドユーザは、OP ローカル識別子 を主張識別子として 使用することを選択してもよい
                   (MAY)。
+                <!--
+                
+                -->
                 </t>
                 <t>
                   注：アサーションにどちらの識別子も存在しない場合、そのアサーションは identifier に
                   関するものではなく、拡張仕様を用いて、ペイロードにその他の情報が含まれることになる。
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2422,6 +2549,9 @@ Base 10 number | btwoc string representation
                   識別子の選択において、エンドユーザを支援してもよい (MAY)。拡張仕様が使用され、当該
                   フィールドがなくても応答が意味をなす場合、openid.identity フィールドを省略しても
                   よい (MAY)  (上記 openid.claimed_id 参照)。
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2431,6 +2561,9 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   値： 要求時に送られた return_to URL パラメータそのままのコピー。
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2445,16 +2578,26 @@ Base 10 number | btwoc string representation
                   に含まれる ASCII 文字 (空白を除く印刷可能な文字) を追加してもよい (MAY)。
                   日付および時刻は [RFC3339] セクション 5.6<xref target="RFC3339" />に指定され
                   る形式で記述しなければならない (MUST) が、以下の制限がある。
+                <!--
+                
+                -->
                   <list style="symbols">
                     <t>
                       時刻は全て世界協定時 ( UTC ) 時間帯とし、"Z" で示す。
+                    <!--
+                    
+                    -->
                     </t>
                     <t>
                       小数点以下の秒の記述は認められていない。
+                    <!--
+                    
+                    -->
                     </t>
                   </list>
 
                   例： 2005-05-15T17:11:51ZUNIQUE
+
                 </t>
               </list>
             </t>
@@ -2465,6 +2608,9 @@ Base 10 number | btwoc string representation
                 <t>
                   値： (オプション) 要求とともに RP が無効なアソシエーションハンドルを送った場合、
                   その値をここに含めるべきである (SHOULD)。
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2474,6 +2620,9 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   値： このアサーションに署名するために用いられたアソシエーションのハンドル。
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2483,6 +2632,9 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   値：署名済みフィールドのコンマ区切りのリスト。
+                <!--
+                
+                -->
                 </t>
                 <t>
                   注：このエントリは、署名がカバーしているフィールドからなるが、"openid." プリ
@@ -2491,9 +2643,15 @@ Base 10 number | btwoc string representation
                   また、応答に存在する場合は、"claimed_id" と "identity" を含まなければならない
                   (MUST)。追加のキーをメッセージの一部として署名してもよい (MAY)。
                   <xref target="generating_signatures">署名の生成</xref>を参照のこと。
+                <!--
+                
+                -->
                 </t>
                 <t>
                   例："op_endpoint,identity,claimed_id,return_to,assoc_handle,response_nonce"
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2503,6 +2661,9 @@ Base 10 number | btwoc string representation
               <list style='empty'>
                 <t>
                   値：セクション 6 で指定した方法で計算され、Base 64 エンコードされた署名
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2518,6 +2679,9 @@ Base 10 number | btwoc string representation
           もしくは承諾できない場合、OP は、RP に対し<xref target="indirect_comm">
           間接応答</xref>の形で否定アサーション (negative asserton) を送るべきである
           (SHOULD)。
+        <!--
+        
+        -->
         </t>
 
         <t>
@@ -2525,6 +2689,9 @@ Base 10 number | btwoc string representation
           とき、RP は、"checkid_setup" モードを用いて、新たな認証要求を構築すべきである
           (SHOULD)。OpenID Authentication 1.1 との相違点に関する詳細は、
           <xref target="compat_mode" />で述べる。
+        <!--
+        
+        -->
         </t>
 
         <section title="即時要求への応答の場合">
@@ -2532,12 +2699,18 @@ Base 10 number | btwoc string representation
             要求が即時要求であった場合、エンドユーザが OP のページを介して対話し、識別のため
             のクレデンシャルや要求の承諾を提供する機会はない。即時要求への否定アサーションは、
             以下のフォームとする。
+          <!--
+          
+          -->
             <list style='symbols'>
               <t>
                 openid.ns
                 <list style='empty'>
                   <t>
                     <xref target="http_encoding" />で指定した通り。
+                  <!--
+                  
+                  -->
                   </t>
                 </list>
               </t>
@@ -2556,12 +2729,18 @@ Base 10 number | btwoc string representation
             OP がエンドユーザに対してページを表示し、エンドユーザのクレデンシャルを要求しても
             よいことから、即時要求ではない要求への否定応答は最終的なものとなる。この場合の否定
             応答は、以下のフォームとする。
+          <!--
+          
+          -->
             <list style='symbols'>
               <t>
                 openid.ns
                 <list style='empty'>
                   <t>
                     <xref target="http_encoding" />で指定した通り。
+                  <!--
+                  
+                  -->
                   </t>
                 </list>
               </t>
@@ -2570,6 +2749,9 @@ Base 10 number | btwoc string representation
                 <list style='empty'>
                   <t>
                     値： "cancel"
+                  <!--
+                  
+                  -->
                   </t>
                 </list>
               </t>
@@ -2583,6 +2765,9 @@ Base 10 number | btwoc string representation
             ボタンを押したりするかもしれない)。RP が "cancel" 応答を受け取った場合、認証は
             失敗したことを意味し、RP はそのエンドユーザを認証されなかったものとして扱わなけれ
             ばならない (MUST)。
+          <!--
+          
+          -->
           </t>
         </section>
       </section>
@@ -2592,44 +2777,70 @@ Base 10 number | btwoc string representation
       <t>
         RP が肯定アサーションを受け取ったときには、そのアサーションを受け入れる前に、
         以下の点について検証しなければならない (MUST)。
+          <!--
+          
+          -->
 
         <list style="symbols">
           <t>
             "openid.return_to" が現在の要求の URL と一致する
             (<xref target="verify_return_to" />)
+          <!--
+          
+          -->
           </t>
           <t>
             ディスカバリによって得られた情報がアサーションの情報と一致する
             (<xref target="verify_disco" />)
+          <!--
+          
+          -->
           </t>
           <t>
             "openid.response_nonce" について、当該 OP から、これまでに同じ値の
             アサーションを受け入れたことがない
             (<xref target="verify_nonce" />)
+          <!--
+          
+          -->
           </t>
           <t>
             アサーションの署名が有効で、署名が必要な全てのフィールドに署名がされている
             (<xref target="verifying_signatures" />)
+          <!--
+          
+          -->
           </t>
         </list>
 
         上記４つの条件が全て満たされていれば、アサーションが検証されたことになる。アサーション
         に主張識別子が含まれている場合は、その識別子について、ユーザの認証が済んだことになる。
+        <!--
+        
+        -->
       </t>
 
       <section title="戻り URL の検証" anchor="verify_return_to">
         <t>
           "openid.return_to" URL がこのアサーションを処理している URL と一致している
           ことを検証するためには、
-
+        <!--
+        
+        -->
           <list style="symbols">
             <t>
               URL のスキーム、オーソリティ、パスが、ふたつの URL の間で同じでなければならない
               (MUST)。
+            <!--
+            
+            -->
             </t>
             <t>
               "openid.return_to" URL の照会パラメータは、どのパラメータも、RP が受け取った
               HTTP 要求の URL に同じ値がなければならない。
+            <!--
+            
+            -->
             </t>
           </list>
         </t>
@@ -2640,6 +2851,9 @@ Base 10 number | btwoc string representation
           アサーションの中の主張識別子が URL で、フラグメントを含む場合、ディスカバリによって
           得られた情報を検証するために、そのフラグメント部分およびフラグメントの区切り文字 "#"
           を用いてはならない (MUST NOT)。
+        <!--
+        
+        -->
         </t>
 
         <t>
@@ -2647,6 +2861,9 @@ Base 10 number | btwoc string representation
           によって取得したものでなければならない (MUST)。また、アサーションの中の情報はディス
           カバリによって得られた情報の中に存在していなければならない (MUST)。主張識別子は OP
           識別子であってはならない (MUST NOT)。
+        <!--
+        
+        -->
         </t>
 
         <t>
@@ -2655,12 +2872,18 @@ Base 10 number | btwoc string representation
           または異なる識別子であった場合、もしくは、OP が一方的な肯定アサーションを送ろうとして
           いる場合)、RP は応答の中の主張識別子に関するディスカバリを実行し、その主張識別子に関
           するアサーションを行なう権限を OP が有しているかどうかを確認しなければならない (MUST)。
+        <!--
+        
+        -->
         </t>
 
         <t>
           応答の中に主張識別子がない場合、アサーションは識別子に関するものではない。RP は、ユーザ
           を識別するために、現在の OpenID 認証トランザクションに関連するユーザ入力識別子を用いて
           はならない (MUST NOT)。しかし、アサーションの中の拡張仕様情報は用いてもよい (MAY)。
+        <!--
+        
+        -->
         </t>
 
         <texttable title="Discovered Information to Authentication Response Mapping">
@@ -2683,6 +2906,9 @@ Base 10 number | btwoc string representation
             OpenID Authentication 2.0 "id_res"応答</xref>へのマッピング (対応づけ) を示している。
 
             ディスカバリによって得られた値の認証応答へのマッピング
+          <!--
+          
+          -->
           </postamble>
         </texttable>
 
@@ -2691,6 +2917,9 @@ Base 10 number | btwoc string representation
           エレメントの中に、プロトコルバージョン、OPエンドポイントURL および OP ローカル識別子 
           (主張識別子と異なる場合) が記されていなければならない (MUST)。その <xrd:Service> 
           エレメントの中に使用されないフィールドがあってもよい (MAY)。
+        <!--
+        
+        -->
         </t>
 
         <figure>
@@ -2708,6 +2937,9 @@ Base 10 number | btwoc string representation
             られている。アサーションの中の "openid.op_endpoint" の値がふたつのうちのいずれかであ
             れば、そのフィールドとこの <xrd:Service> エレメントとが一致する。もう一方の <xrd:URI>
             エレメントは使われない。
+          <!--
+          
+          -->
           </postamble>
         </figure>
 
@@ -2718,18 +2950,26 @@ Base 10 number | btwoc string representation
           リプレイアタックを阻止するため、署名のチェックを行なうエージェントは、肯定アサーションの
           中に含まれるノンス値の履歴を辿り、同一の OP エンドポイント URL について、同じ値を二度
           以上決して受け入れてはならない。
-
+        <!--
+        
+        -->
         </t>
         <t>
           <list style="symbols">
             <t>
               "check_authentication" を用いるに当たり、OP は、要求への成功時の応答の
               "openid.response_nonce" に、同一の値を二度以上用いてはならない (MUST NOT)。
+            <!--
+            
+            -->
             </t>
             <t>
               RP がアサーションの署名をチェックするに当たり、RP は、同じ OP エンドポイント URL
               から "openid.response_nonce" の値が同一のアサーションを過去に受け入れていないこと
               を保証すべきである (SHOULD)。
+            <!--
+            
+            -->
             </t>
           </list>
         </t>
@@ -2739,6 +2979,9 @@ Base 10 number | btwoc string representation
           本仕様の対象範囲外である。許容範囲が大きいほど、より多くのノンスを、より長時間保存する
           必要がある。許容範囲を短くすると、クロック・スキューやトランザクション時間が原因で誤って
           拒否してしまう可能性が高まる。
+        <!--
+        
+        -->
         </t>
       </section>
 
@@ -2749,12 +2992,18 @@ Base 10 number | btwoc string representation
           続けている場合、RP は、アサーション自体の署名をチェックしなければならない (MUST)。
           アソシエーションを保存していない場合、RP は、OP が<xref target="check_auth">直接検証
           </xref>を通じて署名を検証するように要求しなければならない (MUST)。
+        <!--
+        
+        -->
         </t>
 
         <section title="アソシエーションによる検証" toc="exclude">
           <t>
             RP は署名を生成する際に OP が従うのと同じ手順に従い、その後、応答の中の署名を生成
             された署名と比較する。署名が一致しなければ、アサーションは無効である。
+          <!--
+          
+          -->
           </t>
 
           <t>
@@ -2764,6 +3013,9 @@ Base 10 number | btwoc string representation
             で指定する通り、OP は、OP との直接検証が必要な応答を送ることになる。この場合、OP は、
             RP から受け取った元の要求に含まれていたアソシエーションハンドルを 
             "openid.invalidate_handle" の値に設定して、そのフィールドを含める。
+          <!--
+          
+          -->
           </t>
         </section>
 
@@ -2773,6 +3025,9 @@ Base 10 number | btwoc string representation
             RP が OP に署名検証を行なわせたいときは、OP に直接要求を送る。OP は、署名検証のために、
             <xref target="positive_assertions">肯定アサーション</xref>発行時に生成された専用の
             アソシエーションを用いる。
+          <!--
+          
+          -->
           </t>
 
           <section title='要求パラメータ' toc="exclude">
@@ -2787,6 +3042,9 @@ Base 10 number | btwoc string representation
 
                 <t>
                   認証応答の全てのフィールドをそのままコピー、ただし "openid.mode" を除く。
+                <!--
+                
+                -->
                 </t>
               </list>
             </t>
@@ -2797,12 +3055,18 @@ Base 10 number | btwoc string representation
               エーションのハンドルが検証要求に含まれている場合は、RP がもはや秘密共有鍵を知らない、
               あるいは、このアソシエーションが RP 以外のエンティティ (例えば、攻撃者) と OP との間
               で確立してしまっていることを意味している。
+              <!--
+              
+              -->
             </t>
 
             <t>
               リプレイアタックを阻止するため、OP は、過去に発行した認証応答のそれぞれについて、
               検証応答を二度以上発行してはならない (MUST NOT)。"openid.response_nonce" 
               の値で、認証応答およびそれに対応する検証要求を識別してもよい。
+            <!--
+            
+            -->
             </t>
 
           </section>
@@ -2815,6 +3079,9 @@ Base 10 number | btwoc string representation
                   <list style='empty'>
                     <t>
                       <xref target="direct_response" />セクション 5.1.2 で指定した通り。
+                    <!--
+                    
+                    -->
                     </t>
                   </list>
                 </t>
@@ -2824,6 +3091,9 @@ Base 10 number | btwoc string representation
                   <list style='empty'>
                     <t>
                       値： "true" または "false"。検証要求の署名が有効かどうかをアサート。
+                    <!--
+                    
+                    -->
                     </t>
                   </list>
                 </t>
@@ -2834,17 +3104,26 @@ Base 10 number | btwoc string representation
                     <t>
                       値： (オプション)  OP が無効であることを確認した場合に、検証要求の中で送る
                       "invalidate_handle" の値。
+                    <!--
+                    
+                    -->
                     </t>
                     <t>
                       説明： "true" に設定された "is_valid" を含む検証応答の中に、このパラメータ
                       が存在する場合、RP は、保存しているアソシエーションの中から対応するものを削除
                       すべきである (SHOULD)。また、これ以後、このハンドルを含む認証要求を送るべき
                       ではない (SHOULD NOT)。
+                    <!--
+                    
+                    -->
                     </t>
                     <t>
                       注：認証応答に "invalidate_handle" パラメータを追加することによって、攻撃者
                       がアソシエーションを自由自在に無効化してしまうのを防止するためには、こうした二段階
                       のアソシエーション無効化プロセスが必要である。
+                    <!--
+                    
+                    -->
                     </t>
                   </list>
                 </t>
@@ -2860,6 +3139,9 @@ Base 10 number | btwoc string representation
           のキーとして用いるべきである (SHOULD)。また、主張識別子をユーザが管理して
           いる識別子として用いてもよい (MAY)。URL 識別子を表示するときは、フラグ
           メントを省略してもよい (MAY)。
+        <!--
+        
+        -->
         </t>
 
         <section title="識別子のリサイクル" anchor="identifier_recycling">
@@ -2868,16 +3150,25 @@ Base 10 number | btwoc string representation
             URL 識別子をリサイクルすることができる。新たなエンドユーザに対して URL 
             識別子の再割り当てを行なうに当り、OP は、新規かつ固有のフラグメント部分を
             生成すべきである。
+          <!--
+          
+          -->
           </t>
           <t>
             フラグメント部分を含む URL 全体は、肯定アサーションにおいて主張識別子を構成
             する要素であるため、RP は、フラグメントを除く URL の現在の所有者と以前の
             所有者を区別することになる。
+          <!--
+          
+          -->
           </t>
           <t>
             この仕組みを用いると、(恐らく短く、記憶しやすい) リサイクルされたフラグメント
             のない URL 識別子を、エンドユーザがログイン時に使用したり、RP が表示するため
             に用いたりすることができるようになる。
+          <!--
+          
+          -->
           </t>
         </section>
 
@@ -2892,6 +3183,9 @@ Base 10 number | btwoc string representation
             セキュリティの低下は懸念されない。たとえ攻撃者が HTTP URL をコントロールできる
             ようになったとしても、HTTPS URL には何の影響も与えないだろう。HTTP URL は、
             ディスカバリプロセスを開始させる以外には識別子として用いられないからである。
+          <!--
+          
+          -->
           </t>
         </section>
       </section>
