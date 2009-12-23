@@ -2086,7 +2086,7 @@ Base 10 number | btwoc string representation
         RP がディスカバリの実行に成功し、ディスカバリによって得られた OP エンドポイント URL
         とアソシエーションを構築 (オプション) すれば、RP は、アサーションを得るために OP に
         認証要求を送ることができる。認証要求は、<xref target="indirect_comm">間接要求で
-        ある。</xref>.
+        ある</xref>。
       </t>
 
       <section title="要求パラメータ">
@@ -2897,25 +2897,38 @@ Base 10 number | btwoc string representation
       </section>
     </section>
 
-    <section title="Extensions" anchor="extensions">
+    <section title="拡張仕様" anchor="extensions">
+    <!-- section title="Extensions" anchor="extensions" -->
       <t>
+        OpenID 認証の拡張仕様は、認証要求および応答の“上に乗る”プロトコルである。
+        拡張仕様は、認証要求や応答に関するその他の情報を提供したり、認証応答の対象に関するその他の情報を提供したりする際に役立つ。
+        <!--
         An Extension to OpenID Authentication is a protocol that
         "piggybacks" on the authentication request and response. Extensions
         are useful for providing extra information about an
         authentication request or response as well as providing extra
         information about the subject of the authentication response.
+        -->
       </t>
 
       <t>
+        OpenID の拡張仕様は、サービスタイプ URI で識別される。
+        サービスタイプ URI は、主張識別子と関連する XRDS 文書内で、 OpenID &lt;xrd:Service&gt; エレメントの &lt;xrd:Type&gt; エレメントの値として用いてもよい (MAY) 。サービスタイプ URI は、拡張仕様を含むメッセージの中で、キーと値のペアを関連づけるためにも用いられる。
+        <!--
         OpenID extensions are identified by a Type URI. The Type URI
         MAY be used as the value of an &lt;xrd:Type&gt; element of an
         OpenID &lt;xrd:Service&gt; element in an XRDS document
         associated with a Claimed Identifier.  The Type URI is also
         used to associate key-value pairs in messages with the extension.
+        -->
       </t>
 
       <t>
+        メッセージの中で拡張仕様を用いてキーと値とを関連づけるためには、キーを サービスタイプ URI と関連づけなければならない (MUST) 。
+        キーとサービスタイプ URI とを関連づけるためには、頭に "openid.ns." を付加したキーを追加するとともに、値がサービスタイプ URI のエイリアステキストを後ろに追加することによって、エイリアスを確定する。
+        エイリアスが確定すると、メッセージの中のペアのうち、 "openid." で始まり、その後にエイリアステキストが続き、さらにその後ろにピリオドもしくはキーの末尾が続くようなキーを有するペアは全て、拡張仕様と関連づけられる。この仕組みは、 XML名前空間と似ている。
         <!-- XXX: openid. only for indirect messages -->
+        <!--
         To associate keys and values in a message with an extension,
         the key MUST be associated with the Type URI. To associate
         keys with a Type URI, establish an alias by adding a key
@@ -2925,13 +2938,19 @@ Base 10 number | btwoc string representation
         "openid." followed by the alias text, followed by a period or
         the end of the key are associated with that extension.
         This mechanism is similar to the XML namespaces.
+        -->
       </t>
 
       <t>
+        名前空間のエイリアスは、ピリオドを含んでいてはならない (MUST NOT) 。
+        また、同じメッセージの中の他の名前空間のエイリアスと同じであってはならない (MUST NOT) 。
+        さらに、名前空間のエイリアスは、以下のリストに示す許可されていないエイリアスのひとつであってはならない (MUST NOT) 。
+        <!--
         A namespace alias MUST NOT contain a period and MUST NOT be
         the same as another namespace alias in the same message. A
         namespace alias also MUST NOT be in the following list of
         disallowed aliases:
+        -->
 
         <list style="symbols">
           <t>assoc_handle</t>
@@ -2960,15 +2979,22 @@ Base 10 number | btwoc string representation
           <t>trust_root</t>
         </list>
 
+        同じメッセージの中で、ある名前空間にひとつ以上のエイリアスを割り当ててはならない (MUST NOT) 。
+        メッセージが他のメッセージへの応答の場合、その応答は、同じ名前空間を参照するのに異なるエイリアスを用いてもよい (MAY) 。
+        <!--
         A namespace MUST NOT be assigned more than one alias in the
         same message. If a message is a response to another message,
         the response MAY use a different alias to refer to the same
         namespace.
+        -->
       </t>
 
-      <t>Non-normative example:</t>
-      <t>An extension's type URI is
-      "&lt;http://example.com/ext/1.0&gt;".
+      <t>参考例：<!-- Non-normative example: --></t>
+      <t>
+        拡張仕様のサービスタイプ URI は、 "&lt;http://example.com/ext/1.0&gt;" である。
+        <!--
+        An extension's type URI is "&lt;http://example.com/ext/1.0&gt;".
+        -->
 
       <list style="empty">
         <t>openid.ns.x=http://example.com/ext/1.0</t>
@@ -2977,53 +3003,82 @@ Base 10 number | btwoc string representation
         <t>openid.xx=notx</t>
       </list>
 
+        この例において、"openid.x" と "openid.x.foo" という鍵は拡張仕様と関連づけられている。
+        "openid.xx" という鍵は関連づけられていない。
+        <!--
         In this example, the keys "openid.x" and "openid.x.foo" are
         associated with the extension; the "openid.xx" key is not.
+        -->
       </t>
 
       <t>
+        拡張仕様は、同じ名前を有する複数のパラメータを定義してはならない (MUST NOT) 。
+        同じパラメータ名について複数の値を送る必要がある拡張仕様は、そのための独自の規則を定義しなければならない。
+        <!--
         Extensions MUST NOT define multiple parameters with the same name.
         Extensions that need to send multiple values for the same parameter
         name must define their own conventions for doing so.
+        -->
       </t>
     </section>
 
-    <section title="Discovering OpenID Relying Parties" anchor="rp_discovery">
+    <section title="OpenID リライングパーティーのディスカバリ" anchor="rp_discovery">
+    <!-- section title="Discovering OpenID Relying Parties" anchor="rp_discovery" -->
       <t>
+        RP のディスカバリによって、ソフトウェアエージェントは、 OpenID をサポートしているサイトを発見することができる。
+        OpenID 要求の中の return_to URL が、指定されたレルムに対するOpenID RP のエンドポイントであることを、 OpenID プロバイダが自動的に検証することも可能である。
+        <!--
         Relying Party discovery allows for software agents to discover
         sites that support OpenID. It also allows OpenID providers to
         automatically verify that a return_to URL in an OpenID request
         is an OpenID relying party endpoint for the specified realm.
+        -->
       </t>
 
       <t>
+        RP は、 Yadis プロトコルを使用して、有効な return_to URL を公開すべきである (SHOULD) 。
+        RP は、この情報をどの URL で公開してもよい (MAY) 。また、プロバイダが return_to URL を検証できるように、レルムの範囲内で公開すべきである (SHOULD) 。
+        <!--
         Relying Parties SHOULD use the Yadis protocol to publish their
         valid return_to URLs. The relying party MAY publish this
         information at any URL, and SHOULD publish it under the realm
         so that providers can verify return_to URLs.
+        -->
       </t>
 
       <t>
+        RP のディスカバリの XRDS 文書は、ひとつ以上の &lt;xrd:Service&gt; エレメントを含まなければならない (MUST) 。
+        <!--
         A Relying Party discovery XRDS document MUST contain one or more
         &lt;xrd:Service&gt; elements:
+        -->
 
         <list style="symbols">
           <t>
+            少なくともひとつの &lt;xrd:URI&gt; エレメントを含む。
+            <!--
             Containing at least one &lt;xrd:URI&gt; element.
+            -->
           </t>
           <t>
+            全ての &lt;xrd:URI&gt; タグが OpenID 2.0 認証応答を受け入れる URL を含む。
+            <!--
             Where all &lt;xrd:URI&gt; tags contain a URL that accepts
             OpenID 2.0 Authentication responses.
+            -->
           </t>
           <t>
+            内容が "http://specs.openid.net/auth/2.0/return_to" である &lt;xrd:Type&gt; タグを含む。
+            <!--
             Containing a &lt;xrd:Type&gt; tag whose content is
             "http://specs.openid.net/auth/2.0/return_to".
+            -->
           </t>
         </list>
       </t>
 
       <figure>
-        <preamble>Non-normative example:</preamble>
+        <preamble>参考例：<!-- Non-normative example:--></preamble>
         <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
   <Type>http://specs.openid.net/auth/2.0/return_to</Type>
@@ -3033,22 +3088,37 @@ Base 10 number | btwoc string representation
       </figure>
     </section>
 
-    <section title="OpenID Authentication 1.1 Compatibility"
+    <section title="OpenID Authentication 1.1 との互換性"
              anchor="compat_mode">
+    <!-- section title="OpenID Authentication 1.1 Compatibility"
+             anchor="compat_mode" -->
 
       <t>
+        このセクションでは、 OpenID Authentication 1.1 RP および OP との連携方法について説明する。
+        OpenID Authentication 2.0 の実装においては、セキュリティに関する考慮事項によって好ましくないとされない限り、 OpenID Authentication 1.1 互換性をサポートすべきである (SHOULD) 。
+        <!--
         This section describes how to interact with OpenID
         Authentication 1.1 Relying Parties and OPs. OpenID
         Authentication 2.0 implementations SHOULD support OpenID
         Authentication 1.1 compatibility, unless security
         considerations make it undesirable.
+        -->
       </t>
 
-      <section title="Changes from OpenID Authentication 1.1" >
+      <section title="OpenID Authentication 1.1 からの変更点" >
+      <!-- section title="Changes from OpenID Authentication 1.1" -->
         <t>
+          （参考）
+          <!--
           (non-normative)
+          -->
         </t>
         <t>
+          本仕様は、 Brad Fitzpatrick が記した OpenID 認証のオリジナルの仕様に基づいている。
+          その仕様にはバージョン番号がなかったが OpenID 1.0 と呼ばれ、その後改訂されて OpenID 1.1 となった。
+          本仕様で概要を示しているプロトコルは、改訂後の OpenID プロトコルと下位互換性を保つように意図されている。
+          仕様の変更点の概要は、このセクションに記す通りである。
+          <!--
           This specification is based on the original specification for
           OpenID Authentication as written by Brad Fitzpatrick. That
           specification did not have a version number, but was called
@@ -3056,61 +3126,96 @@ Base 10 number | btwoc string representation
           protocol outlined in this specification is intended to be
           backwards-compatible with the revised OpenID protocol.  The
           changes to the specification are outlined in this section.
+          -->
         </t>
 
-        <section title="Updated Initiation and Discovery">
+        <section title="開始およびディスカバリに関わる更新">
+        <!-- section title="Updated Initiation and Discovery" -->
           <t>
             <list style="symbols">
               <t>
+                OP 識別子をサポート。
+                この新たな種類のプロトコルフローは、エンドユーザ自身の識別子の代わりに OP 識別子を入力することによって開始される。
+                このため、 OP は、エンドユーザによる識別子の選択を支援できる。
+                <!--
                 Supports OP Identifiers. This new variation of the
                 protocol flow is initiated by an end user entering an OP
                 Identifier instead of their own Identifier.  This allows
                 the OP to assist the end user in selecting an
                 Identifier.
+                -->
               </t>
               <t>
+                識別子としての XRI の使用をサポート。
+                エンドユーザ用の識別子、 OP 用の識別子のどちらにも XRI を使用してよい。
+                また XRI は、ひとつ以上の再割り当て可能な (reassignable) i-names から同義かつ永続的で、再割り当てが決して行われない正準化 ID へと自動的にマッピングする。
+                <!--
                 Supports the use of XRIs as Identifiers. XRIs may be
                 used as Identifiers for both end users and OPs, and
                 provide automatic mapping from one or more reassignable
                 i-names to a synonymous persistent Canonical ID that
                 will never be reassigned.
+                -->
               </t>
               <t>
+                URL を識別子として用いた場合、既存のウェブのインフラとの互換性を高めるために、識別子は [RFC3986] に示される指針に従って正規化される。
+                <!--
                 When URLs are used as Identifiers, they are normalized
                 according to the guidelines in <xref target='RFC3986' />,
                 for better compatibility with the existing Web infrastructure.
+                -->
               </t>
               <t>
+                ディスカバリでの Yadis プロトコルの使用。
+                ひとつの識別子のために複数の OP を利用することができ、 OP に不具合が生じたときのロードバランシングやフォールバックとして役立つ。
+                さらに、サポートしている拡張仕様や他の関連サービスのディスカバリにも利用できる。
+                <!--
                 Uses the Yadis protocol for discovery. This allows for
                 using multiple OPs for a single Identifier, for
                 load-balancing and fallback in the case of OP
                 failure. Additionally, it allows for discovery of
                 supported extensions and other associated services.
+                -->
               </t>
             </list>
           </t>
         </section>
 
-        <section title="Security improvements">
+        <section title="セキュリティ面での改善">
+        <!-- section title="Security improvements" -->
           <t>
+            OpenID 2.0 ではノンスがプロトコルの一部として組み込まれ、リプレイアタックへの防御策が内蔵されることになった。
+            こうした防御策はこれまで、それぞれのライブラリまたはアプリケーションが仕様の外で実装していた。
+            <!--
             A nonce is now part of the protocol for built-in protection
             against replay attacks, which was previously implemented
             out-of-band by each library or application.
+            -->
           </t>
           <t>
+            新たなアソシエーション形式である HMAC-SHA256 および新たなアソシエーションセッション形式である DH-SHA256 によって、認証アサーションにおける、より強力な署名が可能となった。
+            <!--
             A new association type, HMAC-SHA256, and a new association
             session type, DH-SHA256, allow for stronger signatures on
             authentication assertions.
+            -->
           </t>
           <t>
+            セキュリティに関する考慮事項のセクションを設け、プロトコルをエンドツーエンドで保護するために考慮している。
+            <!--
             An actual <xref target="security_considerations">Security
             Considerations section</xref> which looks at protecting
             the protocol from end-to-end.
+            -->
           </t>
         </section>
 
-        <section title="Extensions">
+        <section title="拡張仕様">
+        <!-- section title="Extensions" -->
           <t>
+            OpenID 2.0 では、認証に加え、RPとOP間のデータ交換やその他の通信をサポートするための仕組みとして、拡張仕様が正式にサポートされた。
+            拡張仕様は、任意の属性の交換に利用できるほか、 RP に関する追加情報を認証要求の中に含めるといったプロトコルの拡張にも利用できる。
+            <!--
             Extensions are now an officially supported mechanism to
             support data exchange and other Relying Party-OP
             communication along with the authentication
@@ -3118,36 +3223,56 @@ Base 10 number | btwoc string representation
             attributes, as well as for protocol extensions,
             such as the inclusion of additional information about the
             Relying Party in the authentication request.
+            -->
           </t>
           <t>
+            拡張機能は任意のデータを転送できるため、 OpenID 2.0 では、認証メッセージの中への識別子の記述はオプションとなった。
+            <!--
             Because extensions can transfer arbitrary data, the
             Identifier is now optional in authentication messages.
+            -->
           </t>
         </section>
       </section>
 
-      <section title="Implementing OpenID Authentication 1.1 Compatibility">
+      <section title="OpenID Authentication 1.1 互換性の実装">
+      <!-- section title="Implementing OpenID Authentication 1.1 Compatibility" -->
         <t>
+          OpenID Authentication 1.1 のメッセージは全て "openid.ns" パラメータが省略されているため、 OpenID Authentication 1.1 endpoint から送信されたメッセージかどうかを RP が簡単に判断することができる。
+          OpenID Authentication 1.1 がサポートしているのは HMAC-SHA1 のアソシエーションのみである。
+          <!--
           All messages in OpenID Authentication 1.1 omit the
           "openid.ns" parameter, which is an easy way for an RP to
           determine if the message is from an OpenID Authentication
           1.1 endpoint. OpenID Authentication 1.1 supports only
           HMAC-SHA1 associations.
+          -->
         </t>
 
         <t>
+          OpenID Authentication 1.1 のエラー時の応答では、 "contact" や "reference" を定義していなかった。 OpenID Authentication 1.1 では、エラー時の応答への追加フィールドの追加が可能であった。
+          デバッグに役立つことがあり、また互換性に影響を与えないことから、 OpenID Authentication 1.1 を使用するときも、連絡先や参照先を送ることが推奨される (RECOMMENDED) 。
+          <!--
           Error responses in OpenID Authentication 1.1 did not define
           "contact" or "reference". OpenID Authentication 1.1 did
           allow for the addition of extra fields in error
           responses. It is RECOMMENDED for contact and reference to be
           sent even when using OpenID Authentication 1.1, since they
           may be useful for debugging and do not affect compatibility.
+          -->
         </t>
 
-        <section title="Relying Parties">
+        <section title="リライングパーティー">
+        <!-- section title="Relying Parties" -->
           <t>
             <list style="symbols">
               <t>
+                HTML ベースのディスカバリを実行したとき、 OP エンドポイント URL のリンク関係は、 "openid2.provider" よりも "openid.server" が優先して指し示される。
+                また、エンドユーザの OP ローカル識別子 のリンク関係は "openid2.local_id" よりも "openid.delegate" が優先して指し示される。
+                これらに該当する場合、プロトコルバージョンは "http://openid.net/signon/1.1" である。
+                HTML では、ひとつのリンクに対して複数のリンク関係を指定することができる。
+                従って、もし OP が OpenID Authentication 1.1 と OpenID Authentication 2.0 の両方に対応していれば、同一の "rel" 属性に "openid2.provider" と "openid.server" の両方が記述されている可能性がある。
+                <!--
                 When HTML discovery is performed, the OP endpoint URL
                 is marked by the link relationship "openid.server"
                 rather than "openid2.provider". The end user's
@@ -3160,9 +3285,13 @@ Base 10 number | btwoc string representation
                 and OpenID Authentication 2.0, "openid2.provider" and
                 "openid.server" may appear in the same "rel"
                 attribute.
+                -->
               </t>
 
               <t>
+                XRDS ベースのディスカバリを実行したとき、エンドユーザの OP ローカル識別子は、 OpenID &lt;xrd:Service&gt; エレメントの &lt;xrd:LocalID&gt; タグではなく、 &lt;openid:Delegate&gt; タグに記述されている。
+                現在実装されているディスカバリコードをサポートするため、 &lt;xrd:Service&gt; エレメントに両方のタグを記述してもよい (MAY) 。
+                <!--
                 When XRDS-based discovery is performed, the end user's
                 OP-Local Identifier appears in the
                 &lt;openid:Delegate&gt; tag of the OpenID
@@ -3170,9 +3299,14 @@ Base 10 number | btwoc string representation
                 &lt;xrd:LocalID&gt; tag. In order to support
                 currently-deployed discovery code, both tags MAY
                 appear in the &lt;xrd:Service&gt; element.
+                -->
               </t>
 
               <t>
+                RP は、 Yadis が URL 識別子で成功した場合、 XRDS 文書から OpenID Authentication 1.x サービスエレメントを抽出し、利用すべきである (SHOULD) 。
+                該当のサービスエレメントは、 &lt;xrd:Type&gt; タグのテキスト内容が "http://openid.net/server/1.0" または "http://openid.net/server/1.1" であることから特定できる。
+                前バージョンのプロトコルでは定められていないが、 Yadis を通じて OpenID Authentication 1.x サービスを広く知らせる手法として、一般に受け入れられている。
+                <!--
                 Relying Parties SHOULD extract and use OpenID
                 Authentication 1.x service elements from XRDS
                 documents, if Yadis succeeds on an URL
@@ -3183,9 +3317,15 @@ Base 10 number | btwoc string representation
                 specified in the previous version of the protocol, it
                 is a generally accepted practice of advertising OpenID
                 Authentication 1.x services through Yadis.
+                -->
               </t>
 
               <t>
+                OpenID Authentication 1.1 では、"openid.claimed_id" を定義していない。
+                RP は、要求を行なうときに値を送ってもよい (MAY) が、認証応答の中に記述されている値に依存してはならない (MUST NOT) 。
+                OP ローカル識別子 ("openid.identity") と主張識別子とが異なっている場合、 RP は、セッション状態に保持する等の方法で、 OP ローカル識別子 のディスカバリ時にどの主張識別子を用いたのかを追跡しなければならない (MUST) 。
+                応答に主張識別子が記されることはないが、ユーザの識別子として主張識別子を用いなければならない (MUST)。
+                <!--
                 "openid.claimed_id" is not defined by OpenID
                 Authentication 1.1. Relying Parties MAY send the value
                 when making requests, but MUST NOT depend on the value
@@ -3198,28 +3338,41 @@ Base 10 number | btwoc string representation
                 Claimed Identifier will not be present in the
                 response, it MUST be used as the identifier for the
                 user.
+                -->
               </t>
 
               <t>
+                <xref target="responding_to_authentication">認証要求時</xref>には、 "openid.identity" を送らなければならない (MUST)。
+                <!--
                 "openid.identity" MUST be sent in a <xref
                     target="responding_to_authentication">authentication
                 request</xref>.
+                -->
               </t>
 
               <t>
+                "no-encryption" アソシエーション要求では、RP は、ブランクの session_type パラメータを送らなければならない (MUST)。
+                <!--
                 Relying Parties MUST send a blank session_type parameter
                 in "no-encryption" association requests.
+                -->
               </t>
 
               <t>
+                OpenID Authentication 1.1 では、"openid.session_type" パラメータの内容がブランク、または、当該パラメータがない場合、 "no-encryption" アソシエーションセッション形式 であることを意味する。
+                RP は、"openid.session_type" の値を "no-encryption" に設定して要求を送ってはならない (MUST NOT) 。
+                <!--
                 In OpenID Authentication 1.1, the "no-encryption"
                 association session type is represented by a blank or
                 missing "openid.session_type" parameter. Relying
                 Parties MUST NOT send requests with
                 "openid.session_type" set to "no-encryption".
+                -->
               </t>
 
               <t>
+                <xref target="requesting_authentication">認証要求</xref>では、OpenID Authentication 1.1 が OP 識別子の使用をサポートしていないので、"openid.identity"パラメータの値を特殊値 "http://specs.openid.net/auth/2.0/identifier_select" にすべきではない (SHOULD NOT) 。
+                <!--
                 In <xref
                 target="requesting_authentication">authentication
                 requests</xref>, the "openid.identity" parameter
@@ -3227,15 +3380,25 @@ Base 10 number | btwoc string representation
                 "http://specs.openid.net/auth/2.0/identifier_select",
                 because OpenID Authentication 1.1 does not support the
                 use of OP Identifiers.
+                -->
               </t>
 
               <t>
+                認証要求の中の "openid.realm" パラメータは、以前は "openid.trust_root" と呼ばれていた。
+                構文規則や意味は全く同じである。
+                <!--
                 The "openid.realm" parameter in authentication requests
                 was known as "openid.trust_root". The syntax and meaning
                 are identical.
+                -->
               </t>
 
               <t>
+                "checkid_immediate" モードでの認証要求に対して、否定アサーションで応答するときは、 "user_setup_url" パラメータを戻さなければならない (MUST) 。
+                このパラメータは、エンドユーザが要求を完了するために訪れるかもしれない URL を示している。
+                OP は、エンドユーザをこの URL にリダイレクトしてもよい (MAY) 。
+                また、エンドユーザに、この URL を指し示すリンクを提供してもよい (MAY) 。
+                <!--
                 When responding with a negative assertion to a
                 "checkid_immediate" mode authentication request, the
                 "user_setup_url" parameter MUST be returned. This is a
@@ -3243,67 +3406,103 @@ Base 10 number | btwoc string representation
                 request. The RP MAY redirect the end user to
                 this URL, or provide the end user with a link that
                 points to this URL.
+                -->
               </t>
 
               <t>
+                RP は、 "openid.response_nonce" パラメータがない認証応答を受け入れなければならない (MUST) 。
+                リプレイアタックを防ぐための手段を実装すべきである (SHOULD) 。
+                <!--
                 The Relying Party MUST accept an <xref
                 target="positive_assertions">authentication
                 response</xref> that is missing the
                 "openid.response_nonce" parameter.  It SHOULD
                 implement a method for preventing replay attacks.
+                -->
               </t>
 
               <t>
+                RP は、 "openid.op_endpoint" パラメータがない<xref target="positive_assertions">認証応答</xref>を受け入れなければならない (MUST) 。
+                <!--
                 Relying Parties MUST accept
                 <xref target="positive_assertions">authentication responses
                 </xref> that are missing the "openid.op_endpoint" parameter.
+                -->
               </t>
             </list>
           </t>
         </section>
 
-        <section title="OpenID Providers">
+        <section title="OpenID プロバイダ">
+        <!-- section title="OpenID Providers" -->
           <t>
             <list style="symbols">
               <t>
+                肯定の認証アサーション時に、"openid.identity" を送らなければならない (MUST) 。
+                <!--
                 "openid.identity" MUST be sent in a <xref
                     target="positive_assertions">positive authentication
                 assertion</xref>.
+                -->
               </t>
 
               <t>
+                OpenID Authentication 1.1 では、"openid.session_type" パラメータの内容がブランク、または、当該パラメータがない場合、 "no-encryption" アソシエーションセッション形式 であることを意味する。
+                OP は、"openid.session_type" の値を "no-encryption" に設定して応答を送ってはならない (MUST NOT) 。
+                <!--
                 In OpenID Authentication 1.1, the "no-encryption"
                 association session type is represented by a blank or
                 missing "openid.session_type" parameter.  OPs MUST NOT
                 send responses with "openid.session_type" set to
                 "no-encryption".
+                -->
               </t>
 
               <t>
+                OP は、どのアソシエーション要求に対しても、成功時の "no-encryption" 応答を返すことを選択してもよい (MAY) 。
+                前述の通り、 "openid.session_type" パラメータは、その内容をブランクとするか、パラメータ自体を省略するかしなければならない (MUST) 。
+                <!--
                 OPs MAY choose to return a successful "no-encryption"
                 response to any association request. As above, the
                 "openid.session_type" parameter MUST be blank or
                 omitted from the response.
+                -->
               </t>
 
               <t>
+                OP は、 assoc_type でないパラメータが記されたアソシエーション要求を受け入れなければならない (MUST)。
+                また、それらのアソシエーション要求は、 HMAC-SHA1 タイプであると見なさなければならない (MUST)。
+                <!--
                 OPs MUST accept association requests with no assoc_type
                 parameter, and assume them to be of type HMAC-SHA1.
+                -->
               </t>
 
               <t>
+                アソシエーション構築が失敗したときは、直接のエラーメッセージ、あるいは "noencryption" の肯定アソシエーションで応答してもよい (MAY)。
+                <!--
                 Unsuccessful association attempts MAY be responded with
                 direct error messages or with "no-encryption" positive
                 association responses.
+                -->
               </t>
 
               <t>
+                認証要求の中の "openid.realm" パラメータは、以前は "openid.trust_root" と呼ばれていた。
+                構文規則や意味は全く同じである。
+                <!--
                 The "openid.realm" parameter in authentication requests
                 was known as "openid.trust_root". The syntax and meaning
                 are identical.
+                -->
               </t>
 
               <t>
+                "checkid_immediate" モードでの認証要求に対して、否定アサーションで応答するときは、 "user_setup_url" パラメータを戻さなければならない (MUST) 。
+                このパラメータは、エンドユーザが要求を完了するために訪れるかもしれない URL を示している。
+                RP は、エンドユーザをこの URL にリダイレクトしてもよい (MAY) 。
+                また、エンドユーザに、この URL を指し示すリンクを提供してもよい (MAY) 。
+                <!--
                 When responding with a negative assertion to a
                 "checkid_immediate" mode authentication request, the
                 "user_setup_url" parameter MUST be returned. This is a URL
@@ -3311,13 +3510,18 @@ Base 10 number | btwoc string representation
                 Relying Party may redirect the end user to this URL, or
                 provide the end user with a link that points to this
                 URL.
+                -->
               </t>
 
               <t>
+                OP は、認証応答時に "openid.op_endpoint" パラメータを送ってはならない (MUST NOT) 。
+                その理由は、 OpenID Authentication 1.1 プロトコルが当該パラメータを実装していないからである。
+                <!--
                 OPs MUST NOT send the "openid.op_endpoint" parameter in
                 <xref target="positive_assertions">authentication responses
                 </xref>, since it is not part of the OpenID Authentication
                 1.1 protocol.
+                -->
               </t>
             </list>
           </t>
@@ -3325,33 +3529,53 @@ Base 10 number | btwoc string representation
       </section>
     </section>
 
-    <section title="Security Considerations" anchor="security_considerations">
-      <section title="Preventing Attacks">
-        <section title="Eavesdropping Attacks"
+    <section title="セキュリティに関する考慮事項" anchor="security_considerations">
+    <!-- section title="Security Considerations" anchor="security_considerations" -->
+      <section title="アタック（攻撃）からの防御">
+      <!-- section title="Preventing Attacks" -->
+        <section title="盗聴攻撃"
                  anchor="preventing_eavesdropping">
+        <!-- section title="Eavesdropping Attacks"
+                 anchor="preventing_eavesdropping" -->
           <t>
+            このプロトコルには、盗聴攻撃に対して脆弱な部分が一か所存在する。
+            <!--
             There is one place in this protocol that is vulnerable
             to eavesdropping attacks.
+            -->
             <list style="symbols">
               <t>
+                ノンスのチェックが行なわれないと、盗聴者が成功時の認証アサーションを転送途中で入手して、再利用できてしまう。
+                <!--
                 If the nonce were not checked, an eavesdropper could also
                 intercept a successful authentication assertion and re-use it.
+                -->
               </t>
             </list>
           </t>
 
           <t>
+            こうした攻撃は、トランスポート層での暗号化を用い、これらの接続を盗聴行為から防御することによって防ぐことができる。
+            また TLS を利用しない場合でも、メッセージ検証を実行する途中でノンスをチェックすることによって防ぐことができる。
+            その場合は、肯定の認証アサーションの再利用はできなくなる。
+            <!--
             This attack can be prevented by using transport layer encryption
             for these connections to prevent eavesdropping. In addition,
             if not using TLS this attack can still be prevented by
             checking the nonce while performing message verification.
             When doing so, the positive authentication assertion cannot
             be re-used.
+            -->
           </t>
         </section>
 
-        <section title="Man-in-the-Middle Attacks">
+        <section title="中間者攻撃">
+        <!-- section title="Man-in-the-Middle Attacks" -->
           <t>
+            アソシエーションは、ディスカバリやアソシエーションセッション、<xref target="check_auth">直接検証</xref>の最中を除き、署名済みフィールドの中間者による改竄を防ぐ。
+            秘密の共有鍵を知らずに署名済みフィールドを変更しようとすれば、 MAC を解読する必要がある。現時点では、本プロトコルで用いられている MAC に関し、簡単に対処できる攻撃は判明していない。
+            MAC によって提供される保護の質は 共有 MAC 鍵のランダムさに依存しており、推測できない値を用いることが重要となる。
+            <!--
             Associations prevent tampering of signed fields by a man
             in the middle except during discovery, association
             sessions and <xref target="check_auth">Direct
@@ -3361,9 +3585,16 @@ Base 10 number | btwoc string representation
             protocol. The quality of the protection provided by the
             MAC depends on the randomness of the shared MAC key, so it
             is important that an unguessable value be used.
+            -->
           </t>
 
           <t>
+            DNS 名前解決やトランスポート層で漏えいが生じる場合、攻撃者が OP に成りすまし、攻撃者自身がアソシエーションを発行したり、ステートレスモードで自ら署名検証を行なったりできるため、メッセージへの署名では不十分である。
+            攻撃者がディスカバリプロセスを改竄できる場合、攻撃者は任意のOP を指定することができ、 OP に成りすます必要がなくなる。
+            さらに、攻撃者が XRDS 文書を変更することによって、情報の完全性を損なうことができる場合、中間者さえ必要がなくなる。
+            この種の攻撃を防ぐ方法のひとつとして、 <xref target="RFC3275">XMLDSIG</xref> に示されるような XRDS ファイルへのデジタル署名があげられる。
+            これらの署名に用いられている鍵を信頼するかどうかを最終的に判断する必要があるのは RP であるため、鍵となる材料 (keying materials) は指定しない。
+            <!--
             If DNS resolution or the transport layer is compromised
             signatures on messages are not adequate, since the
             attacker can impersonate the OP and issue its own
@@ -3379,9 +3610,14 @@ Base 10 number | btwoc string representation
             is not specified, since the RP ultimately needs to make
             its own decision whether to trust keys used for such
             signature.
+            -->
           </t>
 
           <t>
+            SSL と信頼できる機関が署名した証明書を用い、 DNS 検索結果と証明書を照らし合わせて検証することによって、こうした攻撃は、避けることができる。
+            証明書の妥当性が立証されれば、改竄は不可能である。
+            SSL サーバに成りすますためには、証明書を偽造したり、盗んだりする必要があるが、これらはネットワークベースの攻撃よりも遥かに困難である。
+            <!--
             Using SSL with certificates signed by a trusted authority
             prevents these kinds of attacks by verifying the results
             of the DNS look-up against the certificate. Once the
@@ -3389,9 +3625,16 @@ Base 10 number | btwoc string representation
             tampering is not possible. Impersonating an SSL server
             requires forging or stealing a certificate, which is
             significantly harder than the network based attacks.
+            -->
           </t>
 
           <t>
+            SSL による保護を受けるには、ユーザエージェントを通じたエンドユーザとの双方向の通信をはじめ、双方向の通信の全ての部分で SSL を用いなければならない。
+            本プロトコルでは必須とはしていないが、 SSL の使用が強く推奨される (RECOMMENDED) 。
+            エンドポイント URL およびエンドユーザのユーザエージェントとの双方向の通信のセキュリティを確保するために、 OP は、 SSLと信頼できる機関が署名した証明書を用いるべきである (SHOULD) ことが、現時点のベストプラクティスから明らかになっている。
+            さらに、SSLと信頼できる機関が署名した証明書を用いることにより、 RP は、エンドユーザの URL を安全な方法で取り出すことができる。
+            RP は、種々のエンドポイントにおいて SSL が正しく用いられていない場合、 RP 自身のセキュリティポリシに基づいて、トランザクションを完了しない、あるいは、トランザクションの開始さえしないことを選択してもよい (MAY) 。
+            <!--
             In order to get protection from SSL, SSL must be used for
             all parts of the interaction, including interaction with
             the end user through the User-Agent.  While the protocol
@@ -3406,10 +3649,18 @@ Base 10 number | btwoc string representation
             policies, a Relying Party MAY choose to not complete, or
             even begin, a transaction if SSL is not being correctly
             used at these various endpoints.
+            -->
           </t>
 
-          <section title="Rogue Relying Party Proxying" anchor="rp_mitm_proxy">
+          <section title="不正なリライングパーティーのプロキシ化" anchor="rp_mitm_proxy">
+          <!-- section title="Rogue Relying Party Proxying" anchor="rp_mitm_proxy" -->
             <t>
+              特殊な形態の中間者攻撃のひとつとして、 RP が不正な中間者（ MITM ）としての役割を果たす、というのがあげられる。
+              RP は、エンドユーザの主張識別子に関してディスカバリを実行し、 ユーザエージェントを OP にリダイレクトするのではなく、代わりに自分自身を通して OP をプロキシする。
+              その結果、エンドユーザが OP に提供するクレデンシャルを、 RP は入手することができるのである。
+              この種の攻撃を防ぐにはいくつかの方法があるが、本文書で記述する対象範囲外である。
+              これらの防御方法はいずれも、 OP がエンドユーザとの間にセキュリティが確保されたチャネルを確立することが必要である。
+              <!--
               A special type of man-in-the-middle attack is one where
               the Relying Party is a rogue party acting as a MITM.  The
               RP would perform discovery on the End User's Claimed
@@ -3421,13 +3672,19 @@ Base 10 number | btwoc string representation
               scope of this document.  Each method of prevention
               requires that the OP establish a secure channel with the
               End User.
+              -->
             </t>
           </section>
         </section>
       </section>
 
-      <section title="User-Agents">
+      <section title="ユーザエージェント">
+      <!-- section title="User-Agents" -->
         <t>
+          本プロトコルは対話的に用いられることを意図しているため、ユーザエージェント (User-Agents) は、主として、一般に普及しているウェブブラウザとなるだろう。
+          ウェブブラウザやそのホストは、スパイウェアやマルウェアに感染している可能性がある。その場合、ソフトウェアが信頼できず、認証がエンドユーザの承諾に基づいて行われたかどうかを知ることが不可能であるため、認証アサーションの強度は制限を受ける。
+          従って、現状では、多くのウェブアプリケーションやプロトコルは、ウェブブラウザやそのホストのセキュリティに依存しているのである。
+          <!--
           Since this protocol is intended to be used interactively,
           User-Agents will primarily be common Web browsers. Web
           browsers or their hosts may be infected with spyware or
@@ -3437,36 +3694,56 @@ Base 10 number | btwoc string representation
           been made with the end user's approval. With that said, many
           web applications and protocols today rely on the security of
           the Web browser and their hosts.
+          -->
         </t>
 
         <t>
+          OP に対するクロスサイトスクリプティングアタックが、同様の効果を狙って行われる可能性がある。
+          セキュリティを安全に保つために、 OP は、スクリプトに依存すべきではない。
+          こうすれば、スクリプトをサポートしていないユーザエージェントやスクリプトを使用不可に設定したユーザエージェントでもプロトコルを利用することができる。
+          <!--
           Cross-site-scripting attacks against OPs may be used to the
           same effect. For the best security, OPs should not depend
           on scripting.  This enables User-Agents that do not support
           scripting, or have scripting disabled, to still employ the
           protocol.
+          -->
         </t>
       </section>
 
-      <section title="User Interface Considerations">
+      <section title="ユーザインタフェースに関する考慮事項">
+      <!-- section title="User Interface Considerations" -->
         <t>
+          RP は、ブラウザのトップレベルのウインドウにおいて全てのコントロールを表示し、エンドユーザを OP エンドポイント URL にリダイレクトすべきである (SHOULD) 。
+          こうすれば、一見 OP のように見えるサイト（フィッシング）に対するエンドユーザの保護が向上する。
+          <!--
           The Relying Party SHOULD redirect the end user to the OP
           Endpoint URL in a top-level browser window with all controls
           visible. This allows better protection for the end user
           against OP look-alike sites (phishing).
+          -->
         </t>
 
         <t>
+          OpenIDプロバイダは、 OpenID のフィッシングアタックの可能性について、エンドユーザを教育すべきである (SHOULD) 。
+          また、こうした攻撃を防ぐため、 OP の認証サービスエンドポイント URL を検証するブラウザのプラグインなどのツールをエンドユーザに装備させるべきである (SHOULD) 。
+          <!--
           OpenID Providers SHOULD educate their end users about the
           potential for OpenID phishing attacks and SHOULD equip their
           end users with the tools to defeat such attacks, for example
           browser plug-ins that verify the authenticity of the OP's
           Authentication Service Endpoint URL.
+          -->
         </t>
       </section>
 
-      <section title="HTTP and HTTPS URL Identifiers">
+      <section title="HTTP および HTTPS URL 識別子">
+      <!-- section title="HTTP and HTTPS URL Identifiers" -->
         <t>
+          これらのタイプ識別子については、既に述べた通りであるが、再度触れておく価値がある。
+          前述の通り、エンドユーザがスキーム以外は同一の URL を管理していることを表明するための方法としては、HTTP URL から HTTPS URL へのリダイレクトをセットアップすることが推奨される (RECOMMENDED) 。
+          RP は、 ディスカバリと開始フェーズでHTTP URLを決して保存するようなことはなく、リダイレクトを辿って、 HTTPS URL を主張識別子として用いる。
+          <!--
           While these types of Identifiers have been <xref
           target='http_s_identifiers'>previously discussed</xref>,
           they are worth mentioning again.  As previously stated, the
@@ -3476,9 +3753,16 @@ Base 10 number | btwoc string representation
           the HTTP URL as during the discovery and initiation phase
           will follow the redirect and use the HTTPS URL as the
           Claimed Identifier.
+          -->
         </t>
 
         <t>
+          本推奨事項に関心を持つエンドユーザは、自身の HTTPS URL をそれぞれの RP で直接入力すべきである。
+          そうすれば、 RP が HTTPS URL ヘのリダイレクトを辿る段階が省かれる。
+          現時点で考慮すべき唯一のセキュリティに関する考慮事項は、攻撃者がリダイレクトを実施せず、識別子を不正な OP に向けることで、 HTTP URL の完全性を損なう場合である。
+          しかし、こうした攻撃は、ユーザエクスペリエンスを変化させるであろうし、アンチフィッシング技術を用いれば検知可能である。
+          そして、 OpenID においては、識別子自体のセキュリティが基本原則なのである。
+          <!--
           End users with concerns over this recommendation should
           directly enter their HTTPS URL at each Relying Party.  This
           thus removes the step where the Relying Party follows the
@@ -3489,226 +3773,345 @@ Base 10 number | btwoc string representation
           however will alter the user experience, is detectable by
           anti-phishing technologies, and the security of the
           Identifier itself is a fundamental principle within OpenID.
+          -->
         </t>
       </section>
 
-      <section title="Denial of Service Attacks">
+      <section title="サービス妨害攻撃 （DoS 攻撃）">
+      <!-- section title="Denial of Service Attacks" -->
         <t>
+          本プロトコルには、不正な RP が OP に対してサービス妨害攻撃を始めることができる部分がある。
+          本当の要求であるかどうかを OP が迅速にチェックするための手段が OpenID プロトコルメッセージにないためである。
+          サービス妨害攻撃は、 RP がアソシエーションや認証、署名検証を繰り返し要求することによって可能となるのである。
+          <!--
           Within the protocol there are places where a rogue RP could
           launch a denial of service attack against an OP since there
           is nothing in OpenID protocol messages that allows the OP to
           quickly check that it is a genuine request.  This can be
           done by the RP repeatedly requesting associations,
           authentication, or verification of a signature.
+          -->
         </t>
 
         <t>
+          こうした攻撃が最も重大な影響を与える可能性があるのは、各メッセージに対しOP が個別に多くの処理を行う必要があるアソシエーションフェーズである。
+          RP はメッセージごとにモジュラスやジェネレータを指定することができるので、攻撃者はOP に対し、各メッセージへの応答に優先して累乗計算をリアルタイムに実行するよう強制すらできる。
+          <!--
           The potentially most severe attack is during the association
           phase as each message requires the OP to execute a discrete
           exponentiation.  Since the RP has the ability to specify
           modulus and generator per message, an attacker can even
           force the OP to perform this exponentiation in real time
           prior to responding for each message.
+          -->
         </t>
 
         <t>
+          こうした攻撃は極めて有害であるが、 OpenID プロバイダは、汎用の IP ベースの大量アクセス制限、禁止技術を用いて、この種の攻撃に容易に対抗することができる。
+          OP は、 "openid.realm" および "openid.return_to" の値をもとに禁止されている要求を調べることもできる。
+          <!--
           While this could be particularly harmful, OpenID Providers
           can easily use generic IP based rate-limiting and banning
           techniques to help combat these sorts of attacks.  OPs can
           also look at banning requests based on the "openid.realm"
           and "openid.return_to" values.
+          -->
         </t>
       </section>
 
-      <section title="Protocol Variants">
+      <section title="プロトコルの可変項目">
+      <!-- section title="Protocol Variants" -->
         <t>
+          プロトコルにおいては以下のバリエーションが知られており、これらのバリエーションは、プロトコルの使用に当たってのセキュリティに直接影響をあたえる場合も与えない場合もある。
+          こうした値は、本プロトコルのためのセキュリティプロファイルの作成に用いられる可能性があると推測される。
+          次の表は、 OpenID プロバイダ側から見た可変項目のリストである。
+          <!--
           The following are known variations in the protocol which may
           or may not directly affect the security of the use of the
           protocol.  It is imagined that these values could be used in
           the creation of security profiles for this protocol.  The
           following list of variants are from the perspective of an
           OpenID Provider.
+          -->
         </t>
 
         <texttable>
-          <ttcol align='left'>Number</ttcol>
-          <ttcol align='left'>Variant</ttcol>
-          <ttcol align='left'>Values</ttcol>
+          <ttcol align='left'>番号</ttcol>
+          <!-- ttcol align='left'>Number</ttcol -->
+          <ttcol align='left'>可変項目</ttcol>
+          <!-- ttcol align='left'>Variant</ttcol -->
+          <ttcol align='left'>値</ttcol>
+          <!-- ttcol align='left'>Values</ttcol -->
 
           <c>1.</c>
           <c>
+            realm でのワイルドカードの使用は認められるか。
+            <!--
             Are wildcards allowed in realms?
+            -->
           </c>
           <c>
+            Yes/No のいずれか
+            <!--
             One of Yes/No
+            -->
           </c>
 
           <c>2.</c>
           <c>
+            事前のアソシエーションが必要か。
+            OP は RP に対し、認証要求を行なう前に最初にアソシエーションの構築を求めるか。
+            <!--
             Require prior association?  Does the OP require the RP
             first create an association before requesting
             authentication?
+            -->
           </c>
           <c>
+            Yes/No のいずれか
+            <!--
             One of Yes/No
+            -->
           </c>
 
           <c>3.</c>
           <c>
+            受け入れられる主張識別子のタイプ
+            <!--
             Types of claimed identifiers accepted.
+            -->
           </c>
           <c>
+            HTTP/HTTPS/XRI のセット
+            <!--
             Set of HTTP/HTTPS/XRI
+            -->
           </c>
 
           <c>4.</c>
           <c>
+            認証において自ら発行した証明書は認められるか。これは全 SSL トラフィックに適用される。
+            本項目が 'no' の場合、 OP は“恐らく” 全ての HTTPS 識別子に対し、既知の信頼するルートCA(証明書発行局)までの証明書の連鎖を要求するが、そのことについては意図的に前提としないでおく。
+            <!--
             Are self-issued certificates allowed for authentication?
             This applies to all SSL traffic. If 'no' here, then OP
             *probably* requires all HTTPS identifiers to chain up to
             known trust roots, but that's intentionally not implied.
+            -->
           </c>
           <c>
+            Yes/No のいずれか
+            <!--
             One of Yes/No
+            -->
           </c>
 
           <c>5.</c>
           <c>
+            XRDS ファイルに署名しなければならないか。
+            XRDS に関する署名は XMLDSIG に従う。
+            これらの署名に用いられている鍵を信頼するかどうかを最終的にRPが自ら判断しなければならないため、鍵となる材料は指定しない。
+            <!--
             Must the XRDS file be signed? Signature on the XRDS as per
             XMLDSIG. Keying material not specified, since the RP
             ultimately needs to make own decision whether to trust
             keys used for such signature.
+            -->
           </c>
           <c>
+            Yes/No のいずれか
+            <!--
             One of Yes/No
+            -->
           </c>
 
           <c>6.</c>
           <c>
+            セキュリティが確保されたチャネルを経由して XRDS ファイルを取得しなければならないか。
+            これは SSL を前提としないか。
+            <!--
             Must the XRDS file be retrieved over secure channel? This does not
             imply SSL?
+            -->
           </c>
           <c>
+            Yes/No のいずれか
+            <!--
             One of Yes/No
+            -->
           </c>
 
           <c>7.</c>
           <c>
+            アソシエーションを構築するとき、どのタイプのセッション形式を用いることができるか。
+            <!--
             What types of session types can be used when creating
             associations?
+            -->
           </c>
           <c>
+            no-encryption/DH-SHA1/DH-SHA256 のセット
+            <!--
             Set of no-encryption/DH-SHA1/DH-SHA256
+            -->
           </c>
 
           <c>8.</c>
           <c>
+            RP は、 XRDS 文書を持っていなければならないか。
+            <!--
             Must the RP have an XRDS document?
+            -->
           </c>
           <c>
+            Yes/No のいずれか
+            <!--
             One of Yes/No
+            -->
           </c>
 
           <c>9.</c>
           <c>
+            OP が署名への使用に合意しているアソシエーション形式は何か。
+            <!--
             What association types the OP agrees to use for
             signatures?
+            -->
           </c>
           <c>
+            HMAC-SHA1/HMAC-SHA256 のセット
+            <!--
             Set of HMAC-SHA1/HMAC-SHA256
+            -->
           </c>
 
           <c>10.</c>
           <c>
+            アソシエーション要求は、セキュリティが確保されたチャネルを経由して行なわなければならないか。
+            <!--
             Must the association request take place over secure channel?
+            -->
           </c>
           <c>
+            Yes/No のいずれか
+            <!--
             One of Yes/No
+            -->
           </c>
 
           <postamble>
+            特定されたセキュリティの可変項目
+            <!--
             Identified security variants.
+            -->
           </postamble>
           </texttable>
       </section>
     </section>
 
-    <appendix title="Examples">
-      <t>Non-normative</t>
+    <appendix title="使用例">
+    <!-- appendix title="Examples" -->
+      <t>参考<!-- Non-normative --></t>
 
-      <appendix title="Normalization" anchor="normalization_example">
+      <appendix title="正規化" anchor="normalization_example">
+      <!-- appendix title="Normalization" anchor="normalization_example" -->
         <t>
+          テキスト URL の正規化の詳細およびさらなる事例については、 <xref target="RFC3986" /> セクション 6 を参照。
+          <!--
           See section 6 of <xref target="RFC3986" /> for
           textual URL normalization details and more examples.
+          -->
         </t>
         <texttable title="User's Input to Identifier Normalization">
-          <ttcol align="left">User's Input</ttcol>
+          <ttcol align="left">ユーザ入力</ttcol>
+          <!-- ttcol align="left">User's Input</ttcol -->
           <ttcol align="left">Identifier</ttcol>
+          <!-- ttcol align="left">Identifier</ttcol -->
           <ttcol align="left">Type</ttcol>
+          <!-- ttcol align="left">Type</ttcol -->
           <ttcol align="left">Discussion</ttcol>
+          <!-- ttcol align="left">Discussion</ttcol -->
 
           <c>example.com</c>
           <c>http://example.com/</c>
           <c>URL</c>
-          <c>A URI with a missing scheme is normalized to a http URI</c>
+          <c>スキームがない URI は http URI に正規化<!-- A URI with a missing scheme is normalized to a http URI --></c>
 
           <c>http://example.com</c>
           <c>http://example.com/</c>
           <c>URL</c>
-          <c>An empty path component is normalized to a slash</c>
+          <c>パスコンポーネントがない場合、スラッシュに正規化<!-- An empty path component is normalized to a slash --></c>
 
           <c>https://example.com/</c>
           <c>https://example.com/</c>
           <c>URL</c>
-          <c>https URIs remain https URIs</c>
+          <c>https URI は https URI のまま<!-- https URIs remain https URIs --></c>
 
           <c>http://example.com/user</c>
           <c>http://example.com/user</c>
           <c>URL</c>
-          <c>No trailing slash is added to non-empty path components</c>
+          <c>パスコンポーネントがある場合、末尾にスラッシュは追加されない<!-- No trailing slash is added to non-empty path components--></c>
 
           <c>http://example.com/user/</c>
           <c>http://example.com/user/</c>
           <c>URL</c>
-          <c>Trailing slashes are preserved on non-empty path components</c>
+          <c>パスコンポーネントがある場合、末尾のスラッシュは保持される<!-- Trailing slashes are preserved on non-empty path components--></c>
 
           <c>http://example.com/</c>
           <c>http://example.com/</c>
           <c>URL</c>
-          <c>Trailing slashes are preserved when the path is empty</c>
+          <c>パスがない場合、末尾のスラッシュは保持される<!-- Trailing slashes are preserved when the path is empty --></c>
 
           <c>=example</c>
           <c>=example</c>
           <c>XRI</c>
-          <c>Normalized XRIs start with a global context symbol</c>
+          <c>グローバルコンテキストシンボルで開始するように XRI を正規化<!-- Normalized XRIs start with a global context symbol --></c>
 
           <c>xri://=example</c>
           <c>=example</c>
           <c>XRI</c>
-          <c>Normalized XRIs start with a global context symbol</c>
+          <c>グローバルコンテキストシンボルで開始するように XRI を正規化<!-- Normalized XRIs start with a global context symbol --></c>
+
+          <postamble>
+            ユーザ入力の識別子への正規化
+            <!--
+            User's Input to Identifier Normalization
+            -->
+          </postamble>
         </texttable>
       </appendix>
 
-      <appendix title="OP-Local Identifiers">
+      <appendix title="OP ローカル識別子">
+      <!-- appendix title="OP-Local Identifiers" -->
         <t>
+          エンドユーザが "http://www.example.com/" を主張識別子として使用したい。
+          エンドユーザが OpenID プロバイダとしての機能を有する プロバイダ(example.com)にアカウントを持っている。
+          エンドユーザの OP ローカル識別子 が "https://exampleuser.exampleprovider.com/" である。
+          <!--
           An end user wants to use "http://www.example.com/" as their
           Claimed Identifier. The end user has an account with
           Example Provider, which functions as an OpenID Provider.  The
           end user's OP-Local Identifier is
           "https://exampleuser.exampleprovider.com/".
+          -->
         </t>
 
         <t>
+          このシナリオにおいて、適切な構成で Yadis または HTML ベースのディスカバリ（セクション 7.3 および下記付属資料 A.3 参照）を実行すると、 RP はエンドユーザに関して以下の情報が得られる。
+          <!--
           In this scenario, with the proper configuration of Yadis or
           HTML-Based Discovery (see <xref target="discovery" /> and
           <xref target="XRDS_Sample" /> below), a Relying Party will
           discover the following information about the end user:
+          -->
 
           <list style="hanging">
-            <t hangText="Claimed Identifier">
+            <t hangText="主張識別子">
+            <!-- t hangText="Claimed Identifier" -->
               http://www.example.com/
             </t>
-            <t hangText="OP-Local Identifier">
+            <t hangText="OP ローカル識別子">
+            <!-- t hangText="OP-Local Identifier" -->
               https://exampleuser.exampleprovider.com/
             </t>
           </list>
@@ -3718,6 +4121,8 @@ Base 10 number | btwoc string representation
       <appendix title="XRDS" anchor="XRDS_Sample">
         <figure>
           <preamble>
+            エンドユーザは "http://www.example.com/" を識別子として使用するが、 RP には実際に OP エンドポイント URL "https://www.exampleprovider.com/endpoint/" で "https://exampleuser.exampleprovider.com/" を検証させるためには、 "http://www.example.com/" に関するディスカバリを実行したとき、 XRDS ファイルの最後の XRD エレメントに、以下の XML 断片が記されているべきである。
+            <!--
             For an end user to use "http://www.example.com/" as
             their Identifier, but have Relying Parties actually
             verify "https://exampleuser.exampleprovider.com/" with the OP
@@ -3726,6 +4131,7 @@ Base 10 number | btwoc string representation
             following XML snippet should be present in the final XRD
             element in the XRDS file when discovery is preformed on
             "http://www.example.com/":
+            -->
           </preamble>
           <artwork><![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
@@ -3737,9 +4143,12 @@ Base 10 number | btwoc string representation
         </figure>
       </appendix>
 
-      <appendix title="HTML Identifier Markup">
+      <appendix title="HTML 識別子のマークアップ">
+      <!-- appendix title="HTML Identifier Markup" -->
         <figure>
           <preamble>
+            "http://www.example.com/" を識別子として用いるが、RP には実際に "http://www.livejournal.com/openid/server.bml" で位置が指定される OpenID プロバイダで "http://exampleuser.livejournal.com/" を検証させるためには、識別子 URL によって位置が指定される HTML 文書の &lt;head&gt; 部分に、以下のマークアップが記されているべきである。
+            <!--
             To use "http://www.example.com/" as their Identifier, but have
             Relying Parties actually verify
             "http://exampleuser.livejournal.com/" with the OpenID
@@ -3747,6 +4156,7 @@ Base 10 number | btwoc string representation
             "http://www.livejournal.com/openid/server.bml", the
             following markup should be present in the &lt;head&gt;
             of the HTML document located by the identifier URL:
+            -->
           </preamble>
           <artwork><![CDATA[
 <link rel="openid2.provider openid.server"
@@ -3757,8 +4167,13 @@ Base 10 number | btwoc string representation
         </figure>
       </appendix>
 
-      <appendix title="XRI CanonicalID">
+      <appendix title="XRI 正準化 ID">
+      <!-- appendix title="XRI CanonicalID" -->
         <t>
+          例えば、 =example と =exmpl という XRI i-name がともに xri://(example)!1234 という正準化 ID を含む XRDS 文書を生成する場合、これらの識別子は同等として扱うべきである。
+          ユーザアカウントを有するアプリケーションでは、永続的な正準化 ID 、 xri://(example)!1234 を、そのアカウントの主キーとして用いるべきである。
+          i-names =example および =exmpl を表示名として参照するために保存してもよいが、これらは再割り当て可能な識別子であり、永続的な鍵として用いるべきではない。
+          <!--
           For example, if the XRI i-names =example and =exmpl both
           yield an XRDS document with the CanonicalID
           xri://(example)!1234 then those Identifiers should be
@@ -3768,15 +4183,20 @@ Base 10 number | btwoc string representation
           i-names =example and =exmpl may also be stored for reference
           as display names, they are reassignable identifiers and
           should not be used as persistent keys.
+          -->
         </t>
       </appendix>
     </appendix>
 
-    <appendix title='Diffie-Hellman Key Exchange Default Value' anchor="pvalue">
+    <appendix title='Diffie-Hellman 鍵交換のデフォルト値' anchor="pvalue">
+    <!-- appendix title='Diffie-Hellman Key Exchange Default Value' anchor="pvalue" -->
       <figure>
         <preamble>
+          これは確認済みの素数で、 Diffie-Hellman 鍵交換においてデフォルトのモジュラスとして用いられる。 16 進表現では、以下の通りである。
+          <!--
           This is a confirmed-prime number, used as the default
           modulus for Diffie-Hellman Key Exchange. In hexadecimal:
+          -->
         </preamble>
         <artwork>
 DCF93A0B883972EC0E19989AC5A2CE310E1D37717E8D9571BB7623731866E61E
@@ -3789,14 +4209,19 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
 
     <!-- XXX: An example for Generating Signatures might be nice. -->
 
-    <appendix title="Acknowledgements">
+    <appendix title="謝辞">
+    <!-- appendix title="Acknowledgements" -->
       <t>
+        OpenID コミュニティは、本仕様の草案作成および編集における、以下の人々の取り組みに謝意を表します。
+        誰がどの部分を実際に書いたのか、その詳細が知りたい場合は、自由に当コミュニティの SVN リポジトリを調べたり、 "svn blame" を使用したりして下さい。http://openid.net/svn/specifications/authentication/2.0/
+        <!--
         The OpenID Community would like to thank the following people
         for the work they've done in the drafting and editing of this
         specification.  If you want to know the nitty gritty of who
         actually wrote what, feel free to look at our SVN repository
         or even use "svn blame". :)
         http://openid.net/svn/specifications/authentication/2.0/
+        -->
       </t>
 
       <t>
@@ -3821,7 +4246,8 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
   </middle>
 
   <back>
-    <references title='Normative References'>
+    <references title='参考文献'>
+    <!-- references title='Normative References' -->
       <reference anchor='RFC3629'>
         <front>
           <title>
