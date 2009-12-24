@@ -1828,7 +1828,7 @@ Base 10 number | btwoc string representation
                 mac_key
                 <list style='empty'>
                   <t>
-                    このアソシエーションの MAC 鍵 (共有秘密鍵) で、<xref target="RFC3548">Base 64</xref>Base 64</xref> でエンコードしたもの。
+                    このアソシエーションの MAC 鍵 (共有秘密鍵) で、<xref target="RFC3548">Base 64</xref> でエンコードしたもの。
                     <!--
                     The MAC key (shared secret) for this
                     association, <xref target="RFC3548">Base 64</xref>
@@ -3070,9 +3070,9 @@ Base 10 number | btwoc string representation
         </texttable>
 
         <t>
-          XRDS 文書を生成するディスカバリの仕組みを使用する場合、いずれかの <xrd:Service> 
+          XRDS 文書を生成するディスカバリの仕組みを使用する場合、いずれかの &lt;xrd:Service&gt; 
           エレメントの中に、プロトコルバージョン、OPエンドポイントURL および OP ローカル識別子 
-          (主張識別子と異なる場合) が記されていなければならない (MUST)。その <xrd:Service> 
+          (主張識別子と異なる場合) が記されていなければならない (MUST)。その &lt;xrd:Service&gt; 
           エレメントの中に使用されないフィールドがあってもよい (MAY)。
         <!--
         If using a discovery mechanism that yields an XRDS document, the protocol 
@@ -3093,10 +3093,10 @@ Base 10 number | btwoc string representation
 </Service>
 ]]></artwork>
           <postamble>
-            この XRDS 断片の例では、<xrd:Service> エレメントにふたつの <xrd:URI> エレメントが
+            この XRDS 断片の例では、&lt;xrd:Service&gt; エレメントにふたつの &lt;xrd:URI&gt; エレメントが
             あり、<xref target="discovered_info" /> の通り OP エンドポイント URL へと対応づけ
             られている。アサーションの中の "openid.op_endpoint" の値がふたつのうちのいずれかであ
-            れば、そのフィールドとこの <xrd:Service> エレメントとが一致する。もう一方の <xrd:URI>
+            れば、そのフィールドとこの &lt;xrd:Service&gt; エレメントとが一致する。もう一方の &lt;xrd:URI&gt;
             エレメントは使われない。
           <!--
           In this example XRDS snippet, the <xrd:Service> element has two <xrd:URI> 
