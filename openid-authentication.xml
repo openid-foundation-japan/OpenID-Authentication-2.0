@@ -360,8 +360,7 @@
             -->
           </t>
           <t>
-            空白を含む追加文字は、コロンまたは改行文字の前後に追加してはならない (MUST NOT)。
-            メッセージからバイト文字列を生成するときは、UTF-8 でエンコードしなければならない (MUST)。
+            空白を含む追加文字は、コロンまたは改行文字の前後に追加してはならない (MUST NOT)。メッセージからバイト文字列を生成するときは、UTF-8 でエンコードしなければならない (MUST)。
             <!--
             Additional characters, including whitespace, MUST NOT be
             added before or after the colon or newline. The message
@@ -369,8 +368,7 @@
             -->
           </t>
           <t>
-          キー・バリュー形式エンコーディングは、署名計算および RP への
-          <xref target="direct_response">直接応答</xref>に利用される。
+          キー・バリュー形式エンコーディングは、署名計算および RP への<xref target="direct_response">直接応答</xref>に利用される。
           <!--
             Key-Value Form encoding is used for signature calculation
             and for <xref target="direct_response">direct
@@ -382,12 +380,7 @@
         <!-- section title="HTTP Encoding" anchor="http_encoding" -->
         <section title="HTTPエンコーディング" anchor="http_encoding">
           <t>
-          HTTP サーバにメッセージを送るときは、<xref target="HTML401" /> 
-          のセクション 17.13.4 に定められるフォームエンコーディングを用いてエンコード
-          しなければならない (MUST)。
-          同様に、要求のヘッダに"Content-Type" ヘッダが含まれている場合は、
-          その値も <xref target="HTML401" /> のセクション 17.13.4 に定められたエンコーディングで
-          なければならない (MUST)。
+          HTTP サーバにメッセージを送るときは、<xref target="HTML401" /> のセクション 17.13.4 に定められるフォームエンコーディングを用いてエンコードしなければならない (MUST)。同様に、要求のヘッダに"Content-Type" ヘッダが含まれている場合は、その値も <xref target="HTML401" /> のセクション 17.13.4 に定められたエンコーディングでなければならない (MUST)。
           <!--
             When a message is sent to an HTTP server, it MUST be encoded
             using a form encoding specified in Section 17.13.4 of
@@ -397,11 +390,7 @@
             -->
           </t>
           <t>
-            要求メッセージの全てのキーは、その前に "openid." プレフィックスを
-            付加しなければならない (MUST)。このプレフィックスを付加することにより、
-            OpenID 認証メッセージとともに受け渡される他のパラメータとの干渉を回避できる。
-            メッセージを POST で送るとき、OpenID パラメータは常に POST ボディに格納して送り、
-            POST ボディから抽出しなければならない (MUST)。
+            要求メッセージの全てのキーは、その前に "openid." プレフィックスを付加しなければならない (MUST)。このプレフィックスを付加することにより、OpenID 認証メッセージとともに受け渡される他のパラメータとの干渉を回避できる。メッセージを POST で送るとき、OpenID パラメータは常に POST ボディに格納して送り、POST ボディから抽出しなければならない (MUST)。
             <!--
             All of the keys in the request message MUST be prefixed
             with "openid.". This prefix prevents interference with
@@ -412,8 +401,7 @@
             -->
           </t>
           <t>
-            HTTP 要求 (GET または POST) として送られるメッセージは全て、
-            以下のフィールドを含んでいなければならない (MUST)。
+            HTTP 要求 (GET または POST) として送られるメッセージは全て、以下のフィールドを含んでいなければならない (MUST)。
             <!--
             All messages that are sent as HTTP requests (GET or POST)
             MUST contain the following fields:
@@ -426,9 +414,7 @@
                     <!-- Value -->値: "http://specs.openid.net/auth/2.0"
                   </t>
                   <t>
-                    要求が OpenID Authentication 2.0 として有効な要求であるためには、
-                    上記の値が存在していなければならない (MUST)。仕様の将来版においては、
-                    メッセージ受信者が要求を適切に解釈できるように、異なる値が定義される場合もある。
+                    要求が OpenID Authentication 2.0 として有効な要求であるためには、上記の値が存在していなければならない (MUST)。仕様の将来版においては、メッセージ受信者が要求を適切に解釈できるように、異なる値が定義される場合もある。
                     <!--
                     This particular value MUST be present for the
                     request to be a valid OpenID Authentication 2.0
@@ -438,12 +424,7 @@
                     -->
                   </t>
                   <t>
-                    この値が存在しない、あるいは "http://openid.net/signon/1.1" 、
-                    "http://openid.net/signon/1.0" のどちらかの値が設定されている場合、
-                    そのメッセージの解釈には、
-                    <xref
-                    target="compat_mode">OpenID Authentication 1.1
-                    互換モード</xref>を用いるべきである (SHOULD)。
+                    この値が存在しない、あるいは "http://openid.net/signon/1.1" 、"http://openid.net/signon/1.0" のどちらかの値が設定されている場合、そのメッセージの解釈には、<xref target="compat_mode">OpenID Authentication 1.1 互換モード</xref>を用いるべきである (SHOULD)。
                   <!--
                     If this value is absent or set to one of
                     "http://openid.net/signon/1.1" or
@@ -463,9 +444,7 @@
                     type.
                   </t>
                   <t>
-                    "openid.mode" パラメータを用いることによって、メッセージ受信者は、
-                    処理中のメッセージの種類を知ることができる。"openid.mode" がない場合、
-                    メッセージ処理側は、その要求が OpenID メッセージではないと見なすべきである (SHOULD)。
+                    "openid.mode" パラメータを用いることによって、メッセージ受信者は、処理中のメッセージの種類を知ることができる。"openid.mode" がない場合、メッセージ処理側は、その要求が OpenID メッセージではないと見なすべきである (SHOULD)。
                   <!--                  
                     The "openid.mode" parameter allows the recipient
                     of the message to know what kind of message it is
@@ -480,9 +459,7 @@
           </t>
 
           <t>
-            このモデルは、ユーザエージェントから RP に送られるメッセージ、
-            ユーザエージェントから OPに送られるメッセージ、そして RP から OP に
-            送られるメッセージにも適用される。
+            このモデルは、ユーザエージェントから RP に送られるメッセージ、ユーザエージェントから OPに送られるメッセージ、そして RP から OP に送られるメッセージにも適用される。
            <!--
             This model applies to messages from the User-Agent to both
             the Relying Party and the OP, as well as messages from the
@@ -534,8 +511,7 @@ error:This is an example message
 
           <figure>
             <preamble>
-                HTTP POST ボディまたは URL のクエリ文字列に含まれるときなど
-                 x-www-urlencoded の場合 (<xref target="RFC3986" /> セクション 3) ：
+                HTTP POST ボディまたは URL のクエリ文字列に含まれるときなど x-www-urlencoded の場合 (<xref target="RFC3986" /> セクション 3) ：
             <!--
               x-www-urlencoded, as in a HTTP POST body or in a URL's
               query string (<xref target="RFC3986" /> section 3):
@@ -549,12 +525,7 @@ error:This is an example message
       <!-- section title="Integer Representations" anchor="btwoc" -->
       <section title="整数表現" anchor="btwoc">
         <t>
-            任意精度整数は、ビッグエンディアン符号付き 2 の補数表現バイナリ文字列に
-            エンコードしなければならない (MUST)。以後 "btwoc" は、任意精度整数を引数とし、
-            最も短いビッグエンディアン 2 の補数表現を返す関数とする。Diffie-Hellman 鍵交換で
-            用いる整数は全て、正の数とする。
-            つまり、2 の補数表現の最上位ビットはゼロでなければならない (MUST)。
-            そうでない場合、文字列の先頭にゼロバイトを付加する実装をしなければならない (MUST)。
+            任意精度整数は、ビッグエンディアン符号付き 2 の補数表現バイナリ文字列にエンコードしなければならない (MUST)。以後 "btwoc" は、任意精度整数を引数とし、最も短いビッグエンディアン 2 の補数表現を返す関数とする。Diffie-Hellman 鍵交換で用いる整数は全て、正の数とする。つまり、2 の補数表現の最上位ビットはゼロでなければならない (MUST)。そうでない場合、文字列の先頭にゼロバイトを付加する実装をしなければならない (MUST)。
         <!--
           Arbitrary precision integers MUST be encoded as big-endian
           signed two's complement binary strings. Henceforth, "btwoc"
@@ -589,16 +560,11 @@ Base 10 number | btwoc string representation
     <!-- section title="Communication Types" -->
     <section title="通信形式">
       <!-- section title="Direct Communication"
-      <section title="Direct Communication"
                anchor="direct_comm" -->
-      <section title="直接通信"
+      <section title="直接通信 (Direct Communication)"
                anchor="direct_comm">
         <t>
-            直接通信 (direct communication) は、OP エンドポイント URL に対し、
-            RP 側から開始する。アソシエーションの確立および認証アサーションの検証のために
-            用いられる。直接通信 (direct communication) は、OP エンドポイント URL に対し、
-            RP 側から開始する。<xref target="associations">アソシエーションの確立</xref>
-            および<xref target="check_auth">認証アサーションの検証</xref>のために用いられる。
+            直接通信は、OP エンドポイント URL に対し、RP 側から開始する。アソシエーションの確立および認証アサーションの検証のために用いられる。直接通信 (direct communication) は、OP エンドポイント URL に対し、RP 側から開始する。<xref target="associations">アソシエーションの確立</xref>および<xref target="check_auth">認証アサーションの検証</xref>のために用いられる。
         <!--
           Direct communication is initiated by a Relying Party to an
           OP endpoint URL.  It is used for <xref
@@ -608,18 +574,16 @@ Base 10 number | btwoc string representation
           -->
         </t>
         <!-- section title="Direct Request" anchor="direct_request" -->
-        <section title="直接要求" anchor="direct_request">
+        <section title="直接要求 (Direct Request)" anchor="direct_request">
           <t>
-            メッセージは、<xref target="http_encoding" />で指定した通り、
-            POST ボディとしてエンコードしなければならない (MUST)。
+            メッセージは、<xref target="http_encoding" />で指定した通り、POST ボディとしてエンコードしなければならない (MUST)。
           <!--
             The message MUST be encoded as a POST body, as specified
             by <xref target="http_encoding" />.
             -->
           </t>
           <t>
-            直接要求は全て HTTP POST であり、そのため、
-            <xref target="http_encoding" /> で示した必須フィールドを含む。
+            直接要求は全て HTTP POST であり、そのため、<xref target="http_encoding" /> で示した必須フィールドを含む。
           <!--
             All direct requests are HTTP POSTs, and so
             contain the required fields listed in <xref
@@ -628,11 +592,9 @@ Base 10 number | btwoc string representation
           </t>
         </section>
         <!-- section title="Direct Response" anchor="direct_response" -->
-        <section title="直接応答" anchor="direct_response">
+        <section title="直接応答 (Direct Response)" anchor="direct_response">
           <t>
-            <xref target="direct_request">直接要求</xref>への応答のボディは、
-            <xref target="kvform">キー・バリュー形式</xref>の中の HTTP 応答ボディで構成される。
-            応答の content-type は、"text/plain" とすべきである (SHOULD)。
+            <xref target="direct_request">直接要求</xref>への応答のボディは、<xref target="kvform">キー・バリュー形式</xref>の中の HTTP 応答ボディで構成される。応答の content-type は、"text/plain" とすべきである (SHOULD)。
           <!--
             The body of a response to a <xref
             target="direct_request">Direct Request</xref> consists of
@@ -654,10 +616,7 @@ Base 10 number | btwoc string representation
                     <!-- Value -->値: "http://specs.openid.net/auth/2.0"
                   </t>
                   <t>
-                    応答が OpenID 2.0 として有効な応答であるためには、
-                    上記の値が存在していなければならない (MUST)。
-                    仕様の将来版においては、メッセージ受信者が応答を適切に解釈できるように、
-                    異なる値が定義される場合もある。
+                    応答が OpenID 2.0 として有効な応答であるためには、上記の値が存在していなければならない (MUST)。仕様の将来版においては、メッセージ受信者が応答を適切に解釈できるように、異なる値が定義される場合もある。
                     <!--
                     This particular value MUST be present for the
                     response to be a valid OpenID 2.0 response. Future
@@ -667,11 +626,7 @@ Base 10 number | btwoc string representation
                     -->
                   </t>
                   <t>
-                    この値が存在しない、あるいは "http://openid.net/signon/1.1" 、
-                    "http://openid.net/signon/1.0" のどちらかの値が設定されている場合、
-                    そのメッセージの解釈には、<xref target="compat_mode">
-                    OpenID Authentication 1.1 互換モード</xref>を
-                    用いるべきである (SHOULD)。
+                    この値が存在しない、あるいは "http://openid.net/signon/1.1" 、"http://openid.net/signon/1.0" のどちらかの値が設定されている場合、そのメッセージの解釈には、<xref target="compat_mode">OpenID Authentication 1.1 互換モード</xref>を用いるべきである (SHOULD)。
                     <!--
                     If this value is absent or set to one of
                     "http://openid.net/signon/1.1" or
@@ -687,10 +642,9 @@ Base 10 number | btwoc string representation
           </t>
 
           <!-- section title="Successful Responses" -->
-          <section title="成功時の応答">
+          <section title="成功時の応答 (Successful Responses)">
             <t>
-                サーバが有効な要求を受け取ったときは、
-                HTTP ステータスコード 200 の応答を送らなければならない (MUST)。
+                サーバが有効な要求を受け取ったときは、HTTP ステータスコード 200 の応答を送らなければならない (MUST)。
                 <!--
               A server receiving a valid request MUST send a
               response with an HTTP status code of 200.
@@ -699,12 +653,9 @@ Base 10 number | btwoc string representation
           </section>
 
           <!-- section title="Error Responses" -->
-          <section title="エラー時の応答">
+          <section title="エラー時の応答 (Error Responses)">
             <t>
-                要求の形式に間違いがあった場合や無効な引数が含まれていた場合、サーバは、
-                HTTP ステータスコード 400 を含む応答を送らなければならない (MUST)。
-                応答のボディは、以下のフィールドを含む<xref
-              target="kvform">キー・バリュー形式</xref>メッセージでなければならない (MUST):
+                不正な要求があった場合や無効な引数が含まれていた場合、サーバは、HTTP ステータスコード 400 を含む応答を送らなければならない (MUST)。応答のボディは、以下のフィールドを含む<xref target="kvform">キー・バリュー形式</xref>メッセージでなければならない (MUST):
             <!--
               If a request is malformed or contains invalid arguments,
               the server MUST send a response with a status code of
@@ -744,8 +695,7 @@ Base 10 number | btwoc string representation
                   contact
                   <list style='empty'>
                     <t>
-                    値: (オプション) サーバ管理者の連絡先。連絡先は、
-                    人間に対して表示するためのものなので、どのような形で記述してもよい。
+                    値: (オプション) サーバ管理者の連絡先。連絡先は、人間に対して表示するためのものなので、どのような形で記述してもよい。
                     <!--
                       Value: (optional) Contact address for the
                       administrator of the server. The contact address
@@ -780,14 +730,11 @@ Base 10 number | btwoc string representation
       </section>
       <!-- section title="Indirect Communication"
                anchor="indirect_comm" -->
-      <section title="間接通信"
+      <section title="間接通信 (Indirect Communication)"
                anchor="indirect_comm">
         <t>
-            間接通信 (indirect communication) は、ユーザエージェントを経由して
-            メッセージの受け渡しを行う。間接通信は、RP 、OP のいずれからでも開始することができる。
-            間接通信は、<xref target="requesting_authentication">認証要求</xref>および
-            <xref target="responding_to_authentication">認証応答</xref>のために用いられる。
-        <!--
+          間接通信では、ユーザエージェントを経由してメッセージの受け渡しを行う。間接通信は、RP 、OP のいずれからでも開始することができる。間接通信は、<xref target="requesting_authentication">認証要求</xref>および<xref target="responding_to_authentication">認証応答</xref>のために用いられる。
+          <!--
           In indirect communication, messages are passed through the
           User-Agent.  This can be initiated by either the Relying
           Party or the OP.  Indirect communication is used for <xref
@@ -798,14 +745,8 @@ Base 10 number | btwoc string representation
           -->
         </t>
         <t>
-            間接通信には、HTTP リダイレクトと HTML フォーム送信の二つの方法がある。
-            フォーム送信もリダイレクトも、送信側が受信側の URL を知っていること、
-            そして受信側の URL が
-            <xref target="http_encoding"/> 
-            で指定されているような、間接メッセージの受信を想定していることが求められる。
-            通信を開始する側が、機能、メッセージサイズ、その他の外部要因に応じて適切な
-            間接通信の方法を選択する。
-        <!--
+          間接通信には、HTTP リダイレクトと HTML フォーム送信の二つの方法がある。フォーム送信もリダイレクトも、送信側が受信側の URL を知っていること、そして受信側の URL が <xref target="http_encoding"/> で指定されているような、間接メッセージの受信を想定していることが求められる。通信を開始する側が、機能、メッセージサイズ、その他の外部要因に応じて適切な間接通信の方法を選択する。
+          <!--
           There are two methods for indirect communication: HTTP
           redirects and HTML form submission.
           Both form submission and redirection require that the sender
@@ -817,10 +758,8 @@ Base 10 number | btwoc string representation
           -->
         </t>
         <t>
-            全ての間接メッセージは HTTP 要求として受信され、そのため、
-            <xref target="http_encoding"/> 
-            で示した必須フィールドを含む。
-            <!--
+          全ての間接メッセージは HTTP 要求として受信され、そのため、<xref target="http_encoding"/> で示した必須フィールドを含む。
+          <!--
           All indirect messages arrive as HTTP requests, and so
           contain the required fields listed in <xref
           target="http_encoding" />.
@@ -828,13 +767,10 @@ Base 10 number | btwoc string representation
         </t>
 
         <!-- section title="HTTP Redirect" -->
-        <section title="リダイレクト">
+        <section title="HTTP リダイレクト">
           <t>
-          データは、302 、303 または 307 HTTP リダイレクトを発行することによって、
-          エンドユーザのユーザエージェントに転送できる。リダイレクト URL は受信側の URL で、
-          <xref target="http_encoding" /> 
-          で指定されている通り、クエリ文字列に OpenID 認証メッセージが付加されている。
-          <!--
+            データは、302 、303 または 307 HTTP リダイレクトを発行することによって、エンドユーザのユーザエージェントに転送できる。リダイレクト URL は受信側の URL で、<xref target="http_encoding" /> で指定されている通り、クエリ文字列に OpenID 認証メッセージが付加されている。
+            <!--
             Data can be transferred by issuing a 302, 303, or 307 HTTP
             Redirect to the end user's User-Agent. The redirect URL is
             the URL of the receiver with the OpenID Authentication
@@ -845,11 +781,10 @@ Base 10 number | btwoc string representation
         </section>
 
         <!-- section title="HTML FORM Redirection" -->
-        <section title="HTMLフォームリダイレクト">
+        <section title="HTML フォームリダイレクト">
           <t>
-          キーと値とのマッピングを転送するには、HTML フォームエレメントを含む HTML ページを
-          ユーザエージェントに戻す。フォーム送信は、JavaScript を用いるなどして自動化してもよい (MAY)。
-          <!--
+            キーと値とのマッピングを転送するには、HTML フォームエレメントを含む HTML ページをユーザエージェントに戻す。フォーム送信は、JavaScript を用いるなどして自動化してもよい (MAY)。
+            <!--
             A mapping of keys to values can be transferred by
             returning an HTML page to the User-Agent that contains an
             HTML form element. Form submission MAY be automated,
@@ -857,13 +792,8 @@ Base 10 number | btwoc string representation
             -->
           </t>
           <t>
-            &lt;form&gt; エレメントの "action" 属性値は、受信側の URL でなければならない (MUST)。
-            それぞれのキー・バリューのペアは、&lt;input&gt; エレメントとしてフォームに含まれて
-            いなければならない (MUST)。フォーム送信を行なうとき、<xref target="http_encoding"/>
-            で指定されている通りにユーザエージェントがメッセージを生成するように、
-            キーは "name" 属性として、値は "value" 属性としてエンコードしなければならない (MUST)。
-            フォームは送信ボタンを含まなければならない (MUST)。
-          <!--
+            &lt;form&gt; エレメントの "action" 属性値は、受信側の URL でなければならない (MUST)。それぞれのキー・バリューのペアは、&lt;input&gt; エレメントとしてフォームに含まれていなければならない (MUST)。フォーム送信を行なうとき、<xref target="http_encoding"/>で指定されている通りにユーザエージェントがメッセージを生成するように、キーは "name" 属性として、値は "value" 属性としてエンコードしなければならない (MUST)。フォームは送信ボタンを含まなければならない (MUST)。
+            <!--
             The &lt;form&gt; element's "action" attribute value MUST
             be the URL of the receiver. Each Key-Value pair MUST be
             included in the form as an &lt;input&gt; element. The key
@@ -878,11 +808,8 @@ Base 10 number | btwoc string representation
         <!-- section title="Indirect Error Responses" anchor="indirect_error" -->
         <section title="エラー時の間接応答" anchor="indirect_error">
           <t>
-            要求の形式に間違いがあった場合や無効な引数が含まれていた場合、
-            OP は、ユーザエージェントを "openid.return_to" URL 値に
-            リダイレクトしなければならない (MUST)。
-            ただし、値が存在し、その値が有効な URL である場合に限る。
-          <!--
+            不正な要求があった場合や無効な引数が含まれていた場合、OP は、ユーザエージェントを "openid.return_to" URL 値にリダイレクトしなければならない (MUST)。ただし、値が存在し、その値が有効な URL である場合に限る。
+            <!--
             In the case of a malformed request, or one that contains
             invalid arguments, the OpenID Provider MUST redirect the
             User-Agent to the "openid.return_to" URL value if the
@@ -896,7 +823,7 @@ Base 10 number | btwoc string representation
                 <list style='empty'>
                   <t>
                     <!-- As specified in <xref target="http_encoding" />. -->
-                    <xref target="http_encoding" />で指定した通り。
+                    <xref target="http_encoding" /> で指定した通り。
                   </t>
                 </list>
               </t>
@@ -913,8 +840,8 @@ Base 10 number | btwoc string representation
                 openid.error
                 <list style='empty'>
                   <t>
-                  値: 人間が解読可能なメッセージ。エラーの原因を示す。
-                  <!--
+                    値: 人間が解読可能なメッセージ。エラーの原因を示す。
+                    <!--
                     Value: A human-readable message indicating the cause
                     of the error.
                     -->
@@ -925,9 +852,8 @@ Base 10 number | btwoc string representation
                 openid.contact
                 <list style='empty'>
                   <t>
-                  値: (オプション) サーバ管理者の連絡先。連絡先は、人間に対して表示するためのものなので、
-                  どのような形で記述してもよい。
-                  <!--
+                    値: (オプション) サーバ管理者の連絡先。連絡先は、人間に対して表示するためのものなので、どのような形で記述してもよい。
+                    <!--
                     Value: (optional) Contact address for the
                     administrator of the sever. The contact address
                     may take any form, as it is intended to be
@@ -941,8 +867,8 @@ Base 10 number | btwoc string representation
                 openid.reference
                 <list style='empty'>
                   <t>
-                  値: (オプション) サポートチケット番号やニュースブログへの URL などの参照トークン。
-                  <!--
+                    値: (オプション) サポートチケット番号やニュースブログへの URL などの参照トークン。
+                    <!--
                     Value: (optional) A reference token, such as a
                     support ticket number or a URL to a news blog,
                     etc.
@@ -956,10 +882,8 @@ Base 10 number | btwoc string representation
             <!-- The server MAY add additional keys to this response. -->
           </t>
           <t>
-            RPが形式に間違いがあるメッセージや無効なメッセージを受け取った場合、もしくは、
-            "openid.return_to" が存在しなかったり、その値が有効な URL ではなかったりした場合、
-            サーバはエンドユーザに応答を戻し、エラーが生じ、処理が継続できないことを示すべきである (SHOULD)。
-          <!--
+            RP が不正なメッセージや無効なメッセージを受け取った場合、もしくは、"openid.return_to" が存在しなかったり、その値が有効な URL ではなかったりした場合、サーバはエンドユーザに応答を戻し、エラーが生じ、処理が継続できないことを示すべきである (SHOULD)。
+            <!--
             If the malformed or invalid message is received by the Relying
             Party, or "openid.return_to" is not present or its value is not
             a valid URL, the server SHOULD return a response to the
@@ -1021,7 +945,7 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              署名すべき鍵と値のペアのリストを、<xref target="kvform">キー・バリュー形式エンコーディング</xref>でエンコードしてオクテット文字列に変換する。
+              署名すべキーと値のペアのリストを、<xref target="kvform">キー・バリュー形式エンコーディング</xref>でエンコードしてオクテット文字列に変換する。
               <!--
               Convert the list of key/value pairs to be signed to an
               octet string by encoding with <xref
