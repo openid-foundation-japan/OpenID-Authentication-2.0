@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en"><head><title>Final: OpenID Authentication 2.0 - 最終版</title>
-<meta http-equiv="Expires" content="Thu, 24 Dec 2009 01:39:41 +0000">
+<meta http-equiv="Expires" content="Thu, 24 Dec 2009 02:37:32 +0000">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="description" content="OpenID Authentication 2.0 - 最終版">
 <meta name="generator" content="xml2rfc v1.34 (http://xml.resource.org/)">
@@ -150,12 +150,12 @@
 <h3>Abstract</h3>
 
 <p>
-        OpenID 認証は、エンドユーザが識別子  (Identifier)  を管理していることを証明する方法を提供するものである。OpenID 認証を利用すれば、リライングパーティー (Relying Party 、以下 RP ) はエンドユーザのパスワードやメールアドレスなどにアクセスする必要がなくなる。
+        OpenID 認証は、エンドユーザが識別子  (Identifier)  を管理していることを証明する方法を提供するものである。OpenID 認証を利用すれば、リライングパーティー (Relying Party 、以下 RP) はエンドユーザのパスワードやメールアドレスなどにアクセスする必要がなくなる。
         
       
 </p>
 <p>
-        OpenID は、分散方式であり、RP や OpenID プロバイダ (OpenID Provider 、以下 OP) の承認・登録を行なう中央集権的な機関は存在しない。エンドユーザは利用する OP を自由に選択することができ、OPを変更しても自身の識別子をそのまま継続して利用することができる。
+        OpenID は、分散方式であり、RP や OpenID プロバイダ (OpenID Provider 、以下 OP) の承認・登録を行なう中央集権的な機関は存在しない。エンドユーザは利用する OP を自由に選択することができ、OP を変更しても自身の識別子をそのまま継続して利用することができる。
         
       
 </p>
@@ -191,9 +191,9 @@
 <a href="#anchor6">5.</a>&nbsp;
 通信形式<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#direct_comm">5.1.</a>&nbsp;
-直接通信<br />
+直接通信 (Direct Communication)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#indirect_comm">5.2.</a>&nbsp;
-間接通信<br />
+間接通信 (Indirect Communication)<br />
 <a href="#generating_signatures">6.</a>&nbsp;
 署名の生成<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor11">6.1.</a>&nbsp;
@@ -332,19 +332,19 @@ Author's Address<br />
           
           
 </dd>
-<dt>OpenIDプロバイダ (OpenID Provider):</dt>
+<dt>OpenID プロバイダ (OpenID Provider):</dt>
 <dd>
-            略語は OP。エンドユーザが識別子を管理しているというアサーション (assertion) を得るためにRPが依存する OpenID 認証サーバ。
+            略語は OP。エンドユーザが識別子を管理しているというアサーション (assertion) を得るために RP が依存する OpenID 認証サーバ。
             
           
 </dd>
-<dt>OPエンドポイントURL (OP Endpoint URL):</dt>
+<dt>OP エンドポイントURL (OP Endpoint URL):</dt>
 <dd>
             OpenID 認証プロトコルメッセージを受け入れる URL で、ユーザ入力識別子 (User-Supplied Identifier) のディスカバリ (discovery) を実行することにより得られる。この値は、絶対 HTTP または HTTPS URL でなければならない (MUST)。
             
           
 </dd>
-<dt>OP識別子 (OP Identifier):</dt>
+<dt>OP 識別子 (OP Identifier):</dt>
 <dd>
             OP の識別子。
             
@@ -352,7 +352,7 @@ Author's Address<br />
 </dd>
 <dt>ユーザ入力識別子 (User-Supplied Identifier):</dt>
 <dd>
-            エンドユーザが RP に提示する識別子、または OP においてユーザが選択した識別子。プロトコルの開始 (initiation) フェーズでは、エンドユーザは、自らの識別子、OP 識別子 (OP Identifier) のどちらを入力してもよい。OP 識別子を用いる場合、OP は、エンドユーザが RP に提示する識別子の選択を支援してもよい。
+            エンドユーザが RP に提示する識別子、または OP においてユーザが選択した識別子。プロトコルの開始 (initiation) フェーズでは、エンドユーザは、自らの識別子、OP 識別子のどちらを入力してもよい。OP 識別子を用いる場合、OP は、エンドユーザが RP に提示する識別子の選択を支援してもよい。
             
           
 </dd>
@@ -375,7 +375,7 @@ Author's Address<br />
 </ul>
           
 </dd>
-<dt>OPローカル識別子 (OP-Local Identifier):</dt>
+<dt>OP ローカル識別子 (OP-Local Identifier):</dt>
 <dd>
             特定の OP でエンドユーザを識別するためにローカルに用いられる代替の識別子。必ずしもエンドユーザが管理しているものではない。
             
@@ -404,7 +404,7 @@ Author's Address<br />
 </li>
 <li>
             (オプション) 
-            RP と OP の間に<a class='info' href='#associations'>アソシエーション(association)<span> (</span><span class='info'>アソシエーションの確立</span><span>)</span></a>を確立する。共有秘密鍵の確立には、<a class='info' href='#RFC2631'>Diffie-Hellman 鍵交換<span> (</span><span class='info'>Rescorla, E., &ldquo;Diffie-Hellman Key Agreement Method,&rdquo; .</span><span>)</span></a> [RFC2631]を用いる。OP はその後のメッセージに署名するためにアソシエーションを用い、RP はこれらのメッセージを検証するためにアソシエーションを用いる。その結果、それぞれの認証要求／応答に続く署名検証のための直接要求を行なう必要がなくなる。
+            RP と OP の間に<a class='info' href='#associations'>アソシエーション (association)<span> (</span><span class='info'>アソシエーションの確立</span><span>)</span></a> を確立する。共有秘密鍵の確立には、<a class='info' href='#RFC2631'>Diffie-Hellman 鍵交換<span> (</span><span class='info'>Rescorla, E., &ldquo;Diffie-Hellman Key Agreement Method,&rdquo; .</span><span>)</span></a> [RFC2631] を用いる。OP はその後のメッセージに署名するためにアソシエーションを用い、RP はこれらのメッセージを検証するためにアソシエーションを用いる。その結果、それぞれの認証要求／応答に続く署名検証のための直接要求を行なう必要がなくなる。
             
           
 </li>
@@ -467,14 +467,12 @@ Author's Address<br />
           
 </p>
 <p>
-            空白を含む追加文字は、コロンまたは改行文字の前後に追加してはならない (MUST NOT)。
-            メッセージからバイト文字列を生成するときは、UTF-8 でエンコードしなければならない (MUST)。
+            空白を含む追加文字は、コロンまたは改行文字の前後に追加してはならない (MUST NOT)。メッセージからバイト文字列を生成するときは、UTF-8 でエンコードしなければならない (MUST)。
             
           
 </p>
 <p>
-          キー・バリュー形式エンコーディングは、署名計算および RP への
-          <a class='info' href='#direct_response'>直接応答<span> (</span><span class='info'>直接応答</span><span>)</span></a>に利用される。
+          キー・バリュー形式エンコーディングは、署名計算および RP への<a class='info' href='#direct_response'>直接応答<span> (</span><span class='info'>直接応答 (Direct Response)</span><span>)</span></a>に利用される。
           
           
 </p>
@@ -484,27 +482,17 @@ Author's Address<br />
 HTTPエンコーディング</h3>
 
 <p>
-          HTTP サーバにメッセージを送るときは、<a class='info' href='#HTML401'>[HTML401]<span> (</span><span class='info'>W3C, &ldquo;HTML 4.01 Specification,&rdquo; .</span><span>)</span></a> 
-          のセクション 17.13.4 に定められるフォームエンコーディングを用いてエンコード
-          しなければならない (MUST)。
-          同様に、要求のヘッダに"Content-Type" ヘッダが含まれている場合は、
-          その値も <a class='info' href='#HTML401'>[HTML401]<span> (</span><span class='info'>W3C, &ldquo;HTML 4.01 Specification,&rdquo; .</span><span>)</span></a> のセクション 17.13.4 に定められたエンコーディングで
-          なければならない (MUST)。
+          HTTP サーバにメッセージを送るときは、<a class='info' href='#HTML401'>[HTML401]<span> (</span><span class='info'>W3C, &ldquo;HTML 4.01 Specification,&rdquo; .</span><span>)</span></a> の Section 17.13.4 に定められるフォームエンコーディングを用いてエンコードしなければならない (MUST)。同様に、要求のヘッダに "Content-Type" ヘッダが含まれている場合は、その値も <a class='info' href='#HTML401'>[HTML401]<span> (</span><span class='info'>W3C, &ldquo;HTML 4.01 Specification,&rdquo; .</span><span>)</span></a> の Section 17.13.4 に定められたエンコーディングでなければならない (MUST)。
           
           
 </p>
 <p>
-            要求メッセージの全てのキーは、その前に "openid." プレフィックスを
-            付加しなければならない (MUST)。このプレフィックスを付加することにより、
-            OpenID 認証メッセージとともに受け渡される他のパラメータとの干渉を回避できる。
-            メッセージを POST で送るとき、OpenID パラメータは常に POST ボディに格納して送り、
-            POST ボディから抽出しなければならない (MUST)。
+            要求メッセージの全てのキーは、その前に "openid." プレフィックスを付加しなければならない (MUST)。このプレフィックスを付加することにより、OpenID 認証メッセージとともに受け渡される他のパラメータとの干渉を回避できる。メッセージを POST で送るとき、OpenID パラメータは常に POST ボディに格納して送り、POST ボディから抽出しなければならない (MUST)。
             
           
 </p>
 <p>
-            HTTP 要求 (GET または POST) として送られるメッセージは全て、
-            以下のフィールドを含んでいなければならない (MUST)。
+            HTTP 要求 (GET または POST) として送られるメッセージは全て、以下のフィールドを含んでいなければならない (MUST)。
             
             </p>
 <ul class="text">
@@ -517,19 +505,13 @@ HTTPエンコーディング</h3>
                   
 </p>
 <p>
-                    要求が OpenID Authentication 2.0 として有効な要求であるためには、
-                    上記の値が存在していなければならない (MUST)。仕様の将来版においては、
-                    メッセージ受信者が要求を適切に解釈できるように、異なる値が定義される場合もある。
+                    要求が OpenID Authentication 2.0 として有効な要求であるためには、上記の値が存在していなければならない (MUST)。仕様の将来版においては、メッセージ受信者が要求を適切に解釈できるように、異なる値が定義される場合もある。
                     
                   
 </p>
 <p>
-                    この値が存在しない、あるいは "http://openid.net/signon/1.1" 、
-                    "http://openid.net/signon/1.0" のどちらかの値が設定されている場合、
-                    そのメッセージの解釈には、
-                    <a class='info' href='#compat_mode'>OpenID Authentication 1.1
-                    互換モード<span> (</span><span class='info'>OpenID Authentication 1.1 との互換性</span><span>)</span></a>を用いるべきである (SHOULD)。
-                  
+                    この値が存在しない、あるいは "http://openid.net/signon/1.1" 、"http://openid.net/signon/1.0" のどちらかの値が設定されている場合、そのメッセージの解釈には、<a class='info' href='#compat_mode'>OpenID Authentication 1.1 互換モード<span> (</span><span class='info'>OpenID Authentication 1.1 との互換性</span><span>)</span></a>を用いるべきである (SHOULD)。
+                   
                   
 </p>
 </blockquote>
@@ -540,14 +522,13 @@ HTTPエンコーディング</h3>
                 
 <blockquote class="text">
 <p>
-                    値: Specified individually for each message
+                    値: メッセージタイプごとに個別に指定。
+                    
                     type.
                   
 </p>
 <p>
-                    "openid.mode" パラメータを用いることによって、メッセージ受信者は、
-                    処理中のメッセージの種類を知ることができる。"openid.mode" がない場合、
-                    メッセージ処理側は、その要求が OpenID メッセージではないと見なすべきである (SHOULD)。
+                    "openid.mode" パラメータを用いることによって、メッセージ受信者は、処理中のメッセージの種類を知ることができる。"openid.mode" がない場合、メッセージ処理側は、その要求が OpenID メッセージではないと見なすべきである (SHOULD)。
                   
                   
 </p>
@@ -558,9 +539,7 @@ HTTPエンコーディング</h3>
           
 </p>
 <p>
-            このモデルは、ユーザエージェントから RP に送られるメッセージ、
-            ユーザエージェントから OPに送られるメッセージ、そして RP から OP に
-            送られるメッセージにも適用される。
+            このモデルは、ユーザエージェントから RP に送られるメッセージ、ユーザエージェントから OP に送られるメッセージ、そして RP から OP に送られるメッセージにも適用される。
            
           
 </p>
@@ -579,7 +558,7 @@ HTTPエンコーディング</h3>
             
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
-キー     | 値
+キー    | 値
 --------+---------------------------
 mode    | error
 error   | This is an example message
@@ -594,8 +573,7 @@ error:This is an example message
 
 </pre></div>
 <p>
-                HTTP POST ボディまたは URL のクエリ文字列に含まれるときなど
-                 x-www-urlencoded の場合 (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., &ldquo;Uniform Resource Identifiers (URI): Generic Syntax,&rdquo; .</span><span>)</span></a> セクション 3) ：
+                HTTP POST ボディまたは URL のクエリ文字列に含まれるときなど x-www-urlencoded の場合 (<a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., &ldquo;Uniform Resource Identifiers (URI): Generic Syntax,&rdquo; .</span><span>)</span></a> Section 3) ：
             
             
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>openid.mode=error&amp;openid.error=This%20is%20an%20example%20message</pre></div>
@@ -605,13 +583,8 @@ error:This is an example message
 整数表現</h3>
 
 <p>
-            任意精度整数は、ビッグエンディアン符号付き 2 の補数表現バイナリ文字列に
-            エンコードしなければならない (MUST)。以後 "btwoc" は、任意精度整数を引数とし、
-            最も短いビッグエンディアン 2 の補数表現を返す関数とする。Diffie-Hellman 鍵交換で
-            用いる整数は全て、正の数とする。
-            つまり、2 の補数表現の最上位ビットはゼロでなければならない (MUST)。
-            そうでない場合、文字列の先頭にゼロバイトを付加する実装をしなければならない (MUST)。
-        
+          任意精度整数は、ビッグエンディアン符号付き 2 の補数表現バイナリ文字列にエンコードしなければならない (MUST)。以後 "btwoc" は、任意精度整数を引数とし、最も短いビッグエンディアン 2 の補数表現を返す関数とする。Diffie-Hellman 鍵交換で用いる整数は全て、正の数とする。つまり、2 の補数表現の最上位ビットはゼロでなければならない (MUST)。そうでない場合、文字列の先頭にゼロバイトを付加する実装をしなければならない (MUST)。
+          
         
 </p>
 <p> 参考例:
@@ -636,44 +609,36 @@ Base 10 number | btwoc string representation
 <a name="direct_comm"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5.1"></a><h3>5.1.&nbsp;
-直接通信</h3>
+直接通信 (Direct Communication)</h3>
 
 <p>
-            直接通信 (direct communication) は、OP エンドポイント URL に対し、
-            RP 側から開始する。アソシエーションの確立および認証アサーションの検証のために
-            用いられる。直接通信 (direct communication) は、OP エンドポイント URL に対し、
-            RP 側から開始する。<a class='info' href='#associations'>アソシエーションの確立<span> (</span><span class='info'>アソシエーションの確立</span><span>)</span></a>
-            および<a class='info' href='#check_auth'>認証アサーションの検証<span> (</span><span class='info'>OpenID プロバイダを通じた直接検証</span><span>)</span></a>のために用いられる。
-        
+          直接通信は、OP エンドポイント URL に対し、RP 側から開始する。アソシエーションの確立および認証アサーションの検証のために用いられる。直接通信は、OP エンドポイント URL に対し、RP 側から開始する。<a class='info' href='#associations'>アソシエーションの確立<span> (</span><span class='info'>アソシエーションの確立</span><span>)</span></a>および<a class='info' href='#check_auth'>認証アサーションの検証<span> (</span><span class='info'>OpenID プロバイダを通じた直接検証</span><span>)</span></a>のために用いられる。
+          
         
 </p>
 <a name="direct_request"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5.1.1"></a><h3>5.1.1.&nbsp;
-直接要求</h3>
+直接要求 (Direct Request)</h3>
 
 <p>
-            メッセージは、<a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a>で指定した通り、
-            POST ボディとしてエンコードしなければならない (MUST)。
-          
+            メッセージは、<a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a> で指定した通り、POST ボディとしてエンコードしなければならない (MUST)。
+            
           
 </p>
 <p>
-            直接要求は全て HTTP POST であり、そのため、
-            <a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a> で示した必須フィールドを含む。
-          
+            直接要求は全て HTTP POST であり、そのため、<a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a> で示した必須フィールドを含む。
+            
           
 </p>
 <a name="direct_response"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5.1.2"></a><h3>5.1.2.&nbsp;
-直接応答</h3>
+直接応答 (Direct Response)</h3>
 
 <p>
-            <a class='info' href='#direct_request'>直接要求<span> (</span><span class='info'>直接要求</span><span>)</span></a>への応答のボディは、
-            <a class='info' href='#kvform'>キー・バリュー形式<span> (</span><span class='info'>キー・バリュー形式エンコーディング</span><span>)</span></a>の中の HTTP 応答ボディで構成される。
-            応答の content-type は、"text/plain" とすべきである (SHOULD)。
-          
+            <a class='info' href='#direct_request'>直接要求<span> (</span><span class='info'>直接要求 (Direct Request)</span><span>)</span></a>への応答のボディは、<a class='info' href='#kvform'>キー・バリュー形式<span> (</span><span class='info'>キー・バリュー形式エンコーディング</span><span>)</span></a>の中の HTTP 応答ボディで構成される。応答の content-type は、"text/plain" とすべきである (SHOULD)。
+            
           
 </p>
 <p>
@@ -690,18 +655,12 @@ Base 10 number | btwoc string representation
                   
 </p>
 <p>
-                    応答が OpenID 2.0 として有効な応答であるためには、
-                    上記の値が存在していなければならない (MUST)。
-                    仕様の将来版においては、メッセージ受信者が応答を適切に解釈できるように、
-                    異なる値が定義される場合もある。
+                    応答が OpenID 2.0 として有効な応答であるためには、上記の値が存在していなければならない (MUST)。仕様の将来版においては、メッセージ受信者が応答を適切に解釈できるように、異なる値が定義される場合もある。
                     
                   
 </p>
 <p>
-                    この値が存在しない、あるいは "http://openid.net/signon/1.1" 、
-                    "http://openid.net/signon/1.0" のどちらかの値が設定されている場合、
-                    そのメッセージの解釈には、<a class='info' href='#compat_mode'>OpenID Authentication 1.1 互換モード<span> (</span><span class='info'>OpenID Authentication 1.1 との互換性</span><span>)</span></a>を
-                    用いるべきである (SHOULD)。
+                    この値が存在しない、あるいは "http://openid.net/signon/1.1"、"http://openid.net/signon/1.0" のどちらかの値が設定されている場合、そのメッセージの解釈には、<a class='info' href='#compat_mode'>OpenID Authentication 1.1 互換モード<span> (</span><span class='info'>OpenID Authentication 1.1 との互換性</span><span>)</span></a>を用いるべきである (SHOULD)。
                     
                   
 </p>
@@ -714,24 +673,21 @@ Base 10 number | btwoc string representation
 <a name="anchor7"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5.1.2.1"></a><h3>5.1.2.1.&nbsp;
-成功時の応答</h3>
+成功時の応答 (Successful Responses)</h3>
 
 <p>
-                サーバが有効な要求を受け取ったときは、
-                HTTP ステータスコード 200 の応答を送らなければならない (MUST)。
-                
+              サーバが有効な要求を受け取ったときは、HTTP ステータスコード 200 の応答を送らなければならない (MUST)。
+              
             
 </p>
 <a name="anchor8"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5.1.2.2"></a><h3>5.1.2.2.&nbsp;
-エラー時の応答</h3>
+エラー時の応答 (Error Responses)</h3>
 
 <p>
-                要求の形式に間違いがあった場合や無効な引数が含まれていた場合、サーバは、
-                HTTP ステータスコード 400 を含む応答を送らなければならない (MUST)。
-                応答のボディは、以下のフィールドを含む<a class='info' href='#kvform'>キー・バリュー形式<span> (</span><span class='info'>キー・バリュー形式エンコーディング</span><span>)</span></a>メッセージでなければならない (MUST):
-            
+              不正な要求があった場合や無効な引数が含まれていた場合、サーバは、HTTP ステータスコード 400 を含む応答を送らなければならない (MUST)。応答のボディは、以下のフィールドを含む<a class='info' href='#kvform'>キー・バリュー形式<span> (</span><span class='info'>キー・バリュー形式エンコーディング</span><span>)</span></a>メッセージでなければならない (MUST):
+              
             
 </p>
 <p>
@@ -742,8 +698,8 @@ Base 10 number | btwoc string representation
                   
 <blockquote class="text">
 <p>
-                        <a class='info' href='#direct_response'>Section&nbsp;5.1.2<span> (</span><span class='info'>直接応答</span><span>)</span></a>で指定した通り。
-                    
+                      <a class='info' href='#direct_response'>Section&nbsp;5.1.2<span> (</span><span class='info'>直接応答 (Direct Response)</span><span>)</span></a> で指定した通り。
+                      
                     
 </p>
 </blockquote>
@@ -754,7 +710,7 @@ Base 10 number | btwoc string representation
                   
 <blockquote class="text">
 <p>
-                    
+                      
                       値: 人間が解読可能なメッセージ。エラーの原因を示す。
                     
 </p>
@@ -766,9 +722,8 @@ Base 10 number | btwoc string representation
                   
 <blockquote class="text">
 <p>
-                    値: (オプション) サーバ管理者の連絡先。連絡先は、
-                    人間に対して表示するためのものなので、どのような形で記述してもよい。
-                    
+                      値: (オプション) サーバ管理者の連絡先。連絡先は、人間に対して表示するためのものなので、どのような形で記述してもよい。
+                      
                     
 </p>
 </blockquote>
@@ -779,8 +734,8 @@ Base 10 number | btwoc string representation
                   
 <blockquote class="text">
 <p>
-                    値: (オプション) サポートチケット番号やニュースブログへの URL などの参照トークン。
-                    
+                      値: (オプション) サポートチケット番号やニュースブログへの URL などの参照トークン。
+                      
                     
 </p>
 </blockquote>
@@ -794,66 +749,46 @@ Base 10 number | btwoc string representation
 <a name="indirect_comm"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5.2"></a><h3>5.2.&nbsp;
-間接通信</h3>
+間接通信 (Indirect Communication)</h3>
 
 <p>
-            間接通信 (indirect communication) は、ユーザエージェントを経由して
-            メッセージの受け渡しを行う。間接通信は、RP 、OP のいずれからでも開始することができる。
-            間接通信は、<a class='info' href='#requesting_authentication'>認証要求<span> (</span><span class='info'>認証要求</span><span>)</span></a>および
-            <a class='info' href='#responding_to_authentication'>認証応答<span> (</span><span class='info'>認証要求に対する応答</span><span>)</span></a>のために用いられる。
-        
+          間接通信では、ユーザエージェントを経由してメッセージの受け渡しを行う。間接通信は、RP、OP のいずれからでも開始することができる。間接通信は、<a class='info' href='#requesting_authentication'>認証要求<span> (</span><span class='info'>認証要求</span><span>)</span></a>および<a class='info' href='#responding_to_authentication'>認証応答<span> (</span><span class='info'>認証要求に対する応答</span><span>)</span></a>のために用いられる。
+          
         
 </p>
 <p>
-            間接通信には、HTTP リダイレクトと HTML フォーム送信の二つの方法がある。
-            フォーム送信もリダイレクトも、送信側が受信側の URL を知っていること、
-            そして受信側の URL が
-            <a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a> 
-            で指定されているような、間接メッセージの受信を想定していることが求められる。
-            通信を開始する側が、機能、メッセージサイズ、その他の外部要因に応じて適切な
-            間接通信の方法を選択する。
-        
+          間接通信には、HTTP リダイレクトと HTML フォーム送信の二つの方法がある。フォーム送信もリダイレクトも、送信側が受信側の URL を知っていること、そして受信側の URL が <a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a> で指定されているような、間接メッセージの受信を想定していることが求められる。通信を開始する側が、機能、メッセージサイズ、その他の外部要因に応じて適切な間接通信の方法を選択する。
+          
         
 </p>
 <p>
-            全ての間接メッセージは HTTP 要求として受信され、そのため、
-            <a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a> 
-            で示した必須フィールドを含む。
-            
+          全ての間接メッセージは HTTP 要求として受信され、そのため、<a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a> で示した必須フィールドを含む。
+          
         
 </p>
 <a name="anchor9"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5.2.1"></a><h3>5.2.1.&nbsp;
-リダイレクト</h3>
+HTTP リダイレクト</h3>
 
 <p>
-          データは、302 、303 または 307 HTTP リダイレクトを発行することによって、
-          エンドユーザのユーザエージェントに転送できる。リダイレクト URL は受信側の URL で、
-          <a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a> 
-          で指定されている通り、クエリ文字列に OpenID 認証メッセージが付加されている。
-          
+            データは、302、303 または 307 HTTP リダイレクトを発行することによって、エンドユーザのユーザエージェントに転送できる。リダイレクト URL は受信側の URL で、<a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a> で指定されている通り、クエリ文字列に OpenID 認証メッセージが付加されている。
+            
           
 </p>
 <a name="anchor10"></a><br /><hr />
 <table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
 <a name="rfc.section.5.2.2"></a><h3>5.2.2.&nbsp;
-HTMLフォームリダイレクト</h3>
+HTML フォームリダイレクト</h3>
 
 <p>
-          キーと値とのマッピングを転送するには、HTML フォームエレメントを含む HTML ページを
-          ユーザエージェントに戻す。フォーム送信は、JavaScript を用いるなどして自動化してもよい (MAY)。
-          
+            キーと値とのマッピングを転送するには、HTML フォームエレメントを含む HTML ページをユーザエージェントに戻す。フォーム送信は、JavaScript を用いるなどして自動化してもよい (MAY)。
+            
           
 </p>
 <p>
-            &lt;form&gt; エレメントの "action" 属性値は、受信側の URL でなければならない (MUST)。
-            それぞれのキー・バリューのペアは、&lt;input&gt; エレメントとしてフォームに含まれて
-            いなければならない (MUST)。フォーム送信を行なうとき、<a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a>
-            で指定されている通りにユーザエージェントがメッセージを生成するように、
-            キーは "name" 属性として、値は "value" 属性としてエンコードしなければならない (MUST)。
-            フォームは送信ボタンを含まなければならない (MUST)。
-          
+            &lt;form&gt; エレメントの "action" 属性値は、受信側の URL でなければならない (MUST)。それぞれのキー・バリューのペアは、&lt;input&gt; エレメントとしてフォームに含まれていなければならない (MUST)。フォーム送信を行なうとき、<a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a> で指定されている通りにユーザエージェントがメッセージを生成するように、キーは "name" 属性として、値は "value" 属性としてエンコードしなければならない (MUST)。フォームは送信ボタンを含まなければならない (MUST)。
+            
           
 </p>
 <a name="indirect_error"></a><br /><hr />
@@ -862,11 +797,8 @@ HTMLフォームリダイレクト</h3>
 エラー時の間接応答</h3>
 
 <p>
-            要求の形式に間違いがあった場合や無効な引数が含まれていた場合、
-            OP は、ユーザエージェントを "openid.return_to" URL 値に
-            リダイレクトしなければならない (MUST)。
-            ただし、値が存在し、その値が有効な URL である場合に限る。
-          
+            不正な要求があった場合や無効な引数が含まれていた場合、OP は、ユーザエージェントを "openid.return_to" URL 値にリダイレクトしなければならない (MUST)。ただし、値が存在し、その値が有効な URL である場合に限る。
+            
           
 </p>
 <p>
@@ -878,7 +810,7 @@ HTMLフォームリダイレクト</h3>
 <blockquote class="text">
 <p>
                     
-                    <a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a>で指定した通り。
+                    <a class='info' href='#http_encoding'>Section&nbsp;4.1.2<span> (</span><span class='info'>HTTPエンコーディング</span><span>)</span></a> で指定した通り。
                   
 </p>
 </blockquote>
@@ -900,8 +832,8 @@ HTMLフォームリダイレクト</h3>
                 
 <blockquote class="text">
 <p>
-                  値: 人間が解読可能なメッセージ。エラーの原因を示す。
-                  
+                    値: 人間が解読可能なメッセージ。エラーの原因を示す。
+                    
                   
 </p>
 </blockquote>
@@ -912,9 +844,8 @@ HTMLフォームリダイレクト</h3>
                 
 <blockquote class="text">
 <p>
-                  値: (オプション) サーバ管理者の連絡先。連絡先は、人間に対して表示するためのものなので、
-                  どのような形で記述してもよい。
-                  
+                    値: (オプション) サーバ管理者の連絡先。連絡先は、人間に対して表示するためのものなので、どのような形で記述してもよい。
+                    
                   
 </p>
 </blockquote>
@@ -925,8 +856,8 @@ HTMLフォームリダイレクト</h3>
                 
 <blockquote class="text">
 <p>
-                  値: (オプション) サポートチケット番号やニュースブログへの URL などの参照トークン。
-                  
+                    値: (オプション) サポートチケット番号やニュースブログへの URL などの参照トークン。
+                    
                   
 </p>
 </blockquote>
@@ -939,10 +870,8 @@ HTMLフォームリダイレクト</h3>
           
 </p>
 <p>
-            RPが形式に間違いがあるメッセージや無効なメッセージを受け取った場合、もしくは、
-            "openid.return_to" が存在しなかったり、その値が有効な URL ではなかったりした場合、
-            サーバはエンドユーザに応答を戻し、エラーが生じ、処理が継続できないことを示すべきである (SHOULD)。
-          
+            RP が不正なメッセージや無効なメッセージを受け取った場合、もしくは、"openid.return_to" が存在しなかったり、その値が有効な URL ではなかったりした場合、サーバはエンドユーザに応答を戻し、エラーが生じ、処理が継続できないことを示すべきである (SHOULD)。
+            
           
 </p>
 <a name="generating_signatures"></a><br /><hr />
@@ -982,7 +911,7 @@ HTMLフォームリダイレクト</h3>
             
 </li>
 <li>
-              署名すべき鍵と値のペアのリストを、<a class='info' href='#kvform'>キー・バリュー形式エンコーディング<span> (</span><span class='info'>キー・バリュー形式エンコーディング</span><span>)</span></a>でエンコードしてオクテット文字列に変換する。
+              署名すべキーと値のペアのリストを、<a class='info' href='#kvform'>キー・バリュー形式エンコーディング<span> (</span><span class='info'>キー・バリュー形式エンコーディング</span><span>)</span></a>でエンコードしてオクテット文字列に変換する。
               
             
 </li>
@@ -1026,7 +955,7 @@ HTMLフォームリダイレクト</h3>
 開始</h3>
 
 <p>
-          OpenID 認証を開始するに当り、RPは、ユーザ入力識別子の入力フォームをエンドユーザに提示すべきである (SHOULD)。
+          OpenID 認証を開始するに当り、RP は、ユーザ入力識別子の入力フォームをエンドユーザに提示すべきである (SHOULD)。
           
         
 </p>
@@ -1049,12 +978,12 @@ HTMLフォームリダイレクト</h3>
           </p>
 <ol class="text">
 <li>
-              ユーザの入力がプレフィックス "xri://" で始まる場合は、XRIが 正準形式で使用されるように、その部分を削除しなければならない (MUST)。
+              ユーザの入力がプレフィックス "xri://" で始まる場合は、XRI が正準形式で使用されるように、その部分を削除しなければならない (MUST)。
               
             
 </li>
 <li>
-              その結果得られた文字列の最初の文字が、<a class='info' href='#XRI_Syntax_2.0'>[XRI_Syntax_2.0]<span> (</span><span class='info'>Reed, D. and D. McAlpin, &ldquo;Extensible Resource Identifier (XRI) Syntax V2.0,&rdquo; .</span><span>)</span></a> セクション 2.2.1 で定義されている XRI グローバルコンテキストシンボル (Global Context Symbol) ("=", "@", "+", "$", "!") または "(" である場合、入力は XRI として扱うべきである (SHOULD)。
+              その結果得られた文字列の最初の文字が、<a class='info' href='#XRI_Syntax_2.0'>[XRI_Syntax_2.0]<span> (</span><span class='info'>Reed, D. and D. McAlpin, &ldquo;Extensible Resource Identifier (XRI) Syntax V2.0,&rdquo; .</span><span>)</span></a> Section 2.2.1 で定義されている XRI グローバルコンテキストシンボル (Global Context Symbol) ("=", "@", "+", "$", "!") または "(" である場合、入力は XRI として扱うべきである (SHOULD)。
               
             
 </li>
@@ -1064,7 +993,7 @@ HTMLフォームリダイレクト</h3>
             
 </li>
 <li>
-              その後、コンテンツを取得するときにリダイレクトを辿り、最終的な目的の URL に対して <a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., &ldquo;Uniform Resource Identifiers (URI): Generic Syntax,&rdquo; .</span><span>)</span></a> セクション 6 に記されている規則を適用することよって、URL 識別子をさらに正規化しなければならない (MUST)。この最終 URL を、RPは主張識別子として記録し、<a class='info' href='#requesting_authentication'>認証要求<span> (</span><span class='info'>認証要求</span><span>)</span></a>時に使用しなければならない (MUST)。
+              その後、コンテンツを取得するときにリダイレクトを辿り、最終的な目的の URL に対して <a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., &ldquo;Uniform Resource Identifiers (URI): Generic Syntax,&rdquo; .</span><span>)</span></a> Section 6 に記されている規則を適用することよって、URL 識別子をさらに正規化しなければならない (MUST)。この最終 URL を、RP は主張識別子として記録し、<a class='info' href='#requesting_authentication'>認証要求<span> (</span><span class='info'>認証要求</span><span>)</span></a>時に使用しなければならない (MUST)。
               
             
 </li>
@@ -1144,7 +1073,7 @@ HTMLフォームリダイレクト</h3>
 XRDS ベースのディスカバリ</h3>
 
 <p>
-            XRI または Yadis ディスカバリを用いた場合、その結果、XRDS 文書が得られる。この XML 文書には、識別子に関連するサービスのエントリが含まれている。その定義は、<a class='info' href='#XRI_Resolution_2.0'>セクション 3<span> (</span><span class='info'>Wachob, G., Reed, D., Chasen, L., Tan, W., and S. Churchill, &ldquo;Extensible Resource Identifier (XRI) Resolution V2.0           - Committee Draft 02,&rdquo; .</span><span>)</span></a> [XRI_Resolution_2.0] で行われている。付属資料 A.3 の <a class='info' href='#XRDS_Sample'>Appendix&nbsp;A.3<span> (</span><span class='info'>XRDS</span><span>)</span></a>を参照のこと。
+            XRI または Yadis ディスカバリを用いた場合、その結果、XRDS 文書が得られる。この XML 文書には、識別子に関連するサービスのエントリが含まれている。その定義は、<a class='info' href='#XRI_Resolution_2.0'>Section 3<span> (</span><span class='info'>Wachob, G., Reed, D., Chasen, L., Tan, W., and S. Churchill, &ldquo;Extensible Resource Identifier (XRI) Resolution V2.0           - Committee Draft 02,&rdquo; .</span><span>)</span></a> [XRI_Resolution_2.0] で行われている。付属資料 A.3 の <a class='info' href='#XRDS_Sample'>Appendix&nbsp;A.3<span> (</span><span class='info'>XRDS</span><span>)</span></a>を参照のこと。
             
           
 </p>
@@ -1336,7 +1265,7 @@ HTML ベースのディスカバリ</h3>
 アソシエーションセッション要求</h3>
 
 <p>
-          アソシエーションセッション (Association Session) は、RP から OP エンドポイント URL に対して、"openid.mode" が "associate" である<a class='info' href='#direct_comm'>直接要求<span> (</span><span class='info'>直接通信</span><span>)</span></a>を行なうことよって開始される。
+          アソシエーションセッション (Association Session) は、RP から OP エンドポイント URL に対して、"openid.mode" が "associate" である<a class='info' href='#direct_comm'>直接要求<span> (</span><span class='info'>直接通信 (Direct Communication)</span><span>)</span></a>を行なうことよって開始される。
           
         
 </p>
@@ -1500,7 +1429,7 @@ Diffie-Hellman 要求パラメータ</h3>
                 
 <blockquote class="text">
 <p>
-                    <a class='info' href='#direct_response'>Section&nbsp;5.1.2<span> (</span><span class='info'>直接応答</span><span>)</span></a> で指定した通り。
+                    <a class='info' href='#direct_response'>Section&nbsp;5.1.2<span> (</span><span class='info'>直接応答 (Direct Response)</span><span>)</span></a> で指定した通り。
                     
                   
 </p>
@@ -1660,7 +1589,7 @@ Diffie-Hellman 応答パラメータ</h3>
                 
 <blockquote class="text">
 <p>
-                    <a class='info' href='#direct_response'>Section&nbsp;5.1.2<span> (</span><span class='info'>直接応答</span><span>)</span></a> で指定した通り。
+                    <a class='info' href='#direct_response'>Section&nbsp;5.1.2<span> (</span><span class='info'>直接応答 (Direct Response)</span><span>)</span></a> で指定した通り。
                     
                   
 </p>
@@ -1802,7 +1731,7 @@ Diffie-Hellman アソシエーションセッション</h3>
         RP がディスカバリの実行に成功し、ディスカバリによって得られた OP エンドポイント URL
         とアソシエーションを構築 (オプション) すれば、RP は、アサーションを得るために OP に
         認証要求を送ることができる。認証要求は、<a class='info' href='#indirect_comm'>間接要求で
-        ある<span> (</span><span class='info'>間接通信</span><span>)</span></a>。
+        ある<span> (</span><span class='info'>間接通信 (Indirect Communication)</span><span>)</span></a>。
       
       
 </p>
@@ -2009,7 +1938,7 @@ Diffie-Hellman アソシエーションセッション</h3>
 <ul class="text">
 <li>
               URL スキームおよび URL のポートがレルムの中のスキームおよびポートと同一の場合。
-              URI マッチングに関する規則については、RFC 3986 [RFC3986] 、セクション 3.1 参照。
+              URI マッチングに関する規則については、RFC 3986 [RFC3986] 、Section 3.1 参照。
             
             
 </li>
@@ -2115,7 +2044,7 @@ Diffie-Hellman アソシエーションセッション</h3>
 認証要求に対する応答</h3>
 
 <p>
-        <a class='info' href='#indirect_comm'>間接通信<span> (</span><span class='info'>間接通信</span><span>)</span></a>を通じてユーザエージェントから認証
+        <a class='info' href='#indirect_comm'>間接通信<span> (</span><span class='info'>間接通信 (Indirect Communication)</span><span>)</span></a>を通じてユーザエージェントから認証
         要求を受け取ったときには、OP は、認可済みの正規のエンドユーザが認証完了を望んでいる
         と判断すべきである (SHOULD)。認可済みの正規のエンドユーザが認証完了を望んでいる場合、
         OP は、RP に<a class='info' href='#positive_assertions'>肯定アサーション<span> (</span><span class='info'>肯定アサーション</span><span>)</span></a>を送る
@@ -2177,7 +2106,7 @@ Diffie-Hellman アソシエーションセッション</h3>
 
 <p>
           肯定アサーションのフィールドは、以下の通り。
-          <a class='info' href='#indirect_comm'>間接通信<span> (</span><span class='info'>間接通信</span><span>)</span></a>で行う。
+          <a class='info' href='#indirect_comm'>間接通信<span> (</span><span class='info'>間接通信 (Indirect Communication)</span><span>)</span></a>で行う。
         
         
 </p>
@@ -2283,7 +2212,7 @@ Diffie-Hellman アソシエーションセッション</h3>
                   ならない (MUST)。ノンスは、サーバの現在時刻で始まらなければならない (MUST)。
                   またノンスには、それぞれの応答を固有のものとする上での必要に応じて、33-126 の範囲
                   に含まれる ASCII 文字 (空白を除く印刷可能な文字) を追加してもよい (MAY)。
-                  日付および時刻は [RFC3339] セクション 5.6<a class='info' href='#RFC3339'>[RFC3339]<span> (</span><span class='info'>Klyne, G. and C. Newman, &ldquo;Date and Time on the Internet: Timestamps,&rdquo; .</span><span>)</span></a>に指定され
+                  日付および時刻は [RFC3339] Section 5.6<a class='info' href='#RFC3339'>[RFC3339]<span> (</span><span class='info'>Klyne, G. and C. Newman, &ldquo;Date and Time on the Internet: Timestamps,&rdquo; .</span><span>)</span></a>に指定され
                   る形式で記述しなければならない (MUST) が、以下の制限がある。
                 
                   </p>
@@ -2364,7 +2293,7 @@ Diffie-Hellman アソシエーションセッション</h3>
               
 <blockquote class="text">
 <p>
-                  値：セクション 6 で指定した方法で計算され、Base 64 エンコードされた署名
+                  値: Section 6 で指定した方法で計算され、Base 64 エンコードされた署名
                 
                 
 </p>
@@ -2382,7 +2311,7 @@ Diffie-Hellman アソシエーションセッション</h3>
 
 <p>
           OP がエンドユーザを識別できない場合、あるいは、エンドユーザが認証要求を承諾しない、
-          もしくは承諾できない場合、OP は、RP に対し<a class='info' href='#indirect_comm'>間接応答<span> (</span><span class='info'>間接通信</span><span>)</span></a>の形で否定アサーション (negative asserton) を送るべきである
+          もしくは承諾できない場合、OP は、RP に対し<a class='info' href='#indirect_comm'>間接応答<span> (</span><span class='info'>間接通信 (Indirect Communication)</span><span>)</span></a>の形で否定アサーション (negative asserton) を送るべきである
           (SHOULD)。
         
         
@@ -2782,7 +2711,7 @@ OpenID プロバイダを通じた直接検証</h3>
                   
 <blockquote class="text">
 <p>
-                      <a class='info' href='#direct_response'>Section&nbsp;5.1.2<span> (</span><span class='info'>直接応答</span><span>)</span></a>セクション 5.1.2 で指定した通り。
+                      <a class='info' href='#direct_response'>Section&nbsp;5.1.2<span> (</span><span class='info'>直接応答 (Direct Response)</span><span>)</span></a>Section 5.1.2 で指定した通り。
                     
                     
 </p>
@@ -3639,7 +3568,7 @@ HTTP および HTTPS URL 識別子</h3>
 正規化</h3>
 
 <p>
-          テキスト URL の正規化の詳細およびさらなる事例については、 <a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., &ldquo;Uniform Resource Identifiers (URI): Generic Syntax,&rdquo; .</span><span>)</span></a> セクション 6 を参照。
+          テキスト URL の正規化の詳細およびさらなる事例については、 <a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., &ldquo;Uniform Resource Identifiers (URI): Generic Syntax,&rdquo; .</span><span>)</span></a> Section 6 を参照。
           
         
 </p><br /><hr class="insert" />
@@ -3716,7 +3645,7 @@ OP ローカル識別子</h3>
         
 </p>
 <p>
-          このシナリオにおいて、適切な構成で Yadis または HTML ベースのディスカバリ（セクション 7.3 および下記付属資料 A.3 参照）を実行すると、 RP はエンドユーザに関して以下の情報が得られる。
+          このシナリオにおいて、適切な構成で Yadis または HTML ベースのディスカバリ（Section 7.3 および下記付属資料 A.3 参照）を実行すると、 RP はエンドユーザに関して以下の情報が得られる。
           
 
           </p>
