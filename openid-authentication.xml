@@ -23,7 +23,7 @@
 
     <abstract> 
       <t>
-        OpenID 認証は、エンドユーザが識別子  (Identifier)  を管理していることを証明する方法を提供するものである。OpenID 認証を利用すれば、リライングパーティー (Relying Party 、以下 RP) はエンドユーザのパスワードやメールアドレスなどにアクセスする必要がなくなる。
+        OpenID 認証は、エンドユーザが識別子  (Identifier)  を管理していることを証明する方法を提供するものである。OpenID 認証を利用すれば、リライングパーティー (Relying Party、以下 RP) はエンドユーザのパスワードやメールアドレスなどにアクセスする必要がなくなる。
         <!--
         OpenID Authentication provides a way to prove that an end user
         controls an Identifier. It does this without the Relying Party
@@ -378,7 +378,7 @@
         </section>
 
         <!-- section title="HTTP Encoding" anchor="http_encoding" -->
-        <section title="HTTPエンコーディング" anchor="http_encoding">
+        <section title="HTTP エンコーディング" anchor="http_encoding">
           <t>
           HTTP サーバにメッセージを送るときは、<xref target="HTML401" /> の Section 17.13.4 に定められるフォームエンコーディングを用いてエンコードしなければならない (MUST)。同様に、要求のヘッダに "Content-Type" ヘッダが含まれている場合は、その値も <xref target="HTML401" /> の Section 17.13.4 に定められたエンコーディングでなければならない (MUST)。
           <!--
