@@ -809,7 +809,7 @@ Base 10 number | btwoc string representation
         <!-- section title="Indirect Error Responses" anchor="indirect_error" -->
         <section title="エラー時の間接応答" anchor="indirect_error">
           <t>
-            fあった場合や無効な引数が含まれていた場合、OP は、ユーザエージェントを "openid.return_to" URL 値にリダイレクトしなければならない (MUST)。ただし、値が存在し、その値が有効な URL である場合に限る。
+            不正な要求があった場合や無効な引数が含まれていた場合、OP は、ユーザエージェントを "openid.return_to" URL 値にリダイレクトしなければならない (MUST)。ただし、値が存在し、その値が有効な URL である場合に限る。
             <!--
             In the case of a malformed request, or one that contains
             invalid arguments, the OpenID Provider MUST redirect the
