@@ -541,12 +541,10 @@ error:This is an example message
         </t>
         <figure>
           <preamble><!-- Non-normative example --> 参考例:</preamble>
-          <artwork>
 <!--
 Base 10 number | btwoc string representation
 -->
-
-<![CDATA[
+          <artwork><![CDATA[
 10 進数表現      | btwoc文字列表現
 ---------------+----------------------------
 0              | "\x00"
