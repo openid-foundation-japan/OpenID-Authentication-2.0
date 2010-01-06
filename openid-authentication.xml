@@ -2548,8 +2548,9 @@ Base 10 number | btwoc string representation
                 -->
                 </t>
                 <t>
-                  注：アサーションにどちらの識別子も存在しない場合、そのアサーションは identifier に
-                  関するものではなく、拡張仕様を用いて、ペイロードに含まれることになる。
+                  注：アサーションにどちらの識別子も存在しない場合、そのアサーションは識別子に
+                  関するものではなく、<xref target="extensions">拡張仕様</xref>を用いて、
+                  ペイロードにその他の情報が含まれることになる。
                 <!--
                 Note: If neither Identifier is present in the assertion, it is not about 
                 an identifier, and will contain other information in its payload, using 
@@ -4243,7 +4244,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          こうした攻撃が最も重大な影響を与える可能性があるのは、各メッセージに対しOP が離散対数の演算を行う必要があるアソシエーションフェーズである。
+          こうした攻撃が最も重大な影響を与える可能性があるのは、各メッセージに対しOP が離散指数の演算を行う必要があるアソシエーションフェーズである。
           RP はメッセージごとにモジュラスやジェネレータを指定することができるので、攻撃者はOP に対し、各メッセージへの応答に優先して累乗計算をリアルタイムに実行するよう強制すらできる。
           <!--
           The potentially most severe attack is during the association
