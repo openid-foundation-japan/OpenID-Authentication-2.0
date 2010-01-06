@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en"><head><title>Final: OpenID Authentication 2.0 - 最終版</title>
-<meta http-equiv="Expires" content="Thu, 24 Dec 2009 02:37:32 +0000">
+<meta http-equiv="Expires" content="Wed, 06 Jan 2010 15:41:17 +0000">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="description" content="OpenID Authentication 2.0 - 最終版">
 <meta name="generator" content="xml2rfc v1.34 (http://xml.resource.org/)">
@@ -340,7 +340,7 @@ Author's Address<br />
 </dd>
 <dt>OP エンドポイントURL (OP Endpoint URL):</dt>
 <dd>
-            OpenID 認証プロトコルメッセージを受け入れる URL で、ユーザ入力識別子 (User-Supplied Identifier) のディスカバリ (discovery) を実行することにより得られる。この値は、絶対 HTTP または HTTPS URL でなければならない (MUST)。
+            OpenID 認証プロトコルメッセージを受け入れる URL で、ユーザ入力識別子 (User-Supplied Identifier) のディスカバリ (discovery) を実行することにより得られる。この値は、HTTP または HTTPS の絶対 URL でなければならない (MUST)。
             
           
 </dd>
@@ -404,7 +404,7 @@ Author's Address<br />
 </li>
 <li>
             (オプション) 
-            RP と OP の間に<a class='info' href='#associations'>アソシエーション (association)<span> (</span><span class='info'>アソシエーションの確立</span><span>)</span></a> を確立する。共有秘密鍵の確立には、<a class='info' href='#RFC2631'>Diffie-Hellman 鍵交換<span> (</span><span class='info'>Rescorla, E., &ldquo;Diffie-Hellman Key Agreement Method,&rdquo; .</span><span>)</span></a> [RFC2631] を用いる。OP はその後のメッセージに署名するためにアソシエーションを用い、RP はこれらのメッセージを検証するためにアソシエーションを用いる。その結果、それぞれの認証要求／応答に続く署名検証のための直接要求を行なう必要がなくなる。
+            RP と OP の間の<a class='info' href='#associations'>アソシエーション (association)<span> (</span><span class='info'>アソシエーションの確立</span><span>)</span></a> を確立は、<a class='info' href='#RFC2631'>Diffie-Hellman 鍵交換<span> (</span><span class='info'>Rescorla, E., &ldquo;Diffie-Hellman Key Agreement Method,&rdquo; .</span><span>)</span></a> [RFC2631]を用いた共有秘密鍵の発行をもって行う。OP はその後のメッセージに署名するためにアソシエーションを用い、RP はこれらのメッセージを検証するためにアソシエーションを用いる。その結果、それぞれの認証要求／応答に続く署名検証のための直接要求を行なう必要がなくなる。
             
           
 </li>
@@ -424,7 +424,7 @@ Author's Address<br />
           
 </li>
 <li>
-            RP は、OP から受け取った情報を<a class='info' href='#verification'>検証<span> (</span><span class='info'>アサーションの検証</span><span>)</span></a>し、戻り URL (Return URL) のチェック、ディスカバリによって得られた情報の検証、ノンス (nonce) のチェックなどを行なう。また、アソシエーション時に確立した共有鍵を用いる、あるいは OP に直接要求を送る、のいずれかの方法で、署名を検証する。
+            RP は、OP から受け取った情報を<a class='info' href='#verification'>検証<span> (</span><span class='info'>アサーションの検証</span><span>)</span></a>し、戻り URL (Return URL) のチェック、ディスカバリによって得られた情報の検証、ノンス (nonce) のチェックなどを行なう。また、アソシエーション確立時に発行した共有鍵、あるいは OP への直接要求のいずれかを用いて、署名を検証する。
             
            
 </li>
@@ -589,9 +589,6 @@ error:This is an example message
 </p>
 <p> 参考例:
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
-&lt;!--
-Base 10 number | btwoc string representation
---&gt;
 10 進数表現      | btwoc文字列表現
 ---------------+----------------------------
 0              | "\x00"
@@ -612,7 +609,7 @@ Base 10 number | btwoc string representation
 直接通信 (Direct Communication)</h3>
 
 <p>
-          直接通信は、OP エンドポイント URL に対し、RP 側から開始する。アソシエーションの確立および認証アサーションの検証のために用いられる。直接通信は、OP エンドポイント URL に対し、RP 側から開始する。<a class='info' href='#associations'>アソシエーションの確立<span> (</span><span class='info'>アソシエーションの確立</span><span>)</span></a>および<a class='info' href='#check_auth'>認証アサーションの検証<span> (</span><span class='info'>OpenID プロバイダを通じた直接検証</span><span>)</span></a>のために用いられる。
+          直接通信は、OP エンドポイント URL に対し、RP 側から開始され、アソシエーションの確立および認証アサーションの検証のために用いられる。直接通信は、OP エンドポイント URL に対し、RP 側から開始され、<a class='info' href='#associations'>アソシエーションの確立<span> (</span><span class='info'>アソシエーションの確立</span><span>)</span></a>および<a class='info' href='#check_auth'>認証アサーションの検証<span> (</span><span class='info'>OpenID プロバイダを通じた直接検証</span><span>)</span></a>のために用いられる。
           
         
 </p>
@@ -797,7 +794,7 @@ HTML フォームリダイレクト</h3>
 エラー時の間接応答</h3>
 
 <p>
-            不正な要求があった場合や無効な引数が含まれていた場合、OP は、ユーザエージェントを "openid.return_to" URL 値にリダイレクトしなければならない (MUST)。ただし、値が存在し、その値が有効な URL である場合に限る。
+            fあった場合や無効な引数が含まれていた場合、OP は、ユーザエージェントを "openid.return_to" URL 値にリダイレクトしなければならない (MUST)。ただし、値が存在し、その値が有効な URL である場合に限る。
             
           
 </p>
@@ -1249,7 +1246,7 @@ HTML ベースのディスカバリ</h3>
 <a name="rfc.section.8"></a><h3>8.&nbsp;
 アソシエーションの確立</h3>
 
-<p>
+<p>ƒ
         RP と OP との間でアソシエーションを確立すると、共有秘密鍵が発行される。この共有秘密鍵を、その後両者間で交換されるプロトコルメッセージの検証に用いることで、メッセージのやりとりを減らすことができる。
         
       
@@ -1713,7 +1710,7 @@ Diffie-Hellman アソシエーションセッション</h3>
           
 </p>
 <p>
-            MAC 鍵 の長さは、ハッシュ関数 H の出力と同じ長さであると同時に、当該アソシエーションの署名アルゴリズムの出力と同じ長さでなければならない (MUST)。つまり、DH-SHA1 については 160 ビット (20 バイト)、DH-SHA256 については 256 ビット (32 バイト) となる。
+            MAC 鍵 の長さは、ハッシュ関数 H の出力および、当該アソシエーションの署名アルゴリズムの出力と同じ長さでなければならない (MUST)。つまり、DH-SHA1 の場合は 160 ビット (20 バイト)、DH-SHA256 の場合は 256 ビット (32 バイト) となる。
             
           
 </p>
@@ -1730,8 +1727,8 @@ Diffie-Hellman アソシエーションセッション</h3>
 <p>
         RP がディスカバリの実行に成功し、ディスカバリによって得られた OP エンドポイント URL
         とアソシエーションを構築 (オプション) すれば、RP は、アサーションを得るために OP に
-        認証要求を送ることができる。認証要求は、<a class='info' href='#indirect_comm'>間接要求で
-        ある<span> (</span><span class='info'>間接通信 (Indirect Communication)</span><span>)</span></a>。
+        認証要求を送ることができる。認証要求は、<a class='info' href='#indirect_comm'>間接要求<span> (</span><span class='info'>間接通信 (Indirect Communication)</span><span>)</span></a>で
+        ある。
       
       
 </p>
@@ -1880,7 +1877,7 @@ Diffie-Hellman アソシエーションセッション</h3>
               
 <blockquote class="text">
 <p>
-                  値： (オプション)  OP が信頼することをエンドユーザに求めるべき (SHOULD) URL のパターン。
+                  値： (オプション)  OP がエンドユーザに新任を求めるべきである (SHOULD) URL のパターン。
                   <a class='info' href='#realms'>Section&nbsp;9.2<span> (</span><span class='info'>レルム</span><span>)</span></a>参照。openid.return_to を省略した場合は、この値を送らなけ
                   ればならない(MUST)。
                 
@@ -1905,7 +1902,7 @@ Diffie-Hellman アソシエーションセッション</h3>
 <p>
           レルム (realm) とは、OpenID 認証要求が有効な URL 空間を表すパターンである。
           レルムは、認証要求の対象範囲をエンドユーザに知らせるために考案された。エンドユーザに
-          よる認証要求の承諾を依頼する際、OP はレルムを提示すべきである (SHOULD)。レルムは、
+          認証要求の承諾を求める際、OP はレルムを提示すべきである (SHOULD)。レルムは、
           OP が RP を一意に特定するために用いるべきである (SHOULD)。例えば、OP は、エンド
           ユーザが認証要求の承認を自動化できるようにするために、レルムを用いてもよい (MAY)。
           
@@ -1932,33 +1929,33 @@ Diffie-Hellman アソシエーションセッション</h3>
         
 </p>
 <p>
-          以下の場合、URL はレルムと一致する。
+          以下の条件を満たす場合、URL はレルムにマッチする。
         
           </p>
 <ul class="text">
 <li>
-              URL スキームおよび URL のポートがレルムの中のスキームおよびポートと同一の場合。
-              URI マッチングに関する規則については、RFC 3986 [RFC3986] 、Section 3.1 参照。
+              URL スキームおよび URL のポートがレルムの中のスキームおよびポートと同一である。
+              URI マッチングに関する規則については、<a class='info' href='#RFC3986'>RFC 3986<span> (</span><span class='info'>Berners-Lee, T., &ldquo;Uniform Resource Identifiers (URI): Generic Syntax,&rdquo; .</span><span>)</span></a> [RFC3986]、Section 3.1 参照。
             
             
 </li>
 <li>
-              URL のパスが、レルムのパスまたはサブディレクトリに等しい場合。
+              URL のパスが、レルムのパスと同一、もしくはそのサブディレクトリである。
             
             
 </li>
 <li>
-              以下のいずれか。
+              以下のいずれかが成り立つ。
               
 <ol class="text">
 <li>
                   レルムのドメインがワイルドカード文字 "*." を含み、URL のドメインの末尾部分が
-                  ワイルドカード "*." に続くレルム部分と同一である場合。
+                  ワイルドカード "*." に続くレルム部分と同一である。
                 
                 
 </li>
 <li>
-                  URL のドメインがレルムのドメインと同一である場合。
+                  URL のドメインがレルムのドメインと同一である。
                 
                 
 </li>
@@ -1967,7 +1964,7 @@ Diffie-Hellman アソシエーションセッション</h3>
 </li>
 </ul><p>
           "openid.return_to" URL が存在するとき、"openid.return_to" URL は 
-          "openid.realm" と合致しなければならない (MUST)。もしくは、OP は、
+          "openid.realm" とマッチしなければならない (MUST)。マッチしない場合、OP は、
           <a class='info' href='#indirect_error'>エラー時の間接応答<span> (</span><span class='info'>エラー時の間接応答</span><span>)</span></a>を返さなければ
           ならない (MUST)。
           
@@ -1977,7 +1974,7 @@ Diffie-Hellman アソシエーションセッション</h3>
           OP は、http://*.com/ や http://*.co.uk/ などあまりにも汎用的なレルムを
           用いてエンドユーザがアサーションを行なわないようにすることが推奨される
           (RECOMMENDED)。あまりにも汎用的なレルムは、特定の RP の識別に用いるときには、
-          危険である場合がある。レルムが汎用的に過ぎるかどうかの判断は、OP に委ねられている。
+          危険である場合がある。レルムが汎用的過ぎるかどうかの判断は、OP に委ねられている。
         
         
 </p>
@@ -1990,9 +1987,9 @@ Diffie-Hellman アソシエーションセッション</h3>
             OP は、要求において指定された return_to URL が OpenID RP の
             エンドポイントであることを検証すべきである (SHOULD)。return_to URL の検証を
             行なうには、<a class='info' href='#rp_discovery'>RP に対するディスカバリ<span> (</span><span class='info'>OpenID リライングパーティーのディスカバリ</span><span>)</span></a>を
-            実行することによって、レルムのための RP のエンドポイントを取得する。ディスカバリ
+            実行し、レルムに対する RP のエンドポイントを取得する。ディスカバリ
             を実行すると、その結果得られる URL は常に、リダイレクトを辿った先の最後の HTTP 
-            応答の URL となる。レルムに関するディスカバリを実行したとき、その後何らかのリダイ
+            応答の URL となる。レルムに対してディスカバリを実行したとき、その後何らかのリダイ
             レクトが生じた場合、検証に失敗したことになる。ディスカバリが正常に完了したときは、
             return_to URL が RP のエンドポイントのひとつと一致することを確認する。
           
@@ -2094,7 +2091,7 @@ Diffie-Hellman アソシエーションセッション</h3>
 </p>
 <p>
         要求時に "openid.return_to" の値が省略されている場合、RP は認証アサーションを OP 
-        から受け取ることを望んでいない。これは、RP から OP へのデータ転送に拡張機能を用いて
+        から受け取ることを望んでいない。これは、RP から OP へのデータ送信に拡張機能を用いて
         いる場合に役立つ。
       
       
@@ -2152,7 +2149,7 @@ Diffie-Hellman アソシエーションセッション</h3>
 <blockquote class="text">
 <p>
                   値： (オプション) 主張識別子。"openid.claimed_id" と "openid.identity"について
-                  は、両方がともに存在するか、ともに存在しないかのいずれかとするものとする (SHALL)。
+                  は、両方がともに存在するか、ともに存在しないかのいずれかとする (SHALL)。
                 
                 
 </p>
@@ -2163,8 +2160,9 @@ Diffie-Hellman アソシエーションセッション</h3>
                 
 </p>
 <p>
-                  注：アサーションにどちらの識別子も存在しない場合、そのアサーションは identifier に
-                  関するものではなく、拡張仕様を用いて、ペイロードにその他の情報が含まれることになる。
+                  注：アサーションにどちらの識別子も存在しない場合、そのアサーションは識別子に
+                  関するものではなく、<a class='info' href='#extensions'>拡張仕様<span> (</span><span class='info'>拡張仕様</span><span>)</span></a>を用いて、
+                  ペイロードにその他の情報が含まれることになる。
                 
                 
 </p>
@@ -2293,7 +2291,7 @@ Diffie-Hellman アソシエーションセッション</h3>
               
 <blockquote class="text">
 <p>
-                  値: Section 6 で指定した方法で計算され、Base 64 エンコードされた署名
+                  値: <a class='info' href='#generating_signatures'>Section&nbsp;6<span> (</span><span class='info'>署名の生成</span><span>)</span></a> で指定した方法で計算され、Base 64 エンコードされた署名
                 
                 
 </p>
@@ -2473,7 +2471,7 @@ Diffie-Hellman アソシエーションセッション</h3>
             
 </li>
 <li>
-              "openid.return_to" URL の照会パラメータは、どのパラメータも、RP が受け取った
+              "openid.return_to" URL のクエリ値は、どのパラメータも、RP が受け取った
               HTTP 要求の URL に同じ値がなければならない。
             
             
@@ -2540,7 +2538,7 @@ Diffie-Hellman アソシエーションセッション</h3>
 <br clear="all" />
 
 <p style='text-align: center'>
-            この表は、ディスカバリによって得られた情報の <a class='info' href='#positive_assertions'>OpenID Authentication 2.0 "id_res"応答<span> (</span><span class='info'>肯定アサーション</span><span>)</span></a>へのマッピング (対応づけ) を示している。
+            この表は、<a class='info' href='#discovered_info'>ディスカバリによって得られた情報<span> (</span><span class='info'>ディスカバリによって得られる情報</span><span>)</span></a>の <a class='info' href='#positive_assertions'>OpenID Authentication 2.0 "id_res"応答<span> (</span><span class='info'>肯定アサーション</span><span>)</span></a>へのマッピング (対応づけ) を示している。
 
             ディスカバリによって得られた値の認証応答へのマッピング
           
@@ -2605,9 +2603,9 @@ Diffie-Hellman アソシエーションセッション</h3>
 </p>
 <p>
           タイムスタンプを利用して、現在時刻との時間差が大きすぎる応答を拒否してもよい (MAY)。
-          そのとき、攻撃を避ける上でノンスの保存が必要な時間は制限する。有効期限については、
-          本仕様の対象範囲外である。有効期限が長いほど、より多くのノンスを、より長時間保存する
-          必要がある。有効期限を短くすると、クロック・スキューやトランザクション時間が原因で誤って
+          そのとき、攻撃を避ける上でノンスの保存が必要な時間は制限する。有効期間については、
+          本仕様の対象範囲外である。有効期間が長いほど、より多くのノンスを、より長時間保存する
+          必要がある。有効期間を短くすると、クロック・スキューやトランザクション時間が原因で誤って
           拒否してしまう可能性が高まる。
         
         
@@ -2651,7 +2649,7 @@ Diffie-Hellman アソシエーションセッション</h3>
 OpenID プロバイダを通じた直接検証</h3>
 
 <p>
-            RP が OP に署名検証を行なわせたいときは、OP に直接要求を送る。OP は、署名検証のために、
+            RP が OP に署名検証を行なわせたいときは、OP に<a class='info' href='#direct_request'>直接要求<span> (</span><span class='info'>直接要求 (Direct Request)</span><span>)</span></a>を送る。OP は、署名検証のために、
             <a class='info' href='#positive_assertions'>肯定アサーション<span> (</span><span class='info'>肯定アサーション</span><span>)</span></a>発行時に生成された専用の
             アソシエーションを用いる。
           
@@ -3037,7 +3035,7 @@ OpenID Authentication 1.1 からの変更点</h3>
               
 </li>
 <li>
-                URL を識別子として用いた場合、既存のウェブのインフラとの互換性を高めるために、識別子は [RFC3986] に示される指針に従って正規化される。
+                URL を識別子として用いた場合、既存のウェブのインフラとの互換性を高めるために、識別子は <a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., &ldquo;Uniform Resource Identifiers (URI): Generic Syntax,&rdquo; .</span><span>)</span></a> に示される指針に従って正規化される。
                 
               
 </li>
@@ -3068,7 +3066,7 @@ OpenID Authentication 1.1 からの変更点</h3>
           
 </p>
 <p>
-            セキュリティに関する考慮事項のセクションを設け、プロトコルをエンドツーエンドで保護するために考慮している。
+            <a class='info' href='#security_considerations'>セキュリティに関する考慮事項のセクション<span> (</span><span class='info'>セキュリティに関する考慮事項</span><span>)</span></a>を設け、プロトコルをエンドツーエンドで保護するために考慮している。
             
           
 </p>
@@ -3179,7 +3177,8 @@ OpenID Authentication 1.1 互換性の実装</h3>
               
 </li>
 <li>
-                RP は、 "openid.response_nonce" パラメータがない認証応答を受け入れなければならない (MUST) 。
+                RP は、 "openid.response_nonce" パラメータがない<a class='info' href='#positive_assertions'>認証応答<span> (</span><span class='info'>肯定アサーション</span><span>)</span></a>
+                を受け入れなければならない (MUST) 。
                 リプレイアタックを防ぐための手段を実装すべきである (SHOULD) 。
                 
               
@@ -3201,7 +3200,7 @@ OpenID プロバイダ</h3>
             </p>
 <ul class="text">
 <li>
-                肯定の認証アサーション時に、"openid.identity" を送らなければならない (MUST) 。
+                <a class='info' href='#positive_assertions'>肯定の認証アサーション<span> (</span><span class='info'>肯定アサーション</span><span>)</span></a>の中に、"openid.identity" を含めて送らなければならない (MUST) 。
                 
               
 </li>
@@ -3379,7 +3378,7 @@ OpenID プロバイダ</h3>
 HTTP および HTTPS URL 識別子</h3>
 
 <p>
-          これらのタイプ識別子については、既に述べた通りであるが、再度触れておく価値がある。
+          これらのタイプ識別子については、<a class='info' href='#http_s_identifiers'>既に述べた通り<span> (</span><span class='info'>11.5.2. HTTP および HTTPS URL 識別子</span><span>)</span></a>であるが、再度触れておく価値がある。
           前述の通り、エンドユーザがスキーム以外は同一の URL を管理していることを表明するための方法としては、HTTP URL から HTTPS URL へのリダイレクトを発行することが推奨される (RECOMMENDED) 。
           RP は、 ディスカバリと開始フェーズでHTTP URLを決して保存するようなことはなく、リダイレクトを辿って、 HTTPS URL を主張識別子として用いる。
           
@@ -3407,7 +3406,7 @@ HTTP および HTTPS URL 識別子</h3>
         
 </p>
 <p>
-          こうした攻撃が最も重大な影響を与える可能性があるのは、各メッセージに対しOP が個別に多くの処理を行う必要があるアソシエーションフェーズである。
+          こうした攻撃が最も重大な影響を与える可能性があるのは、各メッセージに対しOP が離散指数の演算を行う必要があるアソシエーションフェーズである。
           RP はメッセージごとにモジュラスやジェネレータを指定することができるので、攻撃者はOP に対し、各メッセージへの応答に優先して累乗計算をリアルタイムに実行するよう強制すらできる。
           
         
@@ -3645,7 +3644,7 @@ OP ローカル識別子</h3>
         
 </p>
 <p>
-          このシナリオにおいて、適切な構成で Yadis または HTML ベースのディスカバリ（Section 7.3 および下記付属資料 A.3 参照）を実行すると、 RP はエンドユーザに関して以下の情報が得られる。
+          このシナリオにおいて、適切な構成で Yadis または HTML ベースのディスカバリ（<a class='info' href='#discovery'>Section&nbsp;7.3<span> (</span><span class='info'>ディスカバリ</span><span>)</span></a> および下記 <a class='info' href='#XRDS_Sample'>Appendix&nbsp;A.3<span> (</span><span class='info'>XRDS</span><span>)</span></a> 参照）を実行すると、 RP はエンドユーザに関して以下の情報が得られる。
           
 
           </p>
