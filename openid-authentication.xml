@@ -2190,7 +2190,7 @@ Base 10 number | btwoc string representation
               openid.realm
               <list style='empty'>
                 <t>
-                  値： (オプション)  OP がエンドユーザに新任を求めるべきである (SHOULD) URL のパターン。
+                  値： (オプション)  OP がエンドユーザに信認を求めるべきである (SHOULD) URL のパターン。
                   <xref target="realms" />参照。openid.return_to を省略した場合は、この値を送らなけ
                   ればならない(MUST)。
                 <!--
