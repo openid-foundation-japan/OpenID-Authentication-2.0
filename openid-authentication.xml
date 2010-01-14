@@ -254,7 +254,7 @@
           </t>
           <t>
             (オプション) 
-            RP と OP の間の<xref target="associations">アソシエーション (association)</xref> を確立は、<xref target="RFC2631">Diffie-Hellman 鍵交換</xref>を用いた共有秘密鍵の発行をもって行う。OP はその後のメッセージに署名するためにアソシエーションを用い、RP はこれらのメッセージを検証するためにアソシエーションを用いる。その結果、それぞれの認証要求／応答に続く署名検証のための直接要求を行なう必要がなくなる。
+            RP と OP の間の<xref target="associations">アソシエーション (association)</xref> の確立は、<xref target="RFC2631">Diffie-Hellman 鍵交換</xref>を用いた共有秘密鍵の発行をもって行う。OP はその後のメッセージに署名するためにアソシエーションを用い、RP はこれらのメッセージを検証するためにアソシエーションを用いる。その結果、それぞれの認証要求／応答に続く署名検証のための直接要求を行なう必要がなくなる。
             <!--
             (optional)
 
@@ -441,8 +441,7 @@
                 <list style='empty'>
                   <t>
                     値: メッセージタイプごとに個別に指定。
-                    <!-- Value: Specified individually for each message -->
-                    type.
+                    <!-- Value: Specified individually for each message type. -->
                   </t>
                   <t>
                     "openid.mode" パラメータを用いることによって、メッセージ受信者は、処理中のメッセージの種類を知ることができる。"openid.mode" がない場合、メッセージ処理側は、その要求が OpenID メッセージではないと見なすべきである (SHOULD)。
@@ -565,7 +564,7 @@ Base 10 number | btwoc string representation
       <section title="直接通信 (Direct Communication)"
                anchor="direct_comm">
         <t>
-          直接通信は、OP エンドポイント URL に対し、RP 側から開始され、アソシエーションの確立および認証アサーションの検証のために用いられる。直接通信は、OP エンドポイント URL に対し、RP 側から開始され、<xref target="associations">アソシエーションの確立</xref>および<xref target="check_auth">認証アサーションの検証</xref>のために用いられる。
+          直接通信は、OP エンドポイント URL に対し、RP 側から開始され、<xref target="associations">アソシエーションの確立</xref>および<xref target="check_auth">認証アサーションの検証</xref>のために用いられる。
           <!--
           Direct communication is initiated by a Relying Party to an
           OP endpoint URL.  It is used for <xref
@@ -1063,7 +1062,7 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              その後、コンテンツを取得するときにリダイレクトを辿り、最終的な目的の URL に対して <xref target='RFC3986' /> Section 6 に記されている規則を適用することよって、URL 識別子をさらに正規化しなければならない (MUST)。この最終 URL を、RP は主張識別子として記録し、<xref target="requesting_authentication">認証要求</xref>時に使用しなければならない (MUST)。
+              その後、コンテンツを取得するときにリダイレクトを辿り、最終的な目的の URL に対して <xref target='RFC3986' /> Section 6 に記されている規則を適用することによって、URL 識別子をさらに正規化しなければならない (MUST)。この最終 URL を、RP は主張識別子として記録し、<xref target="requesting_authentication">認証要求</xref>時に使用しなければならない (MUST)。
               <!--
               URL Identifiers MUST then be further normalized by both
               following redirects when retrieving their content and
@@ -1264,7 +1263,7 @@ Base 10 number | btwoc string representation
                   </t>
 
                   <t>
-                    テキスト内容が OP- ローカル識別子 の &lt;xrd:LocalID&gt; タグ (オプション)
+                    テキスト内容が OP ローカル識別子 の &lt;xrd:LocalID&gt; タグ (オプション)
                     <!--
                     An &lt;xrd:LocalID&gt; tag (optional) whose text
                     content is the OP-Local Identifier.
@@ -1473,7 +1472,7 @@ Base 10 number | btwoc string representation
 
     <section title="アソシエーションの確立" anchor="associations">
     <!-- section title="Establishing Associations" anchor="associations" -->
-      <t>ƒ
+      <t>
         RP と OP との間でアソシエーションを確立すると、共有秘密鍵が発行される。この共有秘密鍵を、その後両者間で交換されるプロトコルメッセージの検証に用いることで、メッセージのやりとりを減らすことができる。
         <!--
         An association between the Relying Party and the OpenID Provider
@@ -1935,7 +1934,7 @@ Base 10 number | btwoc string representation
       <section title="アソシエーションセッション形式" anchor="assoc_sess_types">
       <!-- section title="Association Session Types" anchor="assoc_sess_types" -->
         <t>
-          OpenID 認証では、"no-encryption" 、"DH-SHA1" 、"DHSHA256" の3 種類の有効なアソシエーションセッション形式が定義されている。
+          OpenID 認証では、"no-encryption" 、"DH-SHA1" 、"DH-SHA256" の3 種類の有効なアソシエーションセッション形式が定義されている。
           <!--
           OpenID Authentication defines three valid association
           session types: "no-encryption", "DH-SHA1", and "DH-SHA256".
@@ -2008,10 +2007,7 @@ Base 10 number | btwoc string representation
 
     <section title="認証要求" anchor="requesting_authentication">
       <t>
-        RP がディスカバリの実行に成功し、ディスカバリによって得られた OP エンドポイント URL
-        とアソシエーションを構築 (オプション) すれば、RP は、アサーションを得るために OP に
-        認証要求を送ることができる。認証要求は、<xref target="indirect_comm">間接要求</xref>で
-        ある。
+        RP がディスカバリの実行に成功し、ディスカバリによって得られた OP エンドポイント URL とアソシエーションを構築 (オプション) すれば、RP は、アサーションを得るために OP に認証要求を送ることができる。認証要求は、<xref target="indirect_comm">間接要求</xref>である。
       <!--
       Once the Relying Party has successfully performed discovery and 
       (optionally) created an association with the discovered OP 
@@ -2046,9 +2042,7 @@ Base 10 number | btwoc string representation
                 -->
                 </t>
                 <t>
-                  注： RP がエンドユーザと OP との対話を望む場合は、"checkid_setup" を用いる
-                  べきである。エンドユーザと OP との対話を望まない状況の例として、JavaScript 
-                  の中で非同期の認証要求が生じた場合があげられる。
+                  注： RP がエンドユーザと OP との対話を望む場合は、"checkid_setup" を用いるべきである。エンドユーザと OP との対話を望まない状況の例として、JavaScript の中で非同期の認証要求が生じた場合があげられる。
                 <!--
                 Note: If the Relying Party wishes the end user to be able to 
                 interact with the OP, "checkid_setup" should be used. 
@@ -2070,11 +2064,7 @@ Base 10 number | btwoc string representation
                 -->
                 </t>
                 <t>
-                  "openid.claimed_id" と "openid.identity" については、両方がともに存在するか、
-                  ともに存在しないかのいずれかとする (SHALL)。どちらの値も存在しない場合、
-                  そのアサーションは識別子に関するものではなく、
-                  <xref target="extensions">拡張仕様</xref>を用いて、ペイロードにその他の
-                  情報が含まれることになる。
+                  "openid.claimed_id" と "openid.identity" については、両方がともに存在するか、ともに存在しないかのいずれかとする (SHALL)。どちらの値も存在しない場合、そのアサーションは識別子に関するものではなく、<xref target="extensions">拡張仕様</xref>を用いて、ペイロードにその他の情報が含まれることになる。
                 <!--
                 "openid.claimed_id" and "openid.identity" SHALL be either both 
                 present or both absent. If neither value is present, the assertion 
@@ -2083,10 +2073,7 @@ Base 10 number | btwoc string representation
                 -->
                 </t>
                 <t>
-                  OP は、<xref target="normalization">正規化</xref>のセクションで示した通り、
-                  "xri://" プリフィックスを伴った XRI 識別子または "xri://" プリフィックスを伴わ
-                  ない XRI 識別子を受け入れることが推奨される
-                  (RECOMMENDED)。
+                  OP は、<xref target="normalization">正規化</xref>のセクションで示した通り、"xri://" プリフィックスを伴った XRI 識別子または "xri://" プリフィックスを伴わない XRI 識別子を受け入れることが推奨される (RECOMMENDED)。
                 <!--
                 It is RECOMMENDED that OPs accept XRI identifiers with or without 
                 the "xri://" prefix, as specified in the Normalization section.
@@ -2105,19 +2092,14 @@ Base 10 number | btwoc string representation
                 -->
                 </t>
                 <t>
-                  openid.identity の値に異なる OP ローカル識別子 が指定されていない場合は、その値
-                  として主張識別子を用いなければならない (MUST)。
+                  openid.identity の値に異なる OP ローカル識別子 が指定されていない場合は、その値として主張識別子を用いなければならない (MUST)。
                 <!--
                 If a different OP-Local Identifier is not specified, the claimed 
                 identifier MUST be used as the value for openid.identity.
                 -->
                 </t>
                 <t>
-                  注： openid.identity に "http://specs.openid.net/auth/2.0/identifier_select"
-                  という特殊値が設定されている場合、OP は、エンドユーザに属する識別子を選択すべきである
-                  (SHOULD)。このパラメータは、要求が識別子に関するものでない場合 (例えば、拡張仕様が使用
-                  され、当該パラメータがなくても要求が意味をなす場合。上記 openid.claimed_id 参照)、
-                  省略してもよい (MAY)。
+                  注： openid.identity に "http://specs.openid.net/auth/2.0/identifier_select" という特殊値が設定されている場合、OP は、エンドユーザに属する識別子を選択すべきである (SHOULD)。このパラメータは、要求が識別子に関するものでない場合 (例えば、拡張仕様が使用され、当該パラメータがなくても要求が意味をなす場合。上記 openid.claimed_id 参照)、省略してもよい (MAY)。
                 <!--
                 Note: If this is set to the special value 
                 "http://specs.openid.net/auth/2.0/identifier_select" 
@@ -2134,16 +2116,14 @@ Base 10 number | btwoc string representation
               openid.assoc_handle
               <list style='empty'>
                 <t>
-                  値： (オプション)  RP と OP の間のアソシエーションハンドル。応答に署名するために用いる
-                  べきである (SHOULD)。
+                  値： (オプション)  RP と OP の間のアソシエーションハンドル。応答に署名するために用いるべきである (SHOULD)。
                 <!--
                 Value: (optional) A handle for an association between the Relying Party and 
                 the OP that SHOULD be used to sign the response.
                 -->
                 </t>
                 <t>
-                  注：アソシエーションハンドルが送られない場合、トランザクションは、
-                  <xref target="check_auth">ステートレスモードで</xref>行われる。
+                  注：アソシエーションハンドルが送られない場合、トランザクションは、<xref target="check_auth">ステートレスモードで</xref>行われる。
                 <!--
                 Note: If no association handle is sent, the transaction will take place in 
                 Stateless Mode.
@@ -2156,25 +2136,21 @@ Base 10 number | btwoc string representation
               openid.return_to
               <list style='empty'>
                 <t>
-                  値： (オプション)  OP が要求のステータスを示す応答とともにユーザエージェントを戻すべき
-                  (SHOULD) URL。
+                  値： (オプション)  OP が要求のステータスを示す応答とともにユーザエージェントを戻すべき (SHOULD) URL。
                 <!--
                 Value: (optional) URL to which the OP SHOULD return the User-Agent with 
                 the response indicating the status of the request.
                 -->
                 </t>
                 <t>
-                  注：送られた要求の中にこの値が記されていない場合、エンドユーザが戻されることを RP は
-                  望んでいないということを意味している。
+                  注：送られた要求の中にこの値が記されていない場合、エンドユーザが戻されることを RP は望んでいないということを意味している。
                 <!--
                 Note: If this value is not sent in the request it signifies that the Relying 
                 Party does not wish for the end user to be returned.
                 -->
                 </t>
                 <t>
-                  注：認証要求に関するコンテキストを RP が認証応答に添付する仕組みとして、return_to URL を
-                  利用してもよい (MAY)。本文書では、クエリパラメータが外部の第三者によって変更されないことを
-                  RP が保証できる仕組みは定義していない。このような仕組みは、RP 自身で定義することができる。
+                  注：認証要求に関するコンテキストを RP が認証応答に添付する仕組みとして、return_to URL を利用してもよい (MAY)。本文書では、クエリパラメータが外部の第三者によって変更されないことを RP が保証できる仕組みは定義していない。このような仕組みは、RP 自身で定義することができる。
                 <!--
                 Note: The return_to URL MAY be used as a mechanism for the Relying Party to 
                 attach context about the authentication request to the authentication response. 
@@ -2190,9 +2166,7 @@ Base 10 number | btwoc string representation
               openid.realm
               <list style='empty'>
                 <t>
-                  値： (オプション)  OP がエンドユーザに信認を求めるべきである (SHOULD) URL のパターン。
-                  <xref target="realms" />参照。openid.return_to を省略した場合は、この値を送らなけ
-                  ればならない(MUST)。
+                  値： (オプション)  OP がエンドユーザに信任を求めるべきである (SHOULD) URL のパターン。<xref target="realms" />参照。openid.return_to を省略した場合は、この値を送らなければならない(MUST)。
                 <!--
                 Value: (optional) URL pattern the OP SHOULD ask the end user to trust. 
                 See Section 9.2. This value MUST be sent if openid.return_to is omitted.
@@ -2212,11 +2186,7 @@ Base 10 number | btwoc string representation
 
       <section title="レルム" anchor="realms">
         <t>
-          レルム (realm) とは、OpenID 認証要求が有効な URL 空間を表すパターンである。
-          レルムは、認証要求の対象範囲をエンドユーザに知らせるために考案された。エンドユーザに
-          認証要求の承諾を求める際、OP はレルムを提示すべきである (SHOULD)。レルムは、
-          OP が RP を一意に特定するために用いるべきである (SHOULD)。例えば、OP は、エンド
-          ユーザが認証要求の承認を自動化できるようにするために、レルムを用いてもよい (MAY)。
+          レルム (realm) とは、OpenID 認証要求が有効な URL 空間を表すパターンである。レルムは、認証要求の対象範囲をエンドユーザに知らせるために考案された。エンドユーザに認証要求の承諾を求める際、OP はレルムを提示すべきである (SHOULD)。レルムは、OP が RP を一意に特定するために用いるべきである (SHOULD)。例えば、OP は、エンドユーザが認証要求の承認を自動化できるようにするために、レルムを用いてもよい (MAY)。
           <!--
           A "realm" is a pattern that represents the part of URL-space for which 
           an OpenID Authentication request is valid. A realm is designed to give 
@@ -2241,9 +2211,7 @@ Base 10 number | btwoc string representation
             -->
             </t>
             <t>
-              レルムは、URL のオーソリティセクションの先頭にワイルドカードを含んでいてもよい
-               (MAY)。ワイルドカードは、"*." の文字列からなり、URL のオーソリティセクション
-              の DNS 名の前に付加される。
+              レルムは、URL のオーソリティセクションの先頭にワイルドカードを含んでいてもよい (MAY)。ワイルドカードは、"*." の文字列からなり、URL のオーソリティセクションの DNS 名の前に付加される。
             <!--
             A realm MAY contain a wild-card at the beginning of the URL authority section. A wild-card consists of the characters "*." prepended to the DNS name in the authority section of the URL.
             -->
@@ -2258,8 +2226,7 @@ Base 10 number | btwoc string representation
         -->
           <list style="symbols">
             <t>
-              URL スキームおよび URL のポートがレルムの中のスキームおよびポートと同一である。
-              URI マッチングに関する規則については、<xref target="RFC3986">RFC 3986</xref>、Section 3.1 参照。
+              URL スキームおよび URL のポートがレルムの中のスキームおよびポートと同一である。URI マッチングに関する規則については、<xref target="RFC3986">RFC 3986</xref>、Section 3.1 参照。
             <!--
               The URL scheme and port of the URL are identical to those
               in the realm.  See <xref target="RFC3986">RFC
@@ -2278,8 +2245,7 @@ Base 10 number | btwoc string representation
               以下のいずれかが成り立つ。<!-- Either: -->
               <list style="numbers">
                 <t>
-                  レルムのドメインがワイルドカード文字 "*." を含み、URL のドメインの末尾部分が
-                  ワイルドカード "*." に続くレルム部分と同一である。
+                  レルムのドメインがワイルドカード文字 "*." を含み、URL のドメインの末尾部分がワイルドカード "*." に続くレルム部分と同一である。
                 <!--
                 The realm's domain contains the wild-card characters "*.", and 
                 the trailing part of the URL's domain is identical to the part 
@@ -2295,10 +2261,7 @@ Base 10 number | btwoc string representation
               </list>
              </t>
           </list>
-          "openid.return_to" URL が存在するとき、"openid.return_to" URL は 
-          "openid.realm" とマッチしなければならない (MUST)。マッチしない場合、OP は、
-          <xref target="indirect_error">エラー時の間接応答</xref>を返さなければ
-          ならない (MUST)。
+          "openid.return_to" URL が存在するとき、"openid.return_to" URL は "openid.realm" とマッチしなければならない (MUST)。マッチしない場合、OP は、<xref target="indirect_error">エラー時の間接応答</xref>を返さなければならない (MUST)。
           <!--
           When present, the "openid.return_to" URL MUST match the "openid.realm", 
           or the OP MUST return an indirect error response.
@@ -2306,10 +2269,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          OP は、http://*.com/ や http://*.co.uk/ などあまりにも汎用的なレルムを
-          用いてエンドユーザがアサーションを行なわないようにすることが推奨される
-          (RECOMMENDED)。あまりにも汎用的なレルムは、特定の RP の識別に用いるときには、
-          危険である場合がある。レルムが汎用的過ぎるかどうかの判断は、OP に委ねられている。
+          OP は、http://*.com/ や http://*.co.uk/ などあまりにも汎用的なレルムを用いてエンドユーザがアサーションを行なわないようにすることが推奨される (RECOMMENDED)。あまりにも汎用的なレルムは、特定の RP の識別に用いるときには、危険である場合がある。レルムが汎用的過ぎるかどうかの判断は、OP に委ねられている。
         <!--
         It is RECOMMENDED that OPs protect their users from making assertions 
         with overly-general realms, like http://*.com/ or http://*.co.uk/. 
@@ -2322,14 +2282,7 @@ Base 10 number | btwoc string representation
         <section title="レルムを用いた戻りURLの検証"
                  anchor="return_to_verification">
           <t>
-            OP は、要求において指定された return_to URL が OpenID RP の
-            エンドポイントであることを検証すべきである (SHOULD)。return_to URL の検証を
-            行なうには、<xref target="rp_discovery">RP に対するディスカバリ</xref>を
-            実行し、レルムに対する RP のエンドポイントを取得する。ディスカバリ
-            を実行すると、その結果得られる URL は常に、リダイレクトを辿った先の最後の HTTP 
-            応答の URL となる。レルムに対してディスカバリを実行したとき、その後何らかのリダイ
-            レクトが生じた場合、検証に失敗したことになる。ディスカバリが正常に完了したときは、
-            return_to URL が RP のエンドポイントのひとつと一致することを確認する。
+            OP は、要求において指定された return_to URL が OpenID RP のエンドポイントであることを検証すべきである (SHOULD)。return_to URL の検証を行なうには、<xref target="rp_discovery">RP に対するディスカバリ</xref>を実行し、レルムに対する RP のエンドポイントを取得する。ディスカバリを実行すると、その結果得られる URL は常に、リダイレクトを辿った先の最後の HTTP 応答の URL となる。レルムに対してディスカバリを実行したとき、その後何らかのリダイレクトが生じた場合、検証に失敗したことになる。ディスカバリが正常に完了したときは、return_to URL が RP のエンドポイントのひとつと一致することを確認する。
           <!--
           OpenID providers SHOULD verify that the return_to URL specified in the 
           request is an OpenID relying party endpoint. To verify a return_to URL, 
@@ -2342,9 +2295,7 @@ Base 10 number | btwoc string representation
           -->
           </t>
           <t>
-            レルムはワイルドカードを含む場合があり、そのため有効なURLでないことがある。 
-            この場合は、レルムの中のワイルドカードを "www" に置き換え、その結果得られる
-            URL に関してディスカバリを実行する。
+            レルムはワイルドカードを含む場合があり、そのため有効なURLでないことがある。この場合は、レルムの中のワイルドカードを "www" に置き換え、その結果得られる URL に関してディスカバリを実行する。
           <!--
           A realm may contain a wildcard, and so may not be a valid URL. In that case, 
           perform discovery on the URL obtained by substituting "www" for the wildcard 
@@ -2352,10 +2303,7 @@ Base 10 number | btwoc string representation
           -->
           </t>
           <t>
-            return_to URL を RP のエンドポイントと照合するためには、RP のエンドポイントURL
-            をレルムとして扱い、return_to URL をレルムと照合するために用いたのと同じ規則を
-            適用する。RP の エンドポイント URL は、ドメインのワイルドカードを含んではならず 
-            (MUST NOT)、可能な限り、固有のものであるべきである (SHOULD)。
+            return_to URL を RP のエンドポイントと照合するためには、RP のエンドポイント URL をレルムとして扱い、return_to URL をレルムと照合するために用いたのと同じ規則を適用する。RP の エンドポイント URL は、ドメインのワイルドカードを含んではならず (MUST NOT)、可能な限り、固有のものであるべきである (SHOULD)。
           <!--
           To match a return_to URL against a relying party endpoint, use the same 
           rules as for matching the return_to URL against the realm, treating the 
@@ -2364,8 +2312,7 @@ Base 10 number | btwoc string representation
           -->
           </t>
           <t>
-            検証を試みても失敗した場合、プロバイダは、その return_to URL に肯定アサーション 
-            (positive assertion) を送るべきではない (SHOULD NOT)。
+            検証を試みても失敗した場合、プロバイダは、その return_to URL に肯定アサーション (positive assertion) を送るべきではない (SHOULD NOT)。
           <!--
           If verification is attempted and fails, the provider SHOULD NOT send 
           a positive assertion to that return_to URL.
@@ -2382,11 +2329,7 @@ Base 10 number | btwoc string representation
 
       <section title="即時要求">
         <t>
-          RP は、認証要求に当り、OP がエンドユーザとの対話を行なわないことを要求してもよい
-          (MAY)。この場合、OP は即時に、認証成功のアサーション、または、ユーザとさらに
-          対話を行なわないと要求が完了できないことを示す応答のいずれかを返さなければなら
-          ない (MUST)。即時要求は、認証要求の "openid.mode" に "checkid_immediate"
-          という値を設定することによって実現できる。
+          RP は、認証要求に当り、OP がエンドユーザとの対話を行なわないことを要求してもよい (MAY)。この場合、OP は即時に、認証成功のアサーション、または、ユーザとさらに対話を行なわないと要求が完了できないことを示す応答のいずれかを返さなければならない (MUST)。即時要求は、認証要求の "openid.mode" に "checkid_immediate" という値を設定することによって実現できる。
         <!--
         When requesting authentication, the Relying Party MAY request that the 
         OP not interact with the end user. In this case the OP MUST respond 
@@ -2402,11 +2345,7 @@ Base 10 number | btwoc string representation
     <section title="認証要求に対する応答"
              anchor="responding_to_authentication">
       <t>
-        <xref target="indirect_comm">間接通信</xref>を通じてユーザエージェントから認証
-        要求を受け取ったときには、OP は、認可済みの正規のエンドユーザが認証完了を望んでいる
-        と判断すべきである (SHOULD)。認可済みの正規のエンドユーザが認証完了を望んでいる場合、
-        OP は、RP に<xref target="positive_assertions">肯定アサーション</xref>を送る
-        べきである (SHOULD)。
+        <xref target="indirect_comm">間接通信</xref>を通じてユーザエージェントから認証要求を受け取ったときには、OP は、認可済みの正規のエンドユーザが認証完了を望んでいると判断すべきである (SHOULD)。認可済みの正規のエンドユーザが認証完了を望んでいる場合、OP は、RP に<xref target="positive_assertions">肯定アサーション</xref>を送るべきである (SHOULD)。
       <!--
       When an authentication request comes from the User-Agent via indirect 
       communication, the OP SHOULD determine that an authorized end user wishes 
@@ -2415,9 +2354,7 @@ Base 10 number | btwoc string representation
       -->
       </t>
       <t>
-        認可済み正規のエンドユーザの識別方法および OpenID 認証アサーションを戻す上で必要な
-        承諾の取得方法については、本仕様の対象範囲外である。OP のセキュリティ
-        に関する考慮事項については、<xref target="rp_mitm_proxy" />参照のこと。
+        認可済みのエンドユーザの識別方法および OpenID 認証アサーションを戻す上で必要な承諾の取得方法については、本仕様の対象範囲外である。OP のセキュリティに関する考慮事項については、<xref target="rp_mitm_proxy" />参照のこと。
       <!--
       Methods of identifying authorized end users and obtaining approval to return an 
       OpenID Authentication assertion are beyond the scope of this specification. 
@@ -2425,10 +2362,7 @@ Base 10 number | btwoc string representation
       -->
       </t>
       <t>
-        "openid.identity" に "http://specs.openid.net/auth/2.0/identifier_select"
-        という値を設定することによって OP 主導での識別子選択を RP が要求し、エンドユーザが
-        認証応答の発行を認可される複数の識別子がある場合、OP は、エンドユーザがどの識別子を
-        使用するのかを選択できるようにすべきである (SHOULD)。
+        "openid.identity" に "http://specs.openid.net/auth/2.0/identifier_select" という値を設定することによって OP 主導での識別子選択を RP が要求し、エンドユーザが認証応答の発行を認可される複数の識別子がある場合、OP は、エンドユーザがどの識別子を使用するのかを選択できるようにすべきである (SHOULD)。
       <!--
       If the relying party requested OP-driven identifier selection by setting 
       "openid.identity" to "http://specs.openid.net/auth/2.0/identifier_select" 
@@ -2438,12 +2372,7 @@ Base 10 number | btwoc string representation
       -->
       </t>
       <t>
-        RP が認証要求にアソシエーションハンドルを付与した場合、OP は、そのハンドルをもとに
-        してアソシエーションを探すべきである (SHOULD)。アソシエーションが見つからない
-        か有効期限切れで失効している場合、OP は、応答の一部として、要求の "openid.assoc_handle"
-        パラメータと同じ値で"openid.invalidate_handle" パラメータを送り返すべきである 
-        (SHOULD)。さらに OP は、アソシエーションハンドルが指定されなかった場合と同様に、
-        処理を継続すべきである (SHOULD)。
+        RP が認証要求にアソシエーションハンドルを付与した場合、OP は、そのハンドルをもとにしてアソシエーションを探すべきである (SHOULD)。アソシエーションが見つからないか有効期限切れで失効している場合、OP は、応答の一部として、要求の "openid.assoc_handle" パラメータと同じ値で"openid.invalidate_handle" パラメータを送り返すべきである (SHOULD)。さらに OP は、アソシエーションハンドルが指定されなかった場合と同様に、処理を継続すべきである (SHOULD)。
       <!--
       If the Relying Party supplied an association handle with the authentication 
       request, the OP SHOULD attempt to look up an association based on that handle. 
@@ -2454,10 +2383,7 @@ Base 10 number | btwoc string representation
       -->
       </t>
       <t>
-        アソシエーションハンドルの指定がない場合、OP は、応答への署名に専用のアソシエーションを
-        用いるべきである (SHOULD)。OP は、このアソシエーションを記憶しなければならない (MUST)。
-        また、その後の要求に応答し、<xref target="check_auth">直接検証</xref>を通じて応答の
-        署名をチェックしなければならない (MUST)。
+        アソシエーションハンドルの指定がない場合、OP は、応答への署名に専用のアソシエーションを用いるべきである (SHOULD)。OP は、このアソシエーションを記憶しなければならない (MUST)。また、その後の要求に応答し、<xref target="check_auth">直接検証</xref>を通じて応答の署名をチェックしなければならない (MUST)。
       <!--
       If no association handle is specified, the OP SHOULD use a private association
       for signing the response. The OP MUST store this association and MUST respond 
@@ -2465,9 +2391,7 @@ Base 10 number | btwoc string representation
       -->
       </t>
       <t>
-        RP は、認証要求を済ませていない識別子に関するアサーションを受け入れ、検証すべきである
-        (SHOULD)。OP は、一方的な (unsolicited) 肯定アサーションの署名に専用のアソシ
-        エーションを用いるべきである (SHOULD)
+        RP は、認証要求を済ませていない識別子に関するアサーションを受け入れ、検証すべきである (SHOULD)。OP は、一方的な (unsolicited) 肯定アサーションの署名に専用のアソシエーションを用いるべきである (SHOULD)
       <!--
       Relying Parties SHOULD accept and verify assertions about Identifiers for which 
       they have not requested authentication. OPs SHOULD use private associations for 
@@ -2475,9 +2399,7 @@ Base 10 number | btwoc string representation
       -->
       </t>
       <t>
-        要求時に "openid.return_to" の値が省略されている場合、RP は認証アサーションを OP 
-        から受け取ることを望んでいない。これは、RP から OP へのデータ送信に拡張機能を用いて
-        いる場合に役立つ。
+        要求時に "openid.return_to" の値が省略されている場合、RP は認証アサーションを OP から受け取ることを望んでいない。これは、RP から OP へのデータ送信に拡張機能を用いている場合に役立つ。
       <!--
       If the "openid.return_to" value is omitted in the request, the Relying Party does 
       not wish to receive an authentication assertion from the OP. This can be useful 
@@ -2487,8 +2409,7 @@ Base 10 number | btwoc string representation
 
       <section title="肯定アサーション" anchor="positive_assertions">
         <t>
-          肯定アサーションのフィールドは、以下の通り。
-          <xref target="indirect_comm">間接通信</xref>で行う。
+          肯定アサーションのフィールドは、以下の通り。<xref target="indirect_comm">間接通信</xref>で行う。
         <!--
         Positive assertions are <xref target="indirect_comm">indirect responses</xref> with the following fields:
         -->
@@ -2530,25 +2451,21 @@ Base 10 number | btwoc string representation
               openid.claimed_id
               <list style='empty'>
                 <t>
-                  値： (オプション) 主張識別子。"openid.claimed_id" と "openid.identity"について
-                  は、両方がともに存在するか、ともに存在しないかのいずれかとする (SHALL)。
+                  値： (オプション) 主張識別子。"openid.claimed_id" と "openid.identity"については、両方がともに存在するか、ともに存在しないかのいずれかとする (SHALL)。
                 <!--
                 Value: (optional) The Claimed Identifier. "openid.claimed_id" and 
                 "openid.identity" SHALL be either both present or both absent.
                 -->
                 </t>
                 <t>
-                  注：エンドユーザは、OP ローカル識別子 を主張識別子として 使用することを選択してもよい
-                  (MAY)。
+                  注：エンドユーザは、OP ローカル識別子 を主張識別子として 使用することを選択してもよい (MAY)。
                 <!--
                 Note: The end user MAY choose to use an OP-Local Identifier as a 
                 Claimed Identifier.
                 -->
                 </t>
                 <t>
-                  注：アサーションにどちらの識別子も存在しない場合、そのアサーションは識別子に
-                  関するものではなく、<xref target="extensions">拡張仕様</xref>を用いて、
-                  ペイロードにその他の情報が含まれることになる。
+                  注：アサーションにどちらの識別子も存在しない場合、そのアサーションは識別子に関するものではなく、<xref target="extensions">拡張仕様</xref>を用いて、ペイロードにその他の情報が含まれることになる。
                 <!--
                 Note: If neither Identifier is present in the assertion, it is not about 
                 an identifier, and will contain other information in its payload, using 
@@ -2568,10 +2485,7 @@ Base 10 number | btwoc string representation
                  -->
                 </t>
                 <t>
-                  注：OpenIDプロバイダは、アサーションを作成する対象である主張識別子および OP ローカル
-                  識別子の選択において、エンドユーザを支援してもよい (MAY)。拡張仕様が使用され、当該
-                  フィールドがなくても応答が意味をなす場合、openid.identity フィールドを省略しても
-                  よい (MAY)  (上記 openid.claimed_id 参照)。
+                  注：OpenIDプロバイダは、アサーションを作成する対象である主張識別子および OP ローカル識別子の選択において、エンドユーザを支援してもよい (MAY)。拡張仕様が使用され、当該フィールドがなくても応答が意味をなす場合、openid.identity フィールドを省略してもよい (MAY) (上記 openid.claimed_id 参照)。
                 <!--
                 Note: OpenID Providers MAY assist the end user in selecting the Claimed 
                 and OP-Local Identifiers about which the assertion is made. 
@@ -2598,12 +2512,7 @@ Base 10 number | btwoc string representation
               openid.response_nonce
               <list style='empty'>
                 <t>
-                  値：長さが 255 文字以下の文字列で、この成功した特定の認証応答に固有のものでなければ
-                  ならない (MUST)。ノンスは、サーバの現在時刻で始まらなければならない (MUST)。
-                  またノンスには、それぞれの応答を固有のものとする上での必要に応じて、33-126 の範囲
-                  に含まれる ASCII 文字 (空白を除く印刷可能な文字) を追加してもよい (MAY)。
-                  日付および時刻は [RFC3339] Section 5.6<xref target="RFC3339" />に指定され
-                  る形式で記述しなければならない (MUST) が、以下の制限がある。
+                  値：長さが 255 文字以下の文字列で、この成功した特定の認証応答に固有のものでなければならない (MUST)。ノンスは、サーバの現在時刻で始まらなければならない (MUST)。またノンスには、それぞれの応答を固有のものとする上での必要に応じて、33-126 の範囲に含まれる ASCII 文字 (空白を除く印刷可能な文字) を追加してもよい (MAY)。日付および時刻は [RFC3339] Section 5.6<xref target="RFC3339" />に指定される形式で記述しなければならない (MUST) が、以下の制限がある。
                 <!--
                 Value: A string 255 characters or less in length, that MUST be unique to 
                 this particular successful authentication response. The nonce MUST start 
@@ -2640,8 +2549,7 @@ Base 10 number | btwoc string representation
               openid.invalidate_handle
               <list style='empty'>
                 <t>
-                  値： (オプション) 要求とともに RP が無効なアソシエーションハンドルを送った場合、
-                  その値をここに含めるべきである (SHOULD)。
+                  値： (オプション) 要求とともに RP が無効なアソシエーションハンドルを送った場合、その値をここに含めるべきである (SHOULD)。
                 <!--
                 Value: (optional) If the Relying Party sent an invalid association handle 
                 with the request, it SHOULD be included here.
@@ -2672,12 +2580,7 @@ Base 10 number | btwoc string representation
                 -->
                 </t>
                 <t>
-                  注：このエントリは、署名がカバーしているフィールドからなるが、"openid." プリ
-                  フィックスは省略する。このリストは、少なくとも "op_endpoint" 、"return_to" 、
-                  "response_nonce" 、"assoc_handle" を含まなければならない (MUST)。
-                  また、応答に存在する場合は、"claimed_id" と "identity" を含まなければならない
-                  (MUST)。追加のキーをメッセージの一部として署名してもよい (MAY)。
-                  <xref target="generating_signatures">署名の生成</xref>を参照のこと。
+                  注：このエントリは、署名がカバーしているフィールドからなるが、"openid." プリフィックスは省略する。このリストは、少なくとも "op_endpoint"、"return_to"、"response_nonce"、"assoc_handle" を含まなければならない (MUST)。また、応答に存在する場合は、"claimed_id" と "identity" を含まなければならない (MUST)。追加のキーをメッセージの一部として署名してもよい (MAY)。<xref target="generating_signatures">署名の生成</xref>を参照のこと。
                 <!--
                 Note: This entry consists of the fields without the "openid." prefix 
                 that the signature covers. This list MUST contain at least "op_endpoint", 
@@ -2716,10 +2619,7 @@ Base 10 number | btwoc string representation
 
       <section title="否定アサーション" anchor="negative_assertions">
         <t>
-          OP がエンドユーザを識別できない場合、あるいは、エンドユーザが認証要求を承諾しない、
-          もしくは承諾できない場合、OP は、RP に対し<xref target="indirect_comm">
-          間接応答</xref>の形で否定アサーション (negative asserton) を送るべきである
-          (SHOULD)。
+          OP がエンドユーザを識別できない場合、あるいは、エンドユーザが認証要求を承諾しない、もしくは承諾できない場合、OP は、RP に対し<xref target="indirect_comm">間接応答</xref>の形で否定アサーション (negative asserton) を送るべきである (SHOULD)。
         <!--
         If the OP is unable to identify the end user or the end user does not or 
         cannot approve the authentication request, the OP SHOULD send a negative 
@@ -2728,10 +2628,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          "checkid_immediate" モードでの要求に対する応答として否定アサーションを受け取った
-          とき、RP は、"checkid_setup" モードを用いて、新たな認証要求を構築すべきである
-          (SHOULD)。OpenID Authentication 1.1 との相違点に関する詳細は、
-          <xref target="compat_mode" />で述べる。
+          "checkid_immediate" モードでの要求に対する応答として否定アサーションを受け取ったとき、RP は、"checkid_setup" モードを用いて、新たな認証要求を構築すべきである (SHOULD)。OpenID Authentication 1.1 との相違点に関する詳細は、<xref target="compat_mode" />で述べる。
         <!--
         When receiving a negative assertion in response to a "checkid_immediate" 
         mode request, Relying Parties SHOULD construct a new authentication 
@@ -2742,9 +2639,7 @@ Base 10 number | btwoc string representation
 
         <section title="即時要求への応答の場合">
           <t>
-            要求が即時要求であった場合、エンドユーザが OP のページを介して対話し、識別用の
-            クレデンシャルと要求に対するの承諾を送信する機会はない。即時要求への否定アサー
-            ションは、以下のフォームとする。
+            要求が即時要求であった場合、エンドユーザが OP のページを介して対話し、識別用のクレデンシャルと要求に対するの承諾を送信する機会はない。即時要求への否定アサーションは、以下のフォームとする。
           <!--
           If the request was an immediate request, there is no chance for the end 
           user to interact with pages on the OP to provide identifying credentials 
@@ -2779,9 +2674,7 @@ Base 10 number | btwoc string representation
 
         <section title="即時要求ではない要求への応答の場合">
           <t>
-            OP がエンドユーザに対してページを表示し、エンドユーザのクレデンシャルを要求しても
-            よいことから、即時要求ではない要求への否定応答は最終的なものとなる。この場合の否定
-            応答は、以下のフォームとする。
+            OP がエンドユーザに対してページを表示し、エンドユーザのクレデンシャルを要求してもよいことから、即時要求ではない要求への否定応答は最終的なものとなる。この場合の否定応答は、以下のフォームとする。
           <!--
           Since the OP may display pages to the end user and request credentials 
           from the end user, a negative response to a request that is not 
@@ -2814,12 +2707,7 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            ユーザが認証要求の完了を望まない場合、あるいは認証要求を完了できない場合、
-            OpenID の認証プロセスが異常終了し、キャンセルモードの応答を RP が取得できない
-            ことが多い (継続する代わりに、エンドユーザは終了したり、ユーザエージェントの「戻る」
-            ボタンを押したりするかもしれない)。RP が "cancel" 応答を受け取った場合、認証は
-            失敗したことを意味し、RP はそのエンドユーザを認証されなかったものとして扱わなけれ
-            ばならない (MUST)。
+            ユーザが認証要求の完了を望まない場合、あるいは認証要求を完了できない場合、OpenID の認証プロセスが異常終了し、キャンセルモードの応答を RP が取得できないことが多い (継続する代わりに、エンドユーザは終了したり、ユーザエージェントの「戻る」ボタンを押したりするかもしれない)。RP が "cancel" 応答を受け取った場合、認証は失敗したことを意味し、RP はそのエンドユーザを認証されなかったものとして扱わなければならない (MUST)。
           <!--
           Often, if the user does not wish to or cannot complete the authentication 
           request, the OpenID authentication process will be aborted and the Relying 
@@ -2835,8 +2723,7 @@ Base 10 number | btwoc string representation
 
     <section title="アサーションの検証" anchor="verification">
       <t>
-        RP が肯定アサーションを受け取ったときには、そのアサーションを受け入れる前に、
-        以下の値について検証しなければならない (MUST)。
+        RP が肯定アサーションを受け取ったときには、そのアサーションを受け入れる前に、以下の値について検証しなければならない (MUST)。
           <!--
           When the Relying Party receives a positive assertion, it MUST verify 
           the following before accepting the assertion:
@@ -2844,31 +2731,26 @@ Base 10 number | btwoc string representation
 
         <list style="symbols">
           <t>
-            "openid.return_to" が現在の要求の URL と一致する
-            (<xref target="verify_return_to" />)
+            "openid.return_to" が現在の要求の URL と一致する (<xref target="verify_return_to" />)
           <!--
           The value of "openid.return_to" matches the URL of the current request (Section 11.1)
           -->
           </t>
           <t>
-            ディスカバリによって得られた情報がアサーションの情報と一致する
-            (<xref target="verify_disco" />)
+            ディスカバリによって得られた情報がアサーションの情報と一致する (<xref target="verify_disco" />)
           <!--
           Discovered information matches the information in the assertion (Section 11.2)
           -->
           </t>
           <t>
-            "openid.response_nonce" について、当該 OP から、これまでに同じ値の
-            アサーションを受け入れたことがない
-            (<xref target="verify_nonce" />)
+            "openid.response_nonce" について、当該 OP から、これまでに同じ値のアサーションを受け入れたことがない (<xref target="verify_nonce" />)
           <!--
           An assertion has not yet been accepted from this OP with the same value for 
           "openid.response_nonce" (Section 11.3)
           -->
           </t>
           <t>
-            アサーションの署名が有効で、署名が必要な全てのフィールドに署名がされている
-            (<xref target="verifying_signatures" />)
+            アサーションの署名が有効で、署名が必要な全てのフィールドに署名がされている (<xref target="verifying_signatures" />)
           <!--
           The signature on the assertion is valid and all fields that are required to 
           be signed are signed (Section 11.4)
@@ -2876,8 +2758,7 @@ Base 10 number | btwoc string representation
           </t>
         </list>
 
-        上記４つの条件が全て満たされていれば、アサーションが検証されたことになる。アサーション
-        に主張識別子が含まれている場合は、その識別子について、ユーザの認証が済んだことになる。
+        上記４つの条件が全て満たされていれば、アサーションが検証されたことになる。アサーションに主張識別子が含まれている場合は、その識別子について、ユーザの認証が済んだことになる。
         <!--
         If all four of these conditions are met, assertion is now verified. 
         If the assertion contained a Claimed Identifier, the user is now 
@@ -2887,23 +2768,20 @@ Base 10 number | btwoc string representation
 
       <section title="戻り URL の検証" anchor="verify_return_to">
         <t>
-          "openid.return_to" URL がこのアサーションを処理している URL と一致している
-          ことを検証するためには、
+          "openid.return_to" URL がこのアサーションを処理している URL と一致していることを検証するためには、
         <!--
         To verify that the "openid.return_to" URL matches the URL that is 
         processing this assertion:
         -->
           <list style="symbols">
             <t>
-              URL のスキーム、オーソリティ、パスが、ふたつの URL の間で同じでなければならない
-              (MUST)。
+              URL のスキーム、オーソリティ、パスが、ふたつの URL の間で同じでなければならない (MUST)。
             <!--
             The URL scheme, authority, and path MUST be the same between the two URLs.
             -->
             </t>
             <t>
-              "openid.return_to" URL のクエリ値は、どのパラメータも、RP が受け取った
-              HTTP 要求の URL に同じ値がなければならない。
+              "openid.return_to" URL のクエリ値は、どのパラメータも、RP が受け取った HTTP 要求の URL に同じ値がなければならない。
             <!--
             Any query parameters that are present in the "openid.return_to" URL MUST 
             also be present with the same values in the URL of the HTTP request the 
@@ -2916,9 +2794,7 @@ Base 10 number | btwoc string representation
 
       <section title="ディスカバリによって得られた情報の検証" anchor="verify_disco">
         <t>
-          アサーションの中の主張識別子が URL で、フラグメントを含む場合、ディスカバリによって
-          得られた情報を検証するために、そのフラグメント部分およびフラグメントの区切り文字 "#"
-          を用いてはならない (MUST NOT)。
+          アサーションの中の主張識別子が URL で、フラグメントを含む場合、ディスカバリによって得られた情報を検証するために、そのフラグメント部分およびフラグメントの区切り文字 "#" を用いてはならない (MUST NOT)。
         <!--
         If the Claimed Identifier in the assertion is a URL and contains a fragment, 
         the fragment part and the fragment delimiter character "#" MUST NOT be used 
@@ -2927,10 +2803,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          主張識別子がアサーションに含まれている場合、その主張識別子は RP が事前にディスカバリ
-          によって取得したものでなければならない (MUST)。また、アサーションの中の情報はディス
-          カバリによって得られた情報の中に存在していなければならない (MUST)。主張識別子は OP
-          識別子であってはならない (MUST NOT)。
+          主張識別子がアサーションに含まれている場合、その主張識別子は RP が事前にディスカバリによって取得したものでなければならない (MUST)。また、アサーションの中の情報はディスカバリによって得られた情報の中に存在していなければならない (MUST)。主張識別子は OP 識別子であってはならない (MUST NOT)。
         <!--
         If the Claimed Identifier is included in the assertion, it MUST have been 
         discovered by the Relying Party and the information in the assertion MUST 
@@ -2940,11 +2813,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          RP がその時点までに主張識別子をディスカバリによって取得していない場合 (要求中の 
-          "openid.identity" が "http://specs.openid.net/auth/2.0/identifier_select"
-          または異なる識別子であった場合、もしくは、OP が一方的な肯定アサーションを送ろうとして
-          いる場合)、RP は応答の中の主張識別子に関するディスカバリを実行し、その主張識別子に関
-          するアサーションを行なう権限を OP が有しているかどうかを確認しなければならない (MUST)。
+          RP がその時点までに主張識別子をディスカバリによって取得していない場合 (要求中の "openid.identity" が "http://specs.openid.net/auth/2.0/identifier_select"または異なる識別子であった場合、もしくは、OP が一方的な肯定アサーションを送ろうとしている場合)、RP は応答の中の主張識別子に関するディスカバリを実行し、その主張識別子に関するアサーションを行なう権限を OP が有しているかどうかを確認しなければならない (MUST)。
         <!--
         If the Claimed Identifier was not previously discovered by the Relying Party
         (the "openid.identity" in the request was 
@@ -2956,9 +2825,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          応答の中に主張識別子がない場合、アサーションは識別子に関するものではない。RP は、ユーザ
-          を識別するために、現在の OpenID 認証トランザクションに関連するユーザ入力識別子を用いて
-          はならない (MUST NOT)。しかし、アサーションの中の拡張仕様情報は用いてもよい (MAY)。
+          応答の中に主張識別子がない場合、アサーションは識別子に関するものではない。RP は、ユーザを識別するために、現在の OpenID 認証トランザクションに関連するユーザ入力識別子を用いてはならない (MUST NOT)。しかし、アサーションの中の拡張仕様情報は用いてもよい (MAY)。
         <!--
         If no Claimed Identifier is present in the response, the assertion is not about 
         an identifier and the RP MUST NOT use the User-supplied Identifier associated 
@@ -2983,10 +2850,7 @@ Base 10 number | btwoc string representation
           <c>プロトコルバージョン</c>
           <c>openid.ns</c>
           <postamble>
-            この表は、<xref target="discovered_info">ディスカバリによって得られた情報</xref>の <xref target="positive_assertions">
-            OpenID Authentication 2.0 "id_res"応答</xref>へのマッピング (対応づけ) を示している。
-
-            ディスカバリによって得られた値の認証応答へのマッピング
+            この表は、<xref target="discovered_info">ディスカバリによって得られた情報</xref>の <xref target="positive_assertions">OpenID Authentication 2.0 "id_res" 応答</xref>へのマッピング (対応づけ) を示している。
           <!--
             This table shows the mapping of <xref
             target="discovered_info">discovered information</xref>
@@ -2998,10 +2862,7 @@ Base 10 number | btwoc string representation
         </texttable>
 
         <t>
-          XRDS 文書を生成するディスカバリの仕組みを使用する場合、いずれかの &lt;xrd:Service&gt; 
-          エレメントの中に、プロトコルバージョン、OPエンドポイントURL および OP ローカル識別子 
-          (主張識別子と異なる場合) が記されていなければならない (MUST)。その &lt;xrd:Service&gt; 
-          エレメントの中に使用されないフィールドがあってもよい (MAY)。
+          XRDS 文書を生成するディスカバリの仕組みを使用する場合、いずれかの &lt;xrd:Service&gt; エレメントの中に、プロトコルバージョン、OPエンドポイントURL および OP ローカル識別子 (主張識別子と異なる場合) が記されていなければならない (MUST)。その &lt;xrd:Service&gt; エレメントの中に使用されないフィールドがあってもよい (MAY)。
         <!--
         If using a discovery mechanism that yields an XRDS document, the protocol 
         version, OP Endpoint URL and the OP-Local Identifier (if different than the 
@@ -3021,11 +2882,7 @@ Base 10 number | btwoc string representation
 </Service>
 ]]></artwork>
           <postamble>
-            この XRDS 断片の例では、&lt;xrd:Service&gt; エレメントにふたつの &lt;xrd:URI&gt; エレメントが
-            あり、<xref target="discovered_info" /> の通り OP エンドポイント URL へと対応づけ
-            られている。アサーションの中の "openid.op_endpoint" の値がふたつのうちのいずれかであ
-            れば、そのフィールドとこの &lt;xrd:Service&gt; エレメントとが一致する。もう一方の &lt;xrd:URI&gt;
-            エレメントは使われない。
+            この XRDS 断片の例では、&lt;xrd:Service&gt; エレメントにふたつの &lt;xrd:URI&gt; エレメントがあり、<xref target="discovered_info" /> の通り OP エンドポイント URL へと対応づけられている。アサーションの中の "openid.op_endpoint" の値がふたつのうちのいずれかであれば、そのフィールドとこの &lt;xrd:Service&gt; エレメントとが一致する。もう一方の &lt;xrd:URI&gt; エレメントは使われない。
           <!--
           In this example XRDS snippet, the <xrd:Service> element has two <xrd:URI> 
           elements, which map to OP Endpoint URLs as per Section 7.3.1. If an assertion 
@@ -3037,11 +2894,9 @@ Base 10 number | btwoc string representation
 
       </section>
 
-      <section title="11.3. ノンスのチェック" anchor="verify_nonce">
+      <section title=ノンスのチェック" anchor="verify_nonce">
         <t>
-          リプレイアタックを阻止するため、署名のチェックを行なうエージェントは、肯定アサーションの
-          中に含まれるノンス値の履歴を辿り、同一の OP エンドポイント URL について、同じ値を二度
-          以上決して受け入れてはならない。
+          リプレイアタックを阻止するため、署名のチェックを行なうエージェントは、肯定アサーションの中に含まれるノンス値の履歴を辿り、同一の OP エンドポイント URL について、同じ値を二度以上決して受け入れてはならない。
         <!--
         To prevent replay attacks, the agent checking the signature keeps track of 
         the nonce values included in positive assertions and never accepts the same 
@@ -3051,17 +2906,14 @@ Base 10 number | btwoc string representation
         <t>
           <list style="symbols">
             <t>
-              "check_authentication" を用いるに当たり、OP は、要求への成功時の応答の
-              "openid.response_nonce" に、同一の値を二度以上用いてはならない (MUST NOT)。
+              "check_authentication" を用いるに当たり、OP は、要求への成功時の応答の "openid.response_nonce" に、同一の値を二度以上用いてはならない (MUST NOT)。
             <!--
             When using "check_authentication", the OP MUST NOT issue more than one 
             successful response to a request with the same value for "openid.response_nonce".
             -->
             </t>
             <t>
-              RP がアサーションの署名をチェックするに当たり、RP は、同じ OP エンドポイント URL
-              から "openid.response_nonce" の値が同一のアサーションを過去に受け入れていないこと
-              を保証すべきである (SHOULD)。
+              RP がアサーションの署名をチェックするに当たり、RP は、同じ OP エンドポイント URL から "openid.response_nonce" の値が同一のアサーションを過去に受け入れていないことを保証すべきである (SHOULD)。
             <!--
             When the Relying Party checks the signature on an assertion, the Relying Party 
             SHOULD ensure that an assertion has not yet been accepted with the same value 
@@ -3071,11 +2923,7 @@ Base 10 number | btwoc string representation
           </list>
         </t>
         <t>
-          タイムスタンプを利用して、現在時刻との時間差が大きすぎる応答を拒否してもよい (MAY)。
-          そのとき、攻撃を避ける上でノンスの保存が必要な時間は制限する。有効期間については、
-          本仕様の対象範囲外である。有効期間が長いほど、より多くのノンスを、より長時間保存する
-          必要がある。有効期間を短くすると、クロック・スキューやトランザクション時間が原因で誤って
-          拒否してしまう可能性が高まる。
+          タイムスタンプを利用して、現在時刻との時間差が大きすぎる応答を拒否してもよい (MAY)。そのとき、攻撃を避ける上でノンスの保存が必要な時間は制限する。有効期間については、本仕様の対象範囲外である。有効期間が長いほど、より多くのノンスを、より長時間保存する必要がある。有効期間を短くすると、クロック・スキューやトランザクション時間が原因で誤って拒否してしまう可能性が高まる。
         <!--
         The time-stamp MAY be used to reject responses that are too far away from the 
         current time, limiting the amount of time that nonces must be stored to prevent 
@@ -3087,13 +2935,10 @@ Base 10 number | btwoc string representation
         </t>
       </section>
 
-      <section title="11.4. 署名の検証"
+      <section title="署名の検証"
                anchor="verifying_signatures">
         <t>
-          アサーションで指定されるアソシエーションハンドルに紐付くアソシエーションを RP が保存し
-          た場合、RP は、アサーション自体の署名をチェックしなければならない (MUST)。
-          アソシエーションを保存していない場合、RP は、OP が<xref target="check_auth">直接検証
-          </xref>を通じて署名を検証するように要求しなければならない (MUST)。
+          アサーションで指定されるアソシエーションハンドルに紐付くアソシエーションを RP が保存した場合、RP は、アサーション自体の署名をチェックしなければならない (MUST)。アソシエーションを保存していない場合、RP は、OP が<xref target="check_auth">直接検証</xref>を通じて署名を検証するように要求しなければならない (MUST)。
         <!--
         If the Relying Party has stored an association with the association handle 
         specified in the assertion, it MUST check the signature on the assertion 
@@ -3104,8 +2949,7 @@ Base 10 number | btwoc string representation
 
         <section title="アソシエーションによる検証" toc="exclude">
           <t>
-            RP は署名を生成する際に OP が従うのと同じ手順に従い、その後、応答の中の署名を生成
-            された署名と比較する。署名が一致しなければ、アサーションは無効である。
+            RP は署名を生成する際に OP が従うのと同じ手順に従い、その後、応答の中の署名を生成された署名と比較する。署名が一致しなければ、アサーションは無効である。
           <!--
           The Relying Party follows the same procedure that the OP followed in 
           generating the signature, and then compares the signature in the response 
@@ -3115,12 +2959,7 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            認証要求に OP 、RP 間のアソシエーションのアソシエーションハンドルが含まれているが、
-            OP がそのアソシエーションハンドルをもはや使用したくない場合 (例えば、有効期限が既に切れ
-            ている、秘密鍵が漏えいしてしまったなどの理由による場合)、<xref target="check_auth" />
-            で指定する通り、OP は、OP との直接検証が必要な応答を送ることになる。この場合、OP は、
-            RP から受け取った元の要求に含まれていたアソシエーションハンドルを 
-            "openid.invalidate_handle" の値に設定して、そのフィールドを含める。
+            認証要求に OP 、RP 間のアソシエーションのアソシエーションハンドルが含まれているが、OP がそのアソシエーションハンドルをもはや使用したくない場合 (例えば、有効期限が既に切れている、秘密鍵が漏えいしてしまったなどの理由による場合)、<xref target="check_auth" /> で指定する通り、OP は、OP との直接検証が必要な応答を送ることになる。この場合、OP は、RP から受け取った元の要求に含まれていたアソシエーションハンドルを "openid.invalidate_handle" の値に設定して、そのフィールドを含める。
           <!--
           If an authentication request included an association handle for an association 
           between the OP and the Relying party, and the OP no longer wishes to use that 
@@ -3136,9 +2975,7 @@ Base 10 number | btwoc string representation
         <section title="OpenID プロバイダを通じた直接検証"
                  toc="exclude" anchor="check_auth">
           <t>
-            RP が OP に署名検証を行なわせたいときは、OP に<xref target="direct_request">直接要求</xref>を送る。OP は、署名検証のために、
-            <xref target="positive_assertions">肯定アサーション</xref>発行時に生成された専用の
-            アソシエーションを用いる。
+            RP が OP に署名検証を行なわせたいときは、OP に<xref target="direct_request">直接要求</xref>を送る。OP は、署名検証のために、<xref target="positive_assertions">肯定アサーション</xref>発行時に生成された専用のアソシエーションを用いる。
           <!--
             To have the signature verification performed by the OP,
             the Relying Party sends a <xref target="direct_request">
@@ -3171,11 +3008,7 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              署名検証のために OP は、専用のアソシエーションを用いなければならない (MUST)。また、
-              共有鍵を有するアソシエーションを用いてはならない (MUST NOT)。共有されているアソシ
-              エーションのハンドルが検証要求に含まれている場合は、RP がもはや秘密共有鍵を知らない、
-              あるいは、このアソシエーションが RP 以外のエンティティ (例えば、攻撃者) と OP との間
-              で確立してしまっていることを意味している。
+              署名検証のために OP は、専用のアソシエーションを用いなければならない (MUST)。また、共有鍵を有するアソシエーションを用いてはならない (MUST NOT)。共有されているアソシエーションのハンドルが検証要求に含まれている場合は、RP がもはや秘密共有鍵を知らない、あるいは、このアソシエーションが RP 以外のエンティティ (例えば、攻撃者) と OP との間で確立してしまっていることを意味している。
               <!--
               For verifying signatures an OP MUST only use private associations and MUST 
               NOT use associations that have shared keys. If the verification request 
@@ -3186,9 +3019,7 @@ Base 10 number | btwoc string representation
             </t>
 
             <t>
-              リプレイアタックを阻止するため、OP は、過去に発行した認証応答のそれぞれについて、
-              検証応答を二度以上発行してはならない (MUST NOT)。"openid.response_nonce" 
-              の値で、認証応答およびそれに対応する検証要求を識別してもよい。
+              リプレイアタックを阻止するため、OP は、過去に発行した認証応答のそれぞれについて、検証応答を二度以上発行してはならない (MUST NOT)。"openid.response_nonce" の値で、認証応答およびそれに対応する検証要求を識別してもよい。
             <!--
             To prevent replay attacks, the OP MUST NOT issue more than one verification 
             response for each authentication response it had previously issued. 
@@ -3231,18 +3062,14 @@ Base 10 number | btwoc string representation
                   invalidate_handle
                   <list style='empty'>
                     <t>
-                      値： (オプション)  OP が無効であることを確認した場合に、検証要求の中で送る
-                      "invalidate_handle" の値。
+                      値： (オプション)  OP が無効であることを確認した場合に、検証要求の中で送る "invalidate_handle" の値。
                     <!--
                     Value: (optional) The "invalidate_handle" value sent in the verification request, 
                     if the OP confirms it is invalid.
                     -->
                     </t>
                     <t>
-                      説明： "true" に設定された "is_valid" を含む検証応答の中に、このパラメータ
-                      が存在する場合、RP は、保存しているアソシエーションの中から対応するものを削除
-                      すべきである (SHOULD)。また、これ以降、このハンドルを含む認証要求を送るべき
-                      ではない (SHOULD NOT)。
+                      説明： "true" に設定された "is_valid" を含む検証応答の中に、このパラメータが存在する場合、RP は、保存しているアソシエーションの中から対応するものを削除すべきである (SHOULD)。また、これ以降、このハンドルを含む認証要求を送るべきではない (SHOULD NOT)。
                     <!--
                     Description: If present in a verification response with "is_valid" set to "true", 
                     the Relying Party SHOULD remove the corresponding association from its store and 
@@ -3250,9 +3077,7 @@ Base 10 number | btwoc string representation
                     -->
                     </t>
                     <t>
-                      注：認証応答に "invalidate_handle" パラメータを追加することによって、攻撃者
-                      がアソシエーションを自由自在に無効化してしまうのを防止するためには、こうした二段階
-                      のアソシエーション無効化プロセスが必要である。
+                      注：認証応答に "invalidate_handle" パラメータを追加することによって、攻撃者がアソシエーションを自由自在に無効化してしまうのを防止するためには、こうした二段階のアソシエーション無効化プロセスが必要である。
                     <!--
                     Note: This two-step process for invalidating associations is necessary to prevent 
                     an attacker from invalidating an association at will by adding "invalidate_handle" 
@@ -3269,10 +3094,7 @@ Base 10 number | btwoc string representation
 
       <section title="エンドユーザの識別" anchor="identifying">
         <t>
-          RP は、成功時の認証応答における主張識別子を、ローカルストレージ内のユーザ情報へ
-          のキーとして用いるべきである (SHOULD)。また、主張識別子をユーザが管理して
-          いる識別子として用いてもよい (MAY)。URL 識別子を表示するときは、フラグ
-          メントを省略してもよい (MAY)。
+          RP は、成功時の認証応答における主張識別子を、ローカルストレージ内のユーザ情報へのキーとして用いるべきである (SHOULD)。また、主張識別子をユーザが管理している識別子として用いてもよい (MAY)。URL 識別子を表示するときは、フラグメントを省略してもよい (MAY)。
         <!--
         The Claimed Identifier in a successful authentication response SHOULD be used 
         by the Relying Party as a key for local storage of information about the user. 
@@ -3283,10 +3105,7 @@ Base 10 number | btwoc string representation
 
         <section title="識別子のリサイクル" anchor="identifier_recycling">
           <t>
-            多数のユーザを抱える OP は、必要に応じ、フラグメントを用いて
-            URL 識別子をリサイクルすることができる。新たなエンドユーザに対して URL 
-            識別子の再割り当てを行なうに当り、OP は、新規かつ固有のフラグメント部分を
-            生成すべきである。
+            多数のユーザを抱える OP は、必要に応じ、フラグメントを用いて URL 識別子をリサイクルすることができる。新たなエンドユーザに対して URL 識別子の再割り当てを行なうに当り、OP は、新規かつ固有のフラグメント部分を生成すべきである。
           <!--
           OpenID Providers with large user bases can use fragments to recycle URL 
           Identifiers if it is so desired. When reassigning a URL Identifier to 
@@ -3294,9 +3113,7 @@ Base 10 number | btwoc string representation
           -->
           </t>
           <t>
-            フラグメント部分を含む URL 全体は、肯定アサーションにおいて主張識別子を構成
-            する要素であるため、RP は、フラグメントを除く URL の現在の所有者と以前の
-            所有者を区別することになる。
+            フラグメント部分を含む URL 全体は、肯定アサーションにおいて主張識別子を構成する要素であるため、RP は、フラグメントを除く URL の現在の所有者と以前の所有者を区別することになる。
           <!--
           The full URL with the fragment part constitutes the Claimed Identifier 
           in positive assertions, therefore Relying Parties will distinguish between 
@@ -3304,9 +3121,7 @@ Base 10 number | btwoc string representation
           -->
           </t>
           <t>
-            この仕組みを用いると、(恐らく短く、記憶しやすい) リサイクルされたフラグメント
-            のない URL 識別子を、エンドユーザがログイン時に使用したり、RP が表示するため
-            に用いたりすることができるようになる。
+            この仕組みを用いると、(恐らく短く、記憶しやすい) リサイクルされたフラグメントのない URL 識別子を、エンドユーザがログイン時に使用したり、RP が表示するために用いたりすることができるようになる。
           <!--
           This mechanism allows the (presumably short, memorable) recycled URL Identifiers 
           without the fragment to be used by end users at login time and by Relying Parties 
@@ -3315,17 +3130,9 @@ Base 10 number | btwoc string representation
           </t>
         </section>
 
-        <section title="11.5.2. HTTP および HTTPS URL 識別子" anchor="http_s_identifiers">
+        <section title="HTTP および HTTPS URL 識別子" anchor="http_s_identifiers">
           <t>
-            RP は、異なるスキームを持つ URL 識別子同士を区別しなければならない (MUST)。
-            エンドユーザの入力を URL に変換するときは、その URL は HTTP URL となる。
-            同一のエンドユーザがスキーム以外は同一の URL を管理しており、識別子が HTTPS URL 
-            であることが望ましい場合、HTTP URL から HTTPS URL へのリダイレクトを発行する
-            ことが推奨される (RECOMMENDED)。HTTP URL と HTTPS URL とは等価ではなく、
-            使用される識別子は、リダイレクト後のURLであるため、このスキームを用いる場合には、
-            セキュリティの低下は懸念されない。たとえ攻撃者が HTTP URL をコントロールできる
-            ようになったとしても、HTTPS URL には何の影響も与えないだろう。HTTP URL は、
-            ディスカバリプロセスを開始させる以外には識別子として用いられないからである。
+            RP は、異なるスキームを持つ URL 識別子同士を区別しなければならない (MUST)。エンドユーザの入力を URL に変換するときは、その URL は HTTP URL となる。同一のエンドユーザがスキーム以外は同一の URL を管理しており、識別子が HTTPS URL であることが望ましい場合、HTTP URL から HTTPS URL へのリダイレクトを発行することが推奨される (RECOMMENDED)。HTTP URL と HTTPS URL とは等価ではなく、使用される識別子は、リダイレクト後のURLであるため、このスキームを用いる場合には、セキュリティの低下は懸念されない。たとえ攻撃者が HTTP URL をコントロールできるようになったとしても、HTTPS URL には何の影響も与えないだろう。HTTP URL は、ディスカバリプロセスを開始させる以外には識別子として用いられないからである。
           <!--
           Relying Parties MUST differentiate between URL Identifiers that have different 
           schemes. When end user input is processed into a URL, it is processed into 
@@ -3346,9 +3153,7 @@ Base 10 number | btwoc string representation
     <section title="拡張仕様" anchor="extensions">
     <!-- section title="Extensions" anchor="extensions" -->
       <t>
-        OpenID 認証の拡張仕様は、認証要求および応答の“上に乗る”プロトコルである。
-        拡張仕様は、認証要求や応答に関するその他の情報を提供したり、認証応答の対象に関する
-        その他の情報を提供したりする際に役立つ。
+        OpenID 認証の拡張仕様は、認証要求および応答の“上に乗る”プロトコルである。拡張仕様は、認証要求や応答に関するその他の情報を提供したり、認証応答の対象に関するその他の情報を提供したりする際に役立つ。
         <!--
         An Extension to OpenID Authentication is a protocol that
         "piggybacks" on the authentication request and response. Extensions
@@ -3359,8 +3164,7 @@ Base 10 number | btwoc string representation
       </t>
 
       <t>
-        OpenID の拡張仕様は、サービスタイプ URI で識別される。
-        サービスタイプ URI は、主張識別子と関連する XRDS 文書内で、 OpenID &lt;xrd:Service&gt; エレメントの &lt;xrd:Type&gt; エレメントの値として用いてもよい (MAY) 。サービスタイプ URI は、拡張仕様を含むメッセージの中で、キーと値のペアを関連づけるためにも用いられる。
+        OpenID の拡張仕様は、サービスタイプ URI で識別される。サービスタイプ URI は、主張識別子と関連する XRDS 文書内で、OpenID &lt;xrd:Service&gt; エレメントの &lt;xrd:Type&gt; エレメントの値として用いてもよい (MAY)。サービスタイプ URI は、拡張仕様を含むメッセージの中で、キーと値のペアを関連づけるためにも用いられる。
         <!--
         OpenID extensions are identified by a Type URI. The Type URI
         MAY be used as the value of an &lt;xrd:Type&gt; element of an
@@ -3371,9 +3175,7 @@ Base 10 number | btwoc string representation
       </t>
 
       <t>
-        メッセージの中で拡張仕様を用いてキーと値とを関連づけるためには、キーを サービスタイプ URI と関連づけなければならない (MUST) 。
-        キーとサービスタイプ URI とを関連づけるためには、頭に "openid.ns." を付加したキーを追加するとともに、値がサービスタイプ URI のエイリアステキストを後ろに追加することによって、エイリアスを確定する。
-        エイリアスが確定すると、メッセージの中のペアのうち、 "openid." で始まり、その後にエイリアステキストが続き、さらにその後ろにピリオドもしくはキーの末尾が続くようなキーを有するペアは全て、拡張仕様と関連づけられる。この仕組みは、 XML名前空間と似ている。
+        メッセージの中で拡張仕様を用いてキーと値とを関連づけるためには、キーを サービスタイプ URI と関連づけなければならない (MUST)。キーとサービスタイプ URI とを関連づけるためには、頭に "openid.ns." を付加したキーを追加するとともに、値がサービスタイプ URI のエイリアステキストを後ろに追加することによって、エイリアスを確定する。エイリアスが確定すると、メッセージの中のペアのうち、"openid." で始まり、その後にエイリアステキストが続き、さらにその後ろにピリオドもしくはキーの末尾が続くようなキーを有するペアは全て、拡張仕様と関連づけられる。この仕組みは、XML名前空間と似ている。
         <!-- XXX: openid. only for indirect messages -->
         <!--
         To associate keys and values in a message with an extension,
@@ -3389,9 +3191,7 @@ Base 10 number | btwoc string representation
       </t>
 
       <t>
-        名前空間のエイリアスは、ピリオドを含んでいてはならない (MUST NOT) 。
-        また、同じメッセージの中の他の名前空間のエイリアスと同じであってはならない (MUST NOT) 。
-        さらに、名前空間のエイリアスは、以下のリストに示す許可されていないエイリアスのひとつであってはならない (MUST NOT) 。
+        名前空間のエイリアスは、ピリオドを含んでいてはならない (MUST NOT)。また、同じメッセージの中の他の名前空間のエイリアスと同じであってはならない (MUST NOT)。さらに、名前空間のエイリアスは、以下のリストに示す許可されていないエイリアスのひとつであってはならない (MUST NOT)。
         <!--
         A namespace alias MUST NOT contain a period and MUST NOT be
         the same as another namespace alias in the same message. A
@@ -3426,8 +3226,7 @@ Base 10 number | btwoc string representation
           <t>trust_root</t>
         </list>
 
-        同じメッセージの中で、ある名前空間にひとつ以上のエイリアスを割り当ててはならない (MUST NOT) 。
-        メッセージが他のメッセージへの応答の場合、その応答は、同じ名前空間を参照するのに異なるエイリアスを用いてもよい (MAY) 。
+        同じメッセージの中で、ある名前空間にひとつ以上のエイリアスを割り当ててはならない (MUST NOT)。メッセージが他のメッセージへの応答の場合、その応答は、同じ名前空間を参照するのに異なるエイリアスを用いてもよい (MAY)。
         <!--
         A namespace MUST NOT be assigned more than one alias in the
         same message. If a message is a response to another message,
@@ -3438,7 +3237,7 @@ Base 10 number | btwoc string representation
 
       <t>参考例：<!-- Non-normative example: --></t>
       <t>
-        拡張仕様のサービスタイプ URI は、 "&lt;http://example.com/ext/1.0&gt;" である。
+        拡張仕様のサービスタイプ URI は、"&lt;http://example.com/ext/1.0&gt;" である。
         <!--
         An extension's type URI is "&lt;http://example.com/ext/1.0&gt;".
         -->
@@ -3450,8 +3249,7 @@ Base 10 number | btwoc string representation
         <t>openid.xx=notx</t>
       </list>
 
-        この例において、"openid.x" と "openid.x.foo" という鍵は拡張仕様と関連づけられている。
-        "openid.xx" という鍵は関連づけられていない。
+        この例において、"openid.x" と "openid.x.foo" という鍵は拡張仕様と関連づけられている。"openid.xx" という鍵は関連づけられていない。
         <!--
         In this example, the keys "openid.x" and "openid.x.foo" are
         associated with the extension; the "openid.xx" key is not.
@@ -3459,8 +3257,7 @@ Base 10 number | btwoc string representation
       </t>
 
       <t>
-        拡張仕様は、同じ名前を有する複数のパラメータを定義してはならない (MUST NOT) 。
-        同じパラメータ名について複数の値を送る必要がある拡張仕様は、そのための独自の規則を定義しなければならない。
+        拡張仕様は、同じ名前を有する複数のパラメータを定義してはならない (MUST NOT)。同じパラメータ名について複数の値を送る必要がある拡張仕様は、そのための独自の規則を定義しなければならない。
         <!--
         Extensions MUST NOT define multiple parameters with the same name.
         Extensions that need to send multiple values for the same parameter
@@ -3472,8 +3269,7 @@ Base 10 number | btwoc string representation
     <section title="OpenID リライングパーティーのディスカバリ" anchor="rp_discovery">
     <!-- section title="Discovering OpenID Relying Parties" anchor="rp_discovery" -->
       <t>
-        RP のディスカバリによって、ソフトウェアエージェントは、 OpenID をサポートしているサイトを発見することができる。
-        OpenID 要求の中の return_to URL が、指定されたレルムに対するOpenID RP のエンドポイントであることを、 OpenID プロバイダが自動的に検証することも可能である。
+        RP のディスカバリによって、ソフトウェアエージェントは、OpenID をサポートしているサイトを発見することができる。OpenID 要求の中の return_to URL が、指定されたレルムに対するOpenID RP のエンドポイントであることを、OpenID プロバイダが自動的に検証することも可能である。
         <!--
         Relying Party discovery allows for software agents to discover
         sites that support OpenID. It also allows OpenID providers to
@@ -3483,8 +3279,7 @@ Base 10 number | btwoc string representation
       </t>
 
       <t>
-        RP は、 Yadis プロトコルを使用して、有効な return_to URL を公開すべきである (SHOULD) 。
-        RP は、この情報をどの URL で公開してもよい (MAY) 。また、プロバイダが return_to URL を検証できるように、レルムの範囲内で公開すべきである (SHOULD) 。
+        RP は、Yadis プロトコルを使用して、有効な return_to URL を公開すべきである (SHOULD)。RP は、この情報をどの URL で公開してもよい (MAY)。また、プロバイダが return_to URL を検証できるように、レルムの範囲内で公開すべきである (SHOULD)。
         <!--
         Relying Parties SHOULD use the Yadis protocol to publish their
         valid return_to URLs. The relying party MAY publish this
@@ -3494,7 +3289,7 @@ Base 10 number | btwoc string representation
       </t>
 
       <t>
-        RP のディスカバリの XRDS 文書は、ひとつ以上の &lt;xrd:Service&gt; エレメントを含まなければならない (MUST) 。
+        RP のディスカバリの XRDS 文書は、ひとつ以上の &lt;xrd:Service&gt; エレメントを含まなければならない (MUST)。
         <!--
         A Relying Party discovery XRDS document MUST contain one or more
         &lt;xrd:Service&gt; elements:
@@ -3541,8 +3336,7 @@ Base 10 number | btwoc string representation
              anchor="compat_mode" -->
 
       <t>
-        このセクションでは、 OpenID Authentication 1.1 RP および OP との連携方法について説明する。
-        OpenID Authentication 2.0 の実装においては、セキュリティに関する考慮事項によって好ましくないとされない限り、 OpenID Authentication 1.1 互換性をサポートすべきである (SHOULD) 。
+        このセクションでは、OpenID Authentication 1.1 RP および OP との連携方法について説明する。OpenID Authentication 2.0 の実装においては、セキュリティに関する考慮事項によって好ましくないとされない限り、OpenID Authentication 1.1 互換性をサポートすべきである (SHOULD)。
         <!--
         This section describes how to interact with OpenID
         Authentication 1.1 Relying Parties and OPs. OpenID
@@ -3561,10 +3355,7 @@ Base 10 number | btwoc string representation
           -->
         </t>
         <t>
-          本仕様は、 Brad Fitzpatrick が記した OpenID 認証のオリジナルの仕様に基づいている。
-          その仕様にはバージョン番号がなかったが OpenID 1.0 と呼ばれ、その後改訂されて OpenID 1.1 となった。
-          本仕様で概要を示しているプロトコルは、改訂後の OpenID プロトコルと下位互換性を保つように意図されている。
-          仕様の変更点の概要は、このセクションに記す通りである。
+          本仕様は、Brad Fitzpatrick が記した OpenID 認証のオリジナルの仕様に基づいている。その仕様にはバージョン番号がなかったが OpenID 1.0 と呼ばれ、その後改訂されて OpenID 1.1 となった。本仕様で概要を示しているプロトコルは、改訂後の OpenID プロトコルと下位互換性を保つように意図されている。仕様の変更点の概要は、このセクションに記す通りである。
           <!--
           This specification is based on the original specification for
           OpenID Authentication as written by Brad Fitzpatrick. That
@@ -3581,9 +3372,7 @@ Base 10 number | btwoc string representation
           <t>
             <list style="symbols">
               <t>
-                OP 識別子をサポート。
-                この新たな種類のプロトコルフローは、エンドユーザ自身の識別子の代わりに OP 識別子を入力することによって開始される。
-                このため、 OP は、エンドユーザによる識別子の選択を支援できる。
+                OP 識別子をサポート。この新たな種類のプロトコルフローは、エンドユーザ自身の識別子の代わりに OP 識別子を入力することによって開始される。このため、OP は、エンドユーザによる識別子の選択を支援できる。
                 <!--
                 Supports OP Identifiers. This new variation of the
                 protocol flow is initiated by an end user entering an OP
@@ -3593,9 +3382,7 @@ Base 10 number | btwoc string representation
                 -->
               </t>
               <t>
-                識別子としての XRI の使用をサポート。
-                エンドユーザ用の識別子、 OP 用の識別子のどちらにも XRI を使用してよい。
-                また XRI は、ひとつ以上の再割り当て可能な (reassignable) i-names から同義かつ永続的で、再割り当てが決して行われない正準化 ID へと自動的にマッピングする。
+                識別子としての XRI の使用をサポート。エンドユーザ用の識別子、OP 用の識別子のどちらにも XRI を使用してよい。また XRI は、ひとつ以上の再割り当て可能な (reassignable) i-names から同義かつ永続的で、再割り当てが決して行われない正準化 ID へと自動的にマッピングする。
                 <!--
                 Supports the use of XRIs as Identifiers. XRIs may be
                 used as Identifiers for both end users and OPs, and
@@ -3613,9 +3400,7 @@ Base 10 number | btwoc string representation
                 -->
               </t>
               <t>
-                ディスカバリでの Yadis プロトコルの使用。
-                ひとつの識別子のために複数の OP を利用することができ、 OP に不具合が生じたときのロードバランシングやフォールバックとして役立つ。
-                さらに、サポートしている拡張仕様や他の関連サービスのディスカバリにも利用できる。
+                ディスカバリでの Yadis プロトコルの使用。ひとつの識別子のために複数の OP を利用することができ、OP に不具合が生じたときのロードバランシングやフォールバックとして役立つ。さらに、サポートしている拡張仕様や他の関連サービスのディスカバリにも利用できる。
                 <!--
                 Uses the Yadis protocol for discovery. This allows for
                 using multiple OPs for a single Identifier, for
@@ -3631,8 +3416,7 @@ Base 10 number | btwoc string representation
         <section title="セキュリティ面での改善">
         <!-- section title="Security improvements" -->
           <t>
-            OpenID 2.0 ではノンスがプロトコルの一部として組み込まれ、リプレイアタックへの防御策が内蔵されることになった。
-            こうした防御策はこれまで、それぞれのライブラリまたはアプリケーションが仕様の外で実装していた。
+            OpenID 2.0 ではノンスがプロトコルの一部として組み込まれ、リプレイアタックへの防御策が内蔵されることになった。こうした防御策はこれまで、それぞれのライブラリまたはアプリケーションが仕様の外で実装していた。
             <!--
             A nonce is now part of the protocol for built-in protection
             against replay attacks, which was previously implemented
@@ -3660,8 +3444,7 @@ Base 10 number | btwoc string representation
         <section title="拡張仕様">
         <!-- section title="Extensions" -->
           <t>
-            OpenID 2.0 では、認証に加え、RPとOP間のデータ交換やその他の通信をサポートするための仕組みとして、拡張仕様が正式にサポートされた。
-            拡張仕様は、任意の属性の交換に利用できるほか、 RP に関する追加情報を認証要求の中に含めるといったプロトコルの拡張にも利用できる。
+            OpenID 2.0 では、認証に加え、RPとOP間のデータ交換やその他の通信をサポートするための仕組みとして、拡張仕様が正式にサポートされた。拡張仕様は、任意の属性の交換に利用できるほか、RP に関する追加情報を認証要求の中に含めるといったプロトコルの拡張にも利用できる。
             <!--
             Extensions are now an officially supported mechanism to
             support data exchange and other Relying Party-OP
@@ -3673,7 +3456,7 @@ Base 10 number | btwoc string representation
             -->
           </t>
           <t>
-            拡張機能は任意のデータを転送できるため、 OpenID 2.0 では、認証メッセージの中への識別子の記述はオプションとなった。
+            拡張機能は任意のデータを転送できるため、OpenID 2.0 では、認証メッセージの中への識別子の記述はオプションとなった。
             <!--
             Because extensions can transfer arbitrary data, the
             Identifier is now optional in authentication messages.
@@ -3685,8 +3468,7 @@ Base 10 number | btwoc string representation
       <section title="OpenID Authentication 1.1 互換性の実装">
       <!-- section title="Implementing OpenID Authentication 1.1 Compatibility" -->
         <t>
-          OpenID Authentication 1.1 のメッセージは全て "openid.ns" パラメータが省略されているため、 OpenID Authentication 1.1 endpoint から送信されたメッセージかどうかを RP が簡単に判断することができる。
-          OpenID Authentication 1.1 がサポートしているのは HMAC-SHA1 のアソシエーションのみである。
+          OpenID Authentication 1.1 のメッセージは全て "openid.ns" パラメータが省略されているため、OpenID Authentication 1.1 endpoint から送信されたメッセージかどうかを RP が簡単に判断することができる。OpenID Authentication 1.1 がサポートしているのは HMAC-SHA1 のアソシエーションのみである。
           <!--
           All messages in OpenID Authentication 1.1 omit the
           "openid.ns" parameter, which is an easy way for an RP to
@@ -3697,8 +3479,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          OpenID Authentication 1.1 のエラー時の応答では、 "contact" や "reference" を定義していなかった。 OpenID Authentication 1.1 では、エラー時の応答への追加フィールドの追加が可能であった。
-          デバッグに役立つことがあり、また互換性に影響を与えないことから、 OpenID Authentication 1.1 を使用するときも、連絡先や参照先を送ることが推奨される (RECOMMENDED) 。
+          OpenID Authentication 1.1 のエラー時の応答では、"contact" や "reference" を定義していなかった。OpenID Authentication 1.1 では、エラー時の応答への追加フィールドの追加が可能であった。デバッグに役立つことがあり、また互換性に影響を与えないことから、OpenID Authentication 1.1 を使用するときも、連絡先や参照先を送ることが推奨される (RECOMMENDED)。
           <!--
           Error responses in OpenID Authentication 1.1 did not define
           "contact" or "reference". OpenID Authentication 1.1 did
@@ -3714,11 +3495,7 @@ Base 10 number | btwoc string representation
           <t>
             <list style="symbols">
               <t>
-                HTML ベースのディスカバリを実行したとき、 OP エンドポイント URL のリンク関係は、 "openid2.provider" よりも "openid.server" が優先して指し示される。
-                また、エンドユーザの OP ローカル識別子 のリンク関係は "openid2.local_id" よりも "openid.delegate" が優先して指し示される。
-                これらに該当する場合、プロトコルバージョンは "http://openid.net/signon/1.1" である。
-                HTML では、ひとつのリンクに対して複数のリンク関係を指定することができる。
-                従って、もし OP が OpenID Authentication 1.1 と OpenID Authentication 2.0 の両方に対応していれば、同一の "rel" 属性に "openid2.provider" と "openid.server" の両方が記述されている可能性がある。
+                HTML ベースのディスカバリを実行したとき、OP エンドポイント URL のリンク関係は、"openid2.provider" よりも "openid.server" が優先して指し示される。また、エンドユーザの OP ローカル識別子のリンク関係は "openid2.local_id" よりも "openid.delegate" が優先して指し示される。これらに該当する場合、プロトコルバージョンは "http://openid.net/signon/1.1" である。HTML では、ひとつのリンクに対して複数のリンク関係を指定することができる。従って、もし OP が OpenID Authentication 1.1 と OpenID Authentication 2.0 の両方に対応していれば、同一の "rel" 属性に "openid2.provider" と "openid.server" の両方が記述されている可能性がある。
                 <!--
                 When HTML discovery is performed, the OP endpoint URL
                 is marked by the link relationship "openid.server"
@@ -3736,8 +3513,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                XRDS ベースのディスカバリを実行したとき、エンドユーザの OP ローカル識別子は、 OpenID &lt;xrd:Service&gt; エレメントの &lt;xrd:LocalID&gt; タグではなく、 &lt;openid:Delegate&gt; タグに記述されている。
-                現在実装されているディスカバリコードをサポートするため、 &lt;xrd:Service&gt; エレメントに両方のタグを記述してもよい (MAY) 。
+                XRDS ベースのディスカバリを実行したとき、エンドユーザの OP ローカル識別子は、OpenID &lt;xrd:Service&gt; エレメントの &lt;xrd:LocalID&gt; タグではなく、&lt;openid:Delegate&gt; タグに記述されている。現在実装されているディスカバリコードをサポートするため、&lt;xrd:Service&gt; エレメントに両方のタグを記述してもよい (MAY)。
                 <!--
                 When XRDS-based discovery is performed, the end user's
                 OP-Local Identifier appears in the
@@ -3750,9 +3526,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                RP は、 Yadis が URL 識別子で成功した場合、 XRDS 文書から OpenID Authentication 1.x サービスエレメントを抽出し、利用すべきである (SHOULD) 。
-                該当のサービスエレメントは、 &lt;xrd:Type&gt; タグのテキスト内容が "http://openid.net/server/1.0" または "http://openid.net/server/1.1" であることから特定できる。
-                前バージョンのプロトコルでは定められていないが、 Yadis を通じて OpenID Authentication 1.x サービスを広く知らせる手法として、一般に受け入れられている。
+                RP は、Yadis が URL 識別子で成功した場合、XRDS 文書から OpenID Authentication 1.x サービスエレメントを抽出し、利用すべきである (SHOULD)。該当のサービスエレメントは、&lt;xrd:Type&gt; タグのテキスト内容が "http://openid.net/server/1.0" または "http://openid.net/server/1.1" であることから特定できる。前バージョンのプロトコルでは定められていないが、Yadis を通じて OpenID Authentication 1.x サービスを広く知らせる手法として、一般に受け入れられている。
                 <!--
                 Relying Parties SHOULD extract and use OpenID
                 Authentication 1.x service elements from XRDS
@@ -3768,10 +3542,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                OpenID Authentication 1.1 では、"openid.claimed_id" を定義していない。
-                RP は、要求を行なうときに値を送ってもよい (MAY) が、認証応答の中に記述されている値に依存してはならない (MUST NOT) 。
-                OP ローカル識別子 ("openid.identity") と主張識別子とが異なっている場合、 RP は、セッション状態に保持する等の方法で、 OP ローカル識別子 のディスカバリ時にどの主張識別子を用いたのかを追跡しなければならない (MUST) 。
-                応答に主張識別子が記されることはないが、ユーザの識別子として主張識別子を用いなければならない (MUST)。
+                OpenID Authentication 1.1 では、"openid.claimed_id" を定義していない。RP は、要求を行なうときに値を送ってもよい (MAY) が、認証応答の中に記述されている値に依存してはならない (MUST NOT)。OP ローカル識別子 ("openid.identity") と主張識別子とが異なっている場合、RP は、セッション状態に保持する等の方法で、OP ローカル識別子 のディスカバリ時にどの主張識別子を用いたのかを追跡しなければならない (MUST)。応答に主張識別子が記されることはないが、ユーザの識別子として主張識別子を用いなければならない (MUST)。
                 <!--
                 "openid.claimed_id" is not defined by OpenID
                 Authentication 1.1. Relying Parties MAY send the value
@@ -3789,7 +3560,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                <xref target="responding_to_authentication">認証要求時</xref>には、 "openid.identity" を送らなければならない (MUST)。
+                <xref target="responding_to_authentication">認証要求時</xref>には、"openid.identity" を送らなければならない (MUST)。
                 <!--
                 "openid.identity" MUST be sent in a <xref
                     target="responding_to_authentication">authentication
@@ -3806,8 +3577,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                OpenID Authentication 1.1 では、"openid.session_type" パラメータの内容がブランク、または、当該パラメータがない場合、 "no-encryption" アソシエーションセッション形式 であることを意味する。
-                RP は、"openid.session_type" の値を "no-encryption" に設定して要求を送ってはならない (MUST NOT) 。
+                OpenID Authentication 1.1 では、"openid.session_type" パラメータの内容がブランク、または、当該パラメータがない場合、"no-encryption" アソシエーションセッション形式 であることを意味する。RP は、"openid.session_type" の値を "no-encryption" に設定して要求を送ってはならない (MUST NOT)。
                 <!--
                 In OpenID Authentication 1.1, the "no-encryption"
                 association session type is represented by a blank or
@@ -3818,7 +3588,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                <xref target="requesting_authentication">認証要求</xref>では、OpenID Authentication 1.1 が OP 識別子の使用をサポートしていないので、"openid.identity"パラメータの値を特殊値 "http://specs.openid.net/auth/2.0/identifier_select" にすべきではない (SHOULD NOT) 。
+                <xref target="requesting_authentication">認証要求</xref>では、OpenID Authentication 1.1 が OP 識別子の使用をサポートしていないので、"openid.identity"パラメータの値を特殊値 "http://specs.openid.net/auth/2.0/identifier_select" にすべきではない (SHOULD NOT)。
                 <!--
                 In <xref
                 target="requesting_authentication">authentication
@@ -3831,8 +3601,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                認証要求の中の "openid.realm" パラメータは、以前は "openid.trust_root" と呼ばれていた。
-                構文規則や意味は全く同じである。
+                認証要求の中の "openid.realm" パラメータは、以前は "openid.trust_root" と呼ばれていた。構文規則や意味は全く同じである。
                 <!--
                 The "openid.realm" parameter in authentication requests
                 was known as "openid.trust_root". The syntax and meaning
@@ -3841,10 +3610,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                "checkid_immediate" モードでの認証要求に対して、否定アサーションで応答するときは、 "user_setup_url" パラメータを戻さなければならない (MUST) 。
-                このパラメータは、エンドユーザが要求を完了するために訪れるかもしれない URL を示している。
-                OP は、エンドユーザをこの URL にリダイレクトしてもよい (MAY) 。
-                また、エンドユーザに、この URL を指し示すリンクを提供してもよい (MAY) 。
+                "checkid_immediate" モードでの認証要求に対して、否定アサーションで応答するときは、"user_setup_url" パラメータを戻さなければならない (MUST)。このパラメータは、エンドユーザが要求を完了するために訪れるかもしれない URL を示している。OP は、エンドユーザをこの URL にリダイレクトしてもよい (MAY)。また、エンドユーザに、この URL を指し示すリンクを提供してもよい (MAY)。
                 <!--
                 When responding with a negative assertion to a
                 "checkid_immediate" mode authentication request, the
@@ -3857,9 +3623,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                RP は、 "openid.response_nonce" パラメータがない<xref target="positive_assertions">認証応答</xref>
-                を受け入れなければならない (MUST) 。
-                リプレイアタックを防ぐための手段を実装すべきである (SHOULD) 。
+                RP は、"openid.response_nonce" パラメータがない<xref target="positive_assertions">認証応答</xref>を受け入れなければならない (MUST)。リプレイアタックを防ぐための手段を実装すべきである (SHOULD)。
                 <!--
                 The Relying Party MUST accept an <xref
                 target="positive_assertions">authentication
@@ -3870,7 +3634,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                RP は、 "openid.op_endpoint" パラメータがない<xref target="positive_assertions">認証応答</xref>を受け入れなければならない (MUST) 。
+                RP は、"openid.op_endpoint" パラメータがない<xref target="positive_assertions">認証応答</xref>を受け入れなければならない (MUST)。
                 <!--
                 Relying Parties MUST accept
                 <xref target="positive_assertions">authentication responses
@@ -3886,7 +3650,7 @@ Base 10 number | btwoc string representation
           <t>
             <list style="symbols">
               <t>
-                <xref target="positive_assertions">肯定の認証アサーション</xref>の中に、"openid.identity" を含めて送らなければならない (MUST) 。
+                <xref target="positive_assertions">肯定の認証アサーション</xref>の中に、"openid.identity" を含めて送らなければならない (MUST)。
                 <!--
                 "openid.identity" MUST be sent in a <xref
                     target="positive_assertions">positive authentication
@@ -3895,8 +3659,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                OpenID Authentication 1.1 では、"openid.session_type" パラメータの内容がブランク、または、当該パラメータがない場合、 "no-encryption" アソシエーションセッション形式 であることを意味する。
-                OP は、"openid.session_type" の値を "no-encryption" に設定して応答を送ってはならない (MUST NOT) 。
+                OpenID Authentication 1.1 では、"openid.session_type" パラメータの内容がブランク、または、当該パラメータがない場合、"no-encryption" アソシエーションセッション形式 であることを意味する。OP は、"openid.session_type" の値を "no-encryption" に設定して応答を送ってはならない (MUST NOT)。
                 <!--
                 In OpenID Authentication 1.1, the "no-encryption"
                 association session type is represented by a blank or
@@ -3907,8 +3670,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                OP は、どのアソシエーション要求に対しても、成功時の "no-encryption" 応答を返すことを選択してもよい (MAY) 。
-                前述の通り、 "openid.session_type" パラメータは、その内容をブランクとするか、パラメータ自体を省略するかしなければならない (MUST) 。
+                OP は、どのアソシエーション要求に対しても、成功時の "no-encryption" 応答を返すことを選択してもよい (MAY)。前述の通り、"openid.session_type" パラメータは、その内容をブランクとするか、パラメータ自体を省略するかしなければならない (MUST)。
                 <!--
                 OPs MAY choose to return a successful "no-encryption"
                 response to any association request. As above, the
@@ -3918,8 +3680,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                OP は、 assoc_type でないパラメータが記されたアソシエーション要求を受け入れなければならない (MUST)。
-                また、それらのアソシエーション要求は、 HMAC-SHA1 タイプであると見なさなければならない (MUST)。
+                OP は、assoc_type でないパラメータが記されたアソシエーション要求を受け入れなければならない (MUST)。また、それらのアソシエーション要求は、HMAC-SHA1 タイプであると見なさなければならない (MUST)。
                 <!--
                 OPs MUST accept association requests with no assoc_type
                 parameter, and assume them to be of type HMAC-SHA1.
@@ -3936,8 +3697,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                認証要求の中の "openid.realm" パラメータは、以前は "openid.trust_root" と呼ばれていた。
-                構文規則や意味は全く同じである。
+                認証要求の中の "openid.realm" パラメータは、以前は "openid.trust_root" と呼ばれていた。構文規則や意味は全く同じである。
                 <!--
                 The "openid.realm" parameter in authentication requests
                 was known as "openid.trust_root". The syntax and meaning
@@ -3946,10 +3706,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                "checkid_immediate" モードでの認証要求に対して、否定アサーションで応答するときは、 "user_setup_url" パラメータを戻さなければならない (MUST) 。
-                このパラメータは、エンドユーザが要求を完了するために訪れるかもしれない URL を示している。
-                RP は、エンドユーザをこの URL にリダイレクトしてもよい (MAY) 。
-                また、エンドユーザに、この URL を指し示すリンクを提供してもよい (MAY) 。
+                "checkid_immediate" モードでの認証要求に対して、否定アサーションで応答するときは、"user_setup_url" パラメータを戻さなければならない (MUST)。このパラメータは、エンドユーザが要求を完了するために訪れるかもしれない URL を示している。RP は、エンドユーザをこの URL にリダイレクトしてもよい (MAY)。また、エンドユーザに、この URL を指し示すリンクを提供してもよい (MAY)。
                 <!--
                 When responding with a negative assertion to a
                 "checkid_immediate" mode authentication request, the
@@ -3962,8 +3719,7 @@ Base 10 number | btwoc string representation
               </t>
 
               <t>
-                OP は、認証応答時に "openid.op_endpoint" パラメータを送ってはならない (MUST NOT) 。
-                その理由は、 OpenID Authentication 1.1 プロトコルが当該パラメータを実装していないからである。
+                OP は、認証応答時に "openid.op_endpoint" パラメータを送ってはならない (MUST NOT)。その理由は、OpenID Authentication 1.1 プロトコルが当該パラメータを実装していないからである。
                 <!--
                 OPs MUST NOT send the "openid.op_endpoint" parameter in
                 <xref target="positive_assertions">authentication responses
@@ -4003,9 +3759,7 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            こうした攻撃は、トランスポート層での暗号化を用い、これらの接続を盗聴行為から防御することによって防ぐことができる。
-            また TLS を利用しない場合でも、メッセージ検証を実行する途中でノンスをチェックすることによって防ぐことができる。
-            その場合は、肯定の認証アサーションの再利用はできなくなる。
+            こうした攻撃は、トランスポート層での暗号化を用い、これらの接続を盗聴行為から防御することによって防ぐことができる。また TLS を利用しない場合でも、メッセージ検証を実行する途中でノンスをチェックすることによって防ぐことができる。その場合は、肯定の認証アサーションの再利用はできなくなる。
             <!--
             This attack can be prevented by using transport layer encryption
             for these connections to prevent eavesdropping. In addition,
@@ -4020,9 +3774,7 @@ Base 10 number | btwoc string representation
         <section title="中間者攻撃">
         <!-- section title="Man-in-the-Middle Attacks" -->
           <t>
-            アソシエーションは、ディスカバリやアソシエーションセッション、<xref target="check_auth">直接検証</xref>の最中を除き、署名済みフィールドの中間者による改竄を防ぐ。
-            秘密の共有鍵を知らずに署名済みフィールドを変更しようとすれば、 MAC を解読する必要がある。現時点では、本プロトコルで用いられている MAC に関し、簡単に対処できる攻撃は判明していない。
-            MAC によって提供される保護の質は 共有 MAC 鍵のランダムさに依存しており、推測できない値を用いることが重要となる。
+            アソシエーションは、ディスカバリやアソシエーションセッション、<xref target="check_auth">直接検証</xref>の最中を除き、署名済みフィールドの中間者による改竄を防ぐ。秘密の共有鍵を知らずに署名済みフィールドを変更しようとすれば、MAC を解読する必要がある。現時点では、本プロトコルで用いられている MAC に関し、簡単に対処できる攻撃は判明していない。MAC によって提供される保護の質は 共有 MAC 鍵のランダムさに依存しており、推測できない値を用いることが重要となる。
             <!--
             Associations prevent tampering of signed fields by a man
             in the middle except during discovery, association
@@ -4037,11 +3789,7 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            DNS 名前解決やトランスポート層で漏えいが生じる場合、攻撃者が OP に成りすまし、攻撃者自身がアソシエーションを発行したり、ステートレスモードで自ら署名検証を行なったりできるため、メッセージへの署名では不十分である。
-            攻撃者がディスカバリプロセスを改竄できる場合、攻撃者は任意のOP を指定することができ、 OP に成りすます必要がなくなる。
-            さらに、攻撃者が XRDS 文書を変更することによって、情報の完全性を損なうことができる場合、中間者さえ必要がなくなる。
-            この種の攻撃を防ぐ方法のひとつとして、 <xref target="RFC3275">XMLDSIG</xref> に示されるような XRDS ファイルへのデジタル署名があげられる。
-            これらの署名に用いられている鍵を信頼するかどうかを最終的に判断する必要があるのは RP であるため、鍵となる材料 (keying materials) は指定しない。
+            DNS 名前解決やトランスポート層で漏えいが生じる場合、攻撃者が OP に成りすまし、攻撃者自身がアソシエーションを発行したり、ステートレスモードで自ら署名検証を行なったりできるため、メッセージへの署名では不十分である。攻撃者がディスカバリプロセスを改竄できる場合、攻撃者は任意のOP を指定することができ、OP に成りすます必要がなくなる。さらに、攻撃者が XRDS 文書を変更することによって、情報の完全性を損なうことができる場合、中間者さえ必要がなくなる。この種の攻撃を防ぐ方法のひとつとして、<xref target="RFC3275">XMLDSIG</xref> に示されるような XRDS ファイルへのデジタル署名があげられる。これらの署名に用いられている鍵を信頼するかどうかを最終的に判断する必要があるのは RP であるため、鍵となる材料 (keying materials) は指定しない。
             <!--
             If DNS resolution or the transport layer is compromised
             signatures on messages are not adequate, since the
@@ -4062,9 +3810,7 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            SSL と信頼できる機関が署名した証明書を用い、 DNS 検索結果と証明書を照らし合わせて検証することによって、こうした攻撃は、避けることができる。
-            証明書の妥当性が立証されれば、改竄は不可能である。
-            SSL サーバに成りすますためには、証明書を偽造したり、盗んだりする必要があるが、これらはネットワークベースの攻撃よりも遥かに困難である。
+            SSL と信頼できる機関が署名した証明書を用い、DNS 検索結果と証明書を照らし合わせて検証することによって、こうした攻撃は、避けることができる。証明書の妥当性が立証されれば、改竄は不可能である。SSL サーバに成りすますためには、証明書を偽造したり、盗んだりする必要があるが、これらはネットワークベースの攻撃よりも遥かに困難である。
             <!--
             Using SSL with certificates signed by a trusted authority
             prevents these kinds of attacks by verifying the results
@@ -4077,11 +3823,7 @@ Base 10 number | btwoc string representation
           </t>
 
           <t>
-            SSL による保護を受けるには、ユーザエージェントを通じたエンドユーザとの双方向の通信をはじめ、双方向の通信の全ての部分で SSL を用いなければならない。
-            本プロトコルでは必須とはしていないが、 SSL の使用が強く推奨される (RECOMMENDED) 。
-            エンドポイント URL およびエンドユーザのユーザエージェントとの双方向の通信のセキュリティを確保するために、 OP は、 SSLと信頼できる機関が署名した証明書を用いるべきである (SHOULD) ことが、現時点のベストプラクティスから明らかになっている。
-            さらに、SSLと信頼できる機関が署名した証明書を用いることにより、 RP は、エンドユーザの URL を安全な方法で取り出すことができる。
-            RP は、種々のエンドポイントにおいて SSL が正しく用いられていない場合、 RP 自身のセキュリティポリシに基づいて、トランザクションを完了しない、あるいは、トランザクションの開始さえしないことを選択してもよい (MAY) 。
+            SSL による保護を受けるには、ユーザエージェントを通じたエンドユーザとの双方向の通信をはじめ、双方向の通信の全ての部分で SSL を用いなければならない。本プロトコルでは必須とはしていないが、SSL の使用が強く推奨される (RECOMMENDED)。エンドポイント URL およびエンドユーザのユーザエージェントとの双方向の通信のセキュリティを確保するために、OP は、SSLと信頼できる機関が署名した証明書を用いるべきである (SHOULD) ことが、現時点のベストプラクティスから明らかになっている。さらに、SSLと信頼できる機関が署名した証明書を用いることにより、RP は、エンドユーザの URL を安全な方法で取り出すことができる。RP は、種々のエンドポイントにおいて SSL が正しく用いられていない場合、RP 自身のセキュリティポリシに基づいて、トランザクションを完了しない、あるいは、トランザクションの開始さえしないことを選択してもよい (MAY)。
             <!--
             In order to get protection from SSL, SSL must be used for
             all parts of the interaction, including interaction with
@@ -4103,11 +3845,7 @@ Base 10 number | btwoc string representation
           <section title="不正なリライングパーティーのプロキシ化" anchor="rp_mitm_proxy">
           <!-- section title="Rogue Relying Party Proxying" anchor="rp_mitm_proxy" -->
             <t>
-              特殊な形態の中間者攻撃のひとつとして、 RP が不正な中間者（ MITM ）としての役割を果たす、というのがあげられる。
-              RP は、エンドユーザの主張識別子に関してディスカバリを実行し、 ユーザエージェントを OP にリダイレクトするのではなく、代わりに自分自身を通して OP をプロキシする。
-              その結果、エンドユーザが OP に提供するクレデンシャルを、 RP は入手することができるのである。
-              この種の攻撃を防ぐにはいくつかの方法があるが、本文書で記述する対象範囲外である。
-              これらの防御方法はいずれも、 OP がエンドユーザとの間にセキュリティが確保されたチャネルを確立することが必要である。
+              特殊な形態の中間者攻撃のひとつとして、RP が不正な中間者（ MITM ）としての役割を果たす、というのがあげられる。RP は、エンドユーザの主張識別子に関してディスカバリを実行し、ユーザエージェントを OP にリダイレクトするのではなく、代わりに自分自身を通して OP をプロキシする。その結果、エンドユーザが OP に提供するクレデンシャルを、RP は入手することができるのである。この種の攻撃を防ぐにはいくつかの方法があるが、本文書で記述する対象範囲外である。これらの防御方法はいずれも、OP がエンドユーザとの間にセキュリティが確保されたチャネルを確立することが必要である。
               <!--
               A special type of man-in-the-middle attack is one where
               the Relying Party is a rogue party acting as a MITM.  The
@@ -4129,9 +3867,7 @@ Base 10 number | btwoc string representation
       <section title="ユーザエージェント">
       <!-- section title="User-Agents" -->
         <t>
-          本プロトコルは対話的に用いられることを意図しているため、ユーザエージェント (User-Agents) は、主として、一般に普及しているウェブブラウザとなるだろう。
-          ウェブブラウザやそのホストは、スパイウェアやマルウェアに感染している可能性がある。その場合、ソフトウェアが信頼できず、認証がエンドユーザの承諾に基づいて行われたかどうかを知ることが不可能であるため、認証アサーションの強度は制限を受ける。
-          従って、現状では、多くのウェブアプリケーションやプロトコルは、ウェブブラウザやそのホストのセキュリティに依存しているのである。
+          本プロトコルは対話的に用いられることを意図しているため、ユーザエージェント (User-Agents) は、主として、一般に普及しているウェブブラウザとなるだろう。ウェブブラウザやそのホストは、スパイウェアやマルウェアに感染している可能性がある。その場合、ソフトウェアが信頼できず、認証がエンドユーザの承諾に基づいて行われたかどうかを知ることが不可能であるため、認証アサーションの強度は制限を受ける。従って、現状では、多くのウェブアプリケーションやプロトコルは、ウェブブラウザやそのホストのセキュリティに依存しているのである。
           <!--
           Since this protocol is intended to be used interactively,
           User-Agents will primarily be common Web browsers. Web
@@ -4146,9 +3882,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          OP に対するクロスサイトスクリプティングアタックが、同様の効果を狙って行われる可能性がある。
-          セキュリティを安全に保つために、 OP は、スクリプトに依存すべきではない。
-          こうすれば、スクリプトをサポートしていないユーザエージェントやスクリプトを使用不可に設定したユーザエージェントでもプロトコルを利用することができる。
+          OP に対するクロスサイトスクリプティングアタックが、同様の効果を狙って行われる可能性がある。セキュリティを安全に保つために、OP は、スクリプトに依存すべきではない。こうすれば、スクリプトをサポートしていないユーザエージェントやスクリプトを使用不可に設定したユーザエージェントでもプロトコルを利用することができる。
           <!--
           Cross-site-scripting attacks against OPs may be used to the
           same effect. For the best security, OPs should not depend
@@ -4162,8 +3896,7 @@ Base 10 number | btwoc string representation
       <section title="ユーザインタフェースに関する考慮事項">
       <!-- section title="User Interface Considerations" -->
         <t>
-          RP は、ブラウザのトップレベルのウインドウにおいて全てのコントロールを表示し、エンドユーザを OP エンドポイント URL にリダイレクトすべきである (SHOULD) 。
-          こうすれば、一見 OP のように見えるサイト（フィッシング）に対するエンドユーザの保護が向上する。
+          RP は、ブラウザのトップレベルのウインドウにおいて全てのコントロールを表示し、エンドユーザを OP エンドポイント URL にリダイレクトすべきである (SHOULD)。こうすれば、一見 OP のように見えるサイト（フィッシング）に対するエンドユーザの保護が向上する。
           <!--
           The Relying Party SHOULD redirect the end user to the OP
           Endpoint URL in a top-level browser window with all controls
@@ -4173,8 +3906,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          OpenIDプロバイダは、 OpenID のフィッシングアタックの可能性について、エンドユーザを教育すべきである (SHOULD) 。
-          また、こうした攻撃を防ぐため、 OP の認証サービスエンドポイント URL を検証するブラウザのプラグインなどのツールをエンドユーザに装備させるべきである (SHOULD) 。
+          OpenIDプロバイダは、OpenID のフィッシングアタックの可能性について、エンドユーザを教育すべきである (SHOULD)。また、こうした攻撃を防ぐため、OP の認証サービスエンドポイント URL を検証するブラウザのプラグインなどのツールをエンドユーザに装備させるべきである (SHOULD)。
           <!--
           OpenID Providers SHOULD educate their end users about the
           potential for OpenID phishing attacks and SHOULD equip their
@@ -4188,9 +3920,7 @@ Base 10 number | btwoc string representation
       <section title="HTTP および HTTPS URL 識別子">
       <!-- section title="HTTP and HTTPS URL Identifiers" -->
         <t>
-          これらのタイプ識別子については、<xref target='http_s_identifiers'>既に述べた通り</xref>であるが、再度触れておく価値がある。
-          前述の通り、エンドユーザがスキーム以外は同一の URL を管理していることを表明するための方法としては、HTTP URL から HTTPS URL へのリダイレクトを発行することが推奨される (RECOMMENDED) 。
-          RP は、 ディスカバリと開始フェーズでHTTP URLを決して保存するようなことはなく、リダイレクトを辿って、 HTTPS URL を主張識別子として用いる。
+          これらのタイプ識別子については、<xref target='http_s_identifiers'>既に述べた通り</xref>であるが、再度触れておく価値がある。前述の通り、エンドユーザがスキーム以外は同一の URL を管理していることを表明するための方法としては、HTTP URL から HTTPS URL へのリダイレクトを発行することが推奨される (RECOMMENDED)。RP は、ディスカバリと開始フェーズでHTTP URLを決して保存するようなことはなく、リダイレクトを辿って、HTTPS URL を主張識別子として用いる。
           <!--
           While these types of Identifiers have been <xref
           target='http_s_identifiers'>previously discussed</xref>,
@@ -4205,11 +3935,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          本推奨事項に関心を持つエンドユーザは、自身の HTTPS URL をそれぞれの RP で直接入力すべきである。
-          そうすれば、 RP が HTTPS URL ヘのリダイレクトを辿る段階が省かれる。
-          現時点で考慮すべき唯一のセキュリティに関する考慮事項は、攻撃者がリダイレクトを実施せず、識別子を不正な OP に向けることで、 HTTP URL の完全性を損なう場合である。
-          しかし、こうした攻撃は、ユーザエクスペリエンスを変化させるであろうし、アンチフィッシング技術を用いれば検知可能である。
-          そして、 OpenID においては、識別子自体のセキュリティが基本原則なのである。
+          本推奨事項に関心を持つエンドユーザは、自身の HTTPS URL をそれぞれの RP で直接入力すべきである。そうすれば、RP が HTTPS URL ヘのリダイレクトを辿る段階が省かれる。現時点で考慮すべき唯一のセキュリティに関する考慮事項は、攻撃者がリダイレクトを実施せず、識別子を不正な OP に向けることで、HTTP URL の完全性を損なう場合である。しかし、こうした攻撃は、ユーザエクスペリエンスを変化させるであろうし、アンチフィッシング技術を用いれば検知可能である。そして、OpenID においては、識別子自体のセキュリティが基本原則なのである。
           <!--
           End users with concerns over this recommendation should
           directly enter their HTTPS URL at each Relying Party.  This
@@ -4228,9 +3954,7 @@ Base 10 number | btwoc string representation
       <section title="サービス妨害攻撃 （DoS 攻撃）">
       <!-- section title="Denial of Service Attacks" -->
         <t>
-          本プロトコルには、不正な RP が OP に対してサービス妨害攻撃を始めることができる部分がある。
-          本当の要求であるかどうかを OP が迅速にチェックするための手段が OpenID プロトコルメッセージにないためである。
-          サービス妨害攻撃は、 RP がアソシエーションや認証、署名検証を繰り返し要求することによって可能となるのである。
+          本プロトコルには、不正な RP が OP に対してサービス妨害攻撃を始めることができる部分がある。本当の要求であるかどうかを OP が迅速にチェックするための手段が OpenID プロトコルメッセージにないためである。サービス妨害攻撃は、RP がアソシエーションや認証、署名検証を繰り返し要求することによって可能となるのである。
           <!--
           Within the protocol there are places where a rogue RP could
           launch a denial of service attack against an OP since there
@@ -4242,8 +3966,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          こうした攻撃が最も重大な影響を与える可能性があるのは、各メッセージに対しOP が離散指数の演算を行う必要があるアソシエーションフェーズである。
-          RP はメッセージごとにモジュラスやジェネレータを指定することができるので、攻撃者はOP に対し、各メッセージへの応答に優先して累乗計算をリアルタイムに実行するよう強制すらできる。
+          こうした攻撃が最も重大な影響を与える可能性があるのは、各メッセージに対しOP が離散指数の演算を行う必要があるアソシエーションフェーズである。RP はメッセージごとにモジュラスやジェネレータを指定することができるので、攻撃者はOP に対し、各メッセージへの応答に優先して累乗計算をリアルタイムに実行するよう強制すらできる。
           <!--
           The potentially most severe attack is during the association
           phase as each message requires the OP to execute a discrete
@@ -4255,8 +3978,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          こうした攻撃は極めて有害であるが、 OpenID プロバイダは、汎用の IP ベースの大量アクセス制限、禁止技術を用いて、この種の攻撃に容易に対抗することができる。
-          OP は、 "openid.realm" および "openid.return_to" の値をもとに禁止されている要求を調べることもできる。
+          こうした攻撃は極めて有害であるが、OpenID プロバイダは、汎用の IP ベースの大量アクセス制限、禁止技術を用いて、この種の攻撃に容易に対抗することができる。OP は、"openid.realm" および "openid.return_to" の値をもとに禁止されている要求を調べることもできる。
           <!--
           While this could be particularly harmful, OpenID Providers
           can easily use generic IP based rate-limiting and banning
@@ -4270,9 +3992,7 @@ Base 10 number | btwoc string representation
       <section title="プロトコルの可変項目">
       <!-- section title="Protocol Variants" -->
         <t>
-          プロトコルにおいては以下のバリエーションが知られており、これらのバリエーションは、プロトコルの使用に当たってのセキュリティに直接影響をあたえる場合も与えない場合もある。
-          こうした値は、本プロトコルのためのセキュリティプロファイルの作成に用いられる可能性があると推測される。
-          次の表は、 OpenID プロバイダ側から見た可変項目のリストである。
+          プロトコルにおいては以下のバリエーションが知られており、これらのバリエーションは、プロトコルの使用に当たってのセキュリティに直接影響をあたえる場合も与えない場合もある。こうした値は、本プロトコルのためのセキュリティプロファイルの作成に用いられる可能性があると推測される。次の表は、OpenID プロバイダ側から見た可変項目のリストである。
           <!--
           The following are known variations in the protocol which may
           or may not directly affect the security of the use of the
@@ -4307,8 +4027,7 @@ Base 10 number | btwoc string representation
 
           <c>2.</c>
           <c>
-            事前のアソシエーションが必要か。
-            OP は RP に対し、認証要求を行なう前に最初にアソシエーションの構築を求めるか。
+            事前のアソシエーションが必要か。OP は RP に対し、認証要求を行なう前に最初にアソシエーションの構築を求めるか。
             <!--
             Require prior association?  Does the OP require the RP
             first create an association before requesting
@@ -4338,8 +4057,7 @@ Base 10 number | btwoc string representation
 
           <c>4.</c>
           <c>
-            認証において自ら発行した証明書は認められるか。これは全 SSL トラフィックに適用される。
-            本項目が 'no' の場合、 OP は“恐らく” 全ての HTTPS 識別子に対し、既知の信頼するルートCA(証明書発行局)までの証明書の連鎖を要求するが、そのことについては意図的に前提としないでおく。
+            認証において自ら発行した証明書は認められるか。これは全 SSL トラフィックに適用される。本項目が 'no' の場合、OP は“恐らく” 全ての HTTPS 識別子に対し、既知の信頼するルートCA(証明書発行局)までの証明書の連鎖を要求するが、そのことについては意図的に前提としないでおく。
             <!--
             Are self-issued certificates allowed for authentication?
             This applies to all SSL traffic. If 'no' here, then OP
@@ -4356,9 +4074,7 @@ Base 10 number | btwoc string representation
 
           <c>5.</c>
           <c>
-            XRDS ファイルに署名しなければならないか。
-            XRDS に関する署名は XMLDSIG に従う。
-            これらの署名に用いられている鍵を信頼するかどうかを最終的にRPが自ら判断しなければならないため、鍵となる材料は指定しない。
+            XRDS ファイルに署名しなければならないか。XRDS に関する署名は XMLDSIG に従う。これらの署名に用いられている鍵を信頼するかどうかを最終的にRPが自ら判断しなければならないため、鍵となる材料は指定しない。
             <!--
             Must the XRDS file be signed? Signature on the XRDS as per
             XMLDSIG. Keying material not specified, since the RP
@@ -4375,8 +4091,7 @@ Base 10 number | btwoc string representation
 
           <c>6.</c>
           <c>
-            セキュリティが確保されたチャネルを経由して XRDS ファイルを取得しなければならないか。
-            これは SSL を前提としないか。
+            セキュリティが確保されたチャネルを経由して XRDS ファイルを取得しなければならないか。これは SSL を前提としないか。
             <!--
             Must the XRDS file be retrieved over secure channel? This does not
             imply SSL?
@@ -4406,7 +4121,7 @@ Base 10 number | btwoc string representation
 
           <c>8.</c>
           <c>
-            RP は、 XRDS 文書を持っていなければならないか。
+            RP は、XRDS 文書を持っていなければならないか。
             <!--
             Must the RP have an XRDS document?
             -->
@@ -4464,7 +4179,7 @@ Base 10 number | btwoc string representation
       <appendix title="正規化" anchor="normalization_example">
       <!-- appendix title="Normalization" anchor="normalization_example" -->
         <t>
-          テキスト URL の正規化の詳細およびさらなる事例については、 <xref target="RFC3986" /> Section 6 を参照。
+          テキスト URL の正規化の詳細およびさらなる事例については、<xref target="RFC3986" /> Section 6 を参照。
           <!--
           See section 6 of <xref target="RFC3986" /> for
           textual URL normalization details and more examples.
@@ -4532,9 +4247,7 @@ Base 10 number | btwoc string representation
       <appendix title="OP ローカル識別子">
       <!-- appendix title="OP-Local Identifiers" -->
         <t>
-          エンドユーザが "http://www.example.com/" を主張識別子として使用したい。
-          エンドユーザが OpenID プロバイダとしての機能を有する プロバイダ(example.com)にアカウントを持っている。
-          エンドユーザの OP ローカル識別子 が "https://exampleuser.exampleprovider.com/" である。
+          エンドユーザが "http://www.example.com/" を主張識別子として使用したい。エンドユーザが OpenID プロバイダとしての機能を有する プロバイダ(example.com)にアカウントを持っている。エンドユーザの OP ローカル識別子 が "https://exampleuser.exampleprovider.com/" である。
           <!--
           An end user wants to use "http://www.example.com/" as their
           Claimed Identifier. The end user has an account with
@@ -4545,7 +4258,7 @@ Base 10 number | btwoc string representation
         </t>
 
         <t>
-          このシナリオにおいて、適切な構成で Yadis または HTML ベースのディスカバリ（<xref target="discovery" /> および下記 <xref target="XRDS_Sample" /> 参照）を実行すると、 RP はエンドユーザに関して以下の情報が得られる。
+          このシナリオにおいて、適切な構成で Yadis または HTML ベースのディスカバリ（<xref target="discovery" /> および下記 <xref target="XRDS_Sample" /> 参照）を実行すると、RP はエンドユーザに関して以下の情報が得られる。
           <!--
           In this scenario, with the proper configuration of Yadis or
           HTML-Based Discovery (see <xref target="discovery" /> and
@@ -4569,7 +4282,7 @@ Base 10 number | btwoc string representation
       <appendix title="XRDS" anchor="XRDS_Sample">
         <figure>
           <preamble>
-            エンドユーザは "http://www.example.com/" を識別子として使用するが、 RP には実際に OP エンドポイント URL "https://www.exampleprovider.com/endpoint/" で "https://exampleuser.exampleprovider.com/" を検証させるためには、 "http://www.example.com/" に関するディスカバリを実行したとき、 XRDS ファイルの最後の XRD エレメントに、以下の XML 断片が記されているべきである。
+            エンドユーザは "http://www.example.com/" を識別子として使用するが、RP には実際に OP エンドポイント URL "https://www.exampleprovider.com/endpoint/" で "https://exampleuser.exampleprovider.com/" を検証させるためには、"http://www.example.com/" に関するディスカバリを実行したとき、XRDS ファイルの最後の XRD エレメントに、以下の XML 断片が記されているべきである。
             <!--
             For an end user to use "http://www.example.com/" as
             their Identifier, but have Relying Parties actually
@@ -4618,9 +4331,7 @@ Base 10 number | btwoc string representation
       <appendix title="XRI 正準化 ID">
       <!-- appendix title="XRI CanonicalID" -->
         <t>
-          例えば、 =example と =exmpl という XRI i-name がともに xri://(example)!1234 という正準化 ID を含む XRDS 文書を生成する場合、これらの識別子は同等として扱うべきである。
-          ユーザアカウントを有するアプリケーションでは、永続的な正準化 ID 、 xri://(example)!1234 を、そのアカウントの主キーとして用いるべきである。
-          i-names =example および =exmpl を表示名として参照するために保存してもよいが、これらは再割り当て可能な識別子であり、永続的な鍵として用いるべきではない。
+          例えば、=example と =exmpl という XRI i-name がともに xri://(example)!1234 という正準化 ID を含む XRDS 文書を生成する場合、これらの識別子は同等として扱うべきである。ユーザアカウントを有するアプリケーションでは、永続的な正準化 ID 、xri://(example)!1234 を、そのアカウントの主キーとして用いるべきである。i-names =example および =exmpl を表示名として参照するために保存してもよいが、これらは再割り当て可能な識別子であり、永続的な鍵として用いるべきではない。
           <!--
           For example, if the XRI i-names =example and =exmpl both
           yield an XRDS document with the CanonicalID
@@ -4640,7 +4351,7 @@ Base 10 number | btwoc string representation
     <!-- appendix title='Diffie-Hellman Key Exchange Default Value' anchor="pvalue" -->
       <figure>
         <preamble>
-          これは確認済みの素数で、 Diffie-Hellman 鍵交換においてデフォルトのモジュラスとして用いられる。 16 進表現では、以下の通りである。
+          これは確認済みの素数で、Diffie-Hellman 鍵交換においてデフォルトのモジュラスとして用いられる。16 進表現では、以下の通りである。
           <!--
           This is a confirmed-prime number, used as the default
           modulus for Diffie-Hellman Key Exchange. In hexadecimal:
@@ -4660,8 +4371,7 @@ F75A2E27898B057F9891C2E27A639C3F29B60814581CD3B2CA3986D268370557
     <appendix title="謝辞">
     <!-- appendix title="Acknowledgements" -->
       <t>
-        OpenID コミュニティは、本仕様の草案作成および編集における、以下の人々の取り組みに謝意を表します。
-        誰がどの部分を実際に書いたのか、その詳細が知りたい場合は、自由に当コミュニティの SVN リポジトリを調べたり、 "svn blame" を使用したりして下さい。http://openid.net/svn/specifications/authentication/2.0/
+        OpenID コミュニティは、本仕様の草案作成および編集における、以下の人々の取り組みに謝意を表します。誰がどの部分を実際に書いたのか、その詳細が知りたい場合は、自由に当コミュニティの SVN リポジトリを調べたり、"svn blame" を使用したりして下さい。http://openid.net/svn/specifications/authentication/2.0/
         <!--
         The OpenID Community would like to thank the following people
         for the work they've done in the drafting and editing of this
