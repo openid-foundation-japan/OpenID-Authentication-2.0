@@ -2894,7 +2894,7 @@ Base 10 number | btwoc string representation
 
       </section>
 
-      <section title=ノンスのチェック" anchor="verify_nonce">
+      <section title="ノンスのチェック" anchor="verify_nonce">
         <t>
           リプレイアタックを阻止するため、署名のチェックを行なうエージェントは、肯定アサーションの中に含まれるノンス値の履歴を辿り、同一の OP エンドポイント URL について、同じ値を二度以上決して受け入れてはならない。
         <!--
